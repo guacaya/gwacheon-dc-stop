@@ -6,14 +6,17 @@
     <title>과천주암 데이터센터 반대 민원 발사기 🚀</title>
     <style>
         :root {
-            --primary-color: #2563eb;
-            --primary-hover: #1d4ed8;
-            --accent-color: #059669;
+            --primary-color: #3b5bdb;      /* 인디고 - 차분한 파랑 */
+            --primary-hover: #2f4ac7;
+            --accent-color: #0d9488;       /* 틸 - 차분한 민트 */
+            --accent-hover: #0f766e;
             --bg-color: #f8fafc;
-            --sms-color: #dc2626;
-            --sms-hover: #b91c1c;
-            --complete-color: #ec4899; /* 오민완 전용 핫핑크 */
-            --complete-hover: #db2777;
+            --sms-color: #e03e3e;          /* 덜 원색적인 레드 */
+            --sms-hover: #c53030;
+            --complete-color: #9333ea;     /* 퍼플 - 핫핑크 대체 */
+            --complete-hover: #7e22ce;
+            --slate: #475569;
+            --slate-hover: #334155;
         }
         body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; padding: 15px; line-height: 1.6; background-color: var(--bg-color); color: #334155; margin: 0; }
         .container { max-width: 750px; margin: 20px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
@@ -71,8 +74,8 @@
             position: relative; line-height: 1.4;
             box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
-        .tab-btn:hover { border-color: #93c5fd; color: #1d4ed8; background: #eff6ff; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(37,99,235,0.12); }
-        .tab-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; box-shadow: 0 4px 12px rgba(37,99,235,0.35); transform: translateY(-1px); }
+        .tab-btn:hover { border-color: #a5b4fc; color: var(--primary-color); background: #eef2ff; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(59,91,219,0.1); }
+        .tab-btn.active { background: var(--primary-color); border-color: var(--primary-color); color: white; box-shadow: 0 4px 12px rgba(59,91,219,0.3); transform: translateY(-1px); }
         .tab-btn.done { background: #f0fdf4; border-color: #86efac; color: #166534; }
         .tab-btn.done::after { content: ' ✅'; }
         .tab-btn.active.done { background: var(--primary-color); border-color: var(--primary-color); color: white; }
@@ -86,7 +89,7 @@
         .progress-wrap { background: #f1f5f9; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; }
         .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13px; font-weight: bold; color: #334155; }
         .progress-bar-bg { background: #e2e8f0; border-radius: 99px; height: 10px; overflow: hidden; }
-        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #2563eb, #059669); border-radius: 99px; transition: width 0.4s ease; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); border-radius: 99px; transition: width 0.4s ease; }
 
         /* 토스트 */
         .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1e293b; color: white; padding: 14px 22px; border-radius: 12px; font-size: 14px; font-weight: bold; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 9999; text-align: center; max-width: 320px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); white-space: pre-line; }
@@ -97,33 +100,33 @@
 
         /* 제목 박스 */
         .title-row { margin-bottom: 0; }
-        .title-box { background: #eff6ff; border-left: 4px solid var(--primary-color); padding: 10px 14px; font-weight: bold; font-size: 14px; color: #1e40af; border-radius: 0 6px 6px 0; display: flex; align-items: center; margin-bottom: 10px; }
+        .title-box { background: #eef2ff; border-left: 4px solid var(--primary-color); padding: 10px 14px; font-weight: bold; font-size: 14px; color: #3730a3; border-radius: 0 6px 6px 0; display: flex; align-items: center; margin-bottom: 10px; }
         /* 제목 아래 버튼 행 */
         .title-action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-        .btn-copy-inline { flex: 1; min-width: 120px; padding: 10px 14px; font-size: 13px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; transition: 0.2s; background-color: #1e40af; color: white; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
-        .btn-copy-inline:hover { background-color: #1e3a8a; }
-        .btn-copy-inline.copied { background-color: #059669; }
-        .btn-go-epeople-title { flex: 1; min-width: 120px; padding: 10px 14px; font-size: 13px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; transition: 0.2s; background-color: #0f766e; color: white; display: inline-flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; box-sizing: border-box; }
-        .btn-go-epeople-title:hover { background-color: #115e59; }
+        .btn-copy-inline { flex: 1; min-width: 120px; padding: 10px 14px; font-size: 13px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; background-color: var(--primary-color); color: white; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-copy-inline:hover { background-color: var(--primary-hover); }
+        .btn-copy-inline.copied { background-color: var(--accent-color); }
+        .btn-go-epeople-title { flex: 1; min-width: 120px; padding: 10px 14px; font-size: 13px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; background-color: var(--accent-color); color: white; display: inline-flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; box-sizing: border-box; }
+        .btn-go-epeople-title:hover { background-color: var(--accent-hover); }
 
         textarea { width: 100%; height: 420px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; box-sizing: border-box; font-size: 14px; resize: none; background-color: #fafafa; line-height: 1.6; color: #334155; }
         
         /* 버튼 그룹 */
         .btn-group-top { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
-        button.action-btn, a.action-link-btn { flex: 1; min-width: 150px; padding: 14px; font-size: 14px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; box-sizing: border-box; }
-        .btn-refresh { background-color: #64748b; color: white; }
-        .btn-refresh:hover { background-color: #475569; }
+        button.action-btn, a.action-link-btn { flex: 1; min-width: 150px; padding: 14px; font-size: 14px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; box-sizing: border-box; }
+        .btn-refresh { background-color: var(--slate); color: white; }
+        .btn-refresh:hover { background-color: var(--slate-hover); }
         .btn-copy { background-color: var(--primary-color); color: white; }
         .btn-copy:hover { background-color: var(--primary-hover); }
-        .btn-copy.copied { background-color: #059669; }
-        .btn-copy-body { background-color: #0ea5e9; color: white; }
-        .btn-copy-body:hover { background-color: #0284c7; }
-        .btn-copy-body.copied { background-color: #059669; }
-        .btn-go-epeople { background-color: #0f766e; color: white; }
-        .btn-go-epeople:hover { background-color: #115e59; }
+        .btn-copy.copied { background-color: var(--accent-color); }
+        .btn-copy-body { background-color: #4f6fce; color: white; }
+        .btn-copy-body:hover { background-color: #3b5bdb; }
+        .btn-copy-body.copied { background-color: var(--accent-color); }
+        .btn-go-epeople { background-color: var(--accent-color); color: white; }
+        .btn-go-epeople:hover { background-color: var(--accent-hover); }
         
-        .btn-sms-refresh { background-color: #475569; color: white; width: 100%; margin-bottom: 20px; }
-        .btn-sms-refresh:hover { background-color: #334155; }
+        .btn-sms-refresh { background-color: var(--slate); color: white; width: 100%; margin-bottom: 20px; border-radius: 8px; font-weight: 600; }
+        .btn-sms-refresh:hover { background-color: var(--slate-hover); }
 
         /* 문자 발송 전용 스타일 */
         .sms-section-title { font-size: 15px; font-weight: bold; color: #1e293b; margin: 20px 0 10px 0; padding-bottom: 5px; border-bottom: 2px solid #cbd5e1; }
@@ -144,9 +147,9 @@
         
         /* 쪼개기 발송 전용 버튼 컨테이너 */
         .sms-btn-group { display: flex; gap: 8px; }
-        .sms-send-link { background-color: var(--sms-color); color: white; text-decoration: none; padding: 10px 14px; font-size: 13px; font-weight: bold; border-radius: 6px; transition: 0.2s; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
-        .sms-send-link.part2 { background-color: #e11d48; } 
-        .sms-send-link:hover { opacity: 0.9; }
+        .sms-send-link { background-color: var(--sms-color); color: white; text-decoration: none; padding: 10px 14px; font-size: 13px; font-weight: 600; border-radius: 8px; transition: 0.2s; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+        .sms-send-link.part2 { background-color: #b83232; }
+        .sms-send-link:hover { opacity: 0.88; }
         
         .sms-preview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 5px; }
         .sms-preview-title { font-size: 12px; font-weight: bold; color: #64748b; margin-bottom: 4px; }
@@ -242,6 +245,16 @@
     <h2>🚀 과천 주암 데이터센터 반대 민원 발사기</h2>
     <p class="desc">국민신문고 민원을 대량 접수하거나, 문자 전송 버튼으로 관계자들에게 글자 잘림 없이 항의할 수 있습니다.</p>
     
+    <!-- 공유 버튼 -->
+    <div style="display:flex; gap:10px; margin-bottom:16px;">
+        <button onclick="shareNative()" style="flex:1; padding:13px; font-size:14px; font-weight:600; background:#f1f0eb; color:#3C1E1E; border:none; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; -webkit-tap-highlight-color:transparent;">
+            📤 공유하기
+        </button>
+        <button id="btnCopyLink" onclick="copyLink()" style="flex:1; padding:13px; font-size:14px; font-weight:600; background:var(--slate); color:white; border:none; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; -webkit-tap-highlight-color:transparent;">
+            🔗 링크 복사
+        </button>
+    </div>
+
     <!-- 데이터센터 위험 안내 (처음 온 사람용) -->
     <div class="danger-box" id="dangerBox">
         <button class="danger-toggle" onclick="toggleDanger()">
@@ -790,6 +803,26 @@
             msg = smsСheers[Math.floor(Math.random() * smsСheers.length)] + `\n(${done}/${SMS_TOTAL} 발송 완료)`;
         }
         showToast(msg);
+    }
+
+    function shareNative() {
+        const url = 'https://guacaya.github.io/gwacheon-dc-stop/';
+        const text = '🚀 과천 주암 데이터센터 반대 민원 발사기\n1분만에 민원 10개 접수하세요!';
+        if (navigator.share) {
+            navigator.share({ title: '과천 주암 데이터센터 반대 민원 발사기 🚀', text, url });
+        } else {
+            // 공유 미지원 브라우저면 링크 복사로 대체
+            copyLink();
+        }
+    }
+
+    function copyLink() {
+        const url = 'https://guacaya.github.io/gwacheon-dc-stop/';
+        const btn = document.getElementById('btnCopyLink');
+        navigator.clipboard.writeText(url).then(() => {
+            btn.innerText = '✅ 복사됐어요!';
+            setTimeout(() => { btn.innerHTML = '🔗 링크 복사'; }, 2000);
+        });
     }
 
     function toggleDanger() {
