@@ -85,6 +85,21 @@
         .tab-btn.active .copy-hint { opacity: 0.85; }
         .tab-btn.done .copy-hint { color: #166534; }
 
+        /* ⭐ 중요 부처 강조 */
+        .tab-btn.important { border-color: #f59e0b; border-width: 2.5px; box-shadow: 0 2px 8px rgba(245,158,11,0.18); }
+        .tab-btn.important:hover { border-color: #f59e0b; }
+        .tab-btn.important.active { background: var(--primary-color); border-color: #f59e0b; }
+        .tab-btn.important.done { border-color: #f59e0b; }
+
+        /* 🆕 오늘 업데이트 배지 */
+        .new-badge {
+            display: inline-block; background: #dc2626; color: white;
+            font-size: 9px; font-weight: 800; padding: 1px 5px;
+            border-radius: 4px; vertical-align: middle; margin-right: 3px;
+            letter-spacing: 0.3px;
+        }
+        .tab-btn.active .new-badge { background: #fde047; color: #1e293b; }
+
         /* 진행률 바 */
         .progress-wrap { background: #f1f5f9; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; }
         .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13px; font-weight: bold; color: #334155; }
@@ -637,6 +652,10 @@
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qdnJubGppdHZhamp6emxrb2toIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NjY1MDMsImV4cCI6MjA5NzA0MjUwM30.aLxQVp6hir5QiFKIfZmbIF4XXS3R5CyZzsuuLAMXRJk";
 
     const COL = { tab: "탭이름", agency: "접수처", title: "제목", main: "본문" };
+
+    /* 🔧 수동 관리: 탭이름(A열) 기준으로 정확히 입력 ─ 매번 직접 업데이트 */
+    const IMPORTANT_TABS = ["과천시1", "한국토지주택공사", "국토교통부1"]; // ⭐ 핵심 부처
+    const UPDATED_TABS = ["한국토지주택공사", "국토교통부1"]; // 🆕 오늘 내용 업데이트된 부처
     /* =================================================================== */
 
     let currentCategory = null;
@@ -977,7 +996,11 @@
         if (doneTabs.has(key)) return;
         doneTabs.add(key);
         btnEl.classList.add('done');
-        btnEl.innerHTML = `${key} ✅<span class="copy-hint">탭하면 기관명 복사</span>`;
+        const isImportant = IMPORTANT_TABS.includes(key);
+        const isUpdated = UPDATED_TABS.includes(key);
+        const star = isImportant ? '⭐ ' : '';
+        const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
+        btnEl.innerHTML = `${newBadge}${star}${key} ✅<span class="copy-hint">탭하면 기관명 복사</span>`;
 
         const done = doneTabs.size;
         const total = tabOrder.length;
@@ -998,8 +1021,12 @@
         c.innerHTML = '';
         order.forEach((key, idx) => {
             const btn = document.createElement('button');
-            btn.className = 'tab-btn' + (idx === 0 ? ' active' : '');
-            btn.innerHTML = `${key}<span class="copy-hint">탭하면 기관명 복사</span>`;
+            const isImportant = IMPORTANT_TABS.includes(key);
+            const isUpdated = UPDATED_TABS.includes(key);
+            btn.className = 'tab-btn' + (idx === 0 ? ' active' : '') + (isImportant ? ' important' : '');
+            const star = isImportant ? '⭐ ' : '';
+            const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
+            btn.innerHTML = `${newBadge}${star}${key}<span class="copy-hint">탭하면 기관명 복사</span>`;
             btn.dataset.key = key;
             btn.onclick = () => selectCategory(key, btn);
             c.appendChild(btn);
@@ -1017,6 +1044,11 @@
         btnEl.classList.add('active');
         generateMinwon();
 
+        const isImportant = IMPORTANT_TABS.includes(key);
+        const isUpdated = UPDATED_TABS.includes(key);
+        const star = isImportant ? '⭐ ' : '';
+        const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
+
         // 탭 이름(기관명 키워드) 직접 복사 — agency 텍스트가 아닌 key 사용
         if (navigator.clipboard) {
             navigator.clipboard.writeText(key).then(() => {
@@ -1024,7 +1056,7 @@
                 const doneTag = wasDone ? ' ✅' : '';
                 btnEl.innerHTML = `✔️ "${key}" 복사됨!<span class="copy-hint">국민신문고 수신기관에 붙여넣기</span>`;
                 setTimeout(() => {
-                    btnEl.innerHTML = `${key}${doneTag}<span class="copy-hint">탭하면 기관명 복사</span>`;
+                    btnEl.innerHTML = `${newBadge}${star}${key}${doneTag}<span class="copy-hint">탭하면 기관명 복사</span>`;
                     markTabDone(key, btnEl);
                 }, 1400);
             }).catch(() => { markTabDone(key, btnEl); });
