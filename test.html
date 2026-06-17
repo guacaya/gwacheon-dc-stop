@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -85,6 +84,21 @@
         .tab-btn .copy-hint { display: block; font-size: 10px; font-weight: 400; margin-top: 3px; opacity: 0.6; }
         .tab-btn.active .copy-hint { opacity: 0.85; }
         .tab-btn.done .copy-hint { color: #166534; }
+
+        /* ⭐ 중요 부처 강조 */
+        .tab-btn.important { border-color: #f59e0b; border-width: 2.5px; box-shadow: 0 2px 8px rgba(245,158,11,0.18); }
+        .tab-btn.important:hover { border-color: #f59e0b; }
+        .tab-btn.important.active { background: var(--primary-color); border-color: #f59e0b; }
+        .tab-btn.important.done { border-color: #f59e0b; }
+
+        /* 🆕 오늘 업데이트 배지 */
+        .new-badge {
+            display: inline-block; background: #dc2626; color: white;
+            font-size: 9px; font-weight: 800; padding: 1px 5px;
+            border-radius: 4px; vertical-align: middle; margin-right: 3px;
+            letter-spacing: 0.3px;
+        }
+        .tab-btn.active .new-badge { background: #fde047; color: #1e293b; }
 
         /* 진행률 바 */
         .progress-wrap { background: #f1f5f9; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; }
@@ -616,6 +630,13 @@
             </div>
         </div>
     </div>
+
+    <!-- 면책 문구 -->
+    <div style="margin-top:24px; padding-top:16px; border-top:1px solid #e2e8f0; font-size:11.5px; color:#94a3b8; line-height:1.7; text-align:center;">
+        본 페이지는 주민 개인이 비영리·공익 목적으로 제작한 사이트이며, 특정 단체나 사업자를 비방할 의도가 없습니다.<br>
+        제공되는 민원·문자 예시 문구는 작성을 돕기 위한 참고 자료이며, 실제 제출 여부와 내용은 이용자 본인의 판단과 책임 하에 결정됩니다.<br>
+        시설의 위험성 등에 관한 내용은 우려 및 의견 제기 차원이며, 정확한 사실관계는 관계 기관의 공식 발표를 확인해 주시기 바랍니다.
+    </div>
 </div>
 
 <div class="toast" id="toastMsg"></div>
@@ -624,13 +645,17 @@
     /* ===================================================================
        구글시트 및 수파베이스 설정
        =================================================================== */
-    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSKvP8-xigw8DPZWKPpuuOzFQcdjDVFztRWLUbW4NzGgHJ6bbfbZ7BhAO7vNrFwqX_W_CUwOlhjkS40/pub?gid=1387598878&single=true&output=csv";
+    const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVXDlFmnvZLMMlFkKrnYJuDG3spufJnEAlgMBlN5Zj1rZ4yrt2IQAdwk7tCfJ5EaeEA1bI8mQfvPWO/pub?gid=125979816&single=true&output=csv";
     const SUPABASE_API_URL = "https://mjvrnljitvajjzzlkokh.supabase.co/rest/v1/minwon_stats";
     
     // 💡 제공해주신 Supabase Anon Public Key 연동 완료
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qdnJubGppdHZhamp6emxrb2toIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NjY1MDMsImV4cCI6MjA5NzA0MjUwM30.aLxQVp6hir5QiFKIfZmbIF4XXS3R5CyZzsuuLAMXRJk";
 
     const COL = { tab: "탭이름", agency: "접수처", title: "제목", main: "본문" };
+
+    /* 🔧 수동 관리: 탭이름(A열) 기준으로 정확히 입력 ─ 매번 직접 업데이트 */
+    const IMPORTANT_TABS = ["과천시1", "한국토지주택공사", "국토교통부1"]; // ⭐ 핵심 부처
+    const UPDATED_TABS = ["한국토지주택공사", "국토교통부1"]; // 🆕 오늘 내용 업데이트된 부처
     /* =================================================================== */
 
     let currentCategory = null;
@@ -971,7 +996,11 @@
         if (doneTabs.has(key)) return;
         doneTabs.add(key);
         btnEl.classList.add('done');
-        btnEl.innerHTML = `${key} ✅<span class="copy-hint">탭하면 기관명 복사</span>`;
+        const isImportant = IMPORTANT_TABS.includes(key);
+        const isUpdated = UPDATED_TABS.includes(key);
+        const star = isImportant ? '⭐ ' : '';
+        const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
+        btnEl.innerHTML = `${newBadge}${star}${key} ✅<span class="copy-hint">탭하면 기관명 복사</span>`;
 
         const done = doneTabs.size;
         const total = tabOrder.length;
@@ -992,8 +1021,12 @@
         c.innerHTML = '';
         order.forEach((key, idx) => {
             const btn = document.createElement('button');
-            btn.className = 'tab-btn' + (idx === 0 ? ' active' : '');
-            btn.innerHTML = `${key}<span class="copy-hint">탭하면 기관명 복사</span>`;
+            const isImportant = IMPORTANT_TABS.includes(key);
+            const isUpdated = UPDATED_TABS.includes(key);
+            btn.className = 'tab-btn' + (idx === 0 ? ' active' : '') + (isImportant ? ' important' : '');
+            const star = isImportant ? '⭐ ' : '';
+            const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
+            btn.innerHTML = `${newBadge}${star}${key}<span class="copy-hint">탭하면 기관명 복사</span>`;
             btn.dataset.key = key;
             btn.onclick = () => selectCategory(key, btn);
             c.appendChild(btn);
@@ -1011,6 +1044,11 @@
         btnEl.classList.add('active');
         generateMinwon();
 
+        const isImportant = IMPORTANT_TABS.includes(key);
+        const isUpdated = UPDATED_TABS.includes(key);
+        const star = isImportant ? '⭐ ' : '';
+        const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
+
         // 탭 이름(기관명 키워드) 직접 복사 — agency 텍스트가 아닌 key 사용
         if (navigator.clipboard) {
             navigator.clipboard.writeText(key).then(() => {
@@ -1018,7 +1056,7 @@
                 const doneTag = wasDone ? ' ✅' : '';
                 btnEl.innerHTML = `✔️ "${key}" 복사됨!<span class="copy-hint">국민신문고 수신기관에 붙여넣기</span>`;
                 setTimeout(() => {
-                    btnEl.innerHTML = `${key}${doneTag}<span class="copy-hint">탭하면 기관명 복사</span>`;
+                    btnEl.innerHTML = `${newBadge}${star}${key}${doneTag}<span class="copy-hint">탭하면 기관명 복사</span>`;
                     markTabDone(key, btnEl);
                 }, 1400);
             }).catch(() => { markTabDone(key, btnEl); });
