@@ -448,9 +448,9 @@
     <!-- 모바일 하단 고정 복사 바 -->
     <div class="sticky-copy-bar" id="stickyCopyBar">
         <button class="sticky-bar-refresh" onclick="generateMinwon()">🔄<br>섞기</button>
-        <button class="sticky-bar-title" onclick="copyTitle()">📋<br>제목</button>
-        <button class="sticky-bar-body" onclick="copyBody()">📄<br>본문</button>
-        <button class="sticky-bar-all" onclick="copyText()">📋<br>전체</button>
+        <button id="stickyBtnTitle" class="sticky-bar-title" onclick="copyTitle(this)">📋<br>제목</button>
+        <button id="stickyBtnBody" class="sticky-bar-body" onclick="copyBody(this)">📄<br>본문</button>
+        <button id="stickyBtnAll" class="sticky-bar-all" onclick="copyText(this)">📋<br>전체</button>
         <a id="stickyEpeople" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople">🏛️<br>신문고</a>
     </div>
 
@@ -1192,21 +1192,35 @@
         return success;
     }
 
-    function copyTitle() {
+    function copyTitle(stickyBtn) {
         const titleText = document.getElementById('titleDisplay').innerText.replace('민원 제목: ', '');
         copyToClipboard(titleText, document.getElementById('btnCopyTitle'), "✔️ 완료");
+        if (stickyBtn) flashStickyBtn(stickyBtn, '✔️<br>완료');
     }
 
-    function copyBody() {
+    function copyBody(stickyBtn) {
         const bodyText = document.getElementById('resultBox').value;
         copyToClipboard(bodyText, document.getElementById('btnCopyBody'), "✔️ 본문 복사 완료");
+        if (stickyBtn) flashStickyBtn(stickyBtn, '✔️<br>완료');
     }
 
-    function copyText() {
+    function copyText(stickyBtn) {
         const titleText = document.getElementById('titleDisplay').innerText.replace('민원 제목: ', '');
         const bodyText = document.getElementById('resultBox').value;
         const combined = `[제목]\n${titleText}\n\n[본문]\n${bodyText}`;
         copyToClipboard(combined, document.getElementById('btnCopyAll'), "✔️ 일괄 복사 완료");
+        if (stickyBtn) flashStickyBtn(stickyBtn, '✔️<br>완료');
+    }
+
+    function flashStickyBtn(btn, html) {
+        const orig = btn.innerHTML;
+        const origBg = btn.style.backgroundColor;
+        btn.innerHTML = html;
+        btn.style.backgroundColor = '#059669';
+        setTimeout(() => {
+            btn.innerHTML = orig;
+            btn.style.backgroundColor = origBg;
+        }, 1400);
     }
 
     async function initData() {
