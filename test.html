@@ -65,13 +65,13 @@
         .mode-btn.active.sms-mode { border-color: var(--sms-color); background-color: var(--sms-color); color: white; }
 
         /* 민원 소분류 부처 탭 구성 */
-        .tabs-container { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .tabs-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 20px; }
         .tab-btn {
-            padding: 14px 10px; font-size: 13px; font-weight: 600;
+            padding: 12px 8px; font-size: 12.5px; font-weight: 600;
             background: white; border: 2px solid #e2e8f0;
             border-radius: 10px; cursor: pointer; color: #475569;
             transition: all 0.18s; text-align: center; word-break: keep-all;
-            position: relative; line-height: 1.4;
+            position: relative; line-height: 1.35;
             box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
         .tab-btn:hover { border-color: #a5b4fc; color: var(--primary-color); background: #eef2ff; transform: translateY(-1px); box-shadow: 0 4px 8px rgba(59,91,219,0.1); }
@@ -192,28 +192,23 @@
             .main-mode-tabs { gap: 8px; }
             .mode-btn { padding: 12px 8px; font-size: 14px; }
 
-            /* 부처 탭 - 가로 스크롤 한 줄 */
+            /* 부처 탭 - 2열 그리드 (세로 스크롤) */
             .tabs-container {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                overflow-x: auto !important;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
                 gap: 8px !important;
-                padding-bottom: 8px !important;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-                grid-template-columns: unset !important;
+                margin-bottom: 12px !important;
             }
             .tabs-container::-webkit-scrollbar { display: none; }
             .tab-btn {
-                flex: 0 0 auto !important;
-                min-width: 120px !important;
-                padding: 11px 14px !important;
-                font-size: 13px !important;
-                border-radius: 20px !important;
-                white-space: nowrap !important;
-                word-break: normal !important;
+                min-width: unset !important;
+                padding: 12px 8px !important;
+                font-size: 12.5px !important;
+                border-radius: 10px !important;
+                white-space: normal !important;
+                word-break: keep-all !important;
             }
-            .tab-btn .copy-hint { display: none !important; }
+            .tab-btn .copy-hint { display: block !important; font-size: 9px !important; margin-top: 2px !important; }
 
             /* title-action-row 숨김 → sticky bar로 대체 */
             .title-action-row { display: none !important; }
@@ -1142,14 +1137,57 @@
         bt.className = "btn-copy-inline"; bt.innerText = "📋 제목 복사";
     }
 
-    async function copyToClipboard(text, btnEl, successText) {
+    function fallbackCopy(text) {
+        // navigator.clipboard 미지원/실패 시 execCommand 폴백
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.top = '-9999px';
+        ta.style.left = '-9999px';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        ta.setSelectionRange(0, text.length);
+        let ok = false;
         try {
-            await navigator.clipboard.writeText(text);
-            btnEl.classList.add('copied');
-            btnEl.innerText = successText;
-        } catch (err) {
-            alert('복사 기능이 지원되지 않는 환경입니다. 직접 드래그하여 복사해 주세요.');
+            ok = document.execCommand('copy');
+        } catch (e) {
+            ok = false;
         }
+        document.body.removeChild(ta);
+        return ok;
+    }
+
+    async function copyToClipboard(text, btnEl, successText) {
+        let success = false;
+
+        // 1차 시도: 최신 Clipboard API (HTTPS 환경 필요)
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            try {
+                await navigator.clipboard.writeText(text);
+                success = true;
+            } catch (err) {
+                success = false;
+            }
+        }
+
+        // 2차 시도: execCommand 폴백 (구형/일부 모바일 사파리 대응)
+        if (!success) {
+            success = fallbackCopy(text);
+        }
+
+        if (success) {
+            if (btnEl) {
+                btnEl.classList.add('copied');
+                const orig = btnEl.innerHTML;
+                btnEl.innerText = successText;
+                setTimeout(() => { if (btnEl) { btnEl.innerHTML = orig; btnEl.classList.remove('copied'); } }, 1600);
+            }
+        } else {
+            alert('이 기기에서는 자동 복사가 지원되지 않습니다.\n아래 텍스트박스를 길게 눌러 직접 복사해 주세요.');
+        }
+        return success;
     }
 
     function copyTitle() {
