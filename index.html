@@ -100,6 +100,15 @@
         }
         .tab-btn.active .new-badge { background: #fde047; color: #1e293b; }
 
+        /* 📅 날짜 플래그 */
+        .date-badge {
+            display: inline-block; background: #7c3aed; color: white;
+            font-size: 9px; font-weight: 700; padding: 1px 5px;
+            border-radius: 4px; vertical-align: middle; margin-right: 3px;
+            letter-spacing: 0.3px;
+        }
+        .tab-btn.active .date-badge { background: #c4b5fd; color: #1e293b; }
+
         /* 진행률 바 */
         .progress-wrap { background: #f1f5f9; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; }
         .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13px; font-weight: bold; color: #334155; }
@@ -654,8 +663,9 @@
     const COL = { tab: "탭이름", agency: "접수처", title: "제목", main: "본문" };
 
     /* 🔧 수동 관리: 탭이름(A열) 기준으로 정확히 입력 ─ 매번 직접 업데이트 */
-    const IMPORTANT_TABS = ["과천시1", "한국토지주택공사", "국토교통부1"]; // ⭐ 핵심 부처
-    const UPDATED_TABS = ["한국토지주택공사", "국토교통부1"]; // 🆕 오늘 내용 업데이트된 부처
+    const IMPORTANT_TABS = ["과천시1", "한국토지주택공사", "국토교통부1", "공무원연금공단"]; // ⭐ 핵심 부처
+    const UPDATED_TABS = ["한국토지주택공사", "국토교통부1", "공무원연금공단"]; // 🆕 오늘 내용 업데이트된 부처
+    const DATED_TABS = { "공무원연금공단": "6.18 추가" }; // 📅 날짜 플래그
     /* =================================================================== */
 
     let currentCategory = null;
@@ -998,9 +1008,11 @@
         btnEl.classList.add('done');
         const isImportant = IMPORTANT_TABS.includes(key);
         const isUpdated = UPDATED_TABS.includes(key);
+        const dateLabel = DATED_TABS[key] || '';
         const star = isImportant ? '⭐ ' : '';
         const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
-        btnEl.innerHTML = `${newBadge}${star}${key} ✅<span class="copy-hint">탭하면 기관명 복사</span>`;
+        const dateBadge = dateLabel ? `<span class="date-badge">${dateLabel}</span>` : '';
+        btnEl.innerHTML = `${newBadge}${dateBadge}${star}${key} ✅<span class="copy-hint">탭하면 기관명 복사</span>`;
 
         const done = doneTabs.size;
         const total = tabOrder.length;
@@ -1023,10 +1035,12 @@
             const btn = document.createElement('button');
             const isImportant = IMPORTANT_TABS.includes(key);
             const isUpdated = UPDATED_TABS.includes(key);
+            const dateLabel = DATED_TABS[key] || '';
             btn.className = 'tab-btn' + (idx === 0 ? ' active' : '') + (isImportant ? ' important' : '');
             const star = isImportant ? '⭐ ' : '';
             const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
-            btn.innerHTML = `${newBadge}${star}${key}<span class="copy-hint">탭하면 기관명 복사</span>`;
+            const dateBadge = dateLabel ? `<span class="date-badge">${dateLabel}</span>` : '';
+            btn.innerHTML = `${newBadge}${dateBadge}${star}${key}<span class="copy-hint">탭하면 기관명 복사</span>`;
             btn.dataset.key = key;
             btn.onclick = () => selectCategory(key, btn);
             c.appendChild(btn);
@@ -1046,8 +1060,10 @@
 
         const isImportant = IMPORTANT_TABS.includes(key);
         const isUpdated = UPDATED_TABS.includes(key);
+        const dateLabel = DATED_TABS[key] || '';
         const star = isImportant ? '⭐ ' : '';
         const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
+        const dateBadge = dateLabel ? `<span class="date-badge">${dateLabel}</span>` : '';
 
         // 탭 이름(기관명 키워드) 직접 복사 — agency 텍스트가 아닌 key 사용
         if (navigator.clipboard) {
@@ -1056,7 +1072,7 @@
                 const doneTag = wasDone ? ' ✅' : '';
                 btnEl.innerHTML = `✔️ "${key}" 복사됨!<span class="copy-hint">국민신문고 수신기관에 붙여넣기</span>`;
                 setTimeout(() => {
-                    btnEl.innerHTML = `${newBadge}${star}${key}${doneTag}<span class="copy-hint">탭하면 기관명 복사</span>`;
+                    btnEl.innerHTML = `${newBadge}${dateBadge}${star}${key}${doneTag}<span class="copy-hint">탭하면 기관명 복사</span>`;
                     markTabDone(key, btnEl);
                 }, 1400);
             }).catch(() => { markTabDone(key, btnEl); });
