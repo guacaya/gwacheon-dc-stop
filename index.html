@@ -656,6 +656,7 @@
        =================================================================== */
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVXDlFmnvZLMMlFkKrnYJuDG3spufJnEAlgMBlN5Zj1rZ4yrt2IQAdwk7tCfJ5EaeEA1bI8mQfvPWO/pub?gid=125979816&single=true&output=csv";
     const SUPABASE_API_URL = "https://mjvrnljitvajjzzlkokh.supabase.co/rest/v1/minwon_stats";
+    const SUPABASE_TAB_CLICKS_URL = "https://mjvrnljitvajjzzlkokh.supabase.co/rest/v1/tab_clicks";
     
     // 💡 제공해주신 Supabase Anon Public Key 연동 완료
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qdnJubGppdHZhamp6emxrb2toIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NjY1MDMsImV4cCI6MjA5NzA0MjUwM30.aLxQVp6hir5QiFKIfZmbIF4XXS3R5CyZzsuuLAMXRJk";
@@ -1052,11 +1053,28 @@
         }
     }
 
+    async function trackTabClick(tabName) {
+        try {
+            await fetch(SUPABASE_TAB_CLICKS_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+                },
+                body: JSON.stringify({ tab_name: tabName })
+            });
+        } catch (e) {
+            console.error("탭 클릭 추적 오류:", e);
+        }
+    }
+
     function selectCategory(key, btnEl) {
         currentCategory = key;
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btnEl.classList.add('active');
         generateMinwon();
+        trackTabClick(key); // 클릭 추적
 
         const isImportant = IMPORTANT_TABS.includes(key);
         const isUpdated = UPDATED_TABS.includes(key);
