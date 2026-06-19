@@ -42,14 +42,6 @@
         /* 국민신문고 인라인 링크 스타일 */
         .link-epeople { color: #2563eb; font-weight: bold; text-decoration: underline; }
 
-        /* 오민완 현황판 스타일 */
-        .stats-box { background: #fdf2f8; border: 1px solid #fbcfe8; border-radius: 8px; padding: 15px; margin-top: 15px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-        .stats-info { font-size: 14px; color: #9d174d; font-weight: bold; }
-        .stats-count { font-size: 20px; color: var(--complete-color); font-weight: 800; }
-        .btn-complete { background-color: var(--complete-color); color: white; border: none; padding: 10px 18px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-complete:hover { background-color: var(--complete-hover); }
-        .btn-complete:disabled { background-color: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
-
         /* 거주 단지 및 동 입력 섹션 스타일 */
         .dong-input-box { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #2563eb; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
         .dong-input-box label { font-size: 14px; font-weight: bold; color: #334155; }
@@ -195,6 +187,23 @@
         }
         .danger-new-badge { background: #fef2f2; border-top: 1px solid #fecaca; padding: 8px 16px; font-size: 12px; color: #991b1b; font-weight: bold; text-align: center; }
 
+        /* 📂 현장 방문 민원 서류 다운로드 */
+        .visit-doc-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; padding: 16px 18px; margin-bottom: 20px; }
+        .visit-doc-title { font-size: 14px; font-weight: 800; color: #0369a1; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+        .visit-doc-desc { font-size: 12.5px; color: #475569; line-height: 1.6; margin-bottom: 12px; }
+        .visit-doc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 100%; background: #0284c7; color: white; font-size: 14px; font-weight: 700; padding: 12px; border-radius: 8px; text-decoration: none; box-sizing: border-box; }
+        .visit-doc-btn:hover { background: #0369a1; }
+
+        /* 📋 최상위 인덱스 탭 (안내 / 시작하기) */
+        .top-index-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 18px; }
+        .top-tab-btn { padding: 13px; font-size: 14.5px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 10px; background: white; cursor: pointer; color: #64748b; transition: 0.2s; }
+        .top-tab-btn.active { border-color: var(--primary-color); background: var(--primary-color); color: white; box-shadow: 0 4px 12px rgba(59,91,219,0.25); }
+        .top-panel { display: none; }
+        .top-panel.active { display: block; }
+
+        /* ── 구분줄 ── */
+        .section-divider { border: none; border-top: 1px dashed #cbd5e1; margin: 22px 0; }
+
 
         /* 모바일 하단 고정 복사 바 */
         .sticky-copy-bar { display: none; }
@@ -244,8 +253,6 @@
             .title-box { font-size: 13px; padding: 10px 12px; }
             textarea { height: 260px; font-size: 13px; padding: 12px; }
             .btn-group-top { margin-top: 10px; }
-            .stats-box { flex-direction: column; text-align: center; }
-            .btn-complete { width: 100%; justify-content: center; padding: 13px; font-size: 15px; }
             .sms-header { flex-direction: column; align-items: flex-start; gap: 10px; }
             .sms-btn-group { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
             .sms-send-link { text-align: center; justify-content: center; padding: 13px 5px; font-size: 14px; }
@@ -313,7 +320,16 @@
             <strong>국민신문고에서 본인이 직접 로그인 후 접수</strong>해야 합니다.
         </div>
     </div>
-    
+
+    <!-- 📋 최상위 인덱스 탭 -->
+    <div class="top-index-tabs">
+        <button class="top-tab-btn" id="topTabGuide" onclick="switchTopTab('guide')">📋 안내 (처음이신가요?)</button>
+        <button class="top-tab-btn active" id="topTabAction" onclick="switchTopTab('action')">🚀 민원접수 시작하기</button>
+    </div>
+
+    <!-- ===================== 안내 패널 ===================== -->
+    <div class="top-panel" id="panelGuide">
+
     <!-- 공유 버튼 -->
     <div style="display:flex; gap:10px; margin-bottom:16px;">
         <button onclick="shareNative()" style="flex:1; padding:13px; font-size:14px; font-weight:600; background:#f1f0eb; color:#3C1E1E; border:none; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; -webkit-tap-highlight-color:transparent;">
@@ -323,6 +339,8 @@
             🔗 링크 복사
         </button>
     </div>
+
+    <hr class="section-divider">
 
     <!-- 데이터센터 위험 안내 (처음 온 사람용) -->
     <div class="danger-box" id="dangerBox">
@@ -337,6 +355,8 @@
             <div class="danger-new-badge">👆 위 내용을 확인하고 아래에서 민원을 접수해 주세요!</div>
         </div>
     </div>
+
+    <hr class="section-divider">
 
     <div class="guide-box" id="guideBox">
         <button class="guide-toggle" onclick="toggleGuide()">
@@ -399,19 +419,30 @@
                 <div><span class="tip-badge">TIP 1</span> <strong>민원 공개 설정 (강추):</strong> 작성 페이지 하단에서 <strong>'공개'</strong>로 설정하면 목소리가 더 크게 퍼집니다.</div>
                 <div style="margin-top:6px;"><span class="tip-badge">TIP 2</span> <strong>주소 미리 등록:</strong> 국민신문고 내 정보 메뉴에서 거주지 주소를 미리 등록해두면 매번 입력 불필요.</div>
             </div>
-
-            <div class="stats-box">
-                <div class="stats-info">
-                    🔥 <span id="currentDateDisplay" style="text-decoration: underline; font-weight: 800;"></span> 오늘 오민완은 몇명? 👉 <span id="todayCountDisplay" class="stats-count">0</span>명 참여 중!
-                </div>
-                <button id="btnCompleteMinwon" class="btn-complete" onclick="submitComplete()">✔️ 오늘 민원 완료! (오민완)</button>
-            </div>
         </div>
     </div>
 
+    </div>
+    <!-- ===================== /안내 패널 ===================== -->
+
+    <!-- ===================== 시작하기 패널 ===================== -->
+    <div class="top-panel active" id="panelAction">
+
+    <!-- 📂 현장 방문 민원 서류 다운로드 -->
+    <div class="visit-doc-box">
+        <div class="visit-doc-title">📂 과천시청 현장 방문 민원 서류</div>
+        <div class="visit-doc-desc">
+            과천시청에 직접 방문해 접수하실 분들을 위해, 15종 민원 서류 양식을 미리 작성해 모아두었습니다. 다운로드 후 출력하여 서명만 하시면 바로 접수 가능합니다.
+        </div>
+        <a href="visit_minwon_docs.zip" download class="visit-doc-btn">⬇️ 방문 민원 서류 15종 일괄 다운로드 (ZIP)</a>
+    </div>
+
+    <hr class="section-divider">
+
     <div class="dong-input-box">
-        <label for="complexSelect">🏢 거주 단지:</label>
+        <label for="complexSelect">🏢 거주 단지 <span style="color:#94a3b8; font-weight:400;">(선택)</span>:</label>
         <select id="complexSelect" onchange="updateComplexAndDong()">
+            <option value="">선택 안 함</option>
             <option value="디에이치아델스타">디에이치아델스타</option>
             <option value="서초네이처힐">서초네이처힐</option>
             <option value="서초호반써밋">서초호반써밋</option>
@@ -420,11 +451,13 @@
             <option value="호반써밋서초파크뷰">호반써밋서초파크뷰</option>
         </select>
         
-        <label for="dongNumber">🏠 동 입력:</label>
+        <label for="dongNumber">🏠 동 입력 <span style="color:#94a3b8; font-weight:400;">(선택)</span>:</label>
         <input type="text" id="dongNumber" placeholder="예: 101" oninput="updateComplexAndDong()" maxlength="5">
         <span class="strong-blue">동</span>
-        <span class="dong-notice">💡 단지와 동을 선택하시면 문자 첫 줄 소속 정보가 자동으로 자연스럽게 변환됩니다.</span>
+        <span class="dong-notice">💡 입력하지 않아도 문자 발송은 가능합니다. 단지와 동을 선택하시면 문자 첫 줄 소속 정보가 자동으로 자연스럽게 변환됩니다.</span>
     </div>
+
+    <hr class="section-divider">
 
     <div class="main-mode-tabs">
         <button id="btnModeMinwon" class="mode-btn active minwon-mode" onclick="switchMode('minwon')">💻 국민신문고 민원 복사</button>
@@ -640,6 +673,9 @@
         </div>
     </div>
 
+    </div>
+    <!-- ===================== /시작하기 패널 ===================== -->
+
     <!-- 면책 문구 -->
     <div style="margin-top:24px; padding-top:16px; border-top:1px solid #e2e8f0; font-size:11.5px; color:#94a3b8; line-height:1.7; text-align:center;">
         본 페이지는 주민 개인이 비영리·공익 목적으로 제작한 사이트이며, 특정 단체나 사업자를 비방할 의도가 없습니다.<br>
@@ -655,7 +691,6 @@
        구글시트 및 수파베이스 설정
        =================================================================== */
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVXDlFmnvZLMMlFkKrnYJuDG3spufJnEAlgMBlN5Zj1rZ4yrt2IQAdwk7tCfJ5EaeEA1bI8mQfvPWO/pub?gid=125979816&single=true&output=csv";
-    const SUPABASE_API_URL = "https://mjvrnljitvajjzzlkokh.supabase.co/rest/v1/minwon_stats";
     const SUPABASE_TAB_CLICKS_URL = "https://mjvrnljitvajjzzlkokh.supabase.co/rest/v1/tab_clicks";
     
     // 💡 제공해주신 Supabase Anon Public Key 연동 완료
@@ -664,9 +699,9 @@
     const COL = { tab: "탭이름", agency: "접수처", title: "제목", main: "본문" };
 
     /* 🔧 수동 관리: 탭이름(A열) 기준으로 정확히 입력 ─ 매번 직접 업데이트 */
-    const IMPORTANT_TABS = ["과천시1", "한국토지주택공사", "국토교통부1", "공무원연금공단"]; // ⭐ 핵심 부처
-    const UPDATED_TABS = ["한국토지주택공사", "국토교통부1", "공무원연금공단"]; // 🆕 오늘 내용 업데이트된 부처
-    const DATED_TABS = { "공무원연금공단": "6.18 추가" }; // 📅 날짜 플래그
+    const IMPORTANT_TABS = ["과천시1", "한국토지주택공사", "국토교통부1", "공무원연금공단", "우정사업본부"]; // ⭐ 핵심 부처
+    const UPDATED_TABS = ["우정사업본부"]; // 🆕 오늘 내용 업데이트된 부처
+    const DATED_TABS = { "공무원연금공단": "6.18 추가", "우정사업본부": "6.19 추가" }; // 📅 날짜 플래그
     /* =================================================================== */
 
     let currentCategory = null;
@@ -687,89 +722,6 @@
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const day = String(d.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
-    }
-
-    async function loadTodayCount() {
-        try {
-            const todayStr = getLocalDateString();
-            
-            // 현황판에 오늘 날짜 표시 처리 (YYYY년 MM월 DD일 형식)
-            const [year, month, day] = todayStr.split('-');
-            document.getElementById('currentDateDisplay').innerText = `${year}년 ${month}월 ${day}일`;
-
-            const res = await fetch(`${SUPABASE_API_URL}?date=eq.${todayStr}`, {
-                method: "GET",
-                headers: { 
-                    "Accept": "application/json",
-                    "apikey": SUPABASE_ANON_KEY,
-                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                }
-            });
-            if (!res.ok) throw new Error("데이터 조회 실패");
-            const data = await res.json();
-            
-            if (data && data.length > 0) {
-                document.getElementById('todayCountDisplay').innerText = data[0].count;
-            } else {
-                document.getElementById('todayCountDisplay').innerText = 0;
-            }
-        } catch (e) {
-            console.error("수파베이스 로드 에러:", e);
-        }
-    }
-
-    async function submitComplete() {
-        const btn = document.getElementById('btnCompleteMinwon');
-        btn.disabled = true;
-        btn.innerText = "⏳ 처리 중...";
-
-        try {
-            const todayStr = getLocalDateString();
-            const checkRes = await fetch(`${SUPABASE_API_URL}?date=eq.${todayStr}`, {
-                headers: {
-                    "apikey": SUPABASE_ANON_KEY,
-                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                }
-            });
-            const currentData = await checkRes.json();
-
-            let response;
-            if (currentData && currentData.length > 0) {
-                const nextCount = currentData[0].count + 1;
-                response = await fetch(`${SUPABASE_API_URL}?date=eq.${todayStr}`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Prefer": "return=representation",
-                        "apikey": SUPABASE_ANON_KEY,
-                        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                    },
-                    body: JSON.stringify({ count: nextCount })
-                });
-            } else {
-                response = await fetch(SUPABASE_API_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Prefer": "return=representation",
-                        "apikey": SUPABASE_ANON_KEY,
-                        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                    },
-                    body: JSON.stringify({ date: todayStr, count: 1 })
-                });
-            }
-
-            if (!response.ok) throw new Error("전송 실패");
-
-            alert("오늘의 민원 참여가 정상적으로 기록되었습니다. 감사합니다! 🔥");
-            btn.innerText = "🎉 참여 완료";
-            loadTodayCount();
-        } catch (e) {
-            alert("연동 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
-            btn.disabled = false;
-            btn.innerText = "✔️ 오늘 민원 완료! (오민완)";
-            console.error(e);
-        }
     }
 
     function switchMode(mode) {
@@ -965,6 +917,31 @@
         document.getElementById('guideBox').classList.toggle('open');
     }
 
+    function switchTopTab(tab) {
+        const btnGuide = document.getElementById('topTabGuide');
+        const btnAction = document.getElementById('topTabAction');
+        const panelGuide = document.getElementById('panelGuide');
+        const panelAction = document.getElementById('panelAction');
+        const bar = document.getElementById('stickyCopyBar');
+
+        if (tab === 'guide') {
+            btnGuide.classList.add('active');
+            btnAction.classList.remove('active');
+            panelGuide.classList.add('active');
+            panelAction.classList.remove('active');
+            if (bar) bar.style.display = 'none';
+        } else {
+            btnGuide.classList.remove('active');
+            btnAction.classList.add('active');
+            panelGuide.classList.remove('active');
+            panelAction.classList.add('active');
+            // sticky bar는 민원 모드일 때만 보이도록 switchMode 로직에 맡김
+            const isMinwon = document.getElementById('sectionMinwon').style.display !== 'none';
+            if (bar) bar.style.display = isMinwon ? '' : 'none';
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     /* ── 진행 현황 (세션 내 유지) ── */
     const doneTabs = new Set();
 
@@ -1136,6 +1113,7 @@
     function getInfoString() {
         const complex = document.getElementById('complexSelect').value;
         const dong = document.getElementById('dongNumber').value.trim();
+        if (!complex) return "지역";
         return dong ? `${complex} ${dong}동` : complex;
     }
 
@@ -1297,7 +1275,6 @@
     }
 
     async function initData() {
-        loadTodayCount();
         try {
             const res = await fetch(SHEET_CSV_URL);
             if(!res.ok) throw new Error("시트 데이터 획득 실패");
