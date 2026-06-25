@@ -1206,7 +1206,9 @@
 
     function updateSmsCard(idKey, phone, open, b1, b2, close) {
         const part1Text = open + b1;
-        const part2Text = b2 + close;
+        // b2 끝의 연속 개행을 정리한 뒤 close를 붙임 (iOS 메시지 앱이 끝부분 개행+텍스트를 자르는 현상 방지)
+        const b2Trimmed = b2.replace(/\n+$/, '\n');
+        const part2Text = b2Trimmed + close;
 
         document.getElementById(`smsPreview${idKey}1`).innerText = part1Text;
         document.getElementById(`smsPreview${idKey}2`).innerText = part2Text;
