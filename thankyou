@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>감사 문자 보내기 — 과천 주암지구</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans KR',sans-serif;background:#F4F6FB;color:#1E293B;min-height:100vh;padding-bottom:40px}
+.top-bar{background:#2C4A8C;color:#fff;padding:16px 20px}
+.top-bar h1{font-size:16px;font-weight:600;letter-spacing:-0.3px;line-height:1.4}
+.top-bar p{font-size:12px;color:#93B0D8;margin-top:3px}
+.notice{background:#EEF2FA;border-bottom:1px solid #C7D4EF;padding:14px 20px;display:flex;gap:10px;align-items:flex-start}
+.notice p{font-size:13px;line-height:1.7;color:#334E78}
+.notice strong{color:#1E293B;font-weight:600}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.08em;color:#7898C7;padding:18px 20px 8px;text-transform:uppercase}
+.card{background:#fff;border-top:1px solid #E2E8F4;border-bottom:1px solid #E2E8F4;margin-bottom:2px}
+.card-header{display:flex;align-items:center;gap:12px;padding:16px 20px 0}
+.avatar{width:42px;height:42px;border-radius:50%;background:#E3EAF8;color:#4A6FA5;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;flex-shrink:0}
+.member-name{font-size:15px;font-weight:600;letter-spacing:-0.3px;color:#1E293B}
+.member-role{font-size:12px;color:#7898C7;margin-top:2px}
+.msg-wrap{margin:12px 20px;background:#F8FAFF;border:1px solid #D8E3F5;border-radius:10px;overflow:hidden}
+.msg-text{font-size:13px;line-height:1.8;color:#1E293B;padding:12px 14px;white-space:pre-line}
+.version-badge{display:inline-block;font-size:10px;color:#7898C7;padding:2px 8px;border:1px solid #D8E3F5;border-radius:99px;margin:0 14px 10px;letter-spacing:.03em}
+.card-actions{display:flex;gap:8px;padding:12px 20px 16px}
+.btn-sms{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:12px 0;background:#2C4A8C;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .1s}
+.btn-sms:active{opacity:.8}
+.btn-copy{flex:0 0 58px;padding:12px 0;background:#fff;color:#4A6FA5;border:1px solid #C7D4EF;border-radius:10px;font-size:13px;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
+.btn-copy:active{background:#F4F6FB}
+.btn-copy.done{color:#16A34A;border-color:#86EFAC}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;font-size:13px;padding:10px 18px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap;z-index:999}
+.toast.show{opacity:1}
+.footer{padding:24px 20px;text-align:center;font-size:12px;color:#7898C7;line-height:1.8}
+svg.ic{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>집회 참석 의원님께 감사 문자 보내기</h1>
+  <p>과천 주암지구 데이터센터 건립 반대</p>
+</div>
+
+<div class="notice">
+  <p>🙏 오늘 집회에 참석해 주신 의원님들께 감사 문자를 보내주세요.<br>
+  <strong>문자 보내기</strong>를 누르면 내용이 자동 채워집니다. 누를 때마다 표현이 조금씩 달라집니다.<br>
+  아이폰에서 내용이 안 채워지면 <strong>복사</strong> 후 붙여넣기 해주세요.</p>
+</div>
+
+<div class="section-label">의원님 목록 (6명)</div>
+<div id="cards"></div>
+
+<div class="footer">
+  과천 주암지구 데이터센터 건립 반대 주민 모임<br>
+  민원 캠페인 → guacaya.github.io/gwacheon-dc-stop
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const members = [
+  {
+    name:"황선희", role:"의장님", phone:"01082275139",
+    msgs:[
+      "황선희 의장님, 과천 주암지구 주민입니다. 의장 취임 진심으로 축하드립니다!\n\n오늘 집회에 참석해 주셔서 감사합니다. 이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성, 인허가 불허 촉구를 간곡히 부탁드립니다.\n\n아파트 50m 앞 데이터센터로부터 9,700세대를 지켜 주세요.",
+      "황선희 의장님, 과천 주암지구 주민입니다. 의장으로 선출되신 것 축하드립니다!\n\n오늘 집회 참석 감사합니다. 계약전력 5MW 이상 이격거리 조례 제정과 방송통신시설 주용도 설정, 민관협의체 구성으로 50MW급 데이터센터를 막아 주시길 부탁드립니다.",
+      "황선희 의장님, 과천 주암지구 주민입니다. 의장 취임 축하드리며 오늘 집회 함께해 주셔서 감사합니다.\n\n인허가 불허 촉구, 이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성을 의장님께 간곡히 요청드립니다. 9,700세대가 응원합니다."
+    ]
+  },
+  {
+    name:"김동진", role:"부의장님", phone:"01079337536",
+    msgs:[
+      "김동진 부의장님, 과천 주암지구 주민입니다.\n\n오늘 시청부터 LH 시위까지 끝까지 함께해 주셔서 큰 힘이 됐습니다. 감사합니다.\n\n이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성으로 9,700세대를 지켜 주시길 부탁드립니다.",
+      "김동진 부의장님, 과천 주암지구 주민입니다.\n\n시청에서 LH 시위까지 끝까지 자리를 지켜 주셔서 주민들에게 큰 힘이 됐습니다.\n\n아파트 50m 앞 50MW급 데이터센터를 막기 위해 이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성을 부탁드립니다.",
+      "김동진 부의장님, 과천 주암지구 주민입니다.\n\n오늘 LH 시위까지 함께해 주셔서 정말 감사드립니다.\n\n이격거리 조례 제정과 방송통신시설 주용도 설정, 민관협의체 구성으로 9,700 주민의 생활환경을 지켜 주시길 간곡히 부탁드립니다."
+    ]
+  },
+  {
+    name:"지태훈", role:"시의원님", phone:"01044291766",
+    msgs:[
+      "지태훈 시의원님, 과천 주암지구 주민입니다.\n\n오늘 집회 함께해 주셔서 감사합니다. 의원님의 행정사 전문 경험으로 이 사업을 막아 주세요!\n\n이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성을 부탁드립니다.",
+      "지태훈 시의원님, 과천 주암지구 주민입니다.\n\n오늘 집회 참석 감사합니다. 의원님의 행정사 경험이 이 싸움에 꼭 필요합니다!\n\n이격거리 조례 제정, 방송통신시설 주용도·부용도 설정, 민관협의체 구성으로 아파트 50m 앞 데이터센터를 막아 주세요.",
+      "지태훈 시의원님, 과천 주암지구 주민입니다.\n\n오늘 함께해 주셔서 감사합니다. 행정사 전문성을 발휘해 9,700세대를 지켜 주시길 부탁드립니다!\n\n이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성을 요청드립니다."
+    ]
+  },
+  {
+    name:"김현석", role:"시의원님", phone:"01045971659",
+    msgs:[
+      "김현석 시의원님, 과천 주암지구 주민입니다.\n\n오늘 집회 함께해 주셔서 감사합니다.\n\n이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성으로 아파트 50m 앞 50MW급 데이터센터를 막아 주시길 부탁드립니다.",
+      "김현석 시의원님, 과천 주암지구 주민입니다.\n\n오늘 집회에 함께해 주셔서 감사드립니다.\n\n어린이집 32곳, 학교 5곳이 밀집한 이 곳을 지키기 위해 이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성을 부탁드립니다.",
+      "김현석 시의원님, 과천 주암지구 주민입니다.\n\n오늘 집회 참석 감사합니다.\n\n방송통신시설 주용도 설정, 이격거리 조례 제정, 민관협의체 구성으로 9,700세대 주민의 안전한 생활환경을 지켜 주시길 간곡히 부탁드립니다."
+    ]
+  },
+  {
+    name:"유부임", role:"시의원님", phone:"01051868058",
+    msgs:[
+      "유부임 시의원님, 과천 주암지구 주민입니다.\n\n오늘 집회 함께해 주셔서 감사합니다.\n\n어린이집 32곳, 학교 5곳 밀집 생활권을 지키기 위해 이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성을 부탁드립니다.",
+      "유부임 시의원님, 과천 주암지구 주민입니다.\n\n오늘 함께해 주셔서 감사드립니다.\n\n이격거리 조례 제정, 방송통신시설 주용도·부용도 설정, 민관협의체 구성으로 아파트 50m 앞 50MW급 데이터센터를 막아 주시길 부탁드립니다.",
+      "유부임 시의원님, 과천 주암지구 주민입니다.\n\n오늘 집회 참석 감사합니다.\n\n민관협의체 구성, 방송통신시설 주용도 설정, 이격거리 조례 제정으로 9,700세대 주민과 어린 아이들의 생활권을 지켜 주시길 부탁드립니다."
+    ]
+  },
+  {
+    name:"최기식", role:"위원장님", phone:"01064620381",
+    msgs:[
+      "최기식 위원장님, 과천 주암지구 주민입니다.\n\n오늘 시청부터 LH 시위까지 끝까지 함께해 주셔서 큰 힘이 됐습니다. 감사합니다.\n\n이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성으로 9,700세대를 지켜 주시길 부탁드립니다.",
+      "최기식 위원장님, 과천 주암지구 주민입니다.\n\n시청에서 LH 시위까지 끝까지 함께해 주셔서 주민들에게 큰 힘이 됐습니다. 진심으로 감사드립니다.\n\n이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성을 부탁드립니다.",
+      "최기식 위원장님, 과천 주암지구 주민입니다.\n\nLH 시위까지 끝까지 함께해 주셔서 정말 감사드립니다.\n\n아파트 50m 앞 50MW급 데이터센터를 막기 위해 이격거리 조례 제정, 방송통신시설 주용도 설정, 민관협의체 구성을 간곡히 부탁드립니다."
+    ]
+  }
+];
+
+function isIOS(){return /iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream}
+
+function makeSmsLink(phone, msg){
+  const enc = encodeURIComponent(msg);
+  return isIOS() ? `sms:${phone}&body=${enc}` : `sms:${phone}?body=${enc}`;
+}
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+async function copyMsg(text, btn){
+  try{ await navigator.clipboard.writeText(text); }
+  catch(e){
+    const ta=document.createElement('textarea');
+    ta.value=text; ta.style.cssText='position:fixed;opacity:0;top:0;left:0;width:1px;height:1px';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+  }
+  const orig=btn.textContent;
+  btn.textContent='✓ 복사됨'; btn.classList.add('done');
+  setTimeout(()=>{btn.textContent=orig; btn.classList.remove('done');},2200);
+}
+
+const container=document.getElementById('cards');
+
+members.forEach(m => {
+  // 각 카드마다 독립적인 랜덤 인덱스 유지 (처음 렌더시 랜덤)
+  let idx = Math.floor(Math.random() * m.msgs.length);
+
+  const card=document.createElement('div');
+  card.className='card';
+  const phoneDisplay=m.phone.replace(/(\d{3})(\d{4})(\d{4})/,'$1-$2-$3');
+
+  function render(){
+    const msg=m.msgs[idx];
+    const link=makeSmsLink(m.phone, msg);
+    card.innerHTML=`
+      <div class="card-header">
+        <div class="avatar">${m.name[0]}</div>
+        <div>
+          <div class="member-name">${m.name} ${m.role}</div>
+          <div class="member-role">${phoneDisplay}</div>
+        </div>
+      </div>
+      <div class="msg-wrap">
+        <div class="msg-text">${msg}</div>
+      </div>
+      <span class="version-badge">버전 ${idx+1} / ${m.msgs.length}</span>
+      <div class="card-actions">
+        <a class="btn-sms" href="${link}">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          문자 보내기
+        </a>
+        <button class="btn-copy">복사</button>
+      </div>
+    `;
+
+    card.querySelector('.btn-sms').addEventListener('click', ()=>{
+      if(isIOS()) navigator.clipboard.writeText(msg).catch(()=>{});
+      // 다음 탭을 위해 버전 미리 교체
+      idx = (idx + 1) % m.msgs.length;
+      setTimeout(()=>render(), 300);
+    });
+
+    card.querySelector('.btn-copy').addEventListener('click', function(){
+      copyMsg(msg, this);
+    });
+  }
+
+  render();
+  container.appendChild(card);
+});
+</script>
+</body>
+</html>
