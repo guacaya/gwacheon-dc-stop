@@ -7,27 +7,56 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans KR',sans-serif;background:#F4F6FB;color:#1E293B;min-height:100vh;padding-bottom:40px}
-.top-bar{background:#2C4A8C;color:#fff;padding:16px 20px}
+
+.top-bar{background:#2C4A8C;color:#fff;padding:16px 20px 12px}
 .top-bar h1{font-size:16px;font-weight:600;letter-spacing:-0.3px;line-height:1.4}
 .top-bar p{font-size:12px;color:#93B0D8;margin-top:3px}
-.notice{background:#EEF2FA;border-bottom:1px solid #C7D4EF;padding:14px 20px;display:flex;gap:10px;align-items:flex-start}
+
+/* 진행 바 */
+.progress-wrap{background:#2C4A8C;padding:0 20px 14px}
+.progress-track{background:rgba(255,255,255,.2);border-radius:99px;height:6px;overflow:hidden}
+.progress-fill{background:#fff;border-radius:99px;height:100%;width:0;transition:width .4s ease}
+.progress-label{display:flex;justify-content:space-between;align-items:center;margin-top:7px}
+.progress-label span{font-size:12px;color:rgba(255,255,255,.75)}
+.progress-label strong{font-size:13px;color:#fff;font-weight:600}
+
+.notice{background:#EEF2FA;border-bottom:1px solid #C7D4EF;padding:14px 20px}
 .notice p{font-size:13px;line-height:1.7;color:#334E78}
 .notice strong{color:#1E293B;font-weight:600}
+
 .section-label{font-size:11px;font-weight:600;letter-spacing:.08em;color:#7898C7;padding:18px 20px 8px;text-transform:uppercase}
-.card{background:#fff;border-top:1px solid #E2E8F4;border-bottom:1px solid #E2E8F4;margin-bottom:2px}
+
+/* 카드 */
+.card{background:#fff;border-top:1px solid #E2E8F4;border-bottom:1px solid #E2E8F4;margin-bottom:2px;transition:opacity .3s}
+.card.sent{background:#F8FAFF;opacity:.6}
 .card-header{display:flex;align-items:center;gap:12px;padding:16px 20px 0}
-.avatar{width:42px;height:42px;border-radius:50%;background:#E3EAF8;color:#4A6FA5;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;flex-shrink:0}
+.avatar{width:42px;height:42px;border-radius:50%;background:#E3EAF8;color:#4A6FA5;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;flex-shrink:0;transition:background .3s,color .3s}
+.card.sent .avatar{background:#D1FAE5;color:#059669}
 .member-name{font-size:15px;font-weight:600;letter-spacing:-0.3px;color:#1E293B}
 .member-role{font-size:12px;color:#7898C7;margin-top:2px}
+
+/* 완료 배지 */
+.sent-badge{display:none;font-size:12px;font-weight:600;color:#059669;background:#D1FAE5;border-radius:99px;padding:3px 10px;margin-left:auto;flex-shrink:0}
+.card.sent .sent-badge{display:block}
+
 .msg-wrap{margin:12px 20px;background:#F8FAFF;border:1px solid #D8E3F5;border-radius:10px;overflow:hidden}
 .msg-text{font-size:13px;line-height:1.8;color:#1E293B;padding:12px 14px;white-space:pre-line}
 .version-badge{display:inline-block;font-size:10px;color:#7898C7;padding:2px 8px;border:1px solid #D8E3F5;border-radius:99px;margin:0 14px 10px;letter-spacing:.03em}
+
 .card-actions{display:flex;gap:8px;padding:12px 20px 16px}
-.btn-sms{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:12px 0;background:#2C4A8C;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .1s}
+.btn-sms{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:12px 0;background:#2C4A8C;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .2s,opacity .1s}
 .btn-sms:active{opacity:.8}
+.card.sent .btn-sms{background:#6B7280}
 .btn-copy{flex:0 0 58px;padding:12px 0;background:#fff;color:#4A6FA5;border:1px solid #C7D4EF;border-radius:10px;font-size:13px;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent}
 .btn-copy:active{background:#F4F6FB}
 .btn-copy.done{color:#16A34A;border-color:#86EFAC}
+
+/* 전체 완료 배너 */
+.all-done{display:none;margin:16px 20px;background:#D1FAE5;border:1px solid #6EE7B7;border-radius:12px;padding:16px;text-align:center}
+.all-done.show{display:block}
+.all-done p{font-size:15px;font-weight:600;color:#065F46}
+.all-done small{font-size:12px;color:#047857;margin-top:4px;display:block}
+
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;font-size:13px;padding:10px 18px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap;z-index:999}
 .toast.show{opacity:1}
 .footer{padding:24px 20px;text-align:center;font-size:12px;color:#7898C7;line-height:1.8}
@@ -40,14 +69,24 @@ svg.ic{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;strok
   <h1>집회 참석 의원님께 감사 문자 보내기</h1>
   <p>과천 주암지구 데이터센터 건립 반대</p>
 </div>
+<div class="progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="pbar"></div></div>
+  <div class="progress-label">
+    <span>완료한 문자</span>
+    <strong id="pcnt">0 / 6명</strong>
+  </div>
+</div>
 
 <div class="notice">
-  <p>🙏 오늘 집회에 참석해 주신 의원님들께 감사 문자를 보내주세요.<br>
-  <strong>문자 보내기</strong>를 누르면 내용이 자동 채워집니다. 누를 때마다 표현이 조금씩 달라집니다.<br>
-  아이폰에서 내용이 안 채워지면 <strong>복사</strong> 후 붙여넣기 해주세요.</p>
+  <p>🙏 의원님 한 분씩 <strong>문자 보내기</strong>를 눌러 주세요. 보낸 분은 자동으로 표시됩니다.<br>
+  누를 때마다 표현이 조금씩 달라집니다. 아이폰에서 내용이 안 채워지면 <strong>복사</strong> 후 붙여넣기 해주세요.</p>
 </div>
 
 <div class="section-label">의원님 목록 (6명)</div>
+<div class="all-done" id="allDone">
+  <p>🎉 6명 모두 완료했어요!</p>
+  <small>수고하셨습니다. 과천 주민의 목소리가 전달됐습니다.</small>
+</div>
 <div id="cards"></div>
 
 <div class="footer">
@@ -109,6 +148,25 @@ const members = [
   }
 ];
 
+const TOTAL = members.length;
+// localStorage로 새로고침해도 진행상황 유지
+const STORE_KEY = 'gwacheon_thankyou_sent';
+const sentSet = new Set(JSON.parse(localStorage.getItem(STORE_KEY) || '[]'));
+
+function saveSent() {
+  localStorage.setItem(STORE_KEY, JSON.stringify([...sentSet]));
+}
+
+function updateProgress() {
+  const done = sentSet.size;
+  const pct = (done / TOTAL) * 100;
+  document.getElementById('pbar').style.width = pct + '%';
+  document.getElementById('pcnt').textContent = done + ' / ' + TOTAL + '명';
+  if (done === TOTAL) {
+    document.getElementById('allDone').classList.add('show');
+  }
+}
+
 function isIOS(){return /iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream}
 
 function makeSmsLink(phone, msg){
@@ -139,24 +197,27 @@ async function copyMsg(text, btn){
 
 const container=document.getElementById('cards');
 
-members.forEach(m => {
-  // 각 카드마다 독립적인 랜덤 인덱스 유지 (처음 렌더시 랜덤)
+members.forEach((m, mi) => {
   let idx = Math.floor(Math.random() * m.msgs.length);
+  const isSent = () => sentSet.has(mi);
 
   const card=document.createElement('div');
-  card.className='card';
+  card.className='card' + (isSent() ? ' sent' : '');
   const phoneDisplay=m.phone.replace(/(\d{3})(\d{4})(\d{4})/,'$1-$2-$3');
 
   function render(){
     const msg=m.msgs[idx];
     const link=makeSmsLink(m.phone, msg);
+    const sent = isSent();
+    card.className='card' + (sent ? ' sent' : '');
     card.innerHTML=`
       <div class="card-header">
-        <div class="avatar">${m.name[0]}</div>
-        <div>
+        <div class="avatar">${sent ? '✓' : m.name[0]}</div>
+        <div style="flex:1">
           <div class="member-name">${m.name} ${m.role}</div>
           <div class="member-role">${phoneDisplay}</div>
         </div>
+        <span class="sent-badge">보냄 ✓</span>
       </div>
       <div class="msg-wrap">
         <div class="msg-text">${msg}</div>
@@ -165,7 +226,7 @@ members.forEach(m => {
       <div class="card-actions">
         <a class="btn-sms" href="${link}">
           <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          문자 보내기
+          ${sent ? '다시 보내기' : '문자 보내기'}
         </a>
         <button class="btn-copy">복사</button>
       </div>
@@ -173,9 +234,13 @@ members.forEach(m => {
 
     card.querySelector('.btn-sms').addEventListener('click', ()=>{
       if(isIOS()) navigator.clipboard.writeText(msg).catch(()=>{});
-      // 다음 탭을 위해 버전 미리 교체
+      sentSet.add(mi);
+      saveSent();
       idx = (idx + 1) % m.msgs.length;
-      setTimeout(()=>render(), 300);
+      setTimeout(()=>{
+        render();
+        updateProgress();
+      }, 400);
     });
 
     card.querySelector('.btn-copy').addEventListener('click', function(){
@@ -186,6 +251,8 @@ members.forEach(m => {
   render();
   container.appendChild(card);
 });
+
+updateProgress();
 </script>
 </body>
 </html>
