@@ -83,6 +83,18 @@
         .tab-btn.important.active { background: var(--primary-color); border-color: #f59e0b; }
         .tab-btn.important.done { border-color: #f59e0b; }
 
+        /* ⏰ 이번 주 필수 민원 헤더 */
+        .essential-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+        .essential-badge { background: #fef3c7; color: #b45309; font-size: 12.5px; font-weight: 800; padding: 5px 10px; border-radius: 20px; white-space: nowrap; }
+        .essential-sub { font-size: 12px; color: #64748b; word-break: keep-all; }
+
+        /* 다른 기관 더보기 토글 */
+        .more-toggle { width: 100%; background: #f8fafc; border: 1.5px dashed #cbd5e1; border-radius: 10px; padding: 12px; margin: 4px 0 20px; font-size: 13.5px; font-weight: 700; color: #475569; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: inherit; }
+        .more-toggle:hover { background: #f1f5f9; border-color: #94a3b8; }
+        .more-toggle-arrow { font-size: 11px; transition: transform 0.25s; }
+        .more-toggle.open .more-toggle-arrow { transform: rotate(180deg); }
+        .tabs-container-more { margin-top: -8px; }
+
         /* 🆕 오늘 업데이트 배지 */
         .new-badge {
             display: inline-block; background: #dc2626; color: white;
@@ -472,17 +484,6 @@
     <!-- ===================== 시작하기 패널 ===================== -->
     <div class="top-panel active" id="panelAction">
 
-    <!-- 📂 현장 방문 민원 서류 다운로드 -->
-    <div class="visit-doc-box">
-        <div class="visit-doc-title">📂 과천시청 현장 방문 민원 서류</div>
-        <div class="visit-doc-desc">
-            과천시청에 직접 방문해 접수하실 분들을 위해, 15종 민원 서류 양식을 미리 작성해 모아두었습니다. 다운로드 후 출력하여 서명만 하시면 바로 접수 가능합니다.
-        </div>
-        <a href="visit_minwon_docs.zip" download class="visit-doc-btn">⬇️ 방문 민원 서류 15종 일괄 다운로드 (ZIP)</a>
-    </div>
-
-    <hr class="section-divider">
-
     <div class="dong-input-box">
         <label for="complexSelect">🏢 거주 단지 <span style="color:#94a3b8; font-weight:400;">(선택)</span>:</label>
         <select id="complexSelect" onchange="updateComplexAndDong()">
@@ -520,8 +521,18 @@
             </div>
         </div>
 
+        <div class="essential-header">
+            <span class="essential-badge">⏰ 이번 주 필수 민원</span>
+            <span class="essential-sub">이 6곳만 집중해주세요 — 5분이면 끝나요</span>
+        </div>
         <div class="tabs-container" id="tabsContainer"></div>
-        
+
+        <button class="more-toggle" id="moreToggle" onclick="toggleMore()" type="button">
+            <span id="moreToggleText">다른 기관 민원 더보기</span>
+            <span class="more-toggle-arrow" id="moreToggleArrow">▼</span>
+        </button>
+        <div class="tabs-container tabs-container-more" id="tabsContainerMore" style="display:none;"></div>
+
         <div class="meta-info">
             <div class="meta-line">
                 <span id="targetAgency" style="color: #475569;">시트 불러오는 중…</span>
@@ -717,6 +728,17 @@
         </div>
     </div>
 
+    <hr class="section-divider">
+
+    <!-- 📂 현장 방문 민원 서류 다운로드 (수요가 적어 하단으로 이동) -->
+    <div class="visit-doc-box">
+        <div class="visit-doc-title">📂 과천시청 현장 방문 민원 서류</div>
+        <div class="visit-doc-desc">
+            과천시청에 직접 방문해 접수하실 분들을 위해, 15종 민원 서류 양식을 미리 작성해 모아두었습니다. 다운로드 후 출력하여 서명만 하시면 바로 접수 가능합니다.
+        </div>
+        <a href="visit_minwon_docs.zip" download class="visit-doc-btn">⬇️ 방문 민원 서류 15종 일괄 다운로드 (ZIP)</a>
+    </div>
+
     </div>
     <!-- ===================== /시작하기 패널 ===================== -->
 
@@ -743,6 +765,7 @@
     const COL = { tab: "탭이름", agency: "접수처", title: "제목", main: "본문" };
 
     /* 🔧 수동 관리: 탭이름(A열) 기준으로 정확히 입력 ─ 매번 직접 업데이트 */
+    const ESSENTIAL_THIS_WEEK = ["과천시1", "과천시2", "한국토지주택공사", "국토교통부", "기후에너지환경부", "한국전력공사"]; // ⏰ 이번 주 필수 6곳 (여기만 수정하면 강조 기관이 바뀝니다)
     const IMPORTANT_TABS = ["과천시1", "한국토지주택공사", "국토교통부", "공무원연금공단", "과학기술정보통신부", "기후에너지환경부", "한국전력공사", "소방청"]; // ⭐ 핵심 부처
     const UPDATED_TABS = ["과천시1", "한국토지주택공사", "국토교통부", "소방청"]; // 🆕 오늘 내용 업데이트된 부처
     const DATED_TABS = { "공무원연금공단": "6.18 추가", "과학기술정보통신부": "6.19 추가", "기후에너지환경부": "6.21 추가", "한국전력공사": "6.21 업데이트", "과천시1": "6.24 업데이트", "한국토지주택공사": "6.24 업데이트", "국토교통부": "6.24 업데이트(1·2 통합)", "소방청": "6.25 업데이트" }; // 📅 날짜 플래그
@@ -1050,26 +1073,57 @@
         updateProgress();
     }
 
+    function makeTabButton(key, isFirst) {
+        const btn = document.createElement('button');
+        const isImportant = IMPORTANT_TABS.includes(key);
+        const isUpdated = UPDATED_TABS.includes(key);
+        const dateLabel = DATED_TABS[key] || '';
+        btn.className = 'tab-btn' + (isFirst ? ' active' : '') + (isImportant ? ' important' : '');
+        const star = isImportant ? '⭐ ' : '';
+        const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
+        const dateBadge = dateLabel ? `<span class="date-badge">${dateLabel}</span>` : '';
+        btn.innerHTML = `${newBadge}${dateBadge}${star}${key}<span class="copy-hint">탭하면 기관명 복사</span>`;
+        btn.dataset.key = key;
+        btn.onclick = () => selectCategory(key, btn);
+        return btn;
+    }
+
+    function toggleMore() {
+        const box = document.getElementById('tabsContainerMore');
+        const btn = document.getElementById('moreToggle');
+        const isOpen = box.style.display !== 'none';
+        box.style.display = isOpen ? 'none' : 'grid';
+        btn.classList.toggle('open', !isOpen);
+        document.getElementById('moreToggleArrow').innerText = isOpen ? '▼' : '▲';
+    }
+
     function buildTabs(order) {
+        const essentialOrder = ESSENTIAL_THIS_WEEK.filter(k => order.includes(k));
+        const otherOrder = order.filter(k => !ESSENTIAL_THIS_WEEK.includes(k));
+
         const c = document.getElementById('tabsContainer');
+        const cMore = document.getElementById('tabsContainerMore');
         c.innerHTML = '';
-        order.forEach((key, idx) => {
-            const btn = document.createElement('button');
-            const isImportant = IMPORTANT_TABS.includes(key);
-            const isUpdated = UPDATED_TABS.includes(key);
-            const dateLabel = DATED_TABS[key] || '';
-            btn.className = 'tab-btn' + (idx === 0 ? ' active' : '') + (isImportant ? ' important' : '');
-            const star = isImportant ? '⭐ ' : '';
-            const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
-            const dateBadge = dateLabel ? `<span class="date-badge">${dateLabel}</span>` : '';
-            btn.innerHTML = `${newBadge}${dateBadge}${star}${key}<span class="copy-hint">탭하면 기관명 복사</span>`;
-            btn.dataset.key = key;
-            btn.onclick = () => selectCategory(key, btn);
-            c.appendChild(btn);
+        cMore.innerHTML = '';
+
+        essentialOrder.forEach((key, idx) => {
+            c.appendChild(makeTabButton(key, idx === 0));
         });
+        otherOrder.forEach((key) => {
+            cMore.appendChild(makeTabButton(key, false));
+        });
+
+        const moreToggleBtn = document.getElementById('moreToggle');
+        const moreToggleText = document.getElementById('moreToggleText');
+        if (moreToggleBtn) {
+            moreToggleBtn.style.display = otherOrder.length > 0 ? 'flex' : 'none';
+            moreToggleText.innerText = `다른 기관 민원 더보기 (${otherOrder.length}곳)`;
+        }
+
         updateProgress();
-        if (order.length > 0) {
-            currentCategory = order[0];
+        const startKey = essentialOrder.length > 0 ? essentialOrder[0] : order[0];
+        if (startKey) {
+            currentCategory = startKey;
             generateMinwon();
         }
     }
