@@ -176,12 +176,42 @@
         .btn-sms-refresh:hover { background-color: var(--slate-hover); }
 
         /* 문자 발송 전용 스타일 */
-        .sms-section-title { font-size: 15px; font-weight: bold; color: #1e293b; margin: 20px 0 10px 0; padding-bottom: 5px; border-bottom: 2px solid #cbd5e1; }
+        .tracker-row { padding: 4px 8px; border-radius: 5px; background: #fff; border: 1px solid #e2e8f0; color: #475569; transition: all .3s; }
+        .tracker-row.done { background: #f0fdf4; border-color: #86efac; color: #166534; font-weight: 500; }
         .sms-target-card { border: 1px solid #cbd5e1; background: #ffffff; border-radius: 8px; padding: 18px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.3s; }
         .sms-target-card.sms-done { border-color: #86efac; background: #f0fdf4; }
         .sms-done-badge { display: none; font-size: 12px; font-weight: bold; color: #166534; background: #dcfce7; border-radius: 20px; padding: 3px 10px; margin-left: 8px; }
         .sms-target-card.sms-done .sms-done-badge { display: inline-block; }
         .sms-target-card.sms-done .sms-send-link { opacity: 0.55; }
+
+        /* 📍 고정 하단 플로팅 진행 바 */
+        .sms-float-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+            background: #1e293b;
+            color: #fff;
+            border-radius: 99px;
+            padding: 10px 22px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,.28);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: transform .15s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .sms-float-bar.visible { display: flex; }
+        .sms-float-bar:active { transform: translateX(-50%) scale(.96); }
+        .sms-float-count { font-size: 15px; font-weight: 700; }
+        .sms-float-count span { color: #4ade80; }
+        .sms-float-mini-bar { width: 72px; height: 6px; background: rgba(255,255,255,.2); border-radius: 99px; overflow: hidden; }
+        .sms-float-mini-fill { height: 100%; background: #22c55e; border-radius: 99px; transition: width .4s ease; width: 0%; }
+        .sms-float-label { font-size: 11px; color: rgba(255,255,255,.6); }
+        .sms-float-done { background: #15803d !important; }
 
         /* SMS 진행률 바 */
         .sms-progress-wrap { background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; }
@@ -534,7 +564,7 @@
 
     <div class="main-mode-tabs">
         <button id="btnModeMinwon" class="mode-btn active minwon-mode" onclick="switchMode('minwon')">💻 국민신문고 민원 복사</button>
-        <button id="btnModeSms" class="mode-btn sms-mode" onclick="switchMode('sms')">📱 항의 문자 발송</button>
+        <button id="btnModeSms" class="mode-btn sms-mode" onclick="switchMode('sms')">📱 항의 문자 발송 <span style="display:inline-block;background:#dc2626;color:white;font-size:9px;font-weight:800;padding:1px 5px;border-radius:4px;vertical-align:middle;margin-left:3px;letter-spacing:0.3px">7/7 UPDATE</span></button>
     </div>
 
     <div id="sectionMinwon">
@@ -600,11 +630,34 @@
             각 대상자별로 <strong>[① 1차 전송] 버튼을 눌러 문자를 보낸 직후, 바로 이어서 [② 2차 전송] 버튼</strong>을 눌러 나머지 내용을 전송하시면 잘림 없이 본문이 깔끔하게 완포됩니다. (실제 발송되는 본문에는 '1탄, 2탄' 같은 불필요한 말머리가 붙지 않습니다.)
         </div>
 
+        <!-- SMS 진행 체크표 -->
+        <div id="smsTrackerWrap" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin-bottom:14px">
+            <div style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:10px">📋 발송 현황 — 10명 중 <span id="trackerCount" style="color:#dc2626">0</span>명 완료</div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;font-size:12px">
+                <div style="font-size:11px;font-weight:600;color:#64748b;grid-column:1/-1;padding-bottom:2px;border-bottom:1px solid #e2e8f0;margin-bottom:2px">① 신계용 시장·최기식 위원장·이소영 의원</div>
+                <div class="tracker-row" id="tracker-Mayor">⬜ 신계용 시장</div>
+                <div class="tracker-row" id="tracker-Choi">⬜ 최기식 당협위원장</div>
+                <div class="tracker-row" id="tracker-Lee">⬜ 이소영 국회의원</div>
+                <div style="opacity:0"></div>
+                <div style="font-size:11px;font-weight:600;color:#64748b;grid-column:1/-1;padding-bottom:2px;border-bottom:1px solid #e2e8f0;margin-bottom:2px;margin-top:4px">② 지역구 의원</div>
+                <div class="tracker-row" id="tracker-Counselor">⬜ 김동진 부의장</div>
+                <div class="tracker-row" id="tracker-KimDH">⬜ 김현석 도의원</div>
+                <div style="font-size:11px;font-weight:600;color:#64748b;grid-column:1/-1;padding-bottom:2px;border-bottom:1px solid #e2e8f0;margin-bottom:2px;margin-top:4px">③ 비지역구 의원</div>
+                <div class="tracker-row" id="tracker-Hwang">⬜ 황선희 시의장</div>
+                <div class="tracker-row" id="tracker-Ji">⬜ 지태훈 시의원</div>
+                <div class="tracker-row" id="tracker-Yu">⬜ 유부임 시의원</div>
+                <div style="opacity:0"></div>
+                <div style="font-size:11px;font-weight:600;color:#64748b;grid-column:1/-1;padding-bottom:2px;border-bottom:1px solid #e2e8f0;margin-bottom:2px;margin-top:4px">④ 서초구 관계자</div>
+                <div class="tracker-row" id="tracker-Seocho2_">⬜ 전성수 구청장</div>
+                <div class="tracker-row" id="tracker-Seocho3_">⬜ 신동욱 의원</div>
+            </div>
+        </div>
+
         <!-- SMS 진행률 바 -->
         <div class="sms-progress-wrap" id="smsProgressWrap" style="display:none;">
             <div class="sms-progress-header">
                 <span id="smsProgressLabel">📱 문자 발송 현황</span>
-                <span id="smsProgressCount" style="color:#dc2626;">0 / 6</span>
+                <span id="smsProgressCount" style="color:#dc2626;">0 / 10</span>
             </div>
             <div class="sms-progress-bar-bg">
                 <div class="sms-progress-bar-fill" id="smsProgressFill" style="width:0%"></div>
@@ -613,7 +666,7 @@
 
         <button class="action-btn btn-sms-refresh" onclick="generateSms(true)">🔄 [매일매일 새롭게] 모든 항의 문자 어조 새로고침</button>
 
-        <div class="sms-section-title">📍 과천시청 및 시·도의회 관계자</div>
+        <div class="sms-section-title">📍 1그룹 — 신계용 시장 · 최기식 당협위원장 · 이소영 국회의원</div>
 
         <div class="sms-target-card" id="smsCard-Mayor" data-sms-key="Mayor">
             <div class="sms-header">
@@ -627,37 +680,25 @@
                 </div>
             </div>
             <div class="sms-preview-grid">
-                <div>
-                    <div class="sms-preview-title">📄 1차 본문 미리보기</div>
-                    <div id="smsPreviewMayor1" class="sms-preview-box">로딩 중...</div>
-                </div>
-                <div>
-                    <div class="sms-preview-title">📄 2차 본문 미리보기</div>
-                    <div id="smsPreviewMayor2" class="sms-preview-box">로딩 중...</div>
-                </div>
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewMayor1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewMayor2" class="sms-preview-box">로딩 중...</div></div>
             </div>
         </div>
 
-        <div class="sms-target-card" id="smsCard-Counselor" data-sms-key="Counselor">
+        <div class="sms-target-card" id="smsCard-Choi" data-sms-key="Choi">
             <div class="sms-header">
                 <div class="sms-target-info">
-                    <strong>👤 김동진 과천시의원</strong> (010-7933-7536)
+                    <strong>👤 최기식 당협위원장</strong> (010-6462-0381)
                     <span class="sms-done-badge">✅ 발송 완료</span>
                 </div>
                 <div class="sms-btn-group">
-                    <a id="smsLinkCounselor1" href="#" class="sms-send-link" onclick="markSmsDone('Counselor')">① 1차 전송</a>
-                    <a id="smsLinkCounselor2" href="#" class="sms-send-link part2" onclick="markSmsDone('Counselor')">② 2차 전송</a>
+                    <a id="smsLinkChoi1" href="#" class="sms-send-link" onclick="markSmsDone('Choi')">① 1차 전송</a>
+                    <a id="smsLinkChoi2" href="#" class="sms-send-link part2" onclick="markSmsDone('Choi')">② 2차 전송</a>
                 </div>
             </div>
             <div class="sms-preview-grid">
-                <div>
-                    <div class="sms-preview-title">📄 1차 본문 미리보기</div>
-                    <div id="smsPreviewCounselor1" class="sms-preview-box">로딩 중...</div>
-                </div>
-                <div>
-                    <div class="sms-preview-title">📄 2차 본문 미리보기</div>
-                    <div id="smsPreviewCounselor2" class="sms-preview-box">로딩 중...</div>
-                </div>
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewChoi1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewChoi2" class="sms-preview-box">로딩 중...</div></div>
             </div>
         </div>
 
@@ -673,41 +714,101 @@
                 </div>
             </div>
             <div class="sms-preview-grid">
-                <div>
-                    <div class="sms-preview-title">📄 1차 본문 미리보기</div>
-                    <div id="smsPreviewLee1" class="sms-preview-box">로딩 중...</div>
-                </div>
-                <div>
-                    <div class="sms-preview-title">📄 2차 본문 미리보기</div>
-                    <div id="smsPreviewLee2" class="sms-preview-box">로딩 중...</div>
-                </div>
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewLee1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewLee2" class="sms-preview-box">로딩 중...</div></div>
             </div>
         </div>
 
-        <div class="sms-target-card" id="smsCard-Kim" data-sms-key="Kim">
+        <div class="sms-section-title">📍 2그룹 — 지역구 의원 (김동진 부의장 · 김현석 도의원)</div>
+
+        <div class="sms-target-card" id="smsCard-Counselor" data-sms-key="Counselor">
             <div class="sms-header">
                 <div class="sms-target-info">
-                    <strong>👤 김현석 경기도의원</strong> (010-4597-1659)
+                    <strong>👤 김동진 부의장</strong> (010-7933-7536)
                     <span class="sms-done-badge">✅ 발송 완료</span>
                 </div>
                 <div class="sms-btn-group">
-                    <a id="smsLinkKim1" href="#" class="sms-send-link" onclick="markSmsDone('Kim')">① 1차 전송</a>
-                    <a id="smsLinkKim2" href="#" class="sms-send-link part2" onclick="markSmsDone('Kim')">② 2차 전송</a>
+                    <a id="smsLinkCounselor1" href="#" class="sms-send-link" onclick="markSmsDone('Counselor')">① 1차 전송</a>
+                    <a id="smsLinkCounselor2" href="#" class="sms-send-link part2" onclick="markSmsDone('Counselor')">② 2차 전송</a>
                 </div>
             </div>
             <div class="sms-preview-grid">
-                <div>
-                    <div class="sms-preview-title">📄 1차 본문 미리보기</div>
-                    <div id="smsPreviewKim1" class="sms-preview-box">로딩 중...</div>
-                </div>
-                <div>
-                    <div class="sms-preview-title">📄 2차 본문 미리보기</div>
-                    <div id="smsPreviewKim2" class="sms-preview-box">로딩 중...</div>
-                </div>
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewCounselor1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewCounselor2" class="sms-preview-box">로딩 중...</div></div>
             </div>
         </div>
 
-        <div class="sms-section-title">📍 서초구청 및 정계 관계자 (양재천 유역 주민 강력 요구)</div>
+        <div class="sms-target-card" id="smsCard-KimDH" data-sms-key="KimDH">
+            <div class="sms-header">
+                <div class="sms-target-info">
+                    <strong>👤 김현석 도의원</strong> (010-4597-1659)
+                    <span class="sms-done-badge">✅ 발송 완료</span>
+                </div>
+                <div class="sms-btn-group">
+                    <a id="smsLinkKimDH1" href="#" class="sms-send-link" onclick="markSmsDone('KimDH')">① 1차 전송</a>
+                    <a id="smsLinkKimDH2" href="#" class="sms-send-link part2" onclick="markSmsDone('KimDH')">② 2차 전송</a>
+                </div>
+            </div>
+            <div class="sms-preview-grid">
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewKimDH1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewKimDH2" class="sms-preview-box">로딩 중...</div></div>
+            </div>
+        </div>
+
+        <div class="sms-section-title">📍 3그룹 — 비지역구 의원 (황선희 의장 · 지태훈 · 유부임)</div>
+
+        <div class="sms-target-card" id="smsCard-Hwang" data-sms-key="Hwang">
+            <div class="sms-header">
+                <div class="sms-target-info">
+                    <strong>👤 황선희 시의회 의장</strong> (010-8227-5139)
+                    <span class="sms-done-badge">✅ 발송 완료</span>
+                </div>
+                <div class="sms-btn-group">
+                    <a id="smsLinkHwang1" href="#" class="sms-send-link" onclick="markSmsDone('Hwang')">① 1차 전송</a>
+                    <a id="smsLinkHwang2" href="#" class="sms-send-link part2" onclick="markSmsDone('Hwang')">② 2차 전송</a>
+                </div>
+            </div>
+            <div class="sms-preview-grid">
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewHwang1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewHwang2" class="sms-preview-box">로딩 중...</div></div>
+            </div>
+        </div>
+
+        <div class="sms-target-card" id="smsCard-Ji" data-sms-key="Ji">
+            <div class="sms-header">
+                <div class="sms-target-info">
+                    <strong>👤 지태훈 시의원</strong> (010-4429-1766)
+                    <span class="sms-done-badge">✅ 발송 완료</span>
+                </div>
+                <div class="sms-btn-group">
+                    <a id="smsLinkJi1" href="#" class="sms-send-link" onclick="markSmsDone('Ji')">① 1차 전송</a>
+                    <a id="smsLinkJi2" href="#" class="sms-send-link part2" onclick="markSmsDone('Ji')">② 2차 전송</a>
+                </div>
+            </div>
+            <div class="sms-preview-grid">
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewJi1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewJi2" class="sms-preview-box">로딩 중...</div></div>
+            </div>
+        </div>
+
+        <div class="sms-target-card" id="smsCard-Yu" data-sms-key="Yu">
+            <div class="sms-header">
+                <div class="sms-target-info">
+                    <strong>👤 유부임 시의원</strong> (010-5186-8058)
+                    <span class="sms-done-badge">✅ 발송 완료</span>
+                </div>
+                <div class="sms-btn-group">
+                    <a id="smsLinkYu1" href="#" class="sms-send-link" onclick="markSmsDone('Yu')">① 1차 전송</a>
+                    <a id="smsLinkYu2" href="#" class="sms-send-link part2" onclick="markSmsDone('Yu')">② 2차 전송</a>
+                </div>
+            </div>
+            <div class="sms-preview-grid">
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewYu1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewYu2" class="sms-preview-box">로딩 중...</div></div>
+            </div>
+        </div>
+
+        <div class="sms-section-title">📍 4그룹 — 서초구청 및 정계 관계자 (양재천 유역 주민 강력 요구)</div>
 
         <div class="sms-target-card" id="smsCard-Seocho2_" data-sms-key="Seocho2_">
             <div class="sms-header">
@@ -804,9 +905,13 @@
     let tabOrder = [];
 
     let selectedMayorIdx = 0; let selectedMayorCloseIdx = 0;
-    let selectedCounselorIdx = 0; let selectedCounselorCloseIdx = 0;
+    let selectedChoiIdx = 0; let selectedChoiCloseIdx = 0;
     let selectedLeeIdx = 0; let selectedLeeCloseIdx = 0;
-    let selectedKimIdx = 0; let selectedKimCloseIdx = 0;
+    let selectedCounselorIdx = 0; let selectedCounselorCloseIdx = 0;
+    let selectedKimDHIdx = 0; let selectedKimDHCloseIdx = 0;
+    let selectedHwangIdx = 0; let selectedHwangCloseIdx = 0;
+    let selectedJiIdx = 0; let selectedJiCloseIdx = 0;
+    let selectedYuIdx = 0; let selectedYuCloseIdx = 0;
     let selectedS2Idx = 0; let selectedS2CloseIdx = 0;
     let selectedS3Idx = 0; let selectedS3CloseIdx = 0;
 
@@ -824,12 +929,16 @@
         if(mode === 'minwon') {
             document.getElementById('btnModeMinwon').classList.add('active');
             document.getElementById('btnModeSms').classList.remove('active');
+            const fb = document.getElementById('smsFloatBar');
+            if (fb) fb.classList.remove('visible');
             document.getElementById('sectionMinwon').style.display = 'block';
             document.getElementById('sectionSms').style.display = 'none';
             if (bar) bar.style.display = '';
         } else {
             document.getElementById('btnModeMinwon').classList.remove('active');
             document.getElementById('btnModeSms').classList.add('active');
+            const fb = document.getElementById('smsFloatBar');
+            if (fb) fb.classList.add('visible');
             document.getElementById('sectionMinwon').style.display = 'none';
             document.getElementById('sectionSms').style.display = 'block';
             if (bar) bar.style.display = 'none';
@@ -854,70 +963,130 @@
         mayor: {
             phone: "01087457577",
             openings: [
-                "안녕하세요 신계용 시장님. [INFO] 주민입니다.",
-                "신계용 시장님, 주암지구 데이터센터 문제로 불안에 떠는 [INFO] 주민입니다.",
-                "과천시정을 이끄시는 신계용 시장님께 [INFO] 주민으로서 호소합니다.",
-                "신계용 시장님 안녕하세요. 공약 이행을 촉구하는 [INFO] 주민입니다."
+                "신계용 시장님, 당선 축하드립니다. 인허가 불허 공약 이행을 기다리는 [INFO] 주민입니다.",
+                "신계용 시장님, 후보 시절 데이터센터 인허가 불허를 약속하셨습니다. [INFO] 주민입니다.",
+                "신계용 시장님, 공약을 믿고 지지한 [INFO] 주민입니다. 이행을 촉구합니다.",
+                "당선 축하드립니다 시장님. 주암지구 데이터센터 공약을 기억하시는지요. [INFO] 주민입니다."
             ],
-            body1: "\n집 근처에 추진 중인 데이터센터 건립으로 소음·전력·안전 문제 등 생활환경 악화가 우려되어 주민들이 심히 불안에 떨고 있습니다.\n1. 매각되지 않은 업무시설용지의 허용용도 중 방송통신시설을 삭제해주십시오.\n2. 과천 주암지구 내의 업무시설용지의 주용도를 설정해주십시오.",
-            body2: "3. 민관협의체 구성을 신속히 추진해주십시오.\n양재천을 공유하는 인근 주민들의 의견이 충분히 반영될 수 있도록 해당 사업을 재검토하거나 중단될 수 있게 적극적인 검토 부탁드립니다.\n시장 취임과 함께 약속하신 주암지구 데이터센터 건립 반대 공약을 조속히 이행해 주십시오.\n\n",
-            closings: ["항상 과천 발전을 위해 애써 주셔서 감사합니다.", "시장님께서 시민의 방패가 되어주시길 진심으로 바랍니다.", "주민들의 정당한 목소리에 귀 기울여 주시리라 믿습니다.", "공약을 지키는 신뢰받는 시장님이 되어주시길 부탁드립니다."]
+            body1: "\n'22.9kV는 전봇대와 같은 전압이라 안전하다'는 주장은 말장난입니다.\n전봇대도 22.9kV 특고압입니다. 전봇대는 220V로 낮춰 분산하지만 데이터센터는 특고압을 건물 내부에서 10MW씩 대용량으로 직접 처리합니다. 전기사업법 제2조: 7,000V 초과 = 특고압.",
+            body2: "후보 시절 인허가 불허를 공약하셨습니다. 주민들은 그 약속을 믿고 지지했습니다.\n지금 공식 입장을 밝히실 때입니다.\n1. 인허가 불허 방침을 공식 발표해 주십시오.\n2. 방송통신시설 허용용도를 삭제해 주십시오.\n3. 민관협의체를 구성해 주십시오.\n공약 파기 시 언론·시의회로 공론화하겠습니다.\n\n",
+            closings: ["공약을 지키는 것이 신뢰받는 시장의 첫걸음입니다.", "후보 시절 약속, 잊지 않으셨으리라 믿습니다.", "지금 시장님의 공식 입장이 9,700세대의 미래를 결정합니다.", "주민이 먼저 손 내밀고 있습니다. 공약으로 화답해 주십시오."]
+        },
+        choi: {
+            phone: "01064620381",
+            openings: [
+                "최기식 위원장님, LH 시위까지 끝까지 함께해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "최기식 위원장님, 주민을 위해 끝까지 자리 지켜 주셔서 큰 힘이 됐습니다. [INFO] 주민입니다.",
+                "최기식 위원장님, 공약을 믿는 [INFO] 주민입니다. 지금이 결정적 시점입니다.",
+                "당협위원장님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
+            ],
+            body1: "\n사업자가 '22.9kV 고압 아니다', '우면동만 반대한다'는 여론전을 시작했습니다.\n22.9kV는 전기사업법상 특고압(7,000V 초과)입니다. 데이터센터는 10MW를 한 건물에 집중합니다. 아파트 3,000세대 에어컨+인덕션 풀가동 수준이며 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다. 실제로 이곳에 살 9,700세대가 반대하고 있습니다.\n여론전이 시작된 지금 당 차원에서 신계용 시장님의 불허 공약 이행을 압박해 주시고 조례가 조속히 통과될 수 있도록 속도 내서 추진해 주십시오.\n\n",
+            closings: ["LH까지 함께해 주신 위원장님이 지금 흔들리지 않아야 합니다.", "위원장님의 분명한 입장이 9,700세대에게 힘이 됩니다.", "당을 믿고 지지하는 주민들이 위원장님을 주목하고 있습니다.", "끝까지 함께해 주셔서 감사합니다. 조례 제정으로 완성해 주십시오."]
+        },
+        hwang: {
+            phone: "01082275139",
+            openings: [
+                "황선희 의장님, 집회에 직접 걸음해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "황선희 의장님, 당선 축하드립니다. 함께해 주신 의장님을 믿는 [INFO] 주민입니다.",
+                "황선희 의장님, 주민 곁에 서 주신 의장님께 [INFO] 입주예정자 주민이 드립니다.",
+                "의장님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
+            ],
+            body1: "\n집회에 직접 걸음해 주셔서 큰 힘이 됐습니다.\n사업자가 '22.9kV 고압 아니다', '우면동만 반대한다'는 여론전을 시작했습니다. 22.9kV는 전기사업법상 특고압(7,000V 초과)입니다. 데이터센터는 10MW를 한 건물에 24시간 집중합니다. 아파트 3,000세대 에어컨+인덕션 풀가동 수준입니다.",
+            body2: "대토주주들은 이곳에 살 사람이 아닙니다. 리츠 수익을 원하는 구조입니다.\n주암동이 직접 지역구는 아니더라도 아델스타 입주예정자들은 과천 전역에 거주합니다. 조례가 조속히 통과될 수 있도록 속도 내서 추진해 주시기를 부탁드립니다.\n\n",
+            closings: ["의장님의 공식 입장이 9,700세대에게 결정적입니다.", "집회에 와주신 의장님이 지금 흔들리지 않아야 합니다.", "과천시의회 의장님의 리더십을 믿습니다. 조례 제정으로 이어 주십시오.", "주민이 먼저 손 내밀고 있습니다. 조례로 화답해 주십시오."]
+        },
+        ji: {
+            phone: "01044291766",
+            openings: [
+                "지태훈 시의원님, 집회에 함께해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "지태훈 의원님, 행정사 전문가이신 의원님을 믿는 [INFO] 주민입니다.",
+                "지태훈 의원님, 주민 곁에 서 주셔서 감사합니다. [INFO] 입주예정자 주민입니다.",
+                "의원님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
+            ],
+            body1: "\n집회에 직접 걸음해 주셔서 큰 힘이 됐습니다.\n사업자가 '22.9kV 고압 아니다', '우면동만 반대한다'는 여론전을 시작했습니다. 22.9kV는 전기사업법상 특고압(7,000V 초과)입니다. 데이터센터는 10MW를 한 건물에 24시간 집중합니다. 아파트 3,000세대 에어컨+인덕션 풀가동 수준입니다.",
+            body2: "대토주주들은 이곳에 살 사람이 아닙니다. 리츠 수익을 원하는 구조입니다.\n행정사 전문성으로 이 여론전을 막아 주십시오. 조례가 조속히 통과될 수 있도록 속도 내서 추진해 주시기를 부탁드립니다.\n\n",
+            closings: ["의원님의 행정사 경험이 지금 가장 필요합니다.", "집회에 와주신 의원님이 끝까지 함께해 주시리라 믿습니다.", "9,700세대 주민이 의원님의 다음 행보를 주목하고 있습니다.", "주민이 먼저 손 내밀고 있습니다. 조례로 화답해 주십시오."]
+        },
+        yu: {
+            phone: "01051868058",
+            openings: [
+                "유부임 시의원님, 집회에 함께해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "유부임 의원님, 주민 곁에 서 주셔서 감사합니다. [INFO] 입주예정자 주민입니다.",
+                "유부임 의원님, 아이들의 미래를 걱정하는 [INFO] 주민입니다.",
+                "의원님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
+            ],
+            body1: "\n집회에 직접 걸음해 주셔서 큰 힘이 됐습니다.\n사업자가 '22.9kV 고압 아니다', '우면동만 반대한다'는 여론전을 시작했습니다. 22.9kV는 전기사업법상 특고압(7,000V 초과)입니다. 데이터센터는 10MW를 한 건물에 24시간 집중합니다. 아파트 3,000세대 에어컨+인덕션 풀가동 수준입니다.",
+            body2: "대토주주들은 이곳에 살 사람이 아닙니다. 리츠 수익을 원하는 구조입니다.\n어린이집 32곳, 학교 5곳 밀집 생활권을 지켜 주십시오. 조례가 조속히 통과될 수 있도록 속도 내서 추진해 주시기를 부탁드립니다.\n\n",
+            closings: ["어린이집 32곳, 학교 5곳이 밀집한 이 생활권을 지켜 주십시오.", "집회에 와주신 의원님이 끝까지 함께해 주시리라 믿습니다.", "9,700세대 주민이 의원님의 다음 행보를 주목하고 있습니다.", "주민이 먼저 손 내밀고 있습니다. 조례로 화답해 주십시오."]
+        },
+        kimdh: {
+            phone: "01045971659",
+            openings: [
+                "김현석 도의원님, 안녕하십니까. 아델스타 입주예정자 [INFO] 주민입니다.",
+                "김현석 도의원님, 과천 주암지구 데이터센터 건립 문제로 연락드립니다. [INFO] 주민입니다.",
+                "도의원님, 경기도 환경·안전 문제로 긴급히 연락드립니다. [INFO] 입주예정자 주민입니다.",
+                "의원님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
+            ],
+            body1: "\n과천 주암지구 주거밀집지역 30m 앞에 50MW급 데이터센터 5개 블록이 추진 중입니다.\n사업자가 '22.9kV 고압 아니다'는 여론전을 시작했습니다. 전기사업법 제2조: 7,000V 초과 = 특고압. 22.9kV는 22,900V로 명백한 특고압입니다. 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "대토주주들은 이곳에 살 사람이 아닙니다. 리츠 수익을 원하는 구조입니다.\n경기도의원으로서 경기도 차원의 환경·안전 검토와 도의회 대응을 촉구해 주십시오. 9,700세대 주민들이 도의원님을 믿고 있습니다.\n\n",
+            closings: ["공약을 지키는 것이 신뢰받는 의원의 첫걸음입니다.", "주민이 먼저 손 내밀고 있습니다. 조례로 화답해 주십시오.", "9,700세대 주민이 의원님의 다음 행보를 주목하고 있습니다.", "의원님의 분명한 입장이 주민들에게 결정적입니다."]
         },
         counselor: {
             phone: "01079337536",
             openings: [
-                "안녕하세요 김동진 의원님. [INFO] 주민입니다.",
-                "김동진 의원님, 주암지구 초근접 데이터센터 건립 반대를 외치를 [INFO] 주민입니다.",
-                "시민의 목소리를 대변하시는 김동진 의원님, [INFO] 현안으로 문자 드립니다.",
-                "의원님 안녕하세요. 우리 아이들의 안전과 주거 환경 보호를 위해 행동하는 [INFO] 주민입니다."
+                "김동진 부의장님, LH 시위까지 함께해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "김동진 부의장님, 끝까지 자리 지켜 주셔서 큰 힘이 됐습니다. [INFO] 주민입니다.",
+                "김동진 부의장님, 공약을 믿는 [INFO] 주민입니다. 지금이 결정적입니다.",
+                "부의장님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
             ],
-            body1: "\n집 근처에 추진 중인 데이터센터 건립으로 소음·전력·안전 문제 등 생활환경 악화가 우려되어 주민들이 심히 불안에 떨고 있습니다.\n1. 매각되지 않은 업무시설용지의 허용용도 중 방송통신시설을 삭제해주십시오.\n2. 과천 주암지구 내의 업무시설용지의 주용도를 설정해주십시오.",
-            body2: "3. 민관협의체 구성을 신속히 추진해주십시오.\n인근 주민들의 의견이 충분히 반영될 수 있도록 해당 사업을 재검토하거나 중단될 수 있게 의회 차원의 강력한 검토 부탁드립니다.\n공약으로 세우신 주암지구 데이터센터 건립 반대 약속을 반드시 이행해 주십시오.\n\n",
-            closings: ["항상 지역 발전을 위해 애써 주셔서 감사합니다.", "의원님의 적극적인 의정 활동과 지원을 기대하겠습니다.", "시민들의 생존권이 걸린 문제입니다. 꼭 앞장서 주십시오.", "언제나 주민들의 든든한 대변인이 되어주셔서 고맙습니다."]
+            body1: "\n어제 사업 측이 언론에 기사를 냈습니다.\n'우면동만 반대한다'고 했지만 사실이 아닙니다.\n대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다.\n실제로 이곳에 살 과천·서초 9,700세대가 반대하고 있습니다.\n'22.9kV라 고압이 아니다'는 주장도 틀렸습니다. 전기사업법상 특고압이며 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "여론전이 시작됐습니다. 지금 부의장님의 공식 입장이 필요합니다.\n1. 이격거리 조례 제정을 추진해 주십시오.\n2. 방송통신시설 허용용도 삭제를 촉구해 주십시오.\n3. 인허가 불허 방침을 의회 차원에서 공식화해 주십시오.\n\n",
+            closings: ["LH까지 함께해 주신 의원님이 지금 흔들리지 않아야 합니다.", "의원님의 분명한 입장이 9,700세대에게 힘이 됩니다.", "시민들의 생존권이 걸린 문제입니다. 꼭 앞장서 주십시오.", "언제나 주민들의 든든한 대변인이 되어주셔서 고맙습니다."]
         },
         lee: {
             phone: "01076242050",
             openings: [
-                "안녕하세요 이소영 의원님. [INFO] 주민입니다.",
-                "이소영 의원님, 주암지구 초근접 데이터센터 건립 반대를 외치는 [INFO] 주민입니다.",
-                "시민의 목소리를 대변하시는 이소영 의원님, [INFO] 현안으로 문자 드립니다.",
-                "의원님 안녕하세요. 우리 아이들의 안전과 주거 환경 보호를 위해 행동하는 [INFO] 주민입니다."
+                "이소영 의원님, 의왕과천 지역구 [INFO] 주민입니다.",
+                "이소영 의원님, 과천 주암지구 데이터센터 건립 문제로 연락드립니다. [INFO] 주민입니다.",
+                "이소영 의원님, 지역구 주민의 안전이 위협받고 있습니다. [INFO] 주민입니다.",
+                "의원님 안녕하세요. 과천 주암지구 주민으로서 긴급히 연락드립니다. [INFO] 주민입니다."
             ],
-            body1: "\n집 근처에 추진 중인 데이터센터 건립으로 소음·전력·안전 문제 등 생활환경 악화가 우려되어 주민들이 심히 불안에 떨고 있습니다.\n1. 매각되지 않은 업무시설용지의 허용용도 중 방송통신시설을 삭제해주십시오.\n2. 과천 주암지구 내의 업무시설용지의 주용도를 설정해주십시오.",
-            body2: "3. 민관협의체 구성을 신속히 추진해주십시오.\n인근 주민들의 의견이 충분히 반영될 수 있도록 해당 사업을 재검토하거나 중단될 수 있게 의회 차원의 강력한 검토 부탁드립니다.\n주암지구 데이터센터 건립 반대를 위해 의정 차원에서 꼭 앞장서 주십시오.\n\n",
-            closings: ["항상 지역 발전을 위해 애써 주셔서 감사합니다.", "의원님의 적극적인 의정 활동과 지원을 기대하겠습니다.", "시민들의 생존권이 걸린 문제입니다. 꼭 앞장서 주십시오.", "언제나 주민들의 든든한 대변인이 되어주셔서 고맙습니다."]
+            body1: "\n반경 1km 어린이집 32곳, 학교 5곳이 밀집한 주거지역 30m 앞에 50MW급 데이터센터 5개 블록이 추진 중입니다. 주민 거주권과 아이들의 안전이 위협받고 있습니다.\n사업자는 50MW를 10MW씩 필지를 쪼개 분산에너지법 제23조 전력계통영향평가를 회피하려 한다는 의혹이 있습니다.",
+            body2: "의원님께 요청드립니다.\n1. 분산에너지법 쪼개기 회피 의혹을 국회 차원에서 조사해 주십시오.\n2. LH·국토부에 지구단위계획 변경을 촉구해 주십시오.\n3. 조례가 조속히 통과될 수 있도록 힘써 주십시오.\n9,700세대 주민들이 의원님을 믿고 있습니다.\n\n",
+            closings: ["지역구 의원님의 목소리가 가장 크게 들립니다. 나서 주십시오.", "9,700세대 지역구 주민이 의원님의 다음 행보를 주목하고 있습니다.", "분산에너지법 소관 부처에 국감 차원의 압박을 해 주십시오.", "의원님이 나서주시면 막을 수 있습니다. 간곡히 부탁드립니다."]
         },
         kim: {
             phone: "01045971659",
             openings: [
-                "안녕하세요 김현석 도의원님. [INFO] 주민입니다.",
-                "김현석 경기도의원님, 주암지구 데이터센터 건립 문제로 불안에 떠는 [INFO] 주민입니다.",
-                "경기도민의 목소리를 대변하시는 김현석 의원님, [INFO] 현안으로 문자 드립니다.",
+                "김현석 의원님 안녕하십니까. 집회 함께해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "김현석 의원님, 주암지구 데이터센터 여론전이 시작됐습니다. [INFO] 주민입니다.",
+                "의원님의 목소리가 필요합니다. [INFO] 주민으로서 긴급히 문자 드립니다.",
                 "의원님 안녕하세요. 우리 아이들의 안전과 주거 환경 보호를 위해 행동하는 [INFO] 주민입니다."
             ],
-            body1: "\n집 근처에 추진 중인 데이터센터 건립으로 소음·전력·안전 문제 등 생활환경 악화가 우려되어 주민들이 심히 불안에 떨고 있습니다.\n1. 매각되지 않은 업무시설용지의 허용용도 중 방송통신시설을 삭제해주십시오.\n2. 과천 주암지구 내의 업무시설용지의 주용도를 설정해주십시오.",
-            body2: "3. 민관협의체 구성을 신속히 추진해주십시오.\n인근 주민들의 의견이 충분히 반영될 수 있도록 해당 사업을 재검토하거나 중단될 수 있게 경기도 차원의 강력한 검토 부탁드립니다.\n주암지구 데이터센터 건립 반대를 위해 도정 차원에서 적극 나서 주십시오.\n\n",
-            closings: ["항상 경기도 발전을 위해 애써 주셔서 감사합니다.", "의원님의 적극적인 의정 활동과 지원을 기대하겠습니다.", "도민의 생존권이 걸린 문제입니다. 꼭 앞장서 주십시오.", "언제나 주민들의 든든한 대변인이 되어주셔서 고맙습니다."]
+            body1: "\n어제 사업 측이 언론에 기사를 냈습니다.\n'우면동만 반대한다'고 했지만 사실이 아닙니다.\n대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다.\n실제로 이곳에 살 과천·서초 9,700세대가 반대하고 있습니다.\n'22.9kV라 고압이 아니다'는 주장도 틀렸습니다. 전기사업법상 특고압이며 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "여론전이 시작됐습니다. 지금 의원님의 분명한 입장이 필요합니다.\n1. 이격거리 조례 제정을 추진해 주십시오.\n2. 방송통신시설 허용용도 삭제를 촉구해 주십시오.\n3. 인허가 불허 방침을 의회 차원에서 공식화해 주십시오.\n\n",
+            closings: ["항상 지역 발전을 위해 애써 주셔서 감사합니다.", "의원님의 적극적인 의정 활동과 지원을 기대하겠습니다.", "시민들의 생존권이 걸린 문제입니다. 꼭 앞장서 주십시오.", "언제나 주민들의 든든한 대변인이 되어주셔서 고맙습니다."]
         },
         seochoCommon: {
-            body1: "\n행정구역은 다르나 서초구 네이처힐 단지와 불과 양재천을 사이에 둔 초근접 위치에 대규모 데이터센터 건립이 추진되고 있습니다.\n이로 인한 초고압선 노출, 전자파 우려, 냉각탑 유해물질 및 소음 피해는 서초구민들과 우리 아이들에게 고스란히 직격탄으로 돌아옵니다.",
-            body2: "과천시의 일방적인 유해시설 인허가 추진에 대해 서초구 차원의 강력한 항의와 공동 대응, 그리고 구민 보호 조치를 즉각 취해 주십시오.\n접경지역 주민들의 정주여건과 환경권을 반드시 지켜주시기 바랍니다. 적극적인 개입을 촉구합니다.\n\n",
+            body1: "\n양재천 바로 옆 과천 주암지구에 50MW급 데이터센터 5개 블록이 추진 중입니다. 반경 200m 내 어린이집이 있으며 영유아보육법 시행규칙 제9조 위험시설 이격거리(50m 이상) 기준에 해당할 수 있습니다. 냉각탑 소음·유해물질 피해도 서초구민에게 직접 영향을 미칩니다.",
+            body2: "서초구 차원의 조치를 요청드립니다.\n1. 과천시에 공식 반대의견서를 공문으로 발송해 주십시오.\n2. 영유아보육법상 위험시설 해당 여부를 법령 해석을 통해 확인해 주십시오.\n3. 양재천 생태계 영향을 서초구 환경부서에서 검토해 주십시오.\n\n",
             openingsJeon: [
-                "전성수 구청장님 안녕하세요. 서초 [INFO] 주민입니다.",
-                "구정을 이끄시는 전성수 구청장님, 양재천변 데이터센터 건립 위협에 처한 [INFO] 구민입니다.",
-                "안녕하세요 구청장님. 서초구민의 생존권과 안전을 지켜주길 바라며 [INFO] 주민이 글을 올립니다.",
-                "전성수 구청장님, 서초구 접경지역 유해시설 침입을 좌시하지 말아주십시오. [INFO] 구민 올림."
+                "전성수 구청장님, 서초 [INFO] 구민입니다.",
+                "구청장님 안녕하세요. 서초구민의 안전과 건강권을 지켜주십시오. [INFO] 구민입니다.",
+                "전성수 구청장님, 서초구 아이들의 안전을 위해 행동하는 [INFO] 구민입니다.",
+                "전성수 구청장님, 데이터센터 건립 문제로 연락드리는 [INFO] 서초구민입니다."
             ],
             openingsShin: [
-                "신동욱 의원님 안녕하십니까. 서초 [INFO] 주민입니다.",
-                "지역구의 안녕을 위해 애쓰시는 신동욱 의원님, [INFO] 주민으로서 호소 드립니다.",
-                "안녕하세요 신동욱 의원님. 서초구 아이들의 안전 환경을 위해 행동하는 [INFO] 구민입니다.",
-                "신동욱 의원님, 양재천 초근접 데이터센터 저지에 서초구 대표로서 강력히 나서주십시오. [INFO] 구민 올림."
+                "신동욱 의원님, 서초 [INFO] 구민입니다.",
+                "신동욱 의원님, 서초구민의 안전을 위해 행동하는 [INFO] 구민입니다.",
+                "의원님 안녕하세요. 데이터센터 건립 문제로 연락드리는 [INFO] 서초구민입니다.",
+                "신동욱 의원님, 서초구 아이들의 건강한 환경을 지켜주십시오. [INFO] 구민입니다."
             ],
             closings: [
-                "서초구민의 안전 and 건강권을 위해 적극 앞장서 주시길 믿습니다.",
-                "지역 주민들의 정당한 분노에 즉각 응답해 주십시오. 감사합니다.",
-                "의정 활동에 늘 감사드리며, 이번 사안에 대한 강력한 조치를 주시하겠습니다.",
+                "서초구민의 건강권과 거주환경을 반드시 지켜 주십시오.",
+                "지역 주민들의 정당한 우려에 적극 응답해 주십시오. 감사합니다.",
+                "의정 활동에 늘 감사드리며 이번 사안에 강력한 조치를 부탁드립니다.",
                 "서초구민의 방패가 되어 주시길 간곡히 부탁드립니다."
             ]
         }
@@ -947,7 +1116,7 @@
 
     /* ── SMS 발송 완료 추적 ── */
     const doneSms = new Set();
-    const SMS_TOTAL = 6;
+    const SMS_TOTAL = 10;
 
     const smsСheers = [
         "📱 발송 완료! 이 기세 유지해요!",
@@ -965,7 +1134,26 @@
         const card = document.getElementById(`smsCard-${key}`);
         if (card) card.classList.add('sms-done');
 
+        // 체크표 업데이트
+        const trackerCell = document.getElementById(`tracker-${key}`);
+        if (trackerCell) {
+            trackerCell.classList.add('done');
+            trackerCell.innerText = '✅ ' + trackerCell.innerText.replace('⬜ ', '');
+        }
         const done = doneSms.size;
+        // 플로팅 바 업데이트
+        const floatBar = document.getElementById('smsFloatBar');
+        const floatDone = document.getElementById('smsFloatDone');
+        const floatFill = document.getElementById('smsFloatFill');
+        const floatLabel = document.getElementById('smsFloatLabel');
+        if (floatDone) floatDone.innerText = done;
+        if (floatFill) floatFill.style.width = Math.round(done / SMS_TOTAL * 100) + '%';
+        if (done === SMS_TOTAL && floatBar) {
+            floatBar.classList.add('sms-float-done');
+            if (floatLabel) floatLabel.innerText = '🎉 전원 완료!';
+        }
+        const tc = document.getElementById('trackerCount');
+        if (tc) tc.innerText = done;
         document.getElementById('smsProgressWrap').style.display = 'block';
         document.getElementById('smsProgressCount').innerText = `${done} / ${SMS_TOTAL}`;
         document.getElementById('smsProgressFill').style.width = `${Math.round(done / SMS_TOTAL * 100)}%`;
@@ -973,10 +1161,10 @@
         let msg;
         if (done === SMS_TOTAL) {
             document.getElementById('smsProgressLabel').innerText = '🎉 전원 발송 완료!';
-            msg = "🎉 6명 전원 발송 완료!\n진짜 대단해요, 최고의 주민 전사! 🏆";
-        } else if (done === 3) {
+            msg = "🎉 10명 전원 발송 완료!\n진짜 대단해요, 최고의 주민 전사! 🏆";
+        } else if (done === 5) {
             document.getElementById('smsProgressLabel').innerText = `📱 문자 발송 현황 (절반 돌파!)`;
-            msg = `💥 절반 돌파! ${done}/${SMS_TOTAL} 발송!\n3명 남았어요, 끝까지 가봐요!`;
+            msg = `💥 절반 돌파! ${done}/${SMS_TOTAL} 발송!\n5명 남았어요, 끝까지 가봐요!`;
         } else {
             document.getElementById('smsProgressLabel').innerText = `📱 문자 발송 현황 (${Math.round(done/SMS_TOTAL*100)}%)`;
             msg = smsСheers[Math.floor(Math.random() * smsСheers.length)] + `\n(${done}/${SMS_TOTAL} 발송 완료)`;
@@ -1249,34 +1437,62 @@
         if (isManualRefresh) {
             selectedMayorIdx = getRandomIndex(smsTemplates.mayor.openings.length);
             selectedMayorCloseIdx = getRandomIndex(smsTemplates.mayor.closings.length);
-            selectedCounselorIdx = getRandomIndex(smsTemplates.counselor.openings.length);
-            selectedCounselorCloseIdx = getRandomIndex(smsTemplates.counselor.closings.length);
+            selectedChoiIdx = getRandomIndex(smsTemplates.choi.openings.length);
+            selectedChoiCloseIdx = getRandomIndex(smsTemplates.choi.closings.length);
             selectedLeeIdx = getRandomIndex(smsTemplates.lee.openings.length);
             selectedLeeCloseIdx = getRandomIndex(smsTemplates.lee.closings.length);
-            selectedKimIdx = getRandomIndex(smsTemplates.kim.openings.length);
-            selectedKimCloseIdx = getRandomIndex(smsTemplates.kim.closings.length);
+            selectedCounselorIdx = getRandomIndex(smsTemplates.counselor.openings.length);
+            selectedCounselorCloseIdx = getRandomIndex(smsTemplates.counselor.closings.length);
+            selectedKimDHIdx = getRandomIndex(smsTemplates.kimdh.openings.length);
+            selectedKimDHCloseIdx = getRandomIndex(smsTemplates.kimdh.closings.length);
+            selectedHwangIdx = getRandomIndex(smsTemplates.hwang.openings.length);
+            selectedHwangCloseIdx = getRandomIndex(smsTemplates.hwang.closings.length);
+            selectedJiIdx = getRandomIndex(smsTemplates.ji.openings.length);
+            selectedJiCloseIdx = getRandomIndex(smsTemplates.ji.closings.length);
+            selectedYuIdx = getRandomIndex(smsTemplates.yu.openings.length);
+            selectedYuCloseIdx = getRandomIndex(smsTemplates.yu.closings.length);
             selectedS2Idx = getRandomIndex(smsTemplates.seochoCommon.openingsJeon.length);
             selectedS2CloseIdx = getRandomIndex(smsTemplates.seochoCommon.closings.length);
             selectedS3Idx = getRandomIndex(smsTemplates.seochoCommon.openingsShin.length);
             selectedS3CloseIdx = getRandomIndex(smsTemplates.seochoCommon.closings.length);
         }
 
+        // 1그룹
         const mOpen = smsTemplates.mayor.openings[selectedMayorIdx].replace("[INFO]", info);
         const mClose = smsTemplates.mayor.closings[selectedMayorCloseIdx];
         updateSmsCard('Mayor', smsTemplates.mayor.phone, mOpen, smsTemplates.mayor.body1, smsTemplates.mayor.body2, mClose);
 
-        const cOpen = smsTemplates.counselor.openings[selectedCounselorIdx].replace("[INFO]", info);
-        const cClose = smsTemplates.counselor.closings[selectedCounselorCloseIdx];
-        updateSmsCard('Counselor', smsTemplates.counselor.phone, cOpen, smsTemplates.counselor.body1, smsTemplates.counselor.body2, cClose);
+        const choiOpen = smsTemplates.choi.openings[selectedChoiIdx].replace("[INFO]", info);
+        const choiClose = smsTemplates.choi.closings[selectedChoiCloseIdx];
+        updateSmsCard('Choi', smsTemplates.choi.phone, choiOpen, smsTemplates.choi.body1, smsTemplates.choi.body2, choiClose);
 
         const lOpen = smsTemplates.lee.openings[selectedLeeIdx].replace("[INFO]", info);
         const lClose = smsTemplates.lee.closings[selectedLeeCloseIdx];
         updateSmsCard('Lee', smsTemplates.lee.phone, lOpen, smsTemplates.lee.body1, smsTemplates.lee.body2, lClose);
 
-        const kOpen = smsTemplates.kim.openings[selectedKimIdx].replace("[INFO]", info);
-        const kClose = smsTemplates.kim.closings[selectedKimCloseIdx];
-        updateSmsCard('Kim', smsTemplates.kim.phone, kOpen, smsTemplates.kim.body1, smsTemplates.kim.body2, kClose);
+        // 2그룹
+        const cOpen = smsTemplates.counselor.openings[selectedCounselorIdx].replace("[INFO]", info);
+        const cClose = smsTemplates.counselor.closings[selectedCounselorCloseIdx];
+        updateSmsCard('Counselor', smsTemplates.counselor.phone, cOpen, smsTemplates.counselor.body1, smsTemplates.counselor.body2, cClose);
 
+        const kdOpen = smsTemplates.kimdh.openings[selectedKimDHIdx].replace("[INFO]", info);
+        const kdClose = smsTemplates.kimdh.closings[selectedKimDHCloseIdx];
+        updateSmsCard('KimDH', smsTemplates.kimdh.phone, kdOpen, smsTemplates.kimdh.body1, smsTemplates.kimdh.body2, kdClose);
+
+        // 3그룹
+        const hwOpen = smsTemplates.hwang.openings[selectedHwangIdx].replace("[INFO]", info);
+        const hwClose = smsTemplates.hwang.closings[selectedHwangCloseIdx];
+        updateSmsCard('Hwang', smsTemplates.hwang.phone, hwOpen, smsTemplates.hwang.body1, smsTemplates.hwang.body2, hwClose);
+
+        const jiOpen = smsTemplates.ji.openings[selectedJiIdx].replace("[INFO]", info);
+        const jiClose = smsTemplates.ji.closings[selectedJiCloseIdx];
+        updateSmsCard('Ji', smsTemplates.ji.phone, jiOpen, smsTemplates.ji.body1, smsTemplates.ji.body2, jiClose);
+
+        const yuOpen = smsTemplates.yu.openings[selectedYuIdx].replace("[INFO]", info);
+        const yuClose = smsTemplates.yu.closings[selectedYuCloseIdx];
+        updateSmsCard('Yu', smsTemplates.yu.phone, yuOpen, smsTemplates.yu.body1, smsTemplates.yu.body2, yuClose);
+
+        // 4그룹
         const s2Open = smsTemplates.seochoCommon.openingsJeon[selectedS2Idx].replace("[INFO]", info);
         const s2Close = smsTemplates.seochoCommon.closings[selectedS2CloseIdx];
         updateSmsCard('Seocho2_', "01095799246", s2Open, smsTemplates.seochoCommon.body1, smsTemplates.seochoCommon.body2, s2Close);
@@ -1458,5 +1674,12 @@
 
     window.onload = initData;
 </script>
+    <!-- 📍 고정 하단 플로팅 진행 바 -->
+    <div class="sms-float-bar" id="smsFloatBar" onclick="document.getElementById('smsTrackerWrap').scrollIntoView({behavior:'smooth',block:'start'})">
+        <div class="sms-float-count"><span id="smsFloatDone">0</span> / 10 완료</div>
+        <div class="sms-float-mini-bar"><div class="sms-float-mini-fill" id="smsFloatFill"></div></div>
+        <div class="sms-float-label" id="smsFloatLabel">↑ 현황 보기</div>
+    </div>
+
 </body>
 </html>
