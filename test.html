@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>과천주암 데이터센터 반대 민원 발사기 🚀</title>
+    <title>과천 주암 데이터센터 반대 민원 안내</title>
+
+    <!-- 홈 화면에 추가 (안드로이드/PWA) -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3b5bdb">
+
+    <!-- 홈 화면에 추가 (아이폰) -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="주암 민원">
+
+    <!-- 카카오톡 등 링크 공유 시 미리보기 -->
+    <meta property="og:title" content="과천 주암 데이터센터 반대 민원">
+    <meta property="og:description" content="탭 몇 번이면 끝나요 — 지금 바로 참여해주세요.">
+    <meta property="og:image" content="https://guacaya.github.io/gwacheon-dc-stop/og-image.png">
+    <meta property="og:url" content="https://guacaya.github.io/gwacheon-dc-stop/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="icon-192.png" type="image/png">
     <style>
         :root {
             --primary-color: #3b5bdb;      /* 인디고 - 차분한 파랑 */
@@ -42,19 +61,11 @@
         /* 국민신문고 인라인 링크 스타일 */
         .link-epeople { color: #2563eb; font-weight: bold; text-decoration: underline; }
 
-        /* 오민완 현황판 스타일 */
-        .stats-box { background: #fdf2f8; border: 1px solid #fbcfe8; border-radius: 8px; padding: 15px; margin-top: 15px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-        .stats-info { font-size: 14px; color: #9d174d; font-weight: bold; }
-        .stats-count { font-size: 20px; color: var(--complete-color); font-weight: 800; }
-        .btn-complete { background-color: var(--complete-color); color: white; border: none; padding: 10px 18px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-complete:hover { background-color: var(--complete-hover); }
-        .btn-complete:disabled { background-color: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
-
         /* 거주 단지 및 동 입력 섹션 스타일 */
-        .dong-input-box { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #2563eb; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-        .dong-input-box label { font-size: 14px; font-weight: bold; color: #334155; }
-        .dong-input-box select { padding: 8px 10px; font-size: 14px; border: 1px solid #cbd5e1; border-radius: 6px; background-color: white; font-weight: bold; color: #334155; }
-        .dong-input-box input { padding: 8px 12px; font-size: 14px; border: 1px solid #cbd5e1; border-radius: 6px; width: 80px; text-align: center; font-weight: bold; }
+        .dong-input-box { background: #f1f5f9; padding: 12px 15px; border-radius: 8px; margin-bottom: 25px; border-left: 4px solid #2563eb; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .dong-input-box label { font-size: 13px; font-weight: bold; color: #334155; }
+        .dong-input-box select { padding: 6px 8px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; background-color: white; font-weight: bold; color: #334155; }
+        .dong-input-box input { padding: 6px 8px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; width: 56px; text-align: center; font-weight: bold; }
         .dong-input-box select:focus, .dong-input-box input:focus { border-color: var(--primary-color); outline: none; }
         .dong-notice { font-size: 12px; color: #64748b; width: 100%; margin-top: 5px; padding-left: 5px; }
 
@@ -91,6 +102,18 @@
         .tab-btn.important.active { background: var(--primary-color); border-color: #f59e0b; }
         .tab-btn.important.done { border-color: #f59e0b; }
 
+        /* ⏰ 이번 주 필수 민원 헤더 */
+        .essential-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+        .essential-badge { background: #fef3c7; color: #b45309; font-size: 12.5px; font-weight: 800; padding: 5px 10px; border-radius: 20px; white-space: nowrap; }
+        .essential-sub { font-size: 12px; color: #64748b; word-break: keep-all; }
+
+        /* 다른 기관 더보기 토글 */
+        .more-toggle { width: 100%; background: #f8fafc; border: 1.5px dashed #cbd5e1; border-radius: 10px; padding: 12px; margin: 4px 0 20px; font-size: 13.5px; font-weight: 700; color: #475569; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: inherit; }
+        .more-toggle:hover { background: #f1f5f9; border-color: #94a3b8; }
+        .more-toggle-arrow { font-size: 11px; transition: transform 0.25s; }
+        .more-toggle.open .more-toggle-arrow { transform: rotate(180deg); }
+        .tabs-container-more { margin-top: -8px; }
+
         /* 🆕 오늘 업데이트 배지 */
         .new-badge {
             display: inline-block; background: #dc2626; color: white;
@@ -99,6 +122,15 @@
             letter-spacing: 0.3px;
         }
         .tab-btn.active .new-badge { background: #fde047; color: #1e293b; }
+
+        /* 📅 날짜 플래그 */
+        .date-badge {
+            display: inline-block; background: #7c3aed; color: white;
+            font-size: 9px; font-weight: 700; padding: 1px 5px;
+            border-radius: 4px; vertical-align: middle; margin-right: 3px;
+            letter-spacing: 0.3px;
+        }
+        .tab-btn.active .date-badge { background: #c4b5fd; color: #1e293b; }
 
         /* 진행률 바 */
         .progress-wrap { background: #f1f5f9; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; }
@@ -186,6 +218,53 @@
         }
         .danger-new-badge { background: #fef2f2; border-top: 1px solid #fecaca; padding: 8px 16px; font-size: 12px; color: #991b1b; font-weight: bold; text-align: center; }
 
+        /* 📂 현장 방문 민원 서류 다운로드 */
+        .visit-doc-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; padding: 16px 18px; margin-bottom: 20px; }
+        .visit-doc-title { font-size: 14px; font-weight: 800; color: #0369a1; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+        .visit-doc-desc { font-size: 12.5px; color: #475569; line-height: 1.6; margin-bottom: 12px; }
+        .visit-doc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 100%; background: #0284c7; color: white; font-size: 14px; font-weight: 700; padding: 12px; border-radius: 8px; text-decoration: none; box-sizing: border-box; }
+        .visit-doc-btn:hover { background: #0369a1; }
+
+        /* 📋 최상위 인덱스 탭 (안내 / 시작하기) - sticky 고정 */
+        .top-index-tabs-wrap {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            padding: 10px 0 12px;
+            margin: 0 -25px 18px;
+            padding-left: 25px;
+            padding-right: 25px;
+            box-shadow: 0 4px 10px -4px rgba(0,0,0,0.08);
+        }
+        .top-index-tabs { display: grid; grid-template-columns: 1.3fr 1fr; gap: 10px; margin-bottom: 0; }
+        .top-tab-btn { padding: 14px; font-size: 14.5px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 10px; background: white; cursor: pointer; color: #64748b; transition: 0.2s; }
+        .top-tab-btn.active { border-color: var(--primary-color); background: var(--primary-color); color: white; box-shadow: 0 4px 12px rgba(59,91,219,0.25); }
+
+        /* 시작하기 탭 강조 - 펄스 애니메이션 + 그라데이션 (중립 톤) */
+        #topTabAction {
+            background: linear-gradient(135deg, #0d9488, #0f766e);
+            color: white;
+            border: 2px solid #0f766e;
+            font-size: 15.5px;
+            box-shadow: 0 4px 16px rgba(15,118,110,0.35);
+            animation: pulseAction 2s infinite;
+        }
+        #topTabAction.active {
+            background: linear-gradient(135deg, #0d9488, #0f766e);
+            border-color: #0f766e;
+            box-shadow: 0 4px 16px rgba(15,118,110,0.45);
+        }
+        @keyframes pulseAction {
+            0%, 100% { box-shadow: 0 4px 16px rgba(15,118,110,0.35); }
+            50% { box-shadow: 0 4px 22px rgba(15,118,110,0.6); }
+        }
+        .top-panel { display: none; }
+        .top-panel.active { display: block; }
+
+        /* ── 구분줄 ── */
+        .section-divider { border: none; border-top: 1px dashed #cbd5e1; margin: 22px 0; }
+
 
         /* 모바일 하단 고정 복사 바 */
         .sticky-copy-bar { display: none; }
@@ -196,14 +275,15 @@
             /* 전체 레이아웃 */
             body { padding: 0; background: white; }
             .container { margin: 0; padding: 16px; border-radius: 0; box-shadow: none; }
+            .top-index-tabs-wrap { margin: 0 -16px 18px; padding-left: 16px; padding-right: 16px; top: 0; }
             h2 { font-size: 18px; line-height: 1.4; }
             p.desc { font-size: 13px; margin-bottom: 18px; }
             .guide-box { padding: 0; }
             .guide-title { font-size: 14px; }
             .guide-step ol { font-size: 13px; }
-            .dong-input-box { gap: 8px; padding: 12px; }
-            .dong-input-box select { font-size: 13px; max-width: 100%; flex: 1 1 100%; }
-            .dong-input-box input { font-size: 13px; }
+            .dong-input-box { gap: 6px; padding: 10px; }
+            .dong-input-box select { font-size: 12px; max-width: 100%; flex: 1 1 100%; }
+            .dong-input-box input { font-size: 12px; width: 50px; }
             .main-mode-tabs { gap: 8px; }
             .mode-btn { padding: 12px 8px; font-size: 14px; }
 
@@ -235,8 +315,6 @@
             .title-box { font-size: 13px; padding: 10px 12px; }
             textarea { height: 260px; font-size: 13px; padding: 12px; }
             .btn-group-top { margin-top: 10px; }
-            .stats-box { flex-direction: column; text-align: center; }
-            .btn-complete { width: 100%; justify-content: center; padding: 13px; font-size: 15px; }
             .sms-header { flex-direction: column; align-items: flex-start; gap: 10px; }
             .sms-btn-group { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
             .sms-send-link { text-align: center; justify-content: center; padding: 13px 5px; font-size: 14px; }
@@ -262,8 +340,8 @@
             .sticky-copy-bar button,
             .sticky-copy-bar a {
                 flex: 1;
-                padding: 12px 4px;
-                font-size: 11px;
+                padding: 12px 2px;
+                font-size: 10px;
                 font-weight: 700;
                 border: none;
                 border-radius: 10px;
@@ -277,6 +355,7 @@
                 gap: 2px;
                 -webkit-tap-highlight-color: transparent;
                 line-height: 1.3;
+                white-space: nowrap;
             }
             .sticky-bar-title { background: var(--primary-color); color: white; }
             .sticky-bar-body { background: #4f6fce; color: white; }
@@ -292,7 +371,7 @@
 <body>
 
 <div class="container">
-    <h2>🚀 과천 주암 데이터센터 반대 민원 발사기</h2>
+    <h2>🚀 과천 주암 데이터센터 반대 민원 안내</h2>
     <p class="desc">국민신문고 민원을 대량 접수하거나, 문자 전송 버튼으로 관계자들에게 글자 잘림 없이 항의할 수 있습니다.</p>
 
     <!-- 항상 보이는 핵심 경고 (오해 방지) -->
@@ -304,7 +383,27 @@
             <strong>국민신문고에서 본인이 직접 로그인 후 접수</strong>해야 합니다.
         </div>
     </div>
-    
+
+    <!-- 홈 화면에 추가 안내 (매번 카톡에서 링크 찾지 않도록) -->
+    <div style="background:#eef2ff; border:2px solid #a5b4fc; border-radius:10px; padding:16px 18px; margin-bottom:18px;">
+        <div style="font-size:15px; font-weight:800; color:#3730a3; margin-bottom:8px;">📱 홈 화면에 추가해두면 다음부터 한 번에 접속돼요</div>
+        <div style="font-size:13.5px; color:#3730a3; line-height:1.75;">
+            <strong>아이폰</strong> — 하단 <span style="white-space:nowrap;">공유 버튼(</span>⬆️<span style="white-space:nowrap;">)</span> → <strong>홈 화면에 추가</strong><br>
+            <strong>안드로이드</strong> — 우측 상단 메뉴(⋮) → <strong>홈 화면에 추가</strong> 또는 <strong>앱 설치</strong>
+        </div>
+    </div>
+
+    <!-- 📋 최상위 인덱스 탭 (고정) -->
+    <div class="top-index-tabs-wrap">
+        <div class="top-index-tabs">
+            <button class="top-tab-btn active" id="topTabAction" onclick="switchTopTab('action')">🚀 민원접수 시작하기</button>
+            <button class="top-tab-btn" id="topTabGuide" onclick="switchTopTab('guide')">📋 안내 (처음이신가요?)</button>
+        </div>
+    </div>
+
+    <!-- ===================== 안내 패널 ===================== -->
+    <div class="top-panel" id="panelGuide">
+
     <!-- 공유 버튼 -->
     <div style="display:flex; gap:10px; margin-bottom:16px;">
         <button onclick="shareNative()" style="flex:1; padding:13px; font-size:14px; font-weight:600; background:#f1f0eb; color:#3C1E1E; border:none; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; -webkit-tap-highlight-color:transparent;">
@@ -314,6 +413,18 @@
             🔗 링크 복사
         </button>
     </div>
+
+    <!-- 관련 기사 안내 -->
+    <a href="https://n.news.naver.com/article/666/0000112529?sid=102" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:10px; background:#eef2ff; border:1px solid #c7d2fe; border-radius:10px; padding:14px 16px; margin-bottom:16px; text-decoration:none; -webkit-tap-highlight-color:transparent;">
+        <span style="font-size:22px;">📰</span>
+        <span style="flex:1;">
+            <span style="display:block; font-size:13px; font-weight:700; color:#1e3a8a;">관련 기사 읽어보기</span>
+            <span style="display:block; font-size:12px; color:#475569; margin-top:2px;">데이터센터 이슈를 다룬 뉴스 기사입니다 — 꼭 한번 읽어보세요</span>
+        </span>
+        <span style="font-size:18px; color:#94a3b8;">›</span>
+    </a>
+
+    <hr class="section-divider">
 
     <!-- 데이터센터 위험 안내 (처음 온 사람용) -->
     <div class="danger-box" id="dangerBox">
@@ -328,6 +439,8 @@
             <div class="danger-new-badge">👆 위 내용을 확인하고 아래에서 민원을 접수해 주세요!</div>
         </div>
     </div>
+
+    <hr class="section-divider">
 
     <div class="guide-box" id="guideBox">
         <button class="guide-toggle" onclick="toggleGuide()">
@@ -390,19 +503,19 @@
                 <div><span class="tip-badge">TIP 1</span> <strong>민원 공개 설정 (강추):</strong> 작성 페이지 하단에서 <strong>'공개'</strong>로 설정하면 목소리가 더 크게 퍼집니다.</div>
                 <div style="margin-top:6px;"><span class="tip-badge">TIP 2</span> <strong>주소 미리 등록:</strong> 국민신문고 내 정보 메뉴에서 거주지 주소를 미리 등록해두면 매번 입력 불필요.</div>
             </div>
-
-            <div class="stats-box">
-                <div class="stats-info">
-                    🔥 <span id="currentDateDisplay" style="text-decoration: underline; font-weight: 800;"></span> 오늘 오민완은 몇명? 👉 <span id="todayCountDisplay" class="stats-count">0</span>명 참여 중!
-                </div>
-                <button id="btnCompleteMinwon" class="btn-complete" onclick="submitComplete()">✔️ 오늘 민원 완료! (오민완)</button>
-            </div>
         </div>
     </div>
 
+    </div>
+    <!-- ===================== /안내 패널 ===================== -->
+
+    <!-- ===================== 시작하기 패널 ===================== -->
+    <div class="top-panel active" id="panelAction">
+
     <div class="dong-input-box">
-        <label for="complexSelect">🏢 거주 단지:</label>
+        <label for="complexSelect">🏢 거주 단지 <span style="color:#94a3b8; font-weight:400;">(선택)</span>:</label>
         <select id="complexSelect" onchange="updateComplexAndDong()">
+            <option value="">선택 안 함</option>
             <option value="디에이치아델스타">디에이치아델스타</option>
             <option value="서초네이처힐">서초네이처힐</option>
             <option value="서초호반써밋">서초호반써밋</option>
@@ -411,11 +524,13 @@
             <option value="호반써밋서초파크뷰">호반써밋서초파크뷰</option>
         </select>
         
-        <label for="dongNumber">🏠 동 입력:</label>
+        <label for="dongNumber">🏠 동 입력 <span style="color:#94a3b8; font-weight:400;">(선택)</span>:</label>
         <input type="text" id="dongNumber" placeholder="예: 101" oninput="updateComplexAndDong()" maxlength="5">
         <span class="strong-blue">동</span>
-        <span class="dong-notice">💡 단지와 동을 선택하시면 문자 첫 줄 소속 정보가 자동으로 자연스럽게 변환됩니다.</span>
+        <span class="dong-notice">💡 입력하지 않아도 문자 발송은 가능합니다. 단지와 동을 선택하시면 문자 첫 줄 소속 정보가 자동으로 자연스럽게 변환됩니다.</span>
     </div>
+
+    <hr class="section-divider">
 
     <div class="main-mode-tabs">
         <button id="btnModeMinwon" class="mode-btn active minwon-mode" onclick="switchMode('minwon')">💻 국민신문고 민원 복사</button>
@@ -434,8 +549,18 @@
             </div>
         </div>
 
+        <div class="essential-header">
+            <span class="essential-badge">⏰ 이번 주 필수 민원</span>
+            <span class="essential-sub">이 6곳만 집중해주세요 — 5분이면 끝나요</span>
+        </div>
         <div class="tabs-container" id="tabsContainer"></div>
-        
+
+        <button class="more-toggle" id="moreToggle" onclick="toggleMore()" type="button">
+            <span id="moreToggleText">다른 기관 민원 더보기</span>
+            <span class="more-toggle-arrow" id="moreToggleArrow">▼</span>
+        </button>
+        <div class="tabs-container tabs-container-more" id="tabsContainerMore" style="display:none;"></div>
+
         <div class="meta-info">
             <div class="meta-line">
                 <span id="targetAgency" style="color: #475569;">시트 불러오는 중…</span>
@@ -462,11 +587,11 @@
 
     <!-- 모바일 하단 고정 복사 바 -->
     <div class="sticky-copy-bar" id="stickyCopyBar">
-        <button class="sticky-bar-refresh" onclick="generateMinwon()">🔄<br>섞기</button>
-        <button id="stickyBtnTitle" class="sticky-bar-title" onclick="copyTitle(this)">📋<br>제목</button>
-        <button id="stickyBtnBody" class="sticky-bar-body" onclick="copyBody(this)">📄<br>본문</button>
-        <button id="stickyBtnAll" class="sticky-bar-all" onclick="copyText(this)">📋<br>전체</button>
-        <a id="stickyEpeople" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople">🏛️<br>신문고</a>
+        <button class="sticky-bar-refresh" onclick="generateMinwon()">🔄<br>내용섞기</button>
+        <button id="stickyBtnTitle" class="sticky-bar-title" onclick="copyTitle(this)">📋<br>제목복사</button>
+        <button id="stickyBtnBody" class="sticky-bar-body" onclick="copyBody(this)">📄<br>본문복사</button>
+        <button id="stickyBtnAll" class="sticky-bar-all" onclick="copyText(this)">📋<br>전체복사</button>
+        <a id="stickyEpeople" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople">🏛️<br>신문고이동</a>
     </div>
 
     <div id="sectionSms" style="display: none;">
@@ -479,7 +604,7 @@
         <div class="sms-progress-wrap" id="smsProgressWrap" style="display:none;">
             <div class="sms-progress-header">
                 <span id="smsProgressLabel">📱 문자 발송 현황</span>
-                <span id="smsProgressCount" style="color:#dc2626;">0 / 6</span>
+                <span id="smsProgressCount" style="color:#dc2626;">0 / 10</span>
             </div>
             <div class="sms-progress-bar-bg">
                 <div class="sms-progress-bar-fill" id="smsProgressFill" style="width:0%"></div>
@@ -488,7 +613,7 @@
 
         <button class="action-btn btn-sms-refresh" onclick="generateSms(true)">🔄 [매일매일 새롭게] 모든 항의 문자 어조 새로고침</button>
 
-        <div class="sms-section-title">📍 과천시청 및 시·도의회 관계자</div>
+        <div class="sms-section-title">📍 1그룹 — 신계용 시장 · 최기식 당협위원장 · 이소영 국회의원</div>
 
         <div class="sms-target-card" id="smsCard-Mayor" data-sms-key="Mayor">
             <div class="sms-header">
@@ -502,44 +627,32 @@
                 </div>
             </div>
             <div class="sms-preview-grid">
-                <div>
-                    <div class="sms-preview-title">📄 1차 본문 미리보기</div>
-                    <div id="smsPreviewMayor1" class="sms-preview-box">로딩 중...</div>
-                </div>
-                <div>
-                    <div class="sms-preview-title">📄 2차 본문 미리보기</div>
-                    <div id="smsPreviewMayor2" class="sms-preview-box">로딩 중...</div>
-                </div>
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewMayor1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewMayor2" class="sms-preview-box">로딩 중...</div></div>
             </div>
         </div>
 
-        <div class="sms-target-card" id="smsCard-Counselor" data-sms-key="Counselor">
+        <div class="sms-target-card" id="smsCard-Choi" data-sms-key="Choi">
             <div class="sms-header">
                 <div class="sms-target-info">
-                    <strong>👤 김동진 과천시의원</strong> (010-7933-7536)
+                    <strong>👤 최기식 당협위원장</strong> (010-6462-0381)
                     <span class="sms-done-badge">✅ 발송 완료</span>
                 </div>
                 <div class="sms-btn-group">
-                    <a id="smsLinkCounselor1" href="#" class="sms-send-link" onclick="markSmsDone('Counselor')">① 1차 전송</a>
-                    <a id="smsLinkCounselor2" href="#" class="sms-send-link part2" onclick="markSmsDone('Counselor')">② 2차 전송</a>
+                    <a id="smsLinkChoi1" href="#" class="sms-send-link" onclick="markSmsDone('Choi')">① 1차 전송</a>
+                    <a id="smsLinkChoi2" href="#" class="sms-send-link part2" onclick="markSmsDone('Choi')">② 2차 전송</a>
                 </div>
             </div>
             <div class="sms-preview-grid">
-                <div>
-                    <div class="sms-preview-title">📄 1차 본문 미리보기</div>
-                    <div id="smsPreviewCounselor1" class="sms-preview-box">로딩 중...</div>
-                </div>
-                <div>
-                    <div class="sms-preview-title">📄 2차 본문 미리보기</div>
-                    <div id="smsPreviewCounselor2" class="sms-preview-box">로딩 중...</div>
-                </div>
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewChoi1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewChoi2" class="sms-preview-box">로딩 중...</div></div>
             </div>
         </div>
 
         <div class="sms-target-card" id="smsCard-Lee" data-sms-key="Lee">
             <div class="sms-header">
                 <div class="sms-target-info">
-                    <strong>👤 이소영 과천시의원</strong> (010-7624-2050)
+                    <strong>👤 이소영 국회의원</strong> (010-7624-2050)
                     <span class="sms-done-badge">✅ 발송 완료</span>
                 </div>
                 <div class="sms-btn-group">
@@ -548,41 +661,101 @@
                 </div>
             </div>
             <div class="sms-preview-grid">
-                <div>
-                    <div class="sms-preview-title">📄 1차 본문 미리보기</div>
-                    <div id="smsPreviewLee1" class="sms-preview-box">로딩 중...</div>
-                </div>
-                <div>
-                    <div class="sms-preview-title">📄 2차 본문 미리보기</div>
-                    <div id="smsPreviewLee2" class="sms-preview-box">로딩 중...</div>
-                </div>
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewLee1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewLee2" class="sms-preview-box">로딩 중...</div></div>
             </div>
         </div>
 
-        <div class="sms-target-card" id="smsCard-Kim" data-sms-key="Kim">
+        <div class="sms-section-title">📍 2그룹 — 지역구 의원 (김동진 부의장 · 김동현 의원)</div>
+
+        <div class="sms-target-card" id="smsCard-Counselor" data-sms-key="Counselor">
             <div class="sms-header">
                 <div class="sms-target-info">
-                    <strong>👤 김현석 경기도의원</strong> (010-4597-1659)
+                    <strong>👤 김동진 부의장</strong> (010-7933-7536)
                     <span class="sms-done-badge">✅ 발송 완료</span>
                 </div>
                 <div class="sms-btn-group">
-                    <a id="smsLinkKim1" href="#" class="sms-send-link" onclick="markSmsDone('Kim')">① 1차 전송</a>
-                    <a id="smsLinkKim2" href="#" class="sms-send-link part2" onclick="markSmsDone('Kim')">② 2차 전송</a>
+                    <a id="smsLinkCounselor1" href="#" class="sms-send-link" onclick="markSmsDone('Counselor')">① 1차 전송</a>
+                    <a id="smsLinkCounselor2" href="#" class="sms-send-link part2" onclick="markSmsDone('Counselor')">② 2차 전송</a>
                 </div>
             </div>
             <div class="sms-preview-grid">
-                <div>
-                    <div class="sms-preview-title">📄 1차 본문 미리보기</div>
-                    <div id="smsPreviewKim1" class="sms-preview-box">로딩 중...</div>
-                </div>
-                <div>
-                    <div class="sms-preview-title">📄 2차 본문 미리보기</div>
-                    <div id="smsPreviewKim2" class="sms-preview-box">로딩 중...</div>
-                </div>
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewCounselor1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewCounselor2" class="sms-preview-box">로딩 중...</div></div>
             </div>
         </div>
 
-        <div class="sms-section-title">📍 서초구청 및 정계 관계자 (양재천 유역 주민 강력 요구)</div>
+        <div class="sms-target-card" id="smsCard-KimDH" data-sms-key="KimDH">
+            <div class="sms-header">
+                <div class="sms-target-info">
+                    <strong>👤 김동현 시의원</strong> (010-4597-1659)
+                    <span class="sms-done-badge">✅ 발송 완료</span>
+                </div>
+                <div class="sms-btn-group">
+                    <a id="smsLinkKimDH1" href="#" class="sms-send-link" onclick="markSmsDone('KimDH')">① 1차 전송</a>
+                    <a id="smsLinkKimDH2" href="#" class="sms-send-link part2" onclick="markSmsDone('KimDH')">② 2차 전송</a>
+                </div>
+            </div>
+            <div class="sms-preview-grid">
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewKimDH1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewKimDH2" class="sms-preview-box">로딩 중...</div></div>
+            </div>
+        </div>
+
+        <div class="sms-section-title">📍 3그룹 — 비지역구 의원 (황선희 의장 · 지태훈 · 유부임)</div>
+
+        <div class="sms-target-card" id="smsCard-Hwang" data-sms-key="Hwang">
+            <div class="sms-header">
+                <div class="sms-target-info">
+                    <strong>👤 황선희 시의회 의장</strong> (010-8227-5139)
+                    <span class="sms-done-badge">✅ 발송 완료</span>
+                </div>
+                <div class="sms-btn-group">
+                    <a id="smsLinkHwang1" href="#" class="sms-send-link" onclick="markSmsDone('Hwang')">① 1차 전송</a>
+                    <a id="smsLinkHwang2" href="#" class="sms-send-link part2" onclick="markSmsDone('Hwang')">② 2차 전송</a>
+                </div>
+            </div>
+            <div class="sms-preview-grid">
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewHwang1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewHwang2" class="sms-preview-box">로딩 중...</div></div>
+            </div>
+        </div>
+
+        <div class="sms-target-card" id="smsCard-Ji" data-sms-key="Ji">
+            <div class="sms-header">
+                <div class="sms-target-info">
+                    <strong>👤 지태훈 시의원</strong> (010-4429-1766)
+                    <span class="sms-done-badge">✅ 발송 완료</span>
+                </div>
+                <div class="sms-btn-group">
+                    <a id="smsLinkJi1" href="#" class="sms-send-link" onclick="markSmsDone('Ji')">① 1차 전송</a>
+                    <a id="smsLinkJi2" href="#" class="sms-send-link part2" onclick="markSmsDone('Ji')">② 2차 전송</a>
+                </div>
+            </div>
+            <div class="sms-preview-grid">
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewJi1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewJi2" class="sms-preview-box">로딩 중...</div></div>
+            </div>
+        </div>
+
+        <div class="sms-target-card" id="smsCard-Yu" data-sms-key="Yu">
+            <div class="sms-header">
+                <div class="sms-target-info">
+                    <strong>👤 유부임 시의원</strong> (010-5186-8058)
+                    <span class="sms-done-badge">✅ 발송 완료</span>
+                </div>
+                <div class="sms-btn-group">
+                    <a id="smsLinkYu1" href="#" class="sms-send-link" onclick="markSmsDone('Yu')">① 1차 전송</a>
+                    <a id="smsLinkYu2" href="#" class="sms-send-link part2" onclick="markSmsDone('Yu')">② 2차 전송</a>
+                </div>
+            </div>
+            <div class="sms-preview-grid">
+                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewYu1" class="sms-preview-box">로딩 중...</div></div>
+                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewYu2" class="sms-preview-box">로딩 중...</div></div>
+            </div>
+        </div>
+
+        <div class="sms-section-title">📍 4그룹 — 서초구청 및 정계 관계자 (양재천 유역 주민 강력 요구)</div>
 
         <div class="sms-target-card" id="smsCard-Seocho2_" data-sms-key="Seocho2_">
             <div class="sms-header">
@@ -631,6 +804,20 @@
         </div>
     </div>
 
+    <hr class="section-divider">
+
+    <!-- 📂 현장 방문 민원 서류 다운로드 (수요가 적어 하단으로 이동) -->
+    <div class="visit-doc-box">
+        <div class="visit-doc-title">📂 과천시청 현장 방문 민원 서류</div>
+        <div class="visit-doc-desc">
+            과천시청에 직접 방문해 접수하실 분들을 위해, 15종 민원 서류 양식을 미리 작성해 모아두었습니다. 다운로드 후 출력하여 서명만 하시면 바로 접수 가능합니다.
+        </div>
+        <a href="visit_minwon_docs.zip" download class="visit-doc-btn">⬇️ 방문 민원 서류 15종 일괄 다운로드 (ZIP)</a>
+    </div>
+
+    </div>
+    <!-- ===================== /시작하기 패널 ===================== -->
+
     <!-- 면책 문구 -->
     <div style="margin-top:24px; padding-top:16px; border-top:1px solid #e2e8f0; font-size:11.5px; color:#94a3b8; line-height:1.7; text-align:center;">
         본 페이지는 주민 개인이 비영리·공익 목적으로 제작한 사이트이며, 특정 단체나 사업자를 비방할 의도가 없습니다.<br>
@@ -646,7 +833,7 @@
        구글시트 및 수파베이스 설정
        =================================================================== */
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTVXDlFmnvZLMMlFkKrnYJuDG3spufJnEAlgMBlN5Zj1rZ4yrt2IQAdwk7tCfJ5EaeEA1bI8mQfvPWO/pub?gid=125979816&single=true&output=csv";
-    const SUPABASE_API_URL = "https://mjvrnljitvajjzzlkokh.supabase.co/rest/v1/minwon_stats";
+    const SUPABASE_TAB_CLICKS_URL = "https://mjvrnljitvajjzzlkokh.supabase.co/rest/v1/tab_clicks";
     
     // 💡 제공해주신 Supabase Anon Public Key 연동 완료
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qdnJubGppdHZhamp6emxrb2toIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NjY1MDMsImV4cCI6MjA5NzA0MjUwM30.aLxQVp6hir5QiFKIfZmbIF4XXS3R5CyZzsuuLAMXRJk";
@@ -654,8 +841,10 @@
     const COL = { tab: "탭이름", agency: "접수처", title: "제목", main: "본문" };
 
     /* 🔧 수동 관리: 탭이름(A열) 기준으로 정확히 입력 ─ 매번 직접 업데이트 */
-    const IMPORTANT_TABS = ["과천시1", "한국토지주택공사", "국토교통부1"]; // ⭐ 핵심 부처
-    const UPDATED_TABS = ["한국토지주택공사", "국토교통부1"]; // 🆕 오늘 내용 업데이트된 부처
+    const ESSENTIAL_THIS_WEEK = ["과천시1", "과천시2", "한국토지주택공사", "국토교통부", "기후에너지환경부", "한국전력공사"]; // ⏰ 이번 주 필수 6곳 (여기만 수정하면 강조 기관이 바뀝니다)
+    const IMPORTANT_TABS = ["과천시1", "한국토지주택공사", "국토교통부", "공무원연금공단", "과학기술정보통신부", "기후에너지환경부", "한국전력공사", "소방청"]; // ⭐ 핵심 부처
+    const UPDATED_TABS = ["과천시1", "한국토지주택공사", "국토교통부", "소방청", "서초구"]; // 🆕 오늘 내용 업데이트된 부처
+    const DATED_TABS = { "공무원연금공단": "6.18 추가", "과학기술정보통신부": "6.19 추가", "기후에너지환경부": "6.21 추가", "한국전력공사": "6.21 업데이트", "과천시1": "6.24 업데이트", "한국토지주택공사": "6.24 업데이트", "국토교통부": "6.24 업데이트(1·2 통합)", "소방청": "6.25 업데이트", "서초구": "7/7 업데이트" }; // 📅 날짜 플래그
     /* =================================================================== */
 
     let currentCategory = null;
@@ -663,9 +852,13 @@
     let tabOrder = [];
 
     let selectedMayorIdx = 0; let selectedMayorCloseIdx = 0;
-    let selectedCounselorIdx = 0; let selectedCounselorCloseIdx = 0;
+    let selectedChoiIdx = 0; let selectedChoiCloseIdx = 0;
     let selectedLeeIdx = 0; let selectedLeeCloseIdx = 0;
-    let selectedKimIdx = 0; let selectedKimCloseIdx = 0;
+    let selectedCounselorIdx = 0; let selectedCounselorCloseIdx = 0;
+    let selectedKimDHIdx = 0; let selectedKimDHCloseIdx = 0;
+    let selectedHwangIdx = 0; let selectedHwangCloseIdx = 0;
+    let selectedJiIdx = 0; let selectedJiCloseIdx = 0;
+    let selectedYuIdx = 0; let selectedYuCloseIdx = 0;
     let selectedS2Idx = 0; let selectedS2CloseIdx = 0;
     let selectedS3Idx = 0; let selectedS3CloseIdx = 0;
 
@@ -676,89 +869,6 @@
         const month = String(d.getMonth() + 1).padStart(2, '0');
         const day = String(d.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
-    }
-
-    async function loadTodayCount() {
-        try {
-            const todayStr = getLocalDateString();
-            
-            // 현황판에 오늘 날짜 표시 처리 (YYYY년 MM월 DD일 형식)
-            const [year, month, day] = todayStr.split('-');
-            document.getElementById('currentDateDisplay').innerText = `${year}년 ${month}월 ${day}일`;
-
-            const res = await fetch(`${SUPABASE_API_URL}?date=eq.${todayStr}`, {
-                method: "GET",
-                headers: { 
-                    "Accept": "application/json",
-                    "apikey": SUPABASE_ANON_KEY,
-                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                }
-            });
-            if (!res.ok) throw new Error("데이터 조회 실패");
-            const data = await res.json();
-            
-            if (data && data.length > 0) {
-                document.getElementById('todayCountDisplay').innerText = data[0].count;
-            } else {
-                document.getElementById('todayCountDisplay').innerText = 0;
-            }
-        } catch (e) {
-            console.error("수파베이스 로드 에러:", e);
-        }
-    }
-
-    async function submitComplete() {
-        const btn = document.getElementById('btnCompleteMinwon');
-        btn.disabled = true;
-        btn.innerText = "⏳ 처리 중...";
-
-        try {
-            const todayStr = getLocalDateString();
-            const checkRes = await fetch(`${SUPABASE_API_URL}?date=eq.${todayStr}`, {
-                headers: {
-                    "apikey": SUPABASE_ANON_KEY,
-                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                }
-            });
-            const currentData = await checkRes.json();
-
-            let response;
-            if (currentData && currentData.length > 0) {
-                const nextCount = currentData[0].count + 1;
-                response = await fetch(`${SUPABASE_API_URL}?date=eq.${todayStr}`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Prefer": "return=representation",
-                        "apikey": SUPABASE_ANON_KEY,
-                        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                    },
-                    body: JSON.stringify({ count: nextCount })
-                });
-            } else {
-                response = await fetch(SUPABASE_API_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Prefer": "return=representation",
-                        "apikey": SUPABASE_ANON_KEY,
-                        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
-                    },
-                    body: JSON.stringify({ date: todayStr, count: 1 })
-                });
-            }
-
-            if (!response.ok) throw new Error("전송 실패");
-
-            alert("오늘의 민원 참여가 정상적으로 기록되었습니다. 감사합니다! 🔥");
-            btn.innerText = "🎉 참여 완료";
-            loadTodayCount();
-        } catch (e) {
-            alert("연동 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.");
-            btn.disabled = false;
-            btn.innerText = "✔️ 오늘 민원 완료! (오민완)";
-            console.error(e);
-        }
     }
 
     function switchMode(mode) {
@@ -796,50 +906,110 @@
         mayor: {
             phone: "01087457577",
             openings: [
-                "안녕하세요 신계용 시장님. [INFO] 주민입니다.",
-                "신계용 시장님, 주암지구 데이터센터 문제로 불안에 떠는 [INFO] 주민입니다.",
-                "과천시정을 이끄시는 신계용 시장님께 [INFO] 주민으로서 호소합니다.",
-                "신계용 시장님 안녕하세요. 공약 이행을 촉구하는 [INFO] 주민입니다."
+                "신계용 시장님, 당선 축하드립니다. 인허가 불허 공약 이행을 기다리는 [INFO] 주민입니다.",
+                "신계용 시장님, 후보 시절 데이터센터 인허가 불허를 약속하셨습니다. [INFO] 주민입니다.",
+                "신계용 시장님, 공약을 믿고 지지한 [INFO] 주민입니다. 이행을 촉구합니다.",
+                "당선 축하드립니다 시장님. 주암지구 데이터센터 공약을 기억하시는지요. [INFO] 주민입니다."
             ],
-            body1: "\n집 근처에 추진 중인 데이터센터 건립으로 소음·전력·안전 문제 등 생활환경 악화가 우려되어 주민들이 심히 불안에 떨고 있습니다.\n1. 매각되지 않은 업무시설용지의 허용용도 중 방송통신시설을 삭제해주십시오.\n2. 과천 주암지구 내의 업무시설용지의 주용도를 설정해주십시오.",
-            body2: "3. 민관협의체 구성을 신속히 추진해주십시오.\n양재천을 공유하는 인근 주민들의 의견이 충분히 반영될 수 있도록 해당 사업을 재검토하거나 중단될 수 있게 적극적인 검토 부탁드립니다.\n시장 취임과 함께 약속하신 주암지구 데이터센터 건립 반대 공약을 조속히 이행해 주십시오.\n\n",
-            closings: ["항상 과천 발전을 위해 애써 주셔서 감사합니다.", "시장님께서 시민의 방패가 되어주시길 진심으로 바랍니다.", "주민들의 정당한 목소리에 귀 기울여 주시리라 믿습니다.", "공약을 지키는 신뢰받는 시장님이 되어주시길 부탁드립니다."]
+            body1: "\n시장님께서는 후보 시절 주암지구 데이터센터 인허가 불허를 공약으로 내세우셨습니다.\n주민들은 그 약속을 믿고 지지했습니다.\n\n최근 사업 측이 언론에 기사를 냈습니다.\n'우면동만 반대한다'고 했지만 사실이 아닙니다.\n대토주주들은 정작 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다.\n실제로 이곳에 살게 될 과천·서초 주민 9,700세대가 반대하고 있습니다.\n'22.9kV라 고압이 아니다'는 주장도 사실이 아닙니다. 전기사업법상 특고압이며 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "사업 측이 여론전을 시작한 지금이 시장님께서 공식 입장을 밝히실 때입니다.\n1. 데이터센터 인허가 불허 방침을 공식 발표해 주십시오.\n2. 매각되지 않은 업무시설용지의 방송통신시설 허용용도를 삭제해 주십시오.\n3. 민관협의체를 신속히 구성해 주십시오.\n\n공약 파기 여부를 주민들이 지켜보고 있습니다. 시의회·국회·언론을 통해 반드시 공론화할 것입니다. 지금 이행하시는 것이 시장님께도 최선입니다.\n\n",
+            closings: ["공약을 지키는 것이 신뢰받는 시장의 첫걸음입니다.", "후보 시절 약속, 잊지 않으셨으리라 믿습니다.", "지금 시장님의 공식 입장이 9,700세대의 미래를 결정합니다.", "주민이 먼저 손 내밀고 있습니다. 공약으로 화답해 주십시오."]
+        },
+        choi: {
+            phone: "01064620381",
+            openings: [
+                "최기식 위원장님, LH 시위까지 끝까지 함께해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "최기식 위원장님, 주민을 위해 끝까지 자리 지켜 주셔서 큰 힘이 됐습니다. [INFO] 주민입니다.",
+                "최기식 위원장님, 공약을 믿는 [INFO] 주민입니다. 지금이 결정적 시점입니다.",
+                "당협위원장님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
+            ],
+            body1: "\n최근 사업자 측이 언론에 기사를 냈습니다. '우면동만 반대한다'는 프레임과 '22.9kV라 고압 아니다'는 주장입니다.\n모두 사실이 아닙니다. 22.9kV는 전기사업법상 특고압입니다. 아파트는 22.9kV를 각 가정에 분산하지만 데이터센터는 10MW를 한 건물에서 집중 사용합니다. 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다. 실제로 이곳에 살 9,700세대가 반대하고 있습니다.\n여론전이 시작된 지금 당 차원에서 신계용 시장님의 불허 공약 이행을 압박해 주시고 조례 제정에 앞장서 주십시오.\n\n",
+            closings: ["LH까지 함께해 주신 위원장님이 지금 흔들리지 않아야 합니다.", "위원장님의 분명한 입장이 9,700세대에게 힘이 됩니다.", "당을 믿고 지지하는 주민들이 위원장님을 주목하고 있습니다.", "끝까지 함께해 주셔서 감사합니다. 조례 제정으로 완성해 주십시오."]
+        },
+        hwang: {
+            phone: "01082275139",
+            openings: [
+                "황선희 의장님, 집회에 직접 걸음해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "황선희 의장님, 당선 축하드립니다. 함께해 주신 의장님을 믿는 [INFO] 주민입니다.",
+                "황선희 의장님, 주민 곁에 서 주신 의장님께 [INFO] 입주예정자 주민이 드립니다.",
+                "의장님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
+            ],
+            body1: "\n집회에 직접 걸음해 주셔서 주민들에게 큰 힘이 되었습니다.\n그런데 최근 사업자 측이 언론을 통해 '22.9kV라 고압이 아니다', '우면동만 반대한다'는 억지 여론전을 펼치고 있습니다.\n22.9kV는 전기사업법상 명백한 특고압입니다. 아파트와 달리 데이터센터는 10MW를 한 건물에서 집중 사용합니다. 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다.\n주암동이 직접 지역구는 아니더라도 아델스타 입주예정자들은 과천 전역에 거주하고 있습니다. 신계용 시장님의 불허 공약과 뜻을 같이하시는 의원님들께서 힘을 모아 조례 제정에 앞장서 주시기를 간곡히 부탁드립니다.\n\n",
+            closings: ["의장님의 공식 입장이 9,700세대에게 결정적입니다.", "집회에 와주신 의장님이 지금 흔들리지 않아야 합니다.", "과천시의회 의장님의 리더십을 믿습니다. 조례 제정으로 이어 주십시오.", "주민이 먼저 손 내밀고 있습니다. 조례로 화답해 주십시오."]
+        },
+        ji: {
+            phone: "01044291766",
+            openings: [
+                "지태훈 시의원님, 집회에 함께해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "지태훈 의원님, 행정사 전문가이신 의원님을 믿는 [INFO] 주민입니다.",
+                "지태훈 의원님, 주민 곁에 서 주셔서 감사합니다. [INFO] 입주예정자 주민입니다.",
+                "의원님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
+            ],
+            body1: "\n집회에 직접 걸음해 주셔서 주민들에게 큰 힘이 되었습니다.\n그런데 최근 사업자 측이 언론을 통해 '22.9kV라 고압이 아니다', '우면동만 반대한다'는 억지 여론전을 펼치고 있습니다.\n22.9kV는 전기사업법상 명백한 특고압입니다. 아파트와 달리 데이터센터는 10MW를 한 건물에서 집중 사용합니다. 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다.\n의원님의 행정사 전문 경험으로 이 여론전을 막아 주십시오. 주암동이 직접 지역구는 아니더라도 아델스타 입주예정자들은 과천 전역에 거주합니다. 신계용 시장님의 불허 공약과 뜻을 같이하시는 의원님들께서 조례 제정에 앞장서 주시기를 부탁드립니다.\n\n",
+            closings: ["의원님의 행정사 경험이 지금 가장 필요합니다.", "집회에 와주신 의원님이 끝까지 함께해 주시리라 믿습니다.", "9,700세대 주민이 의원님의 다음 행보를 주목하고 있습니다.", "주민이 먼저 손 내밀고 있습니다. 조례로 화답해 주십시오."]
+        },
+        yu: {
+            phone: "01051868058",
+            openings: [
+                "유부임 시의원님, 집회에 함께해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "유부임 의원님, 주민 곁에 서 주셔서 감사합니다. [INFO] 입주예정자 주민입니다.",
+                "유부임 의원님, 아이들의 미래를 걱정하는 [INFO] 주민입니다.",
+                "의원님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
+            ],
+            body1: "\n집회에 직접 걸음해 주셔서 주민들에게 큰 힘이 되었습니다.\n그런데 최근 사업자 측이 언론을 통해 '22.9kV라 고압이 아니다', '우면동만 반대한다'는 억지 여론전을 펼치고 있습니다.\n22.9kV는 전기사업법상 명백한 특고압입니다. 아파트와 달리 데이터센터는 10MW를 한 건물에서 집중 사용합니다. 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다.\n반경 1km 어린이집 32곳, 학교 5곳이 밀집한 이 생활권을 지켜 주십시오. 주암동이 직접 지역구는 아니더라도 아델스타 입주예정자들은 과천 전역에 거주합니다. 신계용 시장님의 불허 공약과 뜻을 같이하시는 의원님들께서 조례 제정에 앞장서 주시기를 부탁드립니다.\n\n",
+            closings: ["어린이집 32곳, 학교 5곳이 밀집한 이 생활권을 지켜 주십시오.", "집회에 와주신 의원님이 끝까지 함께해 주시리라 믿습니다.", "9,700세대 주민이 의원님의 다음 행보를 주목하고 있습니다.", "주민이 먼저 손 내밀고 있습니다. 조례로 화답해 주십시오."]
+        },
+        kimdh: {
+            phone: "01045971659",
+            openings: [
+                "김동현 시의원님, 안녕하십니까. 아델스타 입주예정자 [INFO] 주민입니다.",
+                "김동현 의원님, 공약을 믿고 지지한 [INFO] 주민입니다. 이행을 촉구합니다.",
+                "시의원님, 안녕하십니까. 데이터센터 반대 공약을 기억하는 [INFO] 주민입니다.",
+                "의원님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
+            ],
+            body1: "\n의원님께서는 후보 시절 '주암지구 데이터센터 인허가 불허'를 공약으로 내세우셨고, 저희 주민들은 그 약속을 믿고 전폭적인 지지를 보냈습니다.\n그런데 최근 사업자 측이 언론을 통해 '22.9kV라 고압이 아니다'라며 왜곡된 여론전을 시작했습니다.\n22.9kV는 전기사업법상 엄연한 특고압입니다. 아파트는 22.9kV를 각 가정에 분산하지만 데이터센터는 10MW를 한 건물에서 집중 사용합니다. 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다.\n하루빨리 데이터센터 규제 조례를 제정하고 신속히 통과시켜 주십시오. 주민들은 의원님의 다음 행보를 주목하고 있습니다.\n\n",
+            closings: ["공약을 지키는 것이 신뢰받는 의원의 첫걸음입니다.", "주민이 먼저 손 내밀고 있습니다. 조례로 화답해 주십시오.", "9,700세대 주민이 의원님의 다음 행보를 주목하고 있습니다.", "의원님의 분명한 입장이 주민들에게 결정적입니다."]
         },
         counselor: {
             phone: "01079337536",
             openings: [
-                "안녕하세요 김동진 의원님. [INFO] 주민입니다.",
-                "김동진 의원님, 주암지구 초근접 데이터센터 건립 반대를 외치를 [INFO] 주민입니다.",
-                "시민의 목소리를 대변하시는 김동진 의원님, [INFO] 현안으로 문자 드립니다.",
-                "의원님 안녕하세요. 우리 아이들의 안전과 주거 환경 보호를 위해 행동하는 [INFO] 주민입니다."
+                "김동진 부의장님, LH 시위까지 함께해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "김동진 부의장님, 끝까지 자리 지켜 주셔서 큰 힘이 됐습니다. [INFO] 주민입니다.",
+                "김동진 부의장님, 공약을 믿는 [INFO] 주민입니다. 지금이 결정적입니다.",
+                "부의장님 안녕하세요. 우리 아이들의 안전을 위해 행동하는 [INFO] 주민입니다."
             ],
-            body1: "\n집 근처에 추진 중인 데이터센터 건립으로 소음·전력·안전 문제 등 생활환경 악화가 우려되어 주민들이 심히 불안에 떨고 있습니다.\n1. 매각되지 않은 업무시설용지의 허용용도 중 방송통신시설을 삭제해주십시오.\n2. 과천 주암지구 내의 업무시설용지의 주용도를 설정해주십시오.",
-            body2: "3. 민관협의체 구성을 신속히 추진해주십시오.\n인근 주민들의 의견이 충분히 반영될 수 있도록 해당 사업을 재검토하거나 중단될 수 있게 의회 차원의 강력한 검토 부탁드립니다.\n공약으로 세우신 주암지구 데이터센터 건립 반대 약속을 반드시 이행해 주십시오.\n\n",
-            closings: ["항상 지역 발전을 위해 애써 주셔서 감사합니다.", "의원님의 적극적인 의정 활동과 지원을 기대하겠습니다.", "시민들의 생존권이 걸린 문제입니다. 꼭 앞장서 주십시오.", "언제나 주민들의 든든한 대변인이 되어주셔서 고맙습니다."]
+            body1: "\n어제 사업 측이 언론에 기사를 냈습니다.\n'우면동만 반대한다'고 했지만 사실이 아닙니다.\n대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다.\n실제로 이곳에 살 과천·서초 9,700세대가 반대하고 있습니다.\n'22.9kV라 고압이 아니다'는 주장도 틀렸습니다. 전기사업법상 특고압이며 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "여론전이 시작됐습니다. 지금 부의장님의 공식 입장이 필요합니다.\n1. 이격거리 조례 제정을 추진해 주십시오.\n2. 방송통신시설 허용용도 삭제를 촉구해 주십시오.\n3. 인허가 불허 방침을 의회 차원에서 공식화해 주십시오.\n\n",
+            closings: ["LH까지 함께해 주신 의원님이 지금 흔들리지 않아야 합니다.", "의원님의 분명한 입장이 9,700세대에게 힘이 됩니다.", "시민들의 생존권이 걸린 문제입니다. 꼭 앞장서 주십시오.", "언제나 주민들의 든든한 대변인이 되어주셔서 고맙습니다."]
         },
         lee: {
             phone: "01076242050",
             openings: [
-                "안녕하세요 이소영 의원님. [INFO] 주민입니다.",
-                "이소영 의원님, 주암지구 초근접 데이터센터 건립 반대를 외치는 [INFO] 주민입니다.",
+                "이소영 의원님 안녕하십니까. 공약을 믿는 [INFO] 주민입니다.",
+                "이소영 의원님, 주암지구 데이터센터 여론전이 시작됐습니다. [INFO] 주민입니다.",
                 "시민의 목소리를 대변하시는 이소영 의원님, [INFO] 현안으로 문자 드립니다.",
                 "의원님 안녕하세요. 우리 아이들의 안전과 주거 환경 보호를 위해 행동하는 [INFO] 주민입니다."
             ],
-            body1: "\n집 근처에 추진 중인 데이터센터 건립으로 소음·전력·안전 문제 등 생활환경 악화가 우려되어 주민들이 심히 불안에 떨고 있습니다.\n1. 매각되지 않은 업무시설용지의 허용용도 중 방송통신시설을 삭제해주십시오.\n2. 과천 주암지구 내의 업무시설용지의 주용도를 설정해주십시오.",
-            body2: "3. 민관협의체 구성을 신속히 추진해주십시오.\n인근 주민들의 의견이 충분히 반영될 수 있도록 해당 사업을 재검토하거나 중단될 수 있게 의회 차원의 강력한 검토 부탁드립니다.\n주암지구 데이터센터 건립 반대를 위해 의정 차원에서 꼭 앞장서 주십시오.\n\n",
+            body1: "\n어제 사업 측이 언론에 기사를 냈습니다.\n'우면동만 반대한다'고 했지만 사실이 아닙니다.\n대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다.\n실제로 이곳에 살 과천·서초 9,700세대가 반대하고 있습니다.\n'22.9kV라 고압이 아니다'는 주장도 틀렸습니다. 전기사업법상 특고압이며 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "여론전이 시작됐습니다. 지금 의원님의 분명한 입장이 필요합니다.\n1. 이격거리 조례 제정을 추진해 주십시오.\n2. 방송통신시설 허용용도 삭제를 촉구해 주십시오.\n3. 인허가 불허 방침을 의회 차원에서 공식화해 주십시오.\n\n",
             closings: ["항상 지역 발전을 위해 애써 주셔서 감사합니다.", "의원님의 적극적인 의정 활동과 지원을 기대하겠습니다.", "시민들의 생존권이 걸린 문제입니다. 꼭 앞장서 주십시오.", "언제나 주민들의 든든한 대변인이 되어주셔서 고맙습니다."]
         },
         kim: {
             phone: "01045971659",
             openings: [
-                "안녕하세요 김현석 도의원님. [INFO] 주민입니다.",
-                "김현석 경기도의원님, 주암지구 데이터센터 건립 문제로 불안에 떠는 [INFO] 주민입니다.",
-                "경기도민의 목소리를 대변하시는 김현석 의원님, [INFO] 현안으로 문자 드립니다.",
+                "김현석 의원님 안녕하십니까. 집회 함께해 주셔서 감사합니다. [INFO] 주민입니다.",
+                "김현석 의원님, 주암지구 데이터센터 여론전이 시작됐습니다. [INFO] 주민입니다.",
+                "의원님의 목소리가 필요합니다. [INFO] 주민으로서 긴급히 문자 드립니다.",
                 "의원님 안녕하세요. 우리 아이들의 안전과 주거 환경 보호를 위해 행동하는 [INFO] 주민입니다."
             ],
-            body1: "\n집 근처에 추진 중인 데이터센터 건립으로 소음·전력·안전 문제 등 생활환경 악화가 우려되어 주민들이 심히 불안에 떨고 있습니다.\n1. 매각되지 않은 업무시설용지의 허용용도 중 방송통신시설을 삭제해주십시오.\n2. 과천 주암지구 내의 업무시설용지의 주용도를 설정해주십시오.",
-            body2: "3. 민관협의체 구성을 신속히 추진해주십시오.\n인근 주민들의 의견이 충분히 반영될 수 있도록 해당 사업을 재검토하거나 중단될 수 있게 경기도 차원의 강력한 검토 부탁드립니다.\n주암지구 데이터센터 건립 반대를 위해 도정 차원에서 적극 나서 주십시오.\n\n",
-            closings: ["항상 경기도 발전을 위해 애써 주셔서 감사합니다.", "의원님의 적극적인 의정 활동과 지원을 기대하겠습니다.", "도민의 생존권이 걸린 문제입니다. 꼭 앞장서 주십시오.", "언제나 주민들의 든든한 대변인이 되어주셔서 고맙습니다."]
+            body1: "\n어제 사업 측이 언론에 기사를 냈습니다.\n'우면동만 반대한다'고 했지만 사실이 아닙니다.\n대토주주들은 이곳에 살 사람들이 아닙니다. 리츠 투자 수익을 원하는 구조입니다.\n실제로 이곳에 살 과천·서초 9,700세대가 반대하고 있습니다.\n'22.9kV라 고압이 아니다'는 주장도 틀렸습니다. 전기사업법상 특고압이며 5블록 합산 50MW는 하이퍼스케일급입니다.",
+            body2: "여론전이 시작됐습니다. 지금 의원님의 분명한 입장이 필요합니다.\n1. 이격거리 조례 제정을 추진해 주십시오.\n2. 방송통신시설 허용용도 삭제를 촉구해 주십시오.\n3. 인허가 불허 방침을 의회 차원에서 공식화해 주십시오.\n\n",
+            closings: ["항상 지역 발전을 위해 애써 주셔서 감사합니다.", "의원님의 적극적인 의정 활동과 지원을 기대하겠습니다.", "시민들의 생존권이 걸린 문제입니다. 꼭 앞장서 주십시오.", "언제나 주민들의 든든한 대변인이 되어주셔서 고맙습니다."]
         },
         seochoCommon: {
             body1: "\n행정구역은 다르나 서초구 네이처힐 단지와 불과 양재천을 사이에 둔 초근접 위치에 대규모 데이터센터 건립이 추진되고 있습니다.\n이로 인한 초고압선 노출, 전자파 우려, 냉각탑 유해물질 및 소음 피해는 서초구민들과 우리 아이들에게 고스란히 직격탄으로 돌아옵니다.",
@@ -889,7 +1059,7 @@
 
     /* ── SMS 발송 완료 추적 ── */
     const doneSms = new Set();
-    const SMS_TOTAL = 6;
+    const SMS_TOTAL = 10;
 
     const smsСheers = [
         "📱 발송 완료! 이 기세 유지해요!",
@@ -915,10 +1085,10 @@
         let msg;
         if (done === SMS_TOTAL) {
             document.getElementById('smsProgressLabel').innerText = '🎉 전원 발송 완료!';
-            msg = "🎉 6명 전원 발송 완료!\n진짜 대단해요, 최고의 주민 전사! 🏆";
-        } else if (done === 3) {
+            msg = "🎉 10명 전원 발송 완료!\n진짜 대단해요, 최고의 주민 전사! 🏆";
+        } else if (done === 5) {
             document.getElementById('smsProgressLabel').innerText = `📱 문자 발송 현황 (절반 돌파!)`;
-            msg = `💥 절반 돌파! ${done}/${SMS_TOTAL} 발송!\n3명 남았어요, 끝까지 가봐요!`;
+            msg = `💥 절반 돌파! ${done}/${SMS_TOTAL} 발송!\n5명 남았어요, 끝까지 가봐요!`;
         } else {
             document.getElementById('smsProgressLabel').innerText = `📱 문자 발송 현황 (${Math.round(done/SMS_TOTAL*100)}%)`;
             msg = smsСheers[Math.floor(Math.random() * smsСheers.length)] + `\n(${done}/${SMS_TOTAL} 발송 완료)`;
@@ -928,9 +1098,9 @@
 
     function shareNative() {
         const url = 'https://guacaya.github.io/gwacheon-dc-stop/';
-        const text = '🚀 과천 주암 데이터센터 반대 민원 발사기\n1분만에 민원 10개 접수하세요!';
+        const text = '🚀 과천 주암 데이터센터 반대 민원 안내\n1분만에 민원 10개 접수하세요!';
         if (navigator.share) {
-            navigator.share({ title: '과천 주암 데이터센터 반대 민원 발사기 🚀', text, url });
+            navigator.share({ title: '과천 주암 데이터센터 반대 민원 안내', text, url });
         } else {
             // 공유 미지원 브라우저면 링크 복사로 대체
             copyLink();
@@ -952,6 +1122,31 @@
 
     function toggleGuide() {
         document.getElementById('guideBox').classList.toggle('open');
+    }
+
+    function switchTopTab(tab) {
+        const btnGuide = document.getElementById('topTabGuide');
+        const btnAction = document.getElementById('topTabAction');
+        const panelGuide = document.getElementById('panelGuide');
+        const panelAction = document.getElementById('panelAction');
+        const bar = document.getElementById('stickyCopyBar');
+
+        if (tab === 'guide') {
+            btnGuide.classList.add('active');
+            btnAction.classList.remove('active');
+            panelGuide.classList.add('active');
+            panelAction.classList.remove('active');
+            if (bar) bar.style.display = 'none';
+        } else {
+            btnGuide.classList.remove('active');
+            btnAction.classList.add('active');
+            panelGuide.classList.remove('active');
+            panelAction.classList.add('active');
+            // sticky bar는 민원 모드일 때만 보이도록 switchMode 로직에 맡김
+            const isMinwon = document.getElementById('sectionMinwon').style.display !== 'none';
+            if (bar) bar.style.display = isMinwon ? '' : 'none';
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     /* ── 진행 현황 (세션 내 유지) ── */
@@ -998,9 +1193,11 @@
         btnEl.classList.add('done');
         const isImportant = IMPORTANT_TABS.includes(key);
         const isUpdated = UPDATED_TABS.includes(key);
+        const dateLabel = DATED_TABS[key] || '';
         const star = isImportant ? '⭐ ' : '';
         const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
-        btnEl.innerHTML = `${newBadge}${star}${key} ✅<span class="copy-hint">탭하면 기관명 복사</span>`;
+        const dateBadge = dateLabel ? `<span class="date-badge">${dateLabel}</span>` : '';
+        btnEl.innerHTML = `${newBadge}${dateBadge}${star}${key} ✅<span class="copy-hint">탭하면 기관명 복사</span>`;
 
         const done = doneTabs.size;
         const total = tabOrder.length;
@@ -1016,25 +1213,74 @@
         updateProgress();
     }
 
+    function makeTabButton(key, isFirst) {
+        const btn = document.createElement('button');
+        const isImportant = IMPORTANT_TABS.includes(key);
+        const isUpdated = UPDATED_TABS.includes(key);
+        const dateLabel = DATED_TABS[key] || '';
+        btn.className = 'tab-btn' + (isFirst ? ' active' : '') + (isImportant ? ' important' : '');
+        const star = isImportant ? '⭐ ' : '';
+        const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
+        const dateBadge = dateLabel ? `<span class="date-badge">${dateLabel}</span>` : '';
+        btn.innerHTML = `${newBadge}${dateBadge}${star}${key}<span class="copy-hint">탭하면 기관명 복사</span>`;
+        btn.dataset.key = key;
+        btn.onclick = () => selectCategory(key, btn);
+        return btn;
+    }
+
+    function toggleMore() {
+        const box = document.getElementById('tabsContainerMore');
+        const btn = document.getElementById('moreToggle');
+        const isOpen = box.style.display !== 'none';
+        box.style.display = isOpen ? 'none' : 'grid';
+        btn.classList.toggle('open', !isOpen);
+        document.getElementById('moreToggleArrow').innerText = isOpen ? '▼' : '▲';
+    }
+
     function buildTabs(order) {
+        const essentialOrder = ESSENTIAL_THIS_WEEK.filter(k => order.includes(k));
+        const otherOrder = order.filter(k => !ESSENTIAL_THIS_WEEK.includes(k));
+
         const c = document.getElementById('tabsContainer');
+        const cMore = document.getElementById('tabsContainerMore');
         c.innerHTML = '';
-        order.forEach((key, idx) => {
-            const btn = document.createElement('button');
-            const isImportant = IMPORTANT_TABS.includes(key);
-            const isUpdated = UPDATED_TABS.includes(key);
-            btn.className = 'tab-btn' + (idx === 0 ? ' active' : '') + (isImportant ? ' important' : '');
-            const star = isImportant ? '⭐ ' : '';
-            const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
-            btn.innerHTML = `${newBadge}${star}${key}<span class="copy-hint">탭하면 기관명 복사</span>`;
-            btn.dataset.key = key;
-            btn.onclick = () => selectCategory(key, btn);
-            c.appendChild(btn);
+        cMore.innerHTML = '';
+
+        essentialOrder.forEach((key, idx) => {
+            c.appendChild(makeTabButton(key, idx === 0));
         });
+        otherOrder.forEach((key) => {
+            cMore.appendChild(makeTabButton(key, false));
+        });
+
+        const moreToggleBtn = document.getElementById('moreToggle');
+        const moreToggleText = document.getElementById('moreToggleText');
+        if (moreToggleBtn) {
+            moreToggleBtn.style.display = otherOrder.length > 0 ? 'flex' : 'none';
+            moreToggleText.innerText = `다른 기관 민원 더보기 (${otherOrder.length}곳)`;
+        }
+
         updateProgress();
-        if (order.length > 0) {
-            currentCategory = order[0];
+        const startKey = essentialOrder.length > 0 ? essentialOrder[0] : order[0];
+        if (startKey) {
+            currentCategory = startKey;
             generateMinwon();
+        }
+    }
+
+    async function trackTabClick(tabName) {
+        try {
+            await fetch(SUPABASE_TAB_CLICKS_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "apikey": SUPABASE_ANON_KEY,
+                    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`
+                },
+                body: JSON.stringify({ tab_name: tabName })
+            });
+        } catch (e) {
+            console.error("탭 클릭 추적 오류:", e);
         }
     }
 
@@ -1043,11 +1289,14 @@
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btnEl.classList.add('active');
         generateMinwon();
+        trackTabClick(key); // 클릭 추적
 
         const isImportant = IMPORTANT_TABS.includes(key);
         const isUpdated = UPDATED_TABS.includes(key);
+        const dateLabel = DATED_TABS[key] || '';
         const star = isImportant ? '⭐ ' : '';
         const newBadge = isUpdated ? '<span class="new-badge">NEW</span>' : '';
+        const dateBadge = dateLabel ? `<span class="date-badge">${dateLabel}</span>` : '';
 
         // 탭 이름(기관명 키워드) 직접 복사 — agency 텍스트가 아닌 key 사용
         if (navigator.clipboard) {
@@ -1056,7 +1305,7 @@
                 const doneTag = wasDone ? ' ✅' : '';
                 btnEl.innerHTML = `✔️ "${key}" 복사됨!<span class="copy-hint">국민신문고 수신기관에 붙여넣기</span>`;
                 setTimeout(() => {
-                    btnEl.innerHTML = `${newBadge}${star}${key}${doneTag}<span class="copy-hint">탭하면 기관명 복사</span>`;
+                    btnEl.innerHTML = `${newBadge}${dateBadge}${star}${key}${doneTag}<span class="copy-hint">탭하면 기관명 복사</span>`;
                     markTabDone(key, btnEl);
                 }, 1400);
             }).catch(() => { markTabDone(key, btnEl); });
@@ -1102,6 +1351,7 @@
     function getInfoString() {
         const complex = document.getElementById('complexSelect').value;
         const dong = document.getElementById('dongNumber').value.trim();
+        if (!complex) return "지역";
         return dong ? `${complex} ${dong}동` : complex;
     }
 
@@ -1111,34 +1361,62 @@
         if (isManualRefresh) {
             selectedMayorIdx = getRandomIndex(smsTemplates.mayor.openings.length);
             selectedMayorCloseIdx = getRandomIndex(smsTemplates.mayor.closings.length);
-            selectedCounselorIdx = getRandomIndex(smsTemplates.counselor.openings.length);
-            selectedCounselorCloseIdx = getRandomIndex(smsTemplates.counselor.closings.length);
+            selectedChoiIdx = getRandomIndex(smsTemplates.choi.openings.length);
+            selectedChoiCloseIdx = getRandomIndex(smsTemplates.choi.closings.length);
             selectedLeeIdx = getRandomIndex(smsTemplates.lee.openings.length);
             selectedLeeCloseIdx = getRandomIndex(smsTemplates.lee.closings.length);
-            selectedKimIdx = getRandomIndex(smsTemplates.kim.openings.length);
-            selectedKimCloseIdx = getRandomIndex(smsTemplates.kim.closings.length);
+            selectedCounselorIdx = getRandomIndex(smsTemplates.counselor.openings.length);
+            selectedCounselorCloseIdx = getRandomIndex(smsTemplates.counselor.closings.length);
+            selectedKimDHIdx = getRandomIndex(smsTemplates.kimdh.openings.length);
+            selectedKimDHCloseIdx = getRandomIndex(smsTemplates.kimdh.closings.length);
+            selectedHwangIdx = getRandomIndex(smsTemplates.hwang.openings.length);
+            selectedHwangCloseIdx = getRandomIndex(smsTemplates.hwang.closings.length);
+            selectedJiIdx = getRandomIndex(smsTemplates.ji.openings.length);
+            selectedJiCloseIdx = getRandomIndex(smsTemplates.ji.closings.length);
+            selectedYuIdx = getRandomIndex(smsTemplates.yu.openings.length);
+            selectedYuCloseIdx = getRandomIndex(smsTemplates.yu.closings.length);
             selectedS2Idx = getRandomIndex(smsTemplates.seochoCommon.openingsJeon.length);
             selectedS2CloseIdx = getRandomIndex(smsTemplates.seochoCommon.closings.length);
             selectedS3Idx = getRandomIndex(smsTemplates.seochoCommon.openingsShin.length);
             selectedS3CloseIdx = getRandomIndex(smsTemplates.seochoCommon.closings.length);
         }
 
+        // 1그룹
         const mOpen = smsTemplates.mayor.openings[selectedMayorIdx].replace("[INFO]", info);
         const mClose = smsTemplates.mayor.closings[selectedMayorCloseIdx];
         updateSmsCard('Mayor', smsTemplates.mayor.phone, mOpen, smsTemplates.mayor.body1, smsTemplates.mayor.body2, mClose);
 
-        const cOpen = smsTemplates.counselor.openings[selectedCounselorIdx].replace("[INFO]", info);
-        const cClose = smsTemplates.counselor.closings[selectedCounselorCloseIdx];
-        updateSmsCard('Counselor', smsTemplates.counselor.phone, cOpen, smsTemplates.counselor.body1, smsTemplates.counselor.body2, cClose);
+        const choiOpen = smsTemplates.choi.openings[selectedChoiIdx].replace("[INFO]", info);
+        const choiClose = smsTemplates.choi.closings[selectedChoiCloseIdx];
+        updateSmsCard('Choi', smsTemplates.choi.phone, choiOpen, smsTemplates.choi.body1, smsTemplates.choi.body2, choiClose);
 
         const lOpen = smsTemplates.lee.openings[selectedLeeIdx].replace("[INFO]", info);
         const lClose = smsTemplates.lee.closings[selectedLeeCloseIdx];
         updateSmsCard('Lee', smsTemplates.lee.phone, lOpen, smsTemplates.lee.body1, smsTemplates.lee.body2, lClose);
 
-        const kOpen = smsTemplates.kim.openings[selectedKimIdx].replace("[INFO]", info);
-        const kClose = smsTemplates.kim.closings[selectedKimCloseIdx];
-        updateSmsCard('Kim', smsTemplates.kim.phone, kOpen, smsTemplates.kim.body1, smsTemplates.kim.body2, kClose);
+        // 2그룹
+        const cOpen = smsTemplates.counselor.openings[selectedCounselorIdx].replace("[INFO]", info);
+        const cClose = smsTemplates.counselor.closings[selectedCounselorCloseIdx];
+        updateSmsCard('Counselor', smsTemplates.counselor.phone, cOpen, smsTemplates.counselor.body1, smsTemplates.counselor.body2, cClose);
 
+        const kdOpen = smsTemplates.kimdh.openings[selectedKimDHIdx].replace("[INFO]", info);
+        const kdClose = smsTemplates.kimdh.closings[selectedKimDHCloseIdx];
+        updateSmsCard('KimDH', smsTemplates.kimdh.phone, kdOpen, smsTemplates.kimdh.body1, smsTemplates.kimdh.body2, kdClose);
+
+        // 3그룹
+        const hwOpen = smsTemplates.hwang.openings[selectedHwangIdx].replace("[INFO]", info);
+        const hwClose = smsTemplates.hwang.closings[selectedHwangCloseIdx];
+        updateSmsCard('Hwang', smsTemplates.hwang.phone, hwOpen, smsTemplates.hwang.body1, smsTemplates.hwang.body2, hwClose);
+
+        const jiOpen = smsTemplates.ji.openings[selectedJiIdx].replace("[INFO]", info);
+        const jiClose = smsTemplates.ji.closings[selectedJiCloseIdx];
+        updateSmsCard('Ji', smsTemplates.ji.phone, jiOpen, smsTemplates.ji.body1, smsTemplates.ji.body2, jiClose);
+
+        const yuOpen = smsTemplates.yu.openings[selectedYuIdx].replace("[INFO]", info);
+        const yuClose = smsTemplates.yu.closings[selectedYuCloseIdx];
+        updateSmsCard('Yu', smsTemplates.yu.phone, yuOpen, smsTemplates.yu.body1, smsTemplates.yu.body2, yuClose);
+
+        // 4그룹
         const s2Open = smsTemplates.seochoCommon.openingsJeon[selectedS2Idx].replace("[INFO]", info);
         const s2Close = smsTemplates.seochoCommon.closings[selectedS2CloseIdx];
         updateSmsCard('Seocho2_', "01095799246", s2Open, smsTemplates.seochoCommon.body1, smsTemplates.seochoCommon.body2, s2Close);
@@ -1150,7 +1428,9 @@
 
     function updateSmsCard(idKey, phone, open, b1, b2, close) {
         const part1Text = open + b1;
-        const part2Text = b2 + close;
+        // b2 끝의 연속 개행을 정리한 뒤 close를 붙임 (iOS 메시지 앱이 끝부분 개행+텍스트를 자르는 현상 방지)
+        const b2Trimmed = b2.replace(/\n+$/, '\n');
+        const part2Text = b2Trimmed + close;
 
         document.getElementById(`smsPreview${idKey}1`).innerText = part1Text;
         document.getElementById(`smsPreview${idKey}2`).innerText = part2Text;
@@ -1263,7 +1543,6 @@
     }
 
     async function initData() {
-        loadTodayCount();
         try {
             const res = await fetch(SHEET_CSV_URL);
             if(!res.ok) throw new Error("시트 데이터 획득 실패");
