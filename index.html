@@ -632,22 +632,12 @@
 
         <!-- SMS 진행 체크표 -->
         <div id="smsTrackerWrap" style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin-bottom:14px">
-            <div style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:10px">📋 발송 현황 — 10명 중 <span id="trackerCount" style="color:#dc2626">0</span>명 완료</div>
+            <div style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:10px">📋 발송 현황 — 4명 중 <span id="trackerCount" style="color:#dc2626">0</span>명 완료</div>
             <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;font-size:12px">
-                <div style="font-size:11px;font-weight:600;color:#64748b;grid-column:1/-1;padding-bottom:2px;border-bottom:1px solid #e2e8f0;margin-bottom:2px">① 신계용 시장·최기식 위원장·이소영 의원</div>
+                <div style="font-size:11px;font-weight:600;color:#64748b;grid-column:1/-1;padding-bottom:2px;border-bottom:1px solid #e2e8f0;margin-bottom:2px">① 과천시 · 국회의원</div>
                 <div class="tracker-row" id="tracker-Mayor">⬜ 신계용 시장</div>
-                <div class="tracker-row" id="tracker-Choi">⬜ 최기식 당협위원장</div>
                 <div class="tracker-row" id="tracker-Lee">⬜ 이소영 국회의원</div>
-                <div style="opacity:0"></div>
-                <div style="font-size:11px;font-weight:600;color:#64748b;grid-column:1/-1;padding-bottom:2px;border-bottom:1px solid #e2e8f0;margin-bottom:2px;margin-top:4px">② 지역구 의원</div>
-                <div class="tracker-row" id="tracker-Counselor">⬜ 김동진 부의장</div>
-                <div class="tracker-row" id="tracker-KimDH">⬜ 김현석 도의원</div>
-                <div style="font-size:11px;font-weight:600;color:#64748b;grid-column:1/-1;padding-bottom:2px;border-bottom:1px solid #e2e8f0;margin-bottom:2px;margin-top:4px">③ 비지역구 의원</div>
-                <div class="tracker-row" id="tracker-Hwang">⬜ 황선희 시의장</div>
-                <div class="tracker-row" id="tracker-Ji">⬜ 지태훈 시의원</div>
-                <div class="tracker-row" id="tracker-Yu">⬜ 유부임 시의원</div>
-                <div style="opacity:0"></div>
-                <div style="font-size:11px;font-weight:600;color:#64748b;grid-column:1/-1;padding-bottom:2px;border-bottom:1px solid #e2e8f0;margin-bottom:2px;margin-top:4px">④ 서초구 관계자</div>
+                <div style="font-size:11px;font-weight:600;color:#64748b;grid-column:1/-1;padding-bottom:2px;border-bottom:1px solid #e2e8f0;margin-bottom:2px;margin-top:4px">② 서초구 관계자</div>
                 <div class="tracker-row" id="tracker-Seocho2_">⬜ 전성수 구청장</div>
                 <div class="tracker-row" id="tracker-Seocho3_">⬜ 신동욱 의원</div>
             </div>
@@ -657,7 +647,7 @@
         <div class="sms-progress-wrap" id="smsProgressWrap" style="display:none;">
             <div class="sms-progress-header">
                 <span id="smsProgressLabel">📱 문자 발송 현황</span>
-                <span id="smsProgressCount" style="color:#dc2626;">0 / 10</span>
+                <span id="smsProgressCount" style="color:#dc2626;">0 / 4</span>
             </div>
             <div class="sms-progress-bar-bg">
                 <div class="sms-progress-bar-fill" id="smsProgressFill" style="width:0%"></div>
@@ -666,7 +656,7 @@
 
         <button class="action-btn btn-sms-refresh" onclick="generateSms(true)">🔄 [매일매일 새롭게] 모든 항의 문자 어조 새로고침</button>
 
-        <div class="sms-section-title">📍 1그룹 — 신계용 시장 · 최기식 당협위원장 · 이소영 국회의원</div>
+        <div class="sms-section-title">📍 과천시 · 국회의원</div>
 
         <div class="sms-target-card" id="smsCard-Mayor" data-sms-key="Mayor">
             <div class="sms-header">
@@ -685,22 +675,6 @@
             </div>
         </div>
 
-        <div class="sms-target-card" id="smsCard-Choi" data-sms-key="Choi">
-            <div class="sms-header">
-                <div class="sms-target-info">
-                    <strong>👤 최기식 당협위원장</strong> (010-6462-0381)
-                    <span class="sms-done-badge">✅ 발송 완료</span>
-                </div>
-                <div class="sms-btn-group">
-                    <a id="smsLinkChoi1" href="#" class="sms-send-link" onclick="markSmsDone('Choi')">① 1차 전송</a>
-                    <a id="smsLinkChoi2" href="#" class="sms-send-link part2" onclick="markSmsDone('Choi')">② 2차 전송</a>
-                </div>
-            </div>
-            <div class="sms-preview-grid">
-                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewChoi1" class="sms-preview-box">로딩 중...</div></div>
-                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewChoi2" class="sms-preview-box">로딩 중...</div></div>
-            </div>
-        </div>
 
         <div class="sms-target-card" id="smsCard-Lee" data-sms-key="Lee">
             <div class="sms-header">
@@ -719,96 +693,12 @@
             </div>
         </div>
 
-        <div class="sms-section-title">📍 2그룹 — 지역구 의원 (김동진 부의장 · 김현석 도의원)</div>
 
-        <div class="sms-target-card" id="smsCard-Counselor" data-sms-key="Counselor">
-            <div class="sms-header">
-                <div class="sms-target-info">
-                    <strong>👤 김동진 부의장</strong> (010-7933-7536)
-                    <span class="sms-done-badge">✅ 발송 완료</span>
-                </div>
-                <div class="sms-btn-group">
-                    <a id="smsLinkCounselor1" href="#" class="sms-send-link" onclick="markSmsDone('Counselor')">① 1차 전송</a>
-                    <a id="smsLinkCounselor2" href="#" class="sms-send-link part2" onclick="markSmsDone('Counselor')">② 2차 전송</a>
-                </div>
-            </div>
-            <div class="sms-preview-grid">
-                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewCounselor1" class="sms-preview-box">로딩 중...</div></div>
-                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewCounselor2" class="sms-preview-box">로딩 중...</div></div>
-            </div>
-        </div>
 
-        <div class="sms-target-card" id="smsCard-KimDH" data-sms-key="KimDH">
-            <div class="sms-header">
-                <div class="sms-target-info">
-                    <strong>👤 김현석 도의원</strong> (010-4597-1659)
-                    <span class="sms-done-badge">✅ 발송 완료</span>
-                </div>
-                <div class="sms-btn-group">
-                    <a id="smsLinkKimDH1" href="#" class="sms-send-link" onclick="markSmsDone('KimDH')">① 1차 전송</a>
-                    <a id="smsLinkKimDH2" href="#" class="sms-send-link part2" onclick="markSmsDone('KimDH')">② 2차 전송</a>
-                </div>
-            </div>
-            <div class="sms-preview-grid">
-                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewKimDH1" class="sms-preview-box">로딩 중...</div></div>
-                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewKimDH2" class="sms-preview-box">로딩 중...</div></div>
-            </div>
-        </div>
 
-        <div class="sms-section-title">📍 3그룹 — 비지역구 의원 (황선희 의장 · 지태훈 · 유부임)</div>
 
-        <div class="sms-target-card" id="smsCard-Hwang" data-sms-key="Hwang">
-            <div class="sms-header">
-                <div class="sms-target-info">
-                    <strong>👤 황선희 시의회 의장</strong> (010-8227-5139)
-                    <span class="sms-done-badge">✅ 발송 완료</span>
-                </div>
-                <div class="sms-btn-group">
-                    <a id="smsLinkHwang1" href="#" class="sms-send-link" onclick="markSmsDone('Hwang')">① 1차 전송</a>
-                    <a id="smsLinkHwang2" href="#" class="sms-send-link part2" onclick="markSmsDone('Hwang')">② 2차 전송</a>
-                </div>
-            </div>
-            <div class="sms-preview-grid">
-                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewHwang1" class="sms-preview-box">로딩 중...</div></div>
-                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewHwang2" class="sms-preview-box">로딩 중...</div></div>
-            </div>
-        </div>
 
-        <div class="sms-target-card" id="smsCard-Ji" data-sms-key="Ji">
-            <div class="sms-header">
-                <div class="sms-target-info">
-                    <strong>👤 지태훈 시의원</strong> (010-4429-1766)
-                    <span class="sms-done-badge">✅ 발송 완료</span>
-                </div>
-                <div class="sms-btn-group">
-                    <a id="smsLinkJi1" href="#" class="sms-send-link" onclick="markSmsDone('Ji')">① 1차 전송</a>
-                    <a id="smsLinkJi2" href="#" class="sms-send-link part2" onclick="markSmsDone('Ji')">② 2차 전송</a>
-                </div>
-            </div>
-            <div class="sms-preview-grid">
-                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewJi1" class="sms-preview-box">로딩 중...</div></div>
-                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewJi2" class="sms-preview-box">로딩 중...</div></div>
-            </div>
-        </div>
-
-        <div class="sms-target-card" id="smsCard-Yu" data-sms-key="Yu">
-            <div class="sms-header">
-                <div class="sms-target-info">
-                    <strong>👤 유부임 시의원</strong> (010-5186-8058)
-                    <span class="sms-done-badge">✅ 발송 완료</span>
-                </div>
-                <div class="sms-btn-group">
-                    <a id="smsLinkYu1" href="#" class="sms-send-link" onclick="markSmsDone('Yu')">① 1차 전송</a>
-                    <a id="smsLinkYu2" href="#" class="sms-send-link part2" onclick="markSmsDone('Yu')">② 2차 전송</a>
-                </div>
-            </div>
-            <div class="sms-preview-grid">
-                <div><div class="sms-preview-title">📄 1차 본문 미리보기</div><div id="smsPreviewYu1" class="sms-preview-box">로딩 중...</div></div>
-                <div><div class="sms-preview-title">📄 2차 본문 미리보기</div><div id="smsPreviewYu2" class="sms-preview-box">로딩 중...</div></div>
-            </div>
-        </div>
-
-        <div class="sms-section-title">📍 4그룹 — 서초구청 및 정계 관계자 (양재천 유역 주민 강력 요구)</div>
+        <div class="sms-section-title">📍 서초구 관계자</div>
 
         <div class="sms-target-card" id="smsCard-Seocho2_" data-sms-key="Seocho2_">
             <div class="sms-header">
@@ -905,13 +795,7 @@
     let tabOrder = [];
 
     let selectedMayorIdx = 0; let selectedMayorCloseIdx = 0;
-    let selectedChoiIdx = 0; let selectedChoiCloseIdx = 0;
     let selectedLeeIdx = 0; let selectedLeeCloseIdx = 0;
-    let selectedCounselorIdx = 0; let selectedCounselorCloseIdx = 0;
-    let selectedKimDHIdx = 0; let selectedKimDHCloseIdx = 0;
-    let selectedHwangIdx = 0; let selectedHwangCloseIdx = 0;
-    let selectedJiIdx = 0; let selectedJiCloseIdx = 0;
-    let selectedYuIdx = 0; let selectedYuCloseIdx = 0;
     let selectedS2Idx = 0; let selectedS2CloseIdx = 0;
     let selectedS3Idx = 0; let selectedS3CloseIdx = 0;
 
@@ -1116,7 +1000,7 @@
 
     /* ── SMS 발송 완료 추적 ── */
     const doneSms = new Set();
-    const SMS_TOTAL = 10;
+    const SMS_TOTAL = 4;
 
     const smsСheers = [
         "📱 발송 완료! 이 기세 유지해요!",
@@ -1162,7 +1046,7 @@
         if (done === SMS_TOTAL) {
             document.getElementById('smsProgressLabel').innerText = '🎉 전원 발송 완료!';
             msg = "🎉 10명 전원 발송 완료!\n진짜 대단해요, 최고의 주민 전사! 🏆";
-        } else if (done === 5) {
+        } else if (done === 2) {
             document.getElementById('smsProgressLabel').innerText = `📱 문자 발송 현황 (절반 돌파!)`;
             msg = `💥 절반 돌파! ${done}/${SMS_TOTAL} 발송!\n5명 남았어요, 끝까지 가봐요!`;
         } else {
@@ -1437,20 +1321,8 @@
         if (isManualRefresh) {
             selectedMayorIdx = getRandomIndex(smsTemplates.mayor.openings.length);
             selectedMayorCloseIdx = getRandomIndex(smsTemplates.mayor.closings.length);
-            selectedChoiIdx = getRandomIndex(smsTemplates.choi.openings.length);
-            selectedChoiCloseIdx = getRandomIndex(smsTemplates.choi.closings.length);
             selectedLeeIdx = getRandomIndex(smsTemplates.lee.openings.length);
             selectedLeeCloseIdx = getRandomIndex(smsTemplates.lee.closings.length);
-            selectedCounselorIdx = getRandomIndex(smsTemplates.counselor.openings.length);
-            selectedCounselorCloseIdx = getRandomIndex(smsTemplates.counselor.closings.length);
-            selectedKimDHIdx = getRandomIndex(smsTemplates.kimdh.openings.length);
-            selectedKimDHCloseIdx = getRandomIndex(smsTemplates.kimdh.closings.length);
-            selectedHwangIdx = getRandomIndex(smsTemplates.hwang.openings.length);
-            selectedHwangCloseIdx = getRandomIndex(smsTemplates.hwang.closings.length);
-            selectedJiIdx = getRandomIndex(smsTemplates.ji.openings.length);
-            selectedJiCloseIdx = getRandomIndex(smsTemplates.ji.closings.length);
-            selectedYuIdx = getRandomIndex(smsTemplates.yu.openings.length);
-            selectedYuCloseIdx = getRandomIndex(smsTemplates.yu.closings.length);
             selectedS2Idx = getRandomIndex(smsTemplates.seochoCommon.openingsJeon.length);
             selectedS2CloseIdx = getRandomIndex(smsTemplates.seochoCommon.closings.length);
             selectedS3Idx = getRandomIndex(smsTemplates.seochoCommon.openingsShin.length);
@@ -1462,37 +1334,11 @@
         const mClose = smsTemplates.mayor.closings[selectedMayorCloseIdx];
         updateSmsCard('Mayor', smsTemplates.mayor.phone, mOpen, smsTemplates.mayor.body1, smsTemplates.mayor.body2, mClose);
 
-        const choiOpen = smsTemplates.choi.openings[selectedChoiIdx].replace("[INFO]", info);
-        const choiClose = smsTemplates.choi.closings[selectedChoiCloseIdx];
-        updateSmsCard('Choi', smsTemplates.choi.phone, choiOpen, smsTemplates.choi.body1, smsTemplates.choi.body2, choiClose);
-
         const lOpen = smsTemplates.lee.openings[selectedLeeIdx].replace("[INFO]", info);
         const lClose = smsTemplates.lee.closings[selectedLeeCloseIdx];
         updateSmsCard('Lee', smsTemplates.lee.phone, lOpen, smsTemplates.lee.body1, smsTemplates.lee.body2, lClose);
 
-        // 2그룹
-        const cOpen = smsTemplates.counselor.openings[selectedCounselorIdx].replace("[INFO]", info);
-        const cClose = smsTemplates.counselor.closings[selectedCounselorCloseIdx];
-        updateSmsCard('Counselor', smsTemplates.counselor.phone, cOpen, smsTemplates.counselor.body1, smsTemplates.counselor.body2, cClose);
-
-        const kdOpen = smsTemplates.kimdh.openings[selectedKimDHIdx].replace("[INFO]", info);
-        const kdClose = smsTemplates.kimdh.closings[selectedKimDHCloseIdx];
-        updateSmsCard('KimDH', smsTemplates.kimdh.phone, kdOpen, smsTemplates.kimdh.body1, smsTemplates.kimdh.body2, kdClose);
-
-        // 3그룹
-        const hwOpen = smsTemplates.hwang.openings[selectedHwangIdx].replace("[INFO]", info);
-        const hwClose = smsTemplates.hwang.closings[selectedHwangCloseIdx];
-        updateSmsCard('Hwang', smsTemplates.hwang.phone, hwOpen, smsTemplates.hwang.body1, smsTemplates.hwang.body2, hwClose);
-
-        const jiOpen = smsTemplates.ji.openings[selectedJiIdx].replace("[INFO]", info);
-        const jiClose = smsTemplates.ji.closings[selectedJiCloseIdx];
-        updateSmsCard('Ji', smsTemplates.ji.phone, jiOpen, smsTemplates.ji.body1, smsTemplates.ji.body2, jiClose);
-
-        const yuOpen = smsTemplates.yu.openings[selectedYuIdx].replace("[INFO]", info);
-        const yuClose = smsTemplates.yu.closings[selectedYuCloseIdx];
-        updateSmsCard('Yu', smsTemplates.yu.phone, yuOpen, smsTemplates.yu.body1, smsTemplates.yu.body2, yuClose);
-
-        // 4그룹
+        // 서초구
         const s2Open = smsTemplates.seochoCommon.openingsJeon[selectedS2Idx].replace("[INFO]", info);
         const s2Close = smsTemplates.seochoCommon.closings[selectedS2CloseIdx];
         updateSmsCard('Seocho2_', "01095799246", s2Open, smsTemplates.seochoCommon.body1, smsTemplates.seochoCommon.body2, s2Close);
@@ -1676,7 +1522,7 @@
 </script>
     <!-- 📍 고정 하단 플로팅 진행 바 -->
     <div class="sms-float-bar" id="smsFloatBar" onclick="document.getElementById('smsTrackerWrap').scrollIntoView({behavior:'smooth',block:'start'})">
-        <div class="sms-float-count"><span id="smsFloatDone">0</span> / 10 완료</div>
+        <div class="sms-float-count"><span id="smsFloatDone">0</span> / 4 완료</div>
         <div class="sms-float-mini-bar"><div class="sms-float-mini-fill" id="smsFloatFill"></div></div>
         <div class="sms-float-label" id="smsFloatLabel">↑ 현황 보기</div>
     </div>
