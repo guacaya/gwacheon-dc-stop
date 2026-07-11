@@ -701,6 +701,117 @@
         </div>
     </div>
 
+    <!-- ✨ AI 민원 생성 섹션 -->
+    <div id="sectionAi" style="display:none; padding-bottom:100px;">
+
+      <!-- 페르소나 설정 화면 -->
+      <div id="aiPersonaSetup">
+        <div style="background:#F5F3FF;border:1px solid #DDD6FE;border-radius:12px;padding:16px 18px;margin-bottom:16px;">
+          <div style="font-size:14px;font-weight:700;color:#5B21B6;margin-bottom:6px;">✨ 내 이야기로 민원 쓰기</div>
+          <div style="font-size:13px;color:#6D28D9;line-height:1.6;">페르소나를 한 번만 설정하면 AI가 <b>내 실제 상황</b>에 맞는 민원을 매번 다르게 작성합니다. 300명이 300개의 다른 민원을 낼 수 있어요.</div>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:14px;">
+          <div style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:18px;">👤 나는 어떤 사람인가요?</div>
+          <div style="margin-bottom:14px;">
+            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">나의 신분 <span style="color:#dc2626">*</span></label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="roleGrid">
+              <button class="role-btn" onclick="selectRole(this,'아델스타 입주예정자')">🏠 아델스타 입주예정자</button>
+              <button class="role-btn" onclick="selectRole(this,'인근 과천 거주민')">🏘️ 과천 거주민</button>
+              <button class="role-btn" onclick="selectRole(this,'서초구 우면동 거주민')">📍 서초구 우면동 거주민</button>
+              <button class="role-btn" onclick="selectRole(this,'어린이집·학교 학부모')">👶 학부모</button>
+              <button class="role-btn" onclick="selectRole(this,'어린이집 교사·원장')">🎓 어린이집 교사·원장</button>
+              <button class="role-btn" onclick="selectRole(this,'건강이 걱정되는 주민')">🏥 건강 취약자·고령자</button>
+            </div>
+          </div>
+          <div style="margin-bottom:14px;">
+            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">거주 지역</label>
+            <input id="pArea" type="text" placeholder="예: 서초구 우면동 / 과천시 부림동 / 아델스타 예약자" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;box-sizing:border-box;">
+          </div>
+          <div style="margin-bottom:14px;">
+            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">이 아파트/지역을 선택한 이유</label>
+            <textarea id="pReason" rows="2" placeholder="예: 아이 학교 때문에 / 양재천 환경이 좋아서 / 전 재산을 걸고 청약했습니다" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;box-sizing:border-box;resize:vertical;"></textarea>
+          </div>
+          <div style="margin-bottom:14px;">
+            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">가족 상황 <span style="font-weight:400">(선택)</span></label>
+            <input id="pFamily" type="text" placeholder="예: 초등학생 자녀 둘 / 만 2세 아이 / 70대 부모님과 동거 예정" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;box-sizing:border-box;">
+          </div>
+          <div style="margin-bottom:18px;">
+            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">가장 걱정되는 것 <span style="color:#dc2626">*</span></label>
+            <textarea id="pWorry" rows="2" placeholder="예: 아이들 놀이터 옆에 경유탱크가 들어온다 / 24시간 소음으로 수면을 못 잘 것 같다 / 전자파가 걱정된다" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;box-sizing:border-box;resize:vertical;"></textarea>
+          </div>
+          <button onclick="savePersona()" style="width:100%;padding:14px;background:#5B21B6;color:#fff;font-size:15px;font-weight:700;border:none;border-radius:10px;cursor:pointer;">내 페르소나 저장하고 민원 작성 시작 →</button>
+        </div>
+      </div>
+
+      <!-- 민원 생성 화면 -->
+      <div id="aiGenScreen" style="display:none;">
+        <div id="aiPersonaCard" style="background:#F5F3FF;border:1px solid #C4B5FD;border-radius:12px;padding:14px 16px;margin-bottom:14px;position:relative;">
+          <div style="font-size:11px;font-weight:700;color:#7C3AED;margin-bottom:6px;letter-spacing:.05em;">내 페르소나</div>
+          <div id="aiPersonaSummary" style="font-size:13px;color:#3B0764;line-height:1.65;"></div>
+          <button onclick="editPersona()" style="position:absolute;top:12px;right:12px;padding:4px 10px;background:#EDE9FE;color:#5B21B6;border:1px solid #C4B5FD;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;">✏️ 수정</button>
+        </div>
+        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 20px;margin-bottom:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div style="font-size:13px;font-weight:700;color:#1e293b;">오늘의 민원 각도</div>
+            <div id="aiAngleBadge" style="font-size:11px;background:#ECFDF5;color:#065F46;border:1px solid #6EE7B7;padding:3px 10px;border-radius:99px;font-weight:600;"></div>
+          </div>
+          <div id="aiAngleDesc" style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:12px;"></div>
+          <div style="margin-bottom:12px;">
+            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">각도 직접 바꾸기 <span style="font-weight:400">(선택)</span></label>
+            <select id="aiAngleSelect" onchange="updateAngleDesc()" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;">
+              <option value="0">🔄 쪼개기 편법 — 분산에너지법 제23조 질의</option>
+              <option value="1">👶 어린이집 이격기준 — 영유아보육법 제9조 질의</option>
+              <option value="2">🔥 경유탱크 화재위험 — 소방 안전기준 질의</option>
+              <option value="3">⚡ 22.9kV 특고압·전자파 — 실측 자료 요구</option>
+              <option value="4">📄 리츠 목적 불일치 — 오피스→데이터센터 위법 질의</option>
+              <option value="5">🌿 양재천 생태계 — 환경영향평가 누락 질의</option>
+              <option value="6">🏛️ 주거권·건강권 — 헌법 제35조 국가 보호의무 질의</option>
+            </select>
+          </div>
+          <div style="margin-bottom:14px;">
+            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">민원 대상 기관</label>
+            <select id="aiTarget" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;">
+              <option value="gwacheon_build">과천시 건축허가과</option>
+              <option value="gwacheon_city">과천시장 (신계용)</option>
+              <option value="lh">LH 의왕과천사업본부</option>
+              <option value="molit">국토교통부 부동산제도과</option>
+              <option value="kreic">한국부동산원</option>
+              <option value="kepco">한국전력공사</option>
+              <option value="moe">기후에너지환경부</option>
+            </select>
+          </div>
+          <button onclick="generateAiMinwon()" id="aiGenBtn" style="width:100%;padding:14px;background:#7C3AED;color:#fff;font-size:15px;font-weight:700;border:none;border-radius:10px;cursor:pointer;">✨ 내 이야기로 민원 생성하기</button>
+        </div>
+        <div id="aiResultWrap" style="display:none;">
+          <div style="background:#fff;border:2px solid #7C3AED;border-radius:12px;padding:20px;margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <div style="font-size:13px;font-weight:700;color:#5B21B6;">생성된 민원</div>
+              <div style="display:flex;gap:8px;">
+                <button onclick="regenerateAiMinwon()" style="padding:6px 12px;background:#F5F3FF;color:#5B21B6;border:1px solid #DDD6FE;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">🔄 재생성</button>
+                <button onclick="copyAiMinwon()" id="aiCopyBtn" style="padding:6px 12px;background:#7C3AED;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">📋 복사</button>
+              </div>
+            </div>
+            <textarea id="aiResultText" rows="13" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:8px;font-size:13px;line-height:1.8;box-sizing:border-box;resize:vertical;color:#1f2937;font-family:inherit;"></textarea>
+            <div style="margin-top:6px;font-size:11px;color:#9CA3AF;" id="aiCharCount"></div>
+          </div>
+          <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:14px 16px;margin-bottom:12px;">
+            <div style="font-size:12px;font-weight:700;color:#92400E;margin-bottom:8px;">📤 복사 후 국민신문고에 붙여넣기</div>
+            <a href="https://www.epeople.go.kr/nep/cit/cmpla/retrieveCmpltEntrView.npaid" target="_blank" style="display:inline-block;padding:8px 16px;background:#EA580C;color:#fff;border-radius:7px;font-size:13px;font-weight:600;text-decoration:none;">국민신문고 민원 작성 →</a>
+          </div>
+          <div style="background:#F0FDF4;border:1px solid #86EFAC;border-radius:10px;padding:12px 14px;">
+            <div style="font-size:12px;font-weight:600;color:#065F46;margin-bottom:4px;">💡 팁</div>
+            <div style="font-size:12px;color:#14532D;line-height:1.65;">내일 또 제출하고 싶다면 각도를 바꿔서 재생성하세요. 내 페르소나는 그대로, 강조점만 달라져서 완전히 다른 민원이 만들어집니다.</div>
+          </div>
+        </div>
+        <div id="aiLoadingWrap" style="display:none;text-align:center;padding:40px 20px;">
+          <div style="font-size:32px;margin-bottom:12px;animation:spin 1s linear infinite;display:inline-block">⚙️</div>
+          <div style="font-size:14px;color:#5B21B6;font-weight:600;" id="aiLoadingMsg">내 이야기로 민원을 작성 중입니다...</div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /AI section -->
+
     <hr class="section-divider">
 
     <!-- 📂 현장 방문 민원 서류 다운로드 (수요가 적어 하단으로 이동) -->
@@ -1592,280 +1703,8 @@ ${p.family ? '가족 상황: ' + p.family : ''}
         else { document.getElementById('aiPersonaSetup').style.display='block'; document.getElementById('aiGenScreen').style.display='none'; }
     };
 
+</script>
 
-
-    const AI_CONTEXT = `당신은 과천 주암지구 데이터센터 반대 주민을 위해 국민신문고 민원을 작성하는 도우미입니다.
-
-[사건 핵심 사실]
-- 과천 주암지구 업무시설용지(1-1, 1-2, 1-7, 1-8, 1-9BL)에 50MW급 대규모 데이터센터 5개 동 건립 추진 중
-- 아파트 단지(디에이치아델스타 880세대 포함)와의 이격거리: 불과 30m
-- 반경 1km 내 어린이집 32개소, 학교 5개교 밀집
-- 비상발전용 경유 저장탱크 대용량 설치 예정
-- 22.9kV 특고압(전기사업법 제2조: 7,000V 초과 = 특고압) 설비 건물 내 24시간 운영
-- 냉각탑 24시간 소음·진동 발생
-- 양재천 생태계 인접
-
-[핵심 법적 쟁점]
-- 분산에너지 활성화 특별법 제23조: 계약전력 10MW 이상은 전력계통영향평가 의무
-  → 사업자는 50MW를 10MW씩 필지·법인 단위로 쪼개 평가 회피 의혹 (쪼개기 편법)
-- 영유아보육법 시행규칙 제9조: 어린이집은 위험시설로부터 50m 이상 이격 기준
-- 최초 리츠 영업인가 목적: 오피스(업무시설) → 실제 추진: 데이터센터 (목적 불일치)
-- LH 공급공고문에 지구단위계획 변경 가능성 명시 → 사업자도 변경 가능성 인지
-
-[사업 구조]
-- 시행사: 웰스어드바이저스
-- AMC: 코람코자산신탁(1-7·8·9BL), 마스턴투자운용(1-1·2BL)
-- LG유플러스 등이 임차인으로 확보된 것으로 파악됨
-- 원주민(대토보상권자)들은 PF 단계에서 이익 실현 후 대부분 이탈 — 실제 수혜자는 웰스어드바이저스·코람코
-
-[기관별 관할]
-- 과천시 건축허가과: 건축 허가 심의, 이격거리 및 안전 기준 검토
-- 과천시장: 허가 방침 및 지구단위계획 변경 건의
-- LH: 미매각 용지 허용용도 삭제, 지구단위계획 변경 가능
-- 국토교통부 부동산제도과: 리츠 사업계획 변경인가 심사 주무부서
-- 한국부동산원: 리츠 사업계획 변경 심사 수행기관
-- 한국전력공사: 수전 통보 및 전력 공급 결정
-- 기후에너지환경부: 분산에너지법 소관 부처, 전력계통영향평가 감독`;
-
-    const AI_TARGETS = {
-        gwacheon_build: { name: '과천시 건축허가과', focus: '건축 허가 심의 시 이격거리·안전 기준 검토 및 전문기관 용역 의뢰를 촉구하는 민원' },
-        gwacheon_city: { name: '과천시장(신계용)', focus: '인허가 불허 공약 이행 촉구 및 지구단위계획 변경 건의를 요청하는 민원' },
-        lh: { name: 'LH 의왕과천사업본부', focus: '미매각 용지 방송통신시설(데이터센터) 허용용도 삭제 및 지구단위계획 변경을 촉구하는 민원' },
-        molit: { name: '국토교통부 부동산제도과', focus: '리츠 사업계획 변경인가 심사 보류 및 쪼개기 편법 조사를 요청하는 민원' },
-        kreic: { name: '한국부동산원', focus: '리츠 사업계획 변경 심사 시 공익성 검토 및 분산에너지법 위반 의혹 확인을 요청하는 민원' },
-        kepco: { name: '한국전력공사', focus: '50MW 합산 사업에 대한 쪼개기 분리 수전의 적법성 검토 및 전력 공급 결정 보류를 요청하는 민원' },
-        moe: { name: '기후에너지환경부', focus: '분산에너지법 제23조 전력계통영향평가 쪼개기 회피 의혹 조사를 요청하는 민원' },
-    };
-
-    let lastAiParams = null;
-
-    async function generateAiMinwon() {
-        const userCtx = document.getElementById('aiUserCtx').value.trim();
-        const targetKey = document.getElementById('aiTarget').value;
-        const angle = document.getElementById('aiAngle').value.trim();
-        const target = AI_TARGETS[targetKey];
-        lastAiParams = { userCtx, targetKey, angle };
-        await callAiApi(userCtx, target, angle);
-    }
-
-    async function regenerateAiMinwon() {
-        if (!lastAiParams) return;
-        const { userCtx, targetKey, angle } = lastAiParams;
-        await callAiApi(userCtx, AI_TARGETS[targetKey], angle);
-    }
-
-    async function callAiApi(userCtx, target, angle) {
-        document.getElementById('aiResultWrap').style.display = 'none';
-        document.getElementById('aiLoadingWrap').style.display = 'block';
-        document.getElementById('aiGenBtn').disabled = true;
-
-        const loadingMsgs = ['AI가 민원을 작성 중입니다...', '핵심 논거를 정리하고 있습니다...', '개인화된 표현을 생성 중입니다...', '거의 다 됐습니다...'];
-        let li = 0;
-        const loadTimer = setInterval(() => {
-            li = (li + 1) % loadingMsgs.length;
-            document.getElementById('aiLoadingMsg').innerText = loadingMsgs[li];
-        }, 1800);
-
-        try {
-            const userLine = userCtx ? `민원인 정보: ${userCtx}` : '민원인 정보: 과천 주암지구 인근 주민';
-            const angleLine = angle ? `오늘 특히 강조할 것: ${angle}` : '';
-            const userPrompt = `${userLine}
-수신 기관: ${target.name}
-민원 목적: ${target.focus}
-${angleLine}
-
-위 정보를 바탕으로 국민신문고에 제출할 민원을 작성해 주세요.
-
-규칙:
-1. 600~900자 분량 (짧은 민원이 실무자가 읽음)
-2. 반드시 민원인의 개인적 상황과 감정이 자연스럽게 녹아들 것
-3. 구체적인 법령 조항 또는 사실관계 1~2개를 반드시 포함할 것
-4. 요청 사항은 번호 목록으로 2~3개로 명확히
-5. 매번 다른 표현과 구조를 사용할 것 (템플릿처럼 보이면 안 됨)
-6. 인사말과 마지막 인사로 자연스럽게 마무리
-7. 민원인 이름은 쓰지 말 것
-8. 순수 텍스트만 출력 (마크다운 기호 없이)`;
-
-            const res = await fetch('https://api.anthropic.com/v1/messages', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    model: 'claude-sonnet-4-6',
-                    max_tokens: 1000,
-                    system: AI_CONTEXT,
-                    messages: [{ role: 'user', content: userPrompt }]
-                })
-            });
-
-            const data = await res.json();
-            const text = data.content?.[0]?.text || '';
-
-            document.getElementById('aiResultText').value = text;
-            document.getElementById('aiCharCount').innerText = `${text.length}자`;
-            document.getElementById('aiResultWrap').style.display = 'block';
-            document.getElementById('aiResultText').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-        } catch (e) {
-            alert('생성 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
-        } finally {
-            clearInterval(loadTimer);
-            document.getElementById('aiLoadingWrap').style.display = 'none';
-            document.getElementById('aiGenBtn').disabled = false;
-        }
-    }
-
-    function copyAiMinwon() {
-        const text = document.getElementById('aiResultText').value;
-        navigator.clipboard.writeText(text).then(() => {
-            const btn = document.getElementById('aiCopyBtn');
-            btn.innerText = '✅ 복사됨!';
-            btn.style.background = '#059669';
-            setTimeout(() => { btn.innerText = '📋 복사'; btn.style.background = '#7C3AED'; }, 2000);
-        });
-    }
-
-    // spin animation
-    document.head.insertAdjacentHTML('beforeend', '<style>@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}</style>');
-
-
-    <!-- ✨ AI 민원 생성 섹션 -->
-    <div id="sectionAi" style="display:none; padding-bottom:100px;">
-
-      <!-- 페르소나 설정 화면 -->
-      <div id="aiPersonaSetup">
-        <div style="background:#F5F3FF;border:1px solid #DDD6FE;border-radius:12px;padding:16px 18px;margin-bottom:16px;">
-          <div style="font-size:14px;font-weight:700;color:#5B21B6;margin-bottom:6px;">✨ 내 이야기로 민원 쓰기</div>
-          <div style="font-size:13px;color:#6D28D9;line-height:1.6;">페르소나를 한 번만 설정하면 AI가 <b>내 실제 상황</b>에 맞는 민원을 매번 다르게 작성합니다. 300명이 300개의 다른 민원을 낼 수 있어요.</div>
-        </div>
-
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:14px;">
-          <div style="font-size:14px;font-weight:700;color:#1e293b;margin-bottom:18px;">👤 나는 어떤 사람인가요?</div>
-
-          <div style="margin-bottom:14px;">
-            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">나의 신분 <span style="color:#dc2626">*</span></label>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="roleGrid">
-              <button class="role-btn" onclick="selectRole(this,'아델스타 입주예정자')">🏠 아델스타 입주예정자</button>
-              <button class="role-btn" onclick="selectRole(this,'인근 과천 거주민')">🏘️ 과천 거주민</button>
-              <button class="role-btn" onclick="selectRole(this,'서초구 우면동 거주민')">📍 서초구 우면동 거주민</button>
-              <button class="role-btn" onclick="selectRole(this,'어린이집·학교 학부모')">👶 학부모</button>
-              <button class="role-btn" onclick="selectRole(this,'어린이집 교사·원장')">🎓 어린이집 교사·원장</button>
-              <button class="role-btn" onclick="selectRole(this,'건강이 걱정되는 주민')">🏥 건강 취약자·고령자</button>
-            </div>
-          </div>
-
-          <div style="margin-bottom:14px;">
-            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">거주 지역 (구체적일수록 좋아요)</label>
-            <input id="pArea" type="text" placeholder="예: 서초구 우면동 / 과천시 부림동 / 아델스타 예약자 (강남구 거주 중)" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;box-sizing:border-box;">
-          </div>
-
-          <div style="margin-bottom:14px;">
-            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">이 아파트 또는 이 지역을 선택한 이유</label>
-            <textarea id="pReason" rows="2" placeholder="예: 아이 학교 때문에 / 양재천 생태환경이 좋아서 / 조용하고 공기 좋은 곳에서 살고 싶어서 / 전 재산을 걸고 청약했습니다" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;box-sizing:border-box;resize:vertical;"></textarea>
-          </div>
-
-          <div style="margin-bottom:14px;">
-            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">가족 상황 <span style="font-weight:400">(선택)</span></label>
-            <input id="pFamily" type="text" placeholder="예: 초등학생 자녀 둘 / 만 2세 아이 / 70대 부모님과 동거 예정 / 임산부" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;box-sizing:border-box;">
-          </div>
-
-          <div style="margin-bottom:18px;">
-            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">가장 걱정되는 것 <span style="color:#dc2626">*</span></label>
-            <textarea id="pWorry" rows="2" placeholder="예: 아이들이 뛰어노는 놀이터 바로 옆에 경유탱크가 들어온다 / 24시간 소음으로 수면을 못 잘 것 같다 / 전자파 때문에 아이 성장이 걱정된다 / 입주 후 집값 폭락이 두렵다" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;box-sizing:border-box;resize:vertical;"></textarea>
-          </div>
-
-          <button onclick="savePersona()" style="width:100%;padding:14px;background:#5B21B6;color:#fff;font-size:15px;font-weight:700;border:none;border-radius:10px;cursor:pointer;">
-            내 페르소나 저장하고 민원 작성 시작 →
-          </button>
-        </div>
-      </div>
-
-      <!-- 민원 생성 화면 (페르소나 설정 후) -->
-      <div id="aiGenScreen" style="display:none;">
-
-        <!-- 내 페르소나 카드 -->
-        <div id="aiPersonaCard" style="background:#F5F3FF;border:1px solid #C4B5FD;border-radius:12px;padding:14px 16px;margin-bottom:14px;position:relative;">
-          <div style="font-size:11px;font-weight:700;color:#7C3AED;margin-bottom:6px;letter-spacing:.05em;">내 페르소나</div>
-          <div id="aiPersonaSummary" style="font-size:13px;color:#3B0764;line-height:1.65;"></div>
-          <button onclick="editPersona()" style="position:absolute;top:12px;right:12px;padding:4px 10px;background:#EDE9FE;color:#5B21B6;border:1px solid #C4B5FD;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;">✏️ 수정</button>
-        </div>
-
-        <!-- 오늘의 각도 (날짜 자동 선택) -->
-        <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 20px;margin-bottom:14px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-            <div style="font-size:13px;font-weight:700;color:#1e293b;">오늘의 민원 각도</div>
-            <div id="aiAngleBadge" style="font-size:11px;background:#ECFDF5;color:#065F46;border:1px solid #6EE7B7;padding:3px 10px;border-radius:99px;font-weight:600;"></div>
-          </div>
-          <div id="aiAngleDesc" style="font-size:13px;color:#374151;line-height:1.6;margin-bottom:12px;"></div>
-
-          <div style="margin-bottom:12px;">
-            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">오늘 각도 직접 바꾸기 <span style="font-weight:400">(선택)</span></label>
-            <select id="aiAngleSelect" onchange="updateAngleDesc()" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;">
-              <option value="0">🔄 쪼개기 편법 — 분산에너지법 제23조 질의</option>
-              <option value="1">👶 어린이집 이격기준 — 영유아보육법 제9조 질의</option>
-              <option value="2">🔥 경유탱크 화재·폭발 위험 — 소방 안전기준 질의</option>
-              <option value="3">⚡ 22.9kV 특고압·전자파 — 실측 자료 제출 요구</option>
-              <option value="4">📄 리츠 목적 불일치 — 오피스→데이터센터 인가 위법 질의</option>
-              <option value="5">🌿 양재천 생태계 — 환경영향평가 누락 질의</option>
-              <option value="6">🏛️ 주거권·건강권 — 헌법 제35조 국가 보호의무 질의</option>
-            </select>
-          </div>
-
-          <div style="margin-bottom:14px;">
-            <label style="font-size:12px;font-weight:600;color:#6B7280;display:block;margin-bottom:6px;">민원 대상 기관</label>
-            <select id="aiTarget" style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;background:#fff;box-sizing:border-box;">
-              <option value="gwacheon_build">과천시 건축허가과</option>
-              <option value="gwacheon_city">과천시장 (신계용)</option>
-              <option value="lh">LH 의왕과천사업본부</option>
-              <option value="molit">국토교통부 부동산제도과</option>
-              <option value="kreic">한국부동산원</option>
-              <option value="kepco">한국전력공사</option>
-              <option value="moe">기후에너지환경부</option>
-            </select>
-          </div>
-
-          <button onclick="generateAiMinwon()" id="aiGenBtn" style="width:100%;padding:14px;background:#7C3AED;color:#fff;font-size:15px;font-weight:700;border:none;border-radius:10px;cursor:pointer;">
-            ✨ 내 이야기로 민원 생성하기
-          </button>
-        </div>
-
-        <!-- 생성 결과 -->
-        <div id="aiResultWrap" style="display:none;">
-          <div style="background:#fff;border:2px solid #7C3AED;border-radius:12px;padding:20px;margin-bottom:12px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-              <div style="font-size:13px;font-weight:700;color:#5B21B6;">생성된 민원</div>
-              <div style="display:flex;gap:8px;">
-                <button onclick="regenerateAiMinwon()" style="padding:6px 12px;background:#F5F3FF;color:#5B21B6;border:1px solid #DDD6FE;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">🔄 재생성</button>
-                <button onclick="copyAiMinwon()" id="aiCopyBtn" style="padding:6px 12px;background:#7C3AED;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;">📋 복사</button>
-              </div>
-            </div>
-            <textarea id="aiResultText" rows="13" style="width:100%;padding:12px;border:1px solid #e5e7eb;border-radius:8px;font-size:13px;line-height:1.8;box-sizing:border-box;resize:vertical;color:#1f2937;font-family:inherit;"></textarea>
-            <div style="margin-top:6px;display:flex;justify-content:space-between;align-items:center;">
-              <div style="font-size:11px;color:#9CA3AF;" id="aiCharCount"></div>
-              <div style="font-size:11px;color:#6B7280;">직접 수정해서 보내셔도 됩니다</div>
-            </div>
-          </div>
-
-          <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:14px 16px;margin-bottom:12px;">
-            <div style="font-size:12px;font-weight:700;color:#92400E;margin-bottom:8px;">📤 복사 후 국민신문고에 붙여넣기</div>
-            <a href="https://www.epeople.go.kr/nep/cit/cmpla/retrieveCmpltEntrView.npaid" target="_blank" style="display:inline-block;padding:8px 16px;background:#EA580C;color:#fff;border-radius:7px;font-size:13px;font-weight:600;text-decoration:none;">국민신문고 민원 작성 →</a>
-          </div>
-
-          <div style="background:#F0FDF4;border:1px solid #86EFAC;border-radius:10px;padding:12px 14px;">
-            <div style="font-size:12px;font-weight:700;color:#065F46;margin-bottom:4px;">💡 팁</div>
-            <div style="font-size:12px;color:#14532D;line-height:1.65;">내일 또 제출하고 싶다면 각도를 바꿔서 재생성하세요. 내 페르소나는 그대로, 오늘의 강조점만 달라져서 완전히 다른 민원이 만들어집니다.</div>
-          </div>
-        </div>
-
-        <!-- 로딩 -->
-        <div id="aiLoadingWrap" style="display:none;text-align:center;padding:40px 20px;">
-          <div style="font-size:32px;margin-bottom:12px;animation:spin 1s linear infinite;display:inline-block">⚙️</div>
-          <div style="font-size:14px;color:#5B21B6;font-weight:600;" id="aiLoadingMsg">내 이야기로 민원을 작성 중입니다...</div>
-        </div>
-
-      </div>
-
-    </div>
-    <!-- /AI section -->
     <div class="sms-float-bar" id="smsFloatBar" onclick="document.getElementById('smsTrackerWrap').scrollIntoView({behavior:'smooth',block:'start'})">
         <div class="sms-float-count"><span id="smsFloatDone">0</span> / 2 완료</div>
         <div class="sms-float-mini-bar"><div class="sms-float-mini-fill" id="smsFloatFill"></div></div>
