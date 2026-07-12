@@ -58,10 +58,7 @@ h1{
 .notice b{color:var(--stamp);}
 
 .progress{
-  display:flex;
-  gap:8px;
-  margin-bottom:28px;
-  flex-wrap:wrap;
+  display:none;
 }
 .progress .pill{
   font-family:'IBM Plex Mono',monospace;
@@ -80,39 +77,54 @@ h1{
 
 .tabs{
   display:flex;
-  gap:6px;
-  border-bottom:1px solid var(--line);
+  gap:8px;
+  flex-wrap:wrap;
   margin-bottom:0;
-  overflow-x:auto;
+  border-bottom:none;
 }
 .tab{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:13px;
-  padding:12px 16px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:14px;
+  font-weight:600;
+  padding:12px 20px;
   cursor:pointer;
   color:var(--ink-soft);
-  border-bottom:2px solid transparent;
+  background:var(--card);
+  border:1.5px solid var(--line);
+  border-radius:999px;
   white-space:nowrap;
   user-select:none;
-  transition:color .15s;
+  transition:all .15s;
 }
-.tab:hover{color:var(--ink);}
+.tab:hover{border-color:var(--accent); color:var(--ink);}
 .tab.active{
-  color:var(--accent);
-  border-bottom-color:var(--accent);
-  font-weight:600;
+  color:#fff;
+  background:var(--ink);
+  border-color:var(--ink);
 }
 .tab .dot{
-  display:inline-block;width:6px;height:6px;border-radius:50%;
-  background:var(--stamp);margin-right:6px;position:relative;top:-1px;
+  display:none;
 }
-.tab.done .dot{background:var(--accent);}
+.tab.done{
+  border-color:var(--accent);
+  color:var(--accent);
+  background:var(--accent-soft);
+}
+.tab.done.active{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+.tab.done::after{
+  content: " ✓";
+  font-weight:700;
+}
 
 .panel{
   background:var(--card);
   border:1px solid var(--line);
-  border-top:none;
-  border-radius:0 0 14px 14px;
+  border-radius:14px;
+  margin-top:16px;
   padding:28px 26px 26px;
   position:relative;
 }
