@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>과천 주암지구 2차 민원 — 재질의 발사기</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+
+:root{
+  --ink:#1B2B44;
+  --ink-soft:#4C5A70;
+  --paper:#F5F6F2;
+  --card:#FFFFFF;
+  --line:#DFE2D8;
+  --accent:#33604F;
+  --accent-soft:#E7EEE9;
+  --stamp:#A8452B;
+  --stamp-soft:#F6E6E1;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Noto Sans KR',sans-serif;
+  line-height:1.7;
+}
+.wrap{max-width:880px;margin:0 auto;padding:40px 20px 100px;}
+
+header{margin-bottom:28px;}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  letter-spacing:.14em;
+  color:var(--accent);
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+h1{
+  font-family:'Noto Serif KR',serif;
+  font-weight:700;
+  font-size:clamp(24px,4vw,32px);
+  margin:0 0 12px;
+  letter-spacing:-0.01em;
+}
+.sub{color:var(--ink-soft);font-size:14.5px;max-width:60ch;}
+
+.notice{
+  background:var(--stamp-soft);
+  border:1px solid #E3B7A6;
+  border-radius:10px;
+  padding:16px 18px;
+  margin:24px 0 32px;
+  font-size:14px;
+  color:#6B2E1C;
+}
+.notice b{color:var(--stamp);}
+
+.progress{
+  display:none;
+}
+.progress .pill{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--ink-soft);
+}
+.progress .pill.done{
+  background:var(--accent-soft);
+  border-color:var(--accent);
+  color:var(--accent);
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:0;
+  border-bottom:none;
+}
+.tab{
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:14px;
+  font-weight:600;
+  padding:12px 20px;
+  cursor:pointer;
+  color:var(--ink-soft);
+  background:var(--card);
+  border:1.5px solid var(--line);
+  border-radius:999px;
+  white-space:nowrap;
+  user-select:none;
+  transition:all .15s;
+}
+.tab:hover{border-color:var(--accent); color:var(--ink);}
+.tab.active{
+  color:#fff;
+  background:var(--ink);
+  border-color:var(--ink);
+}
+.tab .dot{
+  display:none;
+}
+.tab.done{
+  border-color:var(--accent);
+  color:var(--accent);
+  background:var(--accent-soft);
+}
+.tab.done.active{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+.tab.done::after{
+  content: " ✓";
+  font-weight:700;
+}
+
+.panel{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  margin-top:16px;
+  padding:28px 26px 26px;
+  position:relative;
+}
+
+.meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+.meta-left .label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  color:var(--accent);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.meta-left .agency{font-size:13.5px;color:var(--ink-soft);}
+
+.stamp{
+  font-family:'IBM Plex Mono',monospace;
+  font-weight:700;
+  font-size:13px;
+  color:var(--stamp);
+  border:2px solid var(--stamp);
+  border-radius:8px;
+  padding:6px 12px;
+  transform:rotate(-6deg);
+  opacity:0;
+  transition:opacity .25s, transform .25s;
+  pointer-events:none;
+  white-space:nowrap;
+}
+.stamp.show{opacity:1;transform:rotate(-6deg) scale(1);}
+
+.title-field{
+  font-family:'Noto Serif KR',serif;
+  font-weight:600;
+  font-size:18px;
+  line-height:1.45;
+  margin:0 0 16px;
+  padding-bottom:14px;
+  border-bottom:1px dashed var(--line);
+}
+input.title-field{
+  width:100%;
+  display:block;
+  border:none;
+  border-bottom:1px dashed var(--line);
+  background:transparent;
+  outline:none;
+  color:var(--ink);
+}
+input.title-field:focus{
+  border-bottom:1px solid var(--accent);
+}
+
+.personalize{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px 16px;
+  margin-bottom:18px;
+}
+.personalize label{
+  display:block;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  color:var(--ink-soft);
+  letter-spacing:.05em;
+  margin-bottom:8px;
+}
+.personalize input{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:9px 10px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13.5px;
+  background:#fff;
+}
+.personalize .hint{
+  font-size:12px;
+  color:var(--ink-soft);
+  margin-top:6px;
+}
+
+textarea.body{
+  width:100%;
+  min-height:420px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:18px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:14px;
+  line-height:1.8;
+  color:var(--ink);
+  resize:vertical;
+  background:#FCFCFA;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:16px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+button{
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13.5px;
+  font-weight:500;
+  border-radius:8px;
+  padding:11px 18px;
+  cursor:pointer;
+  border:1px solid transparent;
+  transition:transform .1s, background .15s;
+}
+button:active{transform:scale(.97);}
+.btn-primary{
+  background:var(--accent);
+  color:#fff;
+}
+.btn-primary:hover{background:#284c3e;}
+.btn-ghost{
+  background:transparent;
+  border-color:var(--line);
+  color:var(--ink-soft);
+}
+.btn-ghost:hover{border-color:var(--ink-soft);color:var(--ink);}
+.btn-done{
+  background:var(--stamp-soft);
+  color:var(--stamp);
+  border-color:#E3B7A6;
+}
+.btn-done.marked{
+  background:var(--accent-soft);
+  color:var(--accent);
+  border-color:var(--accent);
+}
+.copied-msg{
+  font-size:12.5px;
+  color:var(--accent);
+  font-family:'IBM Plex Mono',monospace;
+  opacity:0;
+  transition:opacity .2s;
+}
+.copied-msg.show{opacity:1;}
+
+.link-out{
+  margin-top:14px;
+  font-size:12.5px;
+  color:var(--ink-soft);
+}
+.link-out a{color:var(--accent);}
+
+.mode-toggle{
+  display:flex;
+  gap:8px;
+  margin-bottom:22px;
+}
+.mode-toggle button{
+  flex:1;
+  padding:13px;
+  font-size:14px;
+  font-weight:600;
+  border:2px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+  color:var(--ink-soft);
+}
+.mode-toggle button.active{
+  border-color:var(--ink);
+  background:var(--ink);
+  color:#fff;
+}
+
+.story-box{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:16px;
+  margin-bottom:18px;
+}
+.story-box .story-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  color:var(--ink-soft);
+  letter-spacing:.05em;
+  margin-bottom:10px;
+}
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:12px;
+}
+.chip{
+  font-size:12.5px;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink-soft);
+  cursor:pointer;
+  user-select:none;
+  transition:all .12s;
+}
+.chip:hover{border-color:var(--accent);}
+.chip.on{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+}
+.story-box textarea{
+  width:100%;
+  min-height:110px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:12px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13.5px;
+  line-height:1.7;
+  background:#fff;
+  resize:vertical;
+}
+.story-box .hint{
+  font-size:12px;
+  color:var(--ink-soft);
+  margin-top:8px;
+  line-height:1.6;
+}
+
+.sms-phone-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+}
+.sms-phone-row input{
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:8px 10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  width:180px;
+}
+.sms-phone-row .phone-warn{
+  font-size:12px;
+  color:var(--stamp);
+}
+.sms-char-count{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11.5px;
+  color:var(--ink-soft);
+}
+
+footer{
+  margin-top:36px;
+  font-size:12px;
+  color:var(--ink-soft);
+  border-top:1px solid var(--line);
+  padding-top:16px;
+}
+
+.disclaimer{
+  margin-top:20px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+  font-size:11.5px;
+  color:#8B9186;
+  line-height:1.8;
+  text-align:center;
+}
+
+/* 상단 고정 복사 바 */
+body{padding-top:56px;}
+.sticky-bar{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:200;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  padding:9px 14px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.sticky-bar .sb-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  color:var(--ink-soft);
+  white-space:nowrap;
+  padding-right:2px;
+  flex-shrink:0;
+}
+.sticky-bar button, .sticky-bar a{
+  flex:1;
+  min-width:0;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:12.5px;
+  font-weight:600;
+  border:none;
+  border-radius:8px;
+  padding:9px 6px;
+  cursor:pointer;
+  text-align:center;
+  text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+  transition:background .15s, transform .1s;
+  white-space:nowrap;
+}
+.sticky-bar button:active, .sticky-bar a:active{transform:scale(.96);}
+.sb-title{background:var(--accent-soft); color:var(--accent);}
+.sb-body{background:var(--accent); color:#fff;}
+.sb-epeople{background:var(--ink); color:#fff;}
+.sb-title.flash{background:var(--accent); color:#fff;}
+
+@media (max-width: 600px){
+  body{padding-top:50px;}
+  .sticky-bar{padding:7px 8px; gap:5px;}
+  .sticky-bar .sb-label{display:none;}
+  .sticky-bar button, .sticky-bar a{font-size:11.5px; padding:9px 3px;}
+}
+
+.consent-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(27,43,68,.5);
+  z-index:500;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.consent-overlay.show{display:flex;}
+.consent-card{
+  background:#fff;
+  border-radius:14px;
+  max-width:360px;
+  width:100%;
+  padding:22px 20px 20px;
+  box-shadow:0 12px 40px rgba(0,0,0,.22);
+}
+.consent-card .consent-title{
+  font-family:'Noto Serif KR',serif;
+  font-weight:700;
+  font-size:15px;
+  margin:0 0 10px;
+}
+.consent-card p{
+  font-size:13.5px;
+  line-height:1.7;
+  color:var(--ink-soft);
+  margin:0 0 18px;
+}
+.consent-card .consent-actions{
+  display:flex;
+  gap:8px;
+}
+.consent-card button{
+  flex:1;
+}
+</style>
+</head>
+<body>
+
+<div class="sticky-bar" id="stickyBar">
+  <span class="sb-label" id="sbLabel">기관 선택</span>
+  <button class="sb-title" id="sbTitleBtn">📋 제목복사</button>
+  <button class="sb-body" id="sbBodyBtn">📄 본문복사</button>
+  <a class="sb-epeople" id="sbEpeopleBtn" href="https://www.epeople.go.kr/index.paid" target="_blank" rel="noopener">🏛️ 국민신문고</a>
+</div>
+
+<div class="consent-overlay" id="consentOverlay">
+  <div class="consent-card">
+    <div class="consent-title">본인 의견으로 제출하시나요?</div>
+    <p>이 내용은 참고용 예시입니다. 자유롭게 고쳐 쓰신 뒤, <b>본인의 의견</b>으로 본인 명의 제출임을 확인하고 복사해주세요.</p>
+    <div class="consent-actions">
+      <button class="btn-ghost" id="consentNoBtn">아니오</button>
+      <button class="btn-primary" id="consentYesBtn">예, 동의합니다</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <h1 style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:700; margin:0;">과천 주암지구 데이터센터 반대 · 2차 재질의 민원 안내</h1>
+  </header>
+
+  <div class="mode-toggle" id="modeToggle">
+    <button id="modeMinwonBtn">📮 민원 (재질의)</button>
+    <button id="modeSmsBtn">📱 문자 (시장·의원)</button>
+  </div>
+
+  <div id="minwonSection">
+    <div class="progress" id="progress"></div>
+    <div class="tabs" id="tabs"></div>
+    <div class="panel" id="panel"></div>
+  </div>
+
+  <div id="smsSection" style="display:none;">
+    <div class="progress" id="smsProgress"></div>
+    <div class="tabs" id="smsTabs"></div>
+    <div class="panel" id="smsPanel"></div>
+  </div>
+
+  <div class="disclaimer">
+    본 페이지는 주민 개인이 비영리·공익 목적으로 제작한 사이트이며, 특정 단체나 사업자를 비방하거나 명예를 훼손할 의도가 없습니다.<br>
+    본 페이지가 제공하는 문구는 관계기관에 사실관계 확인과 제도 개선을 요청하는 참고용 예시이며, 특정 기업·개인의 위법행위를 단정하지 않습니다.<br>
+    제공되는 민원 예시 문구는 작성을 돕기 위한 참고 자료이며, 실제 제출 여부와 내용은 이용자 본인의 판단과 책임 하에 결정됩니다.<br>
+    본 페이지 운영자는 민원 작성을 돕는 도구를 제공할 뿐이며, 개별 민원의 제출·서명·발송은 전적으로 이용자 각자의 의사와 책임으로 이루어집니다.<br>
+    시설의 위험성 등에 관한 내용은 공개된 자료에 근거한 우려 및 의견 제기 차원이며, 정확한 사실관계는 관계 기관의 공식 확인을 통해 판단되어야 합니다.
+  </div>
+
+</div>
+
+<script>
+const AGENCIES = [
+  {
+    id: "gc",
+    name: "과천시",
+    fullName: "과천시청",
+    label: "시장 공약 이행",
+    portalHint: "국민신문고 (과천시)",
+    titles: [
+      "신계용 시장님, 데이터센터 인허가 불허 공약 언제 지키실 겁니까",
+      "데이터센터 인허가 불허 공약, 파기하시는 겁니까 — 즉답 요청",
+      "공약 이행 촉구 — 데이터센터 인허가 불허, 지금 밝혀주십시오"
+    ],
+    variants: {
+      open: [
+        "안녕하십니까. 과천 주암지구 디에이치 아델스타 입주예정자입니다. 신계용 시장님께서 후보 시절 밝히신 데이터센터 인허가 불허 공약의 이행을 강력히 촉구합니다.",
+        "저는 과천 주암지구 디에이치 아델스타 입주 예정 주민입니다. 시장님께서는 후보 시절 데이터센터 인허가를 불허하겠다고 분명히 약속하셨습니다. 그 공약, 지금 지켜주십시오.",
+        "안녕하십니까. 과천 주암지구 아델스타 입주를 앞둔 주민입니다. 신계용 시장님의 공약 이행을 더 이상 미룰 수 없는 시점이라 다시 문의드립니다."
+      ],
+      mid: [
+        "금천구는 취임 첫날 바로 실행에 옮겼습니다. 공약까지 하신 과천시는 왜 아직도 답이 없습니까.",
+        "다른 지자체는 이미 움직이고 있습니다. 정작 공약을 하신 과천시가 가장 느리다는 것은 납득하기 어렵습니다.",
+        "금천구조차 이렇게 빠르게 제도를 만들었는데, 공약까지 걸었던 과천시가 손 놓고 있을 이유가 없습니다."
+      ],
+      close: [
+        "공약 이행, 지금 확인하겠습니다. 이 민원을 접수한 날로부터 일주일 내로 회신해주시기 바랍니다.",
+        "말이 아니라 행동으로 보여주십시오. 일주일 내로 이행 계획과 일정을 명확히 회신해주시기 바랍니다.",
+        "10,000세대 이상 주민이 지켜보고 있습니다. 일주일 내로 명확한 답변을 요구합니다."
+      ]
+    },
+    body: `{{OPEN}}
+
+{{PERSONAL}}최근 서울 금천구에서도 저희와 유사한 데이터센터 입지 갈등이 있었습니다. 금천구 최기찬 구청장은 지난 7월 1일 취임 1호 결재로 '데이터센터 주민참여형 검토체계 구축 및 제도개선'을 발표했습니다. 주요 내용은 다음과 같습니다.
+
+- 건축허가 접수 시 반경 200m 이내 주민 과반수 동의서·체크리스트 제출 의무화
+- 전문가 서면검토 → 갈등조정협의회(구청·주민대표·전문가·사업자 공동) → 건축위원회 자문의 3단계 검증 체계
+- 부구청장 직속 데이터센터 전담 TF 신설 (전담반·인허가반·관리지원반)
+- 주거지역 데이터센터 입지 원천 차단을 위한 상위법령 개정 건의
+
+취임하자마자 1호 결재로 이런 제도를 만든 겁니다. {{MID}}
+
+신계용 시장님께서 후보 시절 밝히신 데이터센터 관련 인허가 불허 공약, 지금 어느 단계까지 이행되고 있습니까. 실행 계획이 아직 없다면, 지금이라도 금천구의 TF·검증체계를 참고해 즉시 도입해주시기 바랍니다. 더 이상 검토만 하고 있을 시간이 없습니다.
+
+{{CLOSE}}`
+  },
+  {
+    id: "molit_reit",
+    name: "국토교통부",
+    fullName: "국토교통부 부동산투자회사 부동산제도과",
+    label: "리츠 사업계획 인가·변경인가 심사",
+    portalHint: "국민신문고 (국토교통부)",
+    titles: [
+      "과천주암지구 내 데이터센터 개발 관련 리츠 사업계획의 공익성 재검토 및 관계 법령상 의무이행 여부 확인 요청",
+      "[민원] 과천주암지구 데이터센터 리츠 사업계획 관련 법령상 의무이행 여부 확인 요청",
+      "과천주암지구 리츠 사업계획 재검토 요청 — 전력계통영향평가 이행 여부 확인"
+    ],
+    variants: {
+      open: [
+        "본 민원인은 경기도 과천시 주암지구에 인접한 공동주택 단지의 입주예정자(일반분양자)입니다. 현재 주암지구 내에서 대규모 데이터센터 개발이 추진되고 있으며, 그 사업주체는 부동산투자회사(리츠)입니다. 「부동산투자회사법」 제9조제2항 및 제40조에 따라 리츠의 영업인가·변경인가 시에는 사업계획의 타당성 및 적정성에 대한 심사가 이루어지고, 같은 법 제49조의7에 따라 그 심사 지원 업무는 한국부동산원에 위탁되어 있는 것으로 알고 있습니다. 이에 민원인은 아래 리츠의 사업계획에 대하여 관계 법령상 의무의 이행 여부를 확인하여 주시고, 주거지 초근접 입지에 따른 공익성 침해 우려를 사업계획 심사 시 반영하여 재검토하여 주실 것을 요청드립니다.",
+        "저는 경기도 과천시 주암지구 인근 공동주택 단지의 입주예정자(일반분양자)입니다. 주암지구 내에서 추진 중인 대규모 데이터센터 개발의 사업주체가 부동산투자회사(리츠)라는 사실을 확인하였습니다. 「부동산투자회사법」 제9조제2항·제40조에 따라 리츠의 영업인가·변경인가 시 사업계획의 타당성·적정성 심사가 이루어지며, 같은 법 제49조의7에 따라 그 심사 지원 업무는 한국부동산원에 위탁되어 있는 것으로 알고 있습니다. 이에 아래 리츠의 사업계획에 대해 관계 법령상 의무 이행 여부 확인과, 주거지 초근접 입지에 따른 공익성 침해 우려의 재검토를 요청드립니다.",
+        "본 민원인은 과천시 주암지구에 인접한 공동주택 단지의 입주를 앞두고 있는 일반분양자입니다. 주암지구 내 대규모 데이터센터 개발 사업의 사업주체가 부동산투자회사(리츠)임을 확인했습니다. 「부동산투자회사법」 제9조제2항 및 제40조에 따른 사업계획 타당성·적정성 심사, 그리고 같은 법 제49조의7에 따라 한국부동산원에 위탁된 심사 지원 업무가 있다는 점을 알고 있는바, 아래 리츠 사업계획에 대한 관계 법령상 의무이행 여부 확인과 공익성 재검토를 요청드립니다."
+      ],
+      mid: [
+        "이는 개별 사업자만의 문제가 아니라, 리츠 인가 제도 전반의 공익성 심사 기능이 실제로 작동하고 있는지를 보여주는 사안이라고 생각합니다.",
+        "이 문제는 특정 사업장에 국한되지 않고, 리츠 인가·등록 심사 단계의 공익성 검증이 실질적으로 이루어지는지를 가늠하는 사안이라고 판단됩니다.",
+        "결국 이는 개별 사업의 문제를 넘어, 리츠 심사 제도가 주거지 인접 대규모 시설의 공익성을 실제로 걸러내고 있는지를 보여주는 사안입니다."
+      ],
+      close: [
+        "본 민원인은 특정 기업이나 개인의 사업활동을 부당하게 방해하고자 하는 것이 아니며, 적법한 절차에 따른 사업 추진을 존중합니다. 다만 대규모 전력수요시설이 주거지 및 보육·교육시설과 매우 근접하여 계획되고 있는 상황에서, 관계 법령상 의무가 빠짐없이 이행되었는지, 그리고 리츠 사업계획의 공익성이 충분히 검토되었는지를 감독기관에 확인받고자 하는 것입니다. 주민의 건강과 안전에 관한 우려가 사업계획 심사 단계에서 충실히 검토될 수 있도록 책임 있는 재검토와 회신을 요청드립니다.",
+        "적법한 절차에 따른 사업 추진 자체를 문제 삼는 것이 아닙니다. 다만 대규모 전력수요시설이 주거지·보육·교육시설과 근접하여 계획된 만큼, 법정 의무 이행 여부와 리츠 사업계획의 공익성이 충분히 검토되었는지를 확인받고자 합니다. 심사 단계에서의 책임 있는 재검토와 회신을 부탁드립니다.",
+        "특정 사업자를 부당하게 방해할 의도는 없으며, 적법한 절차는 존중합니다. 다만 주거지 초근접 입지라는 상황을 고려할 때, 법령상 의무 이행 여부와 사업계획의 공익성 검토가 충실히 이루어졌는지 확인이 필요하다고 판단됩니다. 성실한 재검토와 명확한 회신을 요청드립니다."
+      ]
+    },
+    body: `수신: 국토교통부 부동산투자회사 부동산제도과
+
+대상 리츠:
+① 과천주암대토개발제1호위탁관리부동산투자회사(AMC: 코람코자산신탁) — 변경인가 진행 중 파악
+② 과천주암업무대토위탁관리부동산투자회사(AMC: 마스턴자산운용) — 특례 등록 완료
+
+{{OPEN}}
+
+{{PERSONAL}}2. 확인을 요청드리는 사실관계
+
+아래 사항은 민원인들이 공개된 자료와 지구단위계획 등을 통하여 파악한 내용으로, 사실과 다를 수 있어 관계기관의 확인을 요청드리는 것입니다.
+
+가. 주암지구 내 데이터센터는 1-1·2블록, 1-9블록 등 복수의 블록에 걸쳐 계획되어 있는 것으로 파악됩니다.
+나. 이 중 1-1·2블록의 경우 실질적으로 하나의 사업자에 의하여 계약전력 10메가와트 이상 규모로 추진되는 것으로 파악됩니다.
+다. 해당 사업지 중 주거지에 가장 인접한 곳은 주거지 경계로부터 약 30미터 거리에 위치하는 것으로 파악됩니다.
+라. 해당 지역 반경 내에는 어린이집 약 32개소, 학교 5개교가 밀집해 있습니다.
+
+3. 질의 및 확인 요청 사항
+
+[질의 1] 「분산에너지 활성화 특별법」상 전력계통영향평가 의무 이행 여부
+
+「분산에너지 활성화 특별법」 제23조 및 같은 법 시행령 제25조에 따르면, 계약전력 10메가와트 이상의 전기를 사용하려는 사업자는 전력계통영향평가를 실시하여야 하며, 10메가와트 미만으로 계약한 후 누적하여 10메가와트 이상으로 증설하는 경우에도 평가 대상에 포함되는 것으로 알고 있습니다.
+
+① 1-1·2블록 데이터센터 사업에 대하여 위 전력계통영향평가 의무가 발생하는지, 발생한다면 그 이행이 완료되었는지 확인하여 주시기 바랍니다.
+② 복수의 블록·법인으로 사업이 분할되어 있는 경우에도 실질적으로 동일 사업자·동일 사업으로 볼 수 있는지, 그 경우 계약전력의 합산 여부를 어떻게 판단하는지에 관한 소관 기관의 견해를 밝혀 주시기 바랍니다.
+③ 위 법정 의무가 이행되지 아니한 상태에서 리츠의 사업계획이 인가·변경인가·등록될 경우, 사업계획의 적정성 심사에 어떠한 영향이 있는지 안내해주시기 바랍니다.
+
+[질의 2] 주거지 초근접 입지에 따른 공익성 침해 우려에 대한 재검토
+
+1-1·2블록, 1-9블록은 주거지역 및 건축 중인 공동주택과 매우 근접하여 계획되어 있으며, 가장 인접한 곳은 약 30미터 거리로 파악됩니다. 인근에는 어린이집 약 32개소와 학교 5개교가 밀집해 있어, 대규모 전력수요시설의 운영 및 만일의 사고 발생 시 주민의 건강과 안전에 미치는 영향에 대한 우려가 있습니다. 향후 사업 진행 시 큰 사회적 갈등 유발이 예상됩니다. {{MID}}
+
+① 해당 사업계획이 「부동산투자회사법」상 사업계획의 타당성·적정성 심사에서 공익을 침해할 우려가 없는지 재검토하여 주시기 바랍니다.
+② 리츠 사업계획 심사 시 공익을 고려한 주민의 건강 및 안전에 대한 영향 평가를 반영하여 주실 것을 요청드립니다.
+③ 시민의 건강권·거주권 및 공익성에 관하여 관련 전문기관의 의견을 확보하여 심사에 반영하여 주실 것을 요청드립니다.
+
+[질의 3] 감독기관의 심사 책임 범위
+
+민원인들은 리츠 사업의 공익성 침해 우려에 대한 검토 책임이 인가권자인 국토교통부와 심사지원 업무를 위탁받은 한국부동산원에 있다고 이해하고 있습니다. 개별 건축허가 등 지방자치단체의 인허가 절차와 별개로, 「부동산투자회사법」에 따른 인가·변경인가·등록 심사 단계에서 사업계획의 공익성에 대한 검토가 이루어져야 한다고 보는바, 이에 관한 소관 기관의 견해와 실제 심사 내용을 밝혀 주시기 바랍니다.
+
+4. 요청 사항 정리
+
+가. 위 각 블록 데이터센터 사업의 「분산에너지 활성화 특별법」상 전력계통영향평가 의무 발생 여부 및 이행 여부 확인
+나. 리츠 변경인가·등록 심사 시 사업계획의 공익성(주민 건강·안전 영향 포함) 재검토
+다. 시민 건강권·거주권 및 공익성에 관한 전문기관 의견 확보 및 심사 반영
+라. 위 각 사항에 대한 회신
+
+5. 맺음말
+
+{{CLOSE}}`
+  },
+  {
+    id: "kab_reit",
+    name: "한국부동산원",
+    fullName: "한국부동산원 리츠심사팀",
+    label: "리츠 사업계획 심사지원 업무 (부동산투자회사법 제49조의7)",
+    portalHint: "국민신문고 (한국부동산원) 또는 한국부동산원 홈페이지 민원접수",
+    titles: [
+      "과천주암지구 내 데이터센터 개발 관련 리츠 사업계획의 공익성 재검토 및 관계 법령상 의무이행 여부 확인 요청",
+      "[민원] 과천주암지구 데이터센터 리츠 사업계획 관련 법령상 의무이행 여부 확인 요청",
+      "과천주암지구 리츠 사업계획 재검토 요청 — 전력계통영향평가 이행 여부 확인"
+    ],
+    variants: {
+      open: [
+        "본 민원인은 경기도 과천시 주암지구에 인접한 공동주택 단지의 입주예정자(일반분양자)입니다. 현재 주암지구 내에서 대규모 데이터센터 개발이 추진되고 있으며, 그 사업주체는 부동산투자회사(리츠)입니다. 「부동산투자회사법」 제9조제2항 및 제40조에 따라 리츠의 영업인가·변경인가 시에는 사업계획의 타당성 및 적정성에 대한 심사가 이루어지고, 같은 법 제49조의7에 따라 그 심사 지원 업무는 귀 원(한국부동산원)에 위탁되어 있는 것으로 알고 있습니다. 이에 민원인은 아래 리츠의 사업계획에 대하여 관계 법령상 의무의 이행 여부를 확인하여 주시고, 주거지 초근접 입지에 따른 공익성 침해 우려를 사업계획 심사 지원 시 반영하여 재검토하여 주실 것을 요청드립니다.",
+        "저는 경기도 과천시 주암지구 인근 공동주택 단지의 입주예정자(일반분양자)입니다. 주암지구 내에서 추진 중인 대규모 데이터센터 개발의 사업주체가 부동산투자회사(리츠)라는 사실을 확인하였습니다. 「부동산투자회사법」 제49조의7에 따라 리츠 사업계획의 타당성·적정성 심사 지원 업무를 귀 원이 위탁받아 수행하고 있는 것으로 알고 있습니다. 이에 아래 리츠의 사업계획에 대해 관계 법령상 의무 이행 여부 확인과, 주거지 초근접 입지에 따른 공익성 침해 우려의 재검토를 요청드립니다.",
+        "본 민원인은 과천시 주암지구에 인접한 공동주택 단지의 입주를 앞두고 있는 일반분양자입니다. 주암지구 내 대규모 데이터센터 개발 사업의 사업주체가 부동산투자회사(리츠)임을 확인했습니다. 「부동산투자회사법」 제9조제2항·제40조에 따른 사업계획 타당성·적정성 심사와, 같은 법 제49조의7에 따라 귀 원에 위탁된 심사 지원 업무가 있다는 점을 알고 있는바, 아래 리츠 사업계획에 대한 관계 법령상 의무이행 여부 확인과 공익성 재검토를 요청드립니다."
+      ],
+      mid: [
+        "이는 개별 사업자만의 문제가 아니라, 리츠 심사지원 업무 전반의 공익성 검증 기능이 실제로 작동하고 있는지를 보여주는 사안이라고 생각합니다.",
+        "이 문제는 특정 사업장에 국한되지 않고, 심사지원 단계에서의 공익성 검증이 실질적으로 이루어지는지를 가늠하는 사안이라고 판단됩니다.",
+        "결국 이는 개별 사업의 문제를 넘어, 귀 원의 심사지원 업무가 주거지 인접 대규모 시설의 공익성을 실제로 걸러내고 있는지를 보여주는 사안입니다."
+      ],
+      close: [
+        "본 민원인은 특정 기업이나 개인의 사업활동을 부당하게 방해하고자 하는 것이 아니며, 적법한 절차에 따른 사업 추진을 존중합니다. 다만 대규모 전력수요시설이 주거지 및 보육·교육시설과 매우 근접하여 계획되고 있는 상황에서, 관계 법령상 의무가 빠짐없이 이행되었는지, 그리고 리츠 사업계획의 공익성이 충분히 검토되었는지를 심사지원기관에 확인받고자 하는 것입니다. 주민의 건강과 안전에 관한 우려가 심사지원 단계에서 충실히 검토될 수 있도록 책임 있는 재검토와 회신을 요청드립니다.",
+        "적법한 절차에 따른 사업 추진 자체를 문제 삼는 것이 아닙니다. 다만 대규모 전력수요시설이 주거지·보육·교육시설과 근접하여 계획된 만큼, 법정 의무 이행 여부와 리츠 사업계획의 공익성이 심사지원 단계에서 충분히 검토되었는지를 확인받고자 합니다. 책임 있는 재검토와 회신을 부탁드립니다.",
+        "특정 사업자를 부당하게 방해할 의도는 없으며, 적법한 절차는 존중합니다. 다만 주거지 초근접 입지라는 상황을 고려할 때, 법령상 의무 이행 여부와 사업계획의 공익성 검토가 심사지원 단계에서 충실히 이루어졌는지 확인이 필요하다고 판단됩니다. 성실한 재검토와 명확한 회신을 요청드립니다."
+      ]
+    },
+    body: `수신: 한국부동산원 리츠심사팀
+
+대상 리츠:
+① 과천주암대토개발제1호위탁관리부동산투자회사(AMC: 코람코자산신탁) — 변경인가 진행 중 파악
+② 과천주암업무대토위탁관리부동산투자회사(AMC: 마스턴자산운용) — 특례 등록 완료
+
+{{OPEN}}
+
+{{PERSONAL}}2. 확인을 요청드리는 사실관계
+
+아래 사항은 민원인들이 공개된 자료와 지구단위계획 등을 통하여 파악한 내용으로, 사실과 다를 수 있어 관계기관의 확인을 요청드리는 것입니다.
+
+가. 주암지구 내 데이터센터는 1-1·2블록, 1-9블록 등 복수의 블록에 걸쳐 계획되어 있는 것으로 파악됩니다.
+나. 이 중 1-1·2블록의 경우 실질적으로 하나의 사업자에 의하여 계약전력 10메가와트 이상 규모로 추진되는 것으로 파악됩니다.
+다. 해당 사업지 중 주거지에 가장 인접한 곳은 주거지 경계로부터 약 30미터 거리에 위치하는 것으로 파악됩니다.
+라. 해당 지역 반경 내에는 어린이집 약 32개소, 학교 5개교가 밀집해 있습니다.
+
+3. 질의 및 확인 요청 사항
+
+[질의 1] 「분산에너지 활성화 특별법」상 전력계통영향평가 의무 이행 여부
+
+「분산에너지 활성화 특별법」 제23조 및 같은 법 시행령 제25조에 따르면, 계약전력 10메가와트 이상의 전기를 사용하려는 사업자는 전력계통영향평가를 실시하여야 하며, 10메가와트 미만으로 계약한 후 누적하여 10메가와트 이상으로 증설하는 경우에도 평가 대상에 포함되는 것으로 알고 있습니다.
+
+① 1-1·2블록 데이터센터 사업에 대하여 위 전력계통영향평가 의무가 발생하는지, 발생한다면 그 이행이 완료되었는지 확인하여 주시기 바랍니다.
+② 복수의 블록·법인으로 사업이 분할되어 있는 경우에도 실질적으로 동일 사업자·동일 사업으로 볼 수 있는지, 그 경우 계약전력의 합산 여부를 어떻게 판단하는지에 관한 소관 기관의 견해를 밝혀 주시기 바랍니다.
+③ 위 법정 의무가 이행되지 아니한 상태에서 리츠의 사업계획이 인가·변경인가·등록될 경우, 귀 원의 사업계획 적정성 심사지원 업무에 어떠한 영향이 있는지 안내해주시기 바랍니다.
+
+[질의 2] 주거지 초근접 입지에 따른 공익성 침해 우려에 대한 재검토
+
+1-1·2블록, 1-9블록은 주거지역 및 건축 중인 공동주택과 매우 근접하여 계획되어 있으며, 가장 인접한 곳은 약 30미터 거리로 파악됩니다. 인근에는 어린이집 약 32개소와 학교 5개교가 밀집해 있어, 대규모 전력수요시설의 운영 및 만일의 사고 발생 시 주민의 건강과 안전에 미치는 영향에 대한 우려가 있습니다. 향후 사업 진행 시 큰 사회적 갈등 유발이 예상됩니다. {{MID}}
+
+① 해당 사업계획이 「부동산투자회사법」상 사업계획의 타당성·적정성 심사지원 과정에서 공익을 침해할 우려가 없는지 재검토하여 주시기 바랍니다.
+② 리츠 사업계획 심사지원 시 공익을 고려한 주민의 건강 및 안전에 대한 영향 평가를 반영하여 주실 것을 요청드립니다.
+③ 시민의 건강권·거주권 및 공익성에 관하여 관련 전문기관의 의견을 확보하여 심사지원 업무에 반영하여 주실 것을 요청드립니다.
+
+[질의 3] 감독기관의 심사 책임 범위
+
+민원인들은 리츠 사업의 공익성 침해 우려에 대한 검토 책임이 인가권자인 국토교통부와 심사지원 업무를 위탁받은 귀 원(한국부동산원)에 있다고 이해하고 있습니다. 개별 건축허가 등 지방자치단체의 인허가 절차와 별개로, 「부동산투자회사법」에 따른 인가·변경인가·등록 심사 단계에서 사업계획의 공익성에 대한 검토가 이루어져야 한다고 보는바, 이에 관한 귀 원의 견해와 실제 심사지원 내용을 밝혀 주시기 바랍니다.
+
+4. 요청 사항 정리
+
+가. 위 각 블록 데이터센터 사업의 「분산에너지 활성화 특별법」상 전력계통영향평가 의무 발생 여부 및 이행 여부 확인
+나. 리츠 변경인가·등록 심사지원 시 사업계획의 공익성(주민 건강·안전 영향 포함) 재검토
+다. 시민 건강권·거주권 및 공익성에 관한 전문기관 의견 확보 및 심사지원 반영
+라. 위 각 사항에 대한 회신
+
+5. 맺음말
+
+{{CLOSE}}`
+  }
+];
+
+const STORAGE_KEY = "gwacheon_2cha_minwon_state_v3";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { state = {}; }
+
+function saveState(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function randIndex(len){ return Math.floor(Math.random() * len); }
+
+const STORY_CHIPS = [
+  { key:"kid",    label:"🧒 어린이집 다닐 아이가 있어요",      text:"저희 아이가 곧 인근 어린이집을 다니게 될 예정이라 더 마음이 쓰입니다." },
+  { key:"baby",   label:"🤰 임신 중이에요",                     text:"현재 임신 중이라 이 사안이 남 일 같지가 않습니다." },
+  { key:"live",   label:"🏠 이미 이 동네에 살고 있어요",        text:"저는 이미 이 지역에 거주하고 있는 주민입니다." },
+  { key:"move",   label:"🏡 곧 입주를 앞두고 있어요",           text:"입주를 앞두고 이 소식을 접해서 걱정이 큽니다." },
+  { key:"elder",  label:"👵 부모님(고령층)과 함께 살아요",      text:"고령이신 부모님과 함께 살고 있어 건강 문제가 더 걱정됩니다." },
+  { key:"health", label:"💊 지병이나 건강 문제가 있어요",       text:"가족 중에 지병이 있는 사람이 있어 환경 변화가 특히 우려됩니다." },
+  { key:"remote", label:"💼 재택근무를 해요",                    text:"재택근무를 하고 있어서 하루 대부분을 집 근처에서 보냅니다." },
+  { key:"worry",  label:"😰 잠을 설칠 만큼 걱정이 커요",         text:"솔직히 이 문제 때문에 요즘 밤에 잠을 설칠 정도로 걱정이 큽니다." }
+];
+
+function getEntry(agency){
+  if(!state[agency.id]){
+    state[agency.id] = {
+      storyText: "",
+      storyChips: {},
+      done: false,
+      titleIdx: randIndex(agency.titles.length),
+      titleText: "",
+      openIdx: randIndex(agency.variants.open.length),
+      midIdx: randIndex(agency.variants.mid.length),
+      closeIdx: randIndex(agency.variants.close.length)
+    };
+    saveState();
+  }
+  return state[agency.id];
+}
+
+function reshuffle(agency){
+  const entry = getEntry(agency);
+  entry.titleIdx = randIndex(agency.titles.length);
+  entry.titleText = "";
+  entry.openIdx = randIndex(agency.variants.open.length);
+  entry.midIdx = randIndex(agency.variants.mid.length);
+  entry.closeIdx = randIndex(agency.variants.close.length);
+  saveState();
+}
+
+let activeId = AGENCIES[0].id;
+let MODE = "minwon"; // "minwon" | "sms"
+
+/* ---------- 이야기 빌더 (민원 · 문자 공용) ---------- */
+function renderStoryBox(containerId, entry, afterChange){
+  const box = document.getElementById(containerId);
+  box.innerHTML = `
+    <div class="story-label">✍️ 나의 이야기 직접 써도 좋아요 (칩은 참고용, 본문에 자연스러운 한 단락으로 들어갑니다)</div>
+    <div class="chips">
+      ${STORY_CHIPS.map(c=>`<span class="chip ${entry.storyChips[c.key] ? "on":""}" data-key="${c.key}">${c.label}</span>`).join("")}
+    </div>
+    <textarea id="storyTextarea" placeholder="칩을 눌러 시작하거나, 아래를 비워두고 처음부터 내 이야기를 직접 써도 됩니다. 왜 이 문제가 걱정되는지, 우리 가족·동네 상황이 어떤지 자유롭게 적어주세요. 길게 써도 좋고 짧아도 좋아요 (선택 사항).">${entry.storyText}</textarea>
+    <div class="hint">칩은 시작 문장을 넣어줄 뿐이에요 — 그 위에 자유롭게 고쳐 쓰거나 이어 써주세요. 정해진 형식은 없습니다. 각자 자기 말로 다르게 쓸수록 진짜 개별 민원처럼 읽히고, 더 힘 있는 민원이 됩니다.</div>
+  `;
+
+  box.querySelectorAll(".chip").forEach(chip=>{
+    chip.addEventListener("click", ()=>{
+      const key = chip.dataset.key;
+      const found = STORY_CHIPS.find(c=>c.key===key);
+      const ta = document.getElementById("storyTextarea");
+      const on = !!entry.storyChips[key];
+
+      if(on){
+        // 해당 문장을 텍스트에서 제거 (있는 그대로 매칭될 때만)
+        ta.value = ta.value.split(found.text).join("").replace(/\n{3,}/g,"\n\n").trim();
+        entry.storyChips[key] = false;
+      } else {
+        ta.value = (ta.value.trim() ? ta.value.trim() + " " : "") + found.text;
+        entry.storyChips[key] = true;
+      }
+      entry.storyText = ta.value;
+      chip.classList.toggle("on");
+      saveState();
+      afterChange();
+    });
+  });
+
+  document.getElementById("storyTextarea").addEventListener("input", (e)=>{
+    entry.storyText = e.target.value;
+    saveState();
+    afterChange();
+  });
+}
+
+function renderProgress(){
+  const el = document.getElementById("progress");
+  el.innerHTML = AGENCIES.map(a=>{
+    const done = getEntry(a).done;
+    return `<span class="pill ${done ? "done" : ""}">${done ? "✓ " : ""}${a.name}</span>`;
+  }).join("");
+}
+
+function renderTabs(){
+  const el = document.getElementById("tabs");
+  el.innerHTML = AGENCIES.map(a=>{
+    const done = getEntry(a).done;
+    return `<div class="tab ${a.id===activeId?"active":""} ${done?"done":""}" data-id="${a.id}">
+      <span class="dot"></span>${a.name}
+    </div>`;
+  }).join("");
+  [...el.querySelectorAll(".tab")].forEach(t=>{
+    t.addEventListener("click", ()=>{
+      activeId = t.dataset.id;
+      renderTabs();
+      renderPanel();
+    });
+  });
+}
+
+function currentTitle(agency){
+  const entry = getEntry(agency);
+  return entry.titleText ? entry.titleText : agency.titles[entry.titleIdx];
+}
+
+function buildBody(agency){
+  const entry = getEntry(agency);
+  const storyLine = entry.storyText.trim() ? entry.storyText.trim() + "\n\n" : "";
+  return agency.body
+    .replace("{{OPEN}}", agency.variants.open[entry.openIdx])
+    .replace("{{MID}}", agency.variants.mid[entry.midIdx])
+    .replace("{{PERSONAL}}", storyLine)
+    .replace("{{CLOSE}}", agency.variants.close[entry.closeIdx]);
+}
+
+function renderPanel(){
+  const agency = AGENCIES.find(a=>a.id===activeId);
+  const entry = getEntry(agency);
+  const panel = document.getElementById("panel");
+
+  panel.innerHTML = `
+    <div class="meta">
+      <div class="meta-left">
+        <div class="label">${agency.fullName}</div>
+        <div class="agency">${agency.label}</div>
+      </div>
+      <div class="stamp ${entry.done ? "show" : ""}" id="stampBadge">제출완료</div>
+    </div>
+
+    <input class="title-field" id="titleField" type="text" spellcheck="false" value="${currentTitle(agency).replace(/"/g,'&quot;')}">
+
+    <div class="story-box" id="storyBoxMinwon"></div>
+
+    <textarea class="body" id="bodyText" spellcheck="false">${buildBody(agency)}</textarea>
+
+    <div class="actions">
+      <button class="btn-primary" id="copyBtn">본문 복사하기</button>
+      <button class="btn-ghost" id="copyTitleBtn">제목 복사</button>
+      <button class="btn-ghost" id="reshuffleBtn">문구 다시 섞기</button>
+      <a class="btn-primary" id="epeopleLink" style="text-decoration:none;" href="https://www.epeople.go.kr/index.paid" target="_blank" rel="noopener">🏛️ 국민신문고 바로가기</a>
+      <span class="copied-msg" id="copiedMsg">복사됐어요</span>
+    </div>
+
+  `;
+
+  document.getElementById("titleField").addEventListener("input", (e)=>{
+    entry.titleText = e.target.value;
+    saveState();
+  });
+
+  renderStoryBox("storyBoxMinwon", entry, ()=>{
+    document.getElementById("bodyText").value = buildBody(agency);
+  });
+
+  document.getElementById("copyBtn").addEventListener("click", ()=>{
+    requireConsent(()=>{
+      const text = document.getElementById("bodyText").value;
+      navigator.clipboard.writeText(text).then(()=>flashCopied());
+    });
+  });
+  document.getElementById("copyTitleBtn").addEventListener("click", ()=>{
+    requireConsent(()=>{
+      const text = document.getElementById("titleField").value;
+      navigator.clipboard.writeText(text).then(()=>flashCopied());
+    });
+  });
+  document.getElementById("reshuffleBtn").addEventListener("click", ()=>{
+    reshuffle(agency);
+    renderPanel();
+  });
+  document.getElementById("epeopleLink").addEventListener("click", ()=>{
+    entry.done = true;
+    saveState();
+    renderTabs();
+    renderProgress();
+    document.getElementById("stampBadge").classList.add("show");
+    updateStickyBar();
+  });
+
+  updateStickyBar();
+}
+
+/* ================= 문자 발송기 (신계용 시장 · 신동욱 의원) ================= */
+/* 원본 index_6.html의 smsTemplates를 그대로 이식. 문자 길이 제한 때문에 1차(오프닝+body1) / 2차(body2+클로징) 두 통으로 나눠 보냄 */
+const SMS_TARGETS = [
+  {
+    id: "mayor",
+    name: "신계용 시장",
+    role: "과천시장",
+    label: "01 · 과천시장",
+    phone: "01087457577",
+    openings: [
+      "신계용 시장님, 당선 축하드립니다. 인허가 불허 공약 이행을 기다리는 [INFO] 주민입니다.",
+      "신계용 시장님, 후보 시절 데이터센터 인허가 불허를 약속하셨습니다. [INFO] 주민입니다.",
+      "신계용 시장님, 공약을 믿고 지지한 [INFO] 주민입니다. 이행을 촉구합니다.",
+      "당선 축하드립니다 시장님. 주암지구 데이터센터 공약을 기억하시는지요. [INFO] 주민입니다."
+    ],
+    body1: "\n'22.9kV는 전봇대와 같은 전압이라 안전하다'는 주장은 말장난입니다.\n전봇대도 22.9kV 특고압입니다. 전봇대는 220V로 낮춰 분산하지만 데이터센터는 특고압을 건물 내부에서 10MW씩 대용량으로 직접 처리합니다. 전기사업법 제2조: 7,000V 초과 = 특고압.",
+    body2: "후보 시절 인허가 불허를 공약하셨습니다. 주민들은 그 약속을 믿고 지지했습니다.\n지금 공식 입장을 밝히실 때입니다.\n1. 인허가 불허 방침을 공식 발표해 주십시오.\n2. 방송통신시설 허용용도를 삭제해 주십시오.\n3. 민관협의체를 구성해 주십시오.\n공약 파기 시 언론·시의회로 공론화하겠습니다.\n\n",
+    closings: [
+      "공약을 지키는 것이 신뢰받는 시장의 첫걸음입니다.",
+      "후보 시절 약속, 잊지 않으셨으리라 믿습니다.",
+      "지금 시장님의 공식 입장이 9,700세대의 미래를 결정합니다.",
+      "주민이 먼저 손 내밀고 있습니다. 공약으로 화답해 주십시오."
+    ]
+  },
+  {
+    id: "shin",
+    name: "신동욱 의원",
+    role: "국회의원 (서초구을)",
+    label: "02 · 국회의원 · 서초구을",
+    phone: "01091037227",
+    openings: [
+      "신동욱 의원님, 서초 [INFO] 구민입니다.",
+      "신동욱 의원님, 서초구민의 안전을 위해 행동하는 [INFO] 구민입니다.",
+      "의원님 안녕하세요. 데이터센터 건립 문제로 연락드리는 [INFO] 서초구민입니다.",
+      "신동욱 의원님, 서초구 아이들의 건강한 환경을 지켜주십시오. [INFO] 구민입니다."
+    ],
+    body1: "\n양재천 바로 옆 과천 주암지구에 50MW급 데이터센터 5개 블록이 추진 중입니다. 반경 200m 내 어린이집이 있으며 영유아보육법 시행규칙 제9조 위험시설 이격거리(50m 이상) 기준에 해당할 수 있습니다. 냉각탑 소음·유해물질 피해도 서초구민에게 직접 영향을 미칩니다.",
+    body2: "서초구 차원의 조치를 요청드립니다.\n1. 과천시에 공식 반대의견서를 공문으로 발송해 주십시오.\n2. 영유아보육법상 위험시설 해당 여부를 법령 해석을 통해 확인해 주십시오.\n3. 양재천 생태계 영향을 서초구 환경부서에서 검토해 주십시오.\n\n",
+    closings: [
+      "서초구민의 건강권과 거주환경을 반드시 지켜 주십시오.",
+      "지역 주민들의 정당한 우려에 적극 응답해 주십시오. 감사합니다.",
+      "의정 활동에 늘 감사드리며 이번 사안에 강력한 조치를 부탁드립니다.",
+      "서초구민의 방패가 되어 주시길 간곡히 부탁드립니다."
+    ]
+  }
+];
+
+let activeSmsId = SMS_TARGETS[0].id;
+
+function getInfoString(){
+  const complex = (state.infoComplex || "").trim();
+  const dong = (state.infoDong || "").trim();
+  if(!complex) return "지역";
+  return dong ? `${complex} ${dong}동` : complex;
+}
+
+function getSmsEntry(target){
+  const key = "sms_" + target.id;
+  if(!state[key]){
+    state[key] = {
+      storyText: "",
+      storyChips: {},
+      done: false,
+      openIdx: randIndex(target.openings.length),
+      closeIdx: randIndex(target.closings.length)
+    };
+    saveState();
+  }
+  return state[key];
+}
+
+function reshuffleSms(target){
+  const entry = getSmsEntry(target);
+  entry.openIdx = randIndex(target.openings.length);
+  entry.closeIdx = randIndex(target.closings.length);
+  saveState();
+}
+
+function buildSmsParts(target){
+  const entry = getSmsEntry(target);
+  const info = getInfoString();
+  const storyLine = entry.storyText.trim() ? " " + entry.storyText.trim() : "";
+  const open = target.openings[entry.openIdx].replace("[INFO]", info) + storyLine;
+  const close = target.closings[entry.closeIdx];
+  const part1 = open + target.body1;
+  const body2Trimmed = target.body2.replace(/\n+$/, "\n");
+  const part2 = body2Trimmed + close;
+  return { part1, part2 };
+}
+
+function renderSmsProgress(){
+  const el = document.getElementById("smsProgress");
+  el.innerHTML = SMS_TARGETS.map(t=>{
+    const done = getSmsEntry(t).done;
+    return `<span class="pill ${done ? "done" : ""}">${done ? "✓ " : ""}${t.name}</span>`;
+  }).join("");
+}
+
+function renderSmsTabs(){
+  const el = document.getElementById("smsTabs");
+  el.innerHTML = SMS_TARGETS.map(t=>{
+    const done = getSmsEntry(t).done;
+    return `<div class="tab ${t.id===activeSmsId?"active":""} ${done?"done":""}" data-id="${t.id}">
+      <span class="dot"></span>${t.name}
+    </div>`;
+  }).join("");
+  [...el.querySelectorAll(".tab")].forEach(t=>{
+    t.addEventListener("click", ()=>{
+      activeSmsId = t.dataset.id;
+      renderSmsTabs();
+      renderSmsPanel();
+    });
+  });
+}
+
+function renderSmsPanel(){
+  const target = SMS_TARGETS.find(t=>t.id===activeSmsId);
+  const entry = getSmsEntry(target);
+  const panel = document.getElementById("smsPanel");
+  const { part1, part2 } = buildSmsParts(target);
+
+  panel.innerHTML = `
+    <div class="meta">
+      <div class="meta-left">
+        <div class="label">${target.name}</div>
+        <div class="agency">${target.role} · ${target.phone}</div>
+      </div>
+      <div class="stamp ${entry.done ? "show" : ""}" id="smsStampBadge">발송완료</div>
+    </div>
+
+    <div class="sms-phone-row">
+      <input type="text" id="infoComplex" placeholder="단지명 (예: 디에이치 아델스타)" value="${(state.infoComplex||"").replace(/"/g,'&quot;')}" style="width:180px;">
+      <input type="text" id="infoDong" placeholder="동 (숫자만)" value="${(state.infoDong||"").replace(/"/g,'&quot;')}" style="width:90px;">
+      <span class="phone-warn" style="color:var(--ink-soft);">문자 인사말에 자동으로 들어가요 (예: "OO단지 3동 주민입니다")</span>
+    </div>
+
+    <div class="story-box" id="storyBoxSms"></div>
+
+    <div class="title-field" style="font-size:14px; border:none; padding-bottom:6px;">📩 1차 문자 (인사 + 본문①)</div>
+    <textarea class="body" id="smsBodyText1" spellcheck="false" style="min-height:150px;">${part1}</textarea>
+    <div class="actions" style="margin-top:10px;">
+      <a class="btn-primary" id="smsSendBtn1" style="text-decoration:none;">📱 1차 문자 보내기</a>
+      <button class="btn-ghost" id="smsCopyBtn1">본문 복사</button>
+      <span class="sms-char-count" id="smsCharCount1"></span>
+    </div>
+
+    <div class="title-field" style="font-size:14px; border:none; padding-bottom:6px; margin-top:22px;">📩 2차 문자 (본문② + 마무리) — 1차 보낸 직후 이어서 보내주세요</div>
+    <textarea class="body" id="smsBodyText2" spellcheck="false" style="min-height:150px;">${part2}</textarea>
+    <div class="actions" style="margin-top:10px;">
+      <a class="btn-primary" id="smsSendBtn2" style="text-decoration:none;">📱 2차 문자 보내기</a>
+      <button class="btn-ghost" id="smsCopyBtn2">본문 복사</button>
+      <span class="sms-char-count" id="smsCharCount2"></span>
+    </div>
+
+    <div class="actions">
+      <button class="btn-ghost" id="smsReshuffleBtn">문구 다시 섞기</button>
+      <span class="copied-msg" id="smsCopiedMsg">복사됐어요</span>
+    </div>
+
+    <div class="link-out">모바일에서 "문자 보내기"를 누르면 문자 앱에 번호와 내용이 자동으로 채워지고, 자동으로 발송완료 표시가 돼요. 1차를 먼저 보내고, 곧이어 2차를 보내주세요. PC에서는 복사 후 문자 앱에 직접 붙여넣어 주세요.</div>
+  `;
+
+  function markSmsDone(){
+    entry.done = true;
+    saveState();
+    renderSmsTabs();
+    renderSmsProgress();
+    document.getElementById("smsStampBadge").classList.add("show");
+  }
+
+  function refreshAll(){
+    const parts = buildSmsParts(target);
+    document.getElementById("smsBodyText1").value = parts.part1;
+    document.getElementById("smsBodyText2").value = parts.part2;
+    updateSendLinks();
+  }
+
+  function updateSendLinks(){
+    const t1 = document.getElementById("smsBodyText1").value;
+    const t2 = document.getElementById("smsBodyText2").value;
+    document.getElementById("smsCharCount1").innerText = `${t1.length}자`;
+    document.getElementById("smsCharCount2").innerText = `${t2.length}자`;
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const sep = isMobile ? (navigator.userAgent.match(/iPhone|iPad|iPod/i) ? '&' : '?') : '?';
+    document.getElementById("smsSendBtn1").href = `sms:${target.phone}${sep}body=${encodeURIComponent(t1)}`;
+    document.getElementById("smsSendBtn2").href = `sms:${target.phone}${sep}body=${encodeURIComponent(t2)}`;
+    document.getElementById("smsSendBtn1").onclick = markSmsDone;
+    document.getElementById("smsSendBtn2").onclick = markSmsDone;
+  }
+
+  document.getElementById("infoComplex").addEventListener("input", (e)=>{
+    state.infoComplex = e.target.value;
+    saveState();
+    refreshAll();
+  });
+  document.getElementById("infoDong").addEventListener("input", (e)=>{
+    state.infoDong = e.target.value;
+    saveState();
+    refreshAll();
+  });
+
+  renderStoryBox("storyBoxSms", entry, refreshAll);
+  updateSendLinks();
+
+  document.getElementById("smsCopyBtn1").addEventListener("click", ()=>{
+    navigator.clipboard.writeText(document.getElementById("smsBodyText1").value).then(()=>flashSmsCopied());
+  });
+  document.getElementById("smsCopyBtn2").addEventListener("click", ()=>{
+    navigator.clipboard.writeText(document.getElementById("smsBodyText2").value).then(()=>flashSmsCopied());
+  });
+  function flashSmsCopied(){
+    const msg = document.getElementById("smsCopiedMsg");
+    msg.classList.add("show");
+    setTimeout(()=>msg.classList.remove("show"), 1400);
+  }
+
+  document.getElementById("smsReshuffleBtn").addEventListener("click", ()=>{
+    reshuffleSms(target);
+    renderSmsPanel();
+  });
+
+  updateStickyBar();
+}
+
+/* ---------- 모드 전환 ---------- */
+function setMode(mode){
+  MODE = mode;
+  document.getElementById("minwonSection").style.display = mode === "minwon" ? "" : "none";
+  document.getElementById("smsSection").style.display = mode === "sms" ? "" : "none";
+  document.getElementById("modeMinwonBtn").classList.toggle("active", mode === "minwon");
+  document.getElementById("modeSmsBtn").classList.toggle("active", mode === "sms");
+  updateStickyBar();
+}
+document.getElementById("modeMinwonBtn").addEventListener("click", ()=>setMode("minwon"));
+document.getElementById("modeSmsBtn").addEventListener("click", ()=>setMode("sms"));
+
+function updateStickyBar(){
+  const bar = document.getElementById("stickyBar");
+  if(MODE === "minwon"){
+    bar.innerHTML = `
+      <span class="sb-label" id="sbLabel">기관 선택</span>
+      <button class="sb-title" id="sbTitleBtn">📋 제목복사</button>
+      <button class="sb-body" id="sbBodyBtn">📄 본문복사</button>
+      <a class="sb-epeople" id="sbEpeopleBtn" href="https://www.epeople.go.kr/index.paid" target="_blank" rel="noopener">🏛️ 국민신문고</a>
+    `;
+    const agency = AGENCIES.find(a=>a.id===activeId);
+    document.getElementById("sbLabel").innerText = agency.name;
+    document.getElementById("sbTitleBtn").onclick = ()=>{
+      requireConsent(()=>{
+        const el = document.getElementById("titleField");
+        const text = el ? el.value : currentTitle(agency);
+        navigator.clipboard.writeText(text).then(()=>flashSticky("sbTitleBtn","✅ 완료"));
+      });
+    };
+    document.getElementById("sbBodyBtn").onclick = ()=>{
+      requireConsent(()=>{
+        const el = document.getElementById("bodyText");
+        const text = el ? el.value : buildBody(agency);
+        navigator.clipboard.writeText(text).then(()=>flashSticky("sbBodyBtn","✅ 완료"));
+      });
+    };
+    document.getElementById("sbEpeopleBtn").addEventListener("click", ()=>{
+      getEntry(agency).done = true;
+      saveState();
+      renderTabs();
+      renderProgress();
+    });
+  } else {
+    const target = SMS_TARGETS.find(t=>t.id===activeSmsId);
+    bar.innerHTML = `
+      <span class="sb-label" id="sbLabel">${target.name}</span>
+      <button class="sb-body" id="sbSmsCopy1Btn">📄 1차복사</button>
+      <button class="sb-body" id="sbSmsCopy2Btn">📄 2차복사</button>
+      <a class="sb-epeople" id="sbSmsSendBtn">📱 1차보내기</a>
+    `;
+    document.getElementById("sbSmsCopy1Btn").onclick = ()=>{
+      const el = document.getElementById("smsBodyText1");
+      if(el) navigator.clipboard.writeText(el.value).then(()=>flashSticky("sbSmsCopy1Btn","✅ 완료"));
+    };
+    document.getElementById("sbSmsCopy2Btn").onclick = ()=>{
+      const el = document.getElementById("smsBodyText2");
+      if(el) navigator.clipboard.writeText(el.value).then(()=>flashSticky("sbSmsCopy2Btn","✅ 완료"));
+    };
+    const sendBtn = document.getElementById("sbSmsSendBtn");
+    const el1 = document.getElementById("smsBodyText1");
+    if(el1){
+      sendBtn.href = `sms:${target.phone}?body=${encodeURIComponent(el1.value)}`;
+    }
+    sendBtn.addEventListener("click", ()=>{
+      const e = getSmsEntry(target);
+      e.done = true;
+      saveState();
+      renderSmsTabs();
+      renderSmsProgress();
+    });
+  }
+}
+
+function flashSticky(id, text){
+  const btn = document.getElementById(id);
+  const orig = btn.innerHTML;
+  btn.innerHTML = text;
+  btn.classList.add("flash");
+  setTimeout(()=>{ btn.innerHTML = orig; btn.classList.remove("flash"); }, 1300);
+}
+
+function flashCopied(){
+  const msg = document.getElementById("copiedMsg");
+  if(!msg) return;
+  msg.classList.add("show");
+  setTimeout(()=>msg.classList.remove("show"), 1400);
+}
+
+function requireConsent(onYes){
+  const overlay = document.getElementById("consentOverlay");
+  const yesBtn = document.getElementById("consentYesBtn");
+  const noBtn = document.getElementById("consentNoBtn");
+  overlay.classList.add("show");
+
+  function cleanup(){
+    overlay.classList.remove("show");
+    yesBtn.removeEventListener("click", onYesClick);
+    noBtn.removeEventListener("click", onNoClick);
+  }
+  function onYesClick(){ cleanup(); onYes(); }
+  function onNoClick(){ cleanup(); }
+
+  yesBtn.addEventListener("click", onYesClick);
+  noBtn.addEventListener("click", onNoClick);
+}
+
+renderProgress();
+renderTabs();
+renderPanel();
+renderSmsProgress();
+renderSmsTabs();
+renderSmsPanel();
+setMode("minwon");
+
+/* ---------- 공개 기간 설정: 2026-07-16 23:59:59(KST)까지만 오픈 ---------- */
+const LIVE_UNTIL = new Date("2026-07-16T23:59:59+09:00");
+if (new Date() > LIVE_UNTIL) {
+  document.getElementById("stickyBar").style.display = "none";
+  document.getElementById("consentOverlay").style.display = "none";
+  document.querySelector(".wrap").innerHTML = `
+    <header>
+      <h1 style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:700; margin:0;">과천 주암지구 데이터센터 반대 · 2차 재질의 민원 안내</h1>
+    </header>
+    <div class="notice">
+      <b>사이트가 폐쇄되었습니다.</b> 참여해주신 모든 분들께 감사드립니다.
+    </div>
+  `;
+}
+</script>
+</body>
+</html>
