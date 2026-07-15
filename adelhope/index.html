@@ -5,115 +5,110 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>과천 주암지구 2차 민원 — 재질의 발사기</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
 
 :root{
-  --ink:#1B2B44;
-  --ink-soft:#4C5A70;
-  --paper:#F5F6F2;
+  --ink:#191F28;
+  --ink-soft:#6B7684;
+  --ink-faint:#8B95A1;
+  --paper:#F2F4F6;
   --card:#FFFFFF;
-  --line:#DFE2D8;
-  --accent:#33604F;
-  --accent-soft:#E7EEE9;
-  --stamp:#A8452B;
-  --stamp-soft:#F6E6E1;
+  --line:#EEEFF1;
+  --accent:#3182F6;
+  --accent-dim:#1B64DA;
+  --accent-soft:#EAF2FF;
+  --success:#00C471;
+  --success-soft:#E6F9F1;
+  --warn:#F04452;
+  --warn-soft:#FFF0F1;
+  --track:#F2F4F6;
 }
 *{box-sizing:border-box;}
 body{
   margin:0;
   background:var(--paper);
   color:var(--ink);
-  font-family:'Noto Sans KR',sans-serif;
-  line-height:1.7;
+  font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic',sans-serif;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:880px;margin:0 auto;padding:40px 20px 100px;}
+.wrap{max-width:640px;margin:0 auto;padding:32px 20px 100px;}
 
-header{margin-bottom:28px;}
-.eyebrow{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:12px;
-  letter-spacing:.14em;
-  color:var(--accent);
-  text-transform:uppercase;
-  margin-bottom:10px;
-}
+header{margin-bottom:24px;}
 h1{
-  font-family:'Noto Serif KR',serif;
   font-weight:700;
-  font-size:clamp(24px,4vw,32px);
-  margin:0 0 12px;
+  font-size:20px;
+  line-height:1.4;
+  margin:0;
   letter-spacing:-0.01em;
+  color:var(--ink);
 }
 .sub{color:var(--ink-soft);font-size:14.5px;max-width:60ch;}
 
 .notice{
-  background:var(--stamp-soft);
-  border:1px solid #E3B7A6;
-  border-radius:10px;
-  padding:16px 18px;
+  background:var(--warn-soft);
+  border-radius:16px;
+  padding:18px 20px;
   margin:24px 0 32px;
-  font-size:14px;
-  color:#6B2E1C;
+  font-size:14.5px;
+  line-height:1.6;
+  color:#B3261E;
 }
-.notice b{color:var(--stamp);}
+.notice b{color:var(--warn); font-weight:700;}
 
 .progress{
   display:none;
 }
 .progress .pill{
-  font-family:'IBM Plex Mono',monospace;
   font-size:12px;
   padding:6px 10px;
   border-radius:999px;
-  border:1px solid var(--line);
   background:var(--card);
   color:var(--ink-soft);
 }
 .progress .pill.done{
-  background:var(--accent-soft);
-  border-color:var(--accent);
-  color:var(--accent);
+  background:var(--success-soft);
+  color:var(--success);
 }
 
 .tabs{
   display:flex;
-  gap:8px;
-  flex-wrap:wrap;
+  gap:4px;
+  background:var(--track);
+  padding:4px;
+  border-radius:16px;
   margin-bottom:0;
-  border-bottom:none;
 }
 .tab{
-  font-family:'Noto Sans KR',sans-serif;
+  flex:1;
   font-size:14px;
   font-weight:600;
-  padding:12px 20px;
+  padding:11px 10px;
   cursor:pointer;
   color:var(--ink-soft);
-  background:var(--card);
-  border:1.5px solid var(--line);
-  border-radius:999px;
+  background:transparent;
+  border-radius:12px;
   white-space:nowrap;
   user-select:none;
-  transition:all .15s;
+  text-align:center;
+  transition:all .18s ease;
 }
-.tab:hover{border-color:var(--accent); color:var(--ink);}
+.tab:hover{color:var(--ink);}
 .tab.active{
-  color:#fff;
-  background:var(--ink);
-  border-color:var(--ink);
+  color:var(--ink);
+  background:var(--card);
+  box-shadow:0 1px 3px rgba(25,31,40,.08), 0 1px 2px rgba(25,31,40,.04);
+  font-weight:700;
 }
 .tab .dot{
   display:none;
 }
 .tab.done{
-  border-color:var(--accent);
-  color:var(--accent);
-  background:var(--accent-soft);
+  color:var(--success);
 }
 .tab.done.active{
-  background:var(--accent);
-  color:#fff;
-  border-color:var(--accent);
+  background:var(--card);
+  color:var(--success);
 }
 .tab.done::after{
   content: " ✓";
@@ -122,11 +117,11 @@ h1{
 
 .panel{
   background:var(--card);
-  border:1px solid var(--line);
-  border-radius:14px;
-  margin-top:16px;
-  padding:28px 26px 26px;
+  border-radius:20px;
+  margin-top:12px;
+  padding:24px 20px 22px;
   position:relative;
+  box-shadow:0 1px 2px rgba(25,31,40,.04), 0 8px 24px rgba(25,31,40,.04);
 }
 
 .meta{
@@ -134,144 +129,145 @@ h1{
   justify-content:space-between;
   align-items:flex-start;
   gap:16px;
-  margin-bottom:18px;
+  margin-bottom:16px;
   flex-wrap:wrap;
 }
 .meta-left .label{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;
+  display:inline-block;
+  font-size:12px;
+  font-weight:700;
   color:var(--accent);
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  margin-bottom:6px;
+  background:var(--accent-soft);
+  padding:4px 10px;
+  border-radius:999px;
+  margin-bottom:8px;
 }
-.meta-left .agency{font-size:13.5px;color:var(--ink-soft);}
+.meta-left .agency{font-size:13px;color:var(--ink-soft);}
 
 .stamp{
-  font-family:'IBM Plex Mono',monospace;
   font-weight:700;
-  font-size:13px;
-  color:var(--stamp);
-  border:2px solid var(--stamp);
-  border-radius:8px;
-  padding:6px 12px;
-  transform:rotate(-6deg);
+  font-size:12.5px;
+  color:var(--success);
+  background:var(--success-soft);
+  border-radius:999px;
+  padding:7px 13px;
   opacity:0;
-  transition:opacity .25s, transform .25s;
+  transform:scale(.9);
+  transition:opacity .2s, transform .2s;
   pointer-events:none;
   white-space:nowrap;
 }
-.stamp.show{opacity:1;transform:rotate(-6deg) scale(1);}
+.stamp.show{opacity:1;transform:scale(1);}
 
 .title-field{
-  font-family:'Noto Serif KR',serif;
-  font-weight:600;
-  font-size:18px;
-  line-height:1.45;
-  margin:0 0 16px;
-  padding-bottom:14px;
-  border-bottom:1px dashed var(--line);
+  font-weight:700;
+  font-size:16.5px;
+  line-height:1.5;
+  margin:0 0 14px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--line);
 }
 input.title-field{
   width:100%;
   display:block;
   border:none;
-  border-bottom:1px dashed var(--line);
+  border-bottom:1px solid var(--line);
   background:transparent;
   outline:none;
   color:var(--ink);
+  font-family:inherit;
 }
 input.title-field:focus{
-  border-bottom:1px solid var(--accent);
+  border-bottom:2px solid var(--accent);
+  padding-bottom:11px;
 }
 
 .personalize{
   background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:10px;
+  border-radius:14px;
   padding:14px 16px;
-  margin-bottom:18px;
+  margin-bottom:16px;
 }
 .personalize label{
   display:block;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;
+  font-size:12px;
+  font-weight:700;
   color:var(--ink-soft);
-  letter-spacing:.05em;
   margin-bottom:8px;
 }
 .personalize input{
   width:100%;
   border:1px solid var(--line);
-  border-radius:6px;
-  padding:9px 10px;
-  font-family:'Noto Sans KR',sans-serif;
-  font-size:13.5px;
+  border-radius:10px;
+  padding:10px 12px;
+  font-family:inherit;
+  font-size:16px;
   background:#fff;
 }
 .personalize .hint{
   font-size:12px;
-  color:var(--ink-soft);
+  color:var(--ink-faint);
   margin-top:6px;
 }
 
 textarea.body{
   width:100%;
-  min-height:420px;
-  border:1px solid var(--line);
-  border-radius:10px;
+  min-height:400px;
+  border:none;
+  border-radius:16px;
   padding:18px;
-  font-family:'Noto Sans KR',sans-serif;
-  font-size:14px;
-  line-height:1.8;
+  font-family:inherit;
+  font-size:16px;
+  line-height:1.75;
   color:var(--ink);
   resize:vertical;
-  background:#FCFCFA;
+  background:var(--paper);
+  outline:none;
+}
+textarea.body:focus{
+  box-shadow:0 0 0 2px var(--accent);
 }
 
 .actions{
   display:flex;
-  gap:10px;
-  margin-top:16px;
+  gap:8px;
+  margin-top:14px;
   flex-wrap:wrap;
   align-items:center;
 }
 button{
-  font-family:'Noto Sans KR',sans-serif;
-  font-size:13.5px;
-  font-weight:500;
-  border-radius:8px;
-  padding:11px 18px;
+  font-family:inherit;
+  font-size:14px;
+  font-weight:700;
+  border-radius:14px;
+  padding:13px 18px;
   cursor:pointer;
-  border:1px solid transparent;
-  transition:transform .1s, background .15s;
+  border:none;
+  transition:transform .1s, background .15s, opacity .15s;
 }
 button:active{transform:scale(.97);}
 .btn-primary{
   background:var(--accent);
   color:#fff;
 }
-.btn-primary:hover{background:#284c3e;}
+.btn-primary:hover{background:var(--accent-dim);}
 .btn-ghost{
-  background:transparent;
-  border-color:var(--line);
+  background:var(--paper);
   color:var(--ink-soft);
 }
-.btn-ghost:hover{border-color:var(--ink-soft);color:var(--ink);}
+.btn-ghost:hover{background:var(--track); color:var(--ink);}
 .btn-done{
-  background:var(--stamp-soft);
-  color:var(--stamp);
-  border-color:#E3B7A6;
+  background:var(--warn-soft);
+  color:var(--warn);
 }
 .btn-done.marked{
-  background:var(--accent-soft);
-  color:var(--accent);
-  border-color:var(--accent);
+  background:var(--success-soft);
+  color:var(--success);
 }
 .copied-msg{
-  font-size:12.5px;
-  color:var(--accent);
-  font-family:'IBM Plex Mono',monospace;
+  font-size:13px;
+  font-weight:700;
+  color:var(--success);
   opacity:0;
   transition:opacity .2s;
 }
@@ -280,132 +276,128 @@ button:active{transform:scale(.97);}
 .link-out{
   margin-top:14px;
   font-size:12.5px;
-  color:var(--ink-soft);
+  color:var(--ink-faint);
+  line-height:1.6;
 }
-.link-out a{color:var(--accent);}
+.link-out a{color:var(--accent); font-weight:600;}
 
 .mode-toggle{
   display:flex;
-  gap:8px;
-  margin-bottom:22px;
+  gap:4px;
+  background:var(--track);
+  padding:4px;
+  border-radius:16px;
+  margin-bottom:20px;
 }
 .mode-toggle button{
   flex:1;
   padding:13px;
-  font-size:14px;
-  font-weight:600;
-  border:2px solid var(--line);
-  border-radius:10px;
-  background:#fff;
+  font-size:14.5px;
+  font-weight:700;
+  border-radius:12px;
+  background:transparent;
   color:var(--ink-soft);
 }
 .mode-toggle button.active{
-  border-color:var(--ink);
-  background:var(--ink);
-  color:#fff;
+  background:var(--card);
+  color:var(--ink);
+  box-shadow:0 1px 3px rgba(25,31,40,.08), 0 1px 2px rgba(25,31,40,.04);
 }
 
 .story-box{
   background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:10px;
+  border-radius:16px;
   padding:16px;
-  margin-bottom:18px;
+  margin-bottom:16px;
 }
 .story-box .story-label{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;
-  color:var(--ink-soft);
-  letter-spacing:.05em;
+  font-size:13px;
+  font-weight:700;
+  color:var(--ink);
   margin-bottom:10px;
 }
 .chips{
   display:flex;
   flex-wrap:wrap;
-  gap:7px;
+  gap:6px;
   margin-bottom:12px;
 }
 .chip{
   font-size:12.5px;
-  padding:7px 12px;
+  font-weight:600;
+  padding:8px 13px;
   border-radius:999px;
-  border:1px solid var(--line);
   background:#fff;
   color:var(--ink-soft);
   cursor:pointer;
   user-select:none;
   transition:all .12s;
 }
-.chip:hover{border-color:var(--accent);}
+.chip:hover{color:var(--ink);}
 .chip.on{
   background:var(--accent);
-  border-color:var(--accent);
   color:#fff;
 }
 .story-box textarea{
   width:100%;
-  min-height:110px;
-  border:1px solid var(--line);
-  border-radius:8px;
+  min-height:100px;
+  border:none;
+  border-radius:12px;
   padding:12px;
-  font-family:'Noto Sans KR',sans-serif;
-  font-size:13.5px;
+  font-family:inherit;
+  font-size:16px;
   line-height:1.7;
   background:#fff;
   resize:vertical;
+  outline:none;
+}
+.story-box textarea:focus{
+  box-shadow:0 0 0 2px var(--accent);
 }
 .story-box .hint{
   font-size:12px;
-  color:var(--ink-soft);
+  color:var(--ink-faint);
   margin-top:8px;
   line-height:1.6;
 }
 
 .sms-phone-row{
   display:flex;
-  gap:10px;
+  gap:8px;
   align-items:center;
-  margin-bottom:16px;
+  margin-bottom:14px;
   flex-wrap:wrap;
 }
 .sms-phone-row input{
   border:1px solid var(--line);
-  border-radius:6px;
-  padding:8px 10px;
-  font-family:'IBM Plex Mono',monospace;
-  font-size:13px;
-  width:180px;
+  border-radius:10px;
+  padding:9px 12px;
+  font-family:inherit;
+  font-size:16px;
+  flex:1 1 120px;
+  min-width:100px;
 }
 .sms-phone-row .phone-warn{
   font-size:12px;
-  color:var(--stamp);
+  color:var(--ink-faint);
 }
 .sms-char-count{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11.5px;
-  color:var(--ink-soft);
-}
-
-footer{
-  margin-top:36px;
   font-size:12px;
-  color:var(--ink-soft);
-  border-top:1px solid var(--line);
-  padding-top:16px;
+  color:var(--ink-faint);
+  font-variant-numeric:tabular-nums;
 }
 
 .disclaimer{
-  margin-top:20px;
-  padding-top:16px;
-  border-top:1px solid var(--line);
+  margin-top:24px;
+  padding:18px 16px 0;
   font-size:11.5px;
-  color:#8B9186;
+  color:var(--ink-faint);
   line-height:1.8;
   text-align:center;
 }
 
 /* 상단 고정 복사 바 */
-body{padding-top:56px;}
+body{padding-top:60px;}
 .sticky-bar{
   position:fixed;
   top:0; left:0; right:0;
@@ -413,28 +405,29 @@ body{padding-top:56px;}
   display:flex;
   gap:8px;
   align-items:center;
-  background:#fff;
-  border-bottom:1px solid var(--line);
-  padding:9px 14px;
-  box-shadow:0 2px 10px rgba(0,0,0,.05);
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  padding:10px 16px;
+  box-shadow:0 1px 0 var(--line);
 }
 .sticky-bar .sb-label{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:11px;
+  font-size:12px;
+  font-weight:700;
   color:var(--ink-soft);
   white-space:nowrap;
-  padding-right:2px;
+  padding-right:4px;
   flex-shrink:0;
 }
 .sticky-bar button, .sticky-bar a{
   flex:1;
   min-width:0;
-  font-family:'Noto Sans KR',sans-serif;
+  font-family:inherit;
   font-size:12.5px;
-  font-weight:600;
+  font-weight:700;
   border:none;
-  border-radius:8px;
-  padding:9px 6px;
+  border-radius:12px;
+  padding:10px 6px;
   cursor:pointer;
   text-align:center;
   text-decoration:none;
@@ -452,42 +445,52 @@ body{padding-top:56px;}
 .sb-title.flash{background:var(--accent); color:#fff;}
 
 @media (max-width: 600px){
-  body{padding-top:50px;}
-  .sticky-bar{padding:7px 8px; gap:5px;}
+  body{padding-top:56px;}
+  .sticky-bar{padding:8px 12px; gap:6px;}
   .sticky-bar .sb-label{display:none;}
-  .sticky-bar button, .sticky-bar a{font-size:11.5px; padding:9px 3px;}
+  .sticky-bar button, .sticky-bar a{font-size:12px; padding:10px 4px;}
+  .actions{flex-direction:column; align-items:stretch;}
+  .actions button, .actions a{width:100%;}
+  .actions .copied-msg{text-align:center;}
+  .tab{font-size:12.5px; padding:10px 6px; white-space:normal; line-height:1.3;}
+  .wrap{padding:24px 14px 100px;}
+  .panel{padding:20px 16px 18px;}
 }
 
 .consent-overlay{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(27,43,68,.5);
+  background:rgba(25,31,40,.45);
   z-index:500;
-  align-items:center;
+  align-items:flex-end;
   justify-content:center;
-  padding:20px;
+  padding:0;
 }
 .consent-overlay.show{display:flex;}
 .consent-card{
   background:#fff;
-  border-radius:14px;
-  max-width:360px;
+  border-radius:24px 24px 0 0;
+  max-width:480px;
   width:100%;
-  padding:22px 20px 20px;
-  box-shadow:0 12px 40px rgba(0,0,0,.22);
+  padding:28px 24px 24px;
+  box-shadow:0 -8px 32px rgba(0,0,0,.16);
+}
+@media (min-width: 640px){
+  .consent-overlay{align-items:center;}
+  .consent-card{border-radius:24px; max-width:360px;}
 }
 .consent-card .consent-title{
-  font-family:'Noto Serif KR',serif;
   font-weight:700;
-  font-size:15px;
+  font-size:17px;
   margin:0 0 10px;
+  color:var(--ink);
 }
 .consent-card p{
   font-size:13.5px;
   line-height:1.7;
   color:var(--ink-soft);
-  margin:0 0 18px;
+  margin:0 0 20px;
 }
 .consent-card .consent-actions{
   display:flex;
@@ -521,12 +524,12 @@ body{padding-top:56px;}
 <div class="wrap">
 
   <header>
-    <h1 style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:700; margin:0;">과천 주암지구 데이터센터 반대 · 2차 재질의 민원 안내</h1>
+    <h1>과천 주암지구 데이터센터 반대 · 2차 재질의 민원 안내</h1>
   </header>
 
   <div class="mode-toggle" id="modeToggle">
     <button id="modeMinwonBtn">📮 민원 (재질의)</button>
-    <button id="modeSmsBtn">📱 문자 (시장·의원)</button>
+    <button id="modeSmsBtn">📱 문자 (시장)</button>
   </div>
 
   <div id="minwonSection">
@@ -953,7 +956,7 @@ function renderPanel(){
   updateStickyBar();
 }
 
-/* ================= 문자 발송기 (신계용 시장 · 신동욱 의원) ================= */
+/* ================= 문자 발송기 (신계용 시장) ================= */
 /* 원본 index_6.html의 smsTemplates를 그대로 이식. 문자 길이 제한 때문에 1차(오프닝+body1) / 2차(body2+클로징) 두 통으로 나눠 보냄 */
 const SMS_TARGETS = [
   {
@@ -968,34 +971,13 @@ const SMS_TARGETS = [
       "신계용 시장님, 공약을 믿고 지지한 [INFO] 주민입니다. 이행을 촉구합니다.",
       "당선 축하드립니다 시장님. 주암지구 데이터센터 공약을 기억하시는지요. [INFO] 주민입니다."
     ],
-    body1: "\n'22.9kV는 전봇대와 같은 전압이라 안전하다'는 주장은 말장난입니다.\n전봇대도 22.9kV 특고압입니다. 전봇대는 220V로 낮춰 분산하지만 데이터센터는 특고압을 건물 내부에서 10MW씩 대용량으로 직접 처리합니다. 전기사업법 제2조: 7,000V 초과 = 특고압.",
-    body2: "후보 시절 인허가 불허를 공약하셨습니다. 주민들은 그 약속을 믿고 지지했습니다.\n지금 공식 입장을 밝히실 때입니다.\n1. 인허가 불허 방침을 공식 발표해 주십시오.\n2. 방송통신시설 허용용도를 삭제해 주십시오.\n3. 민관협의체를 구성해 주십시오.\n공약 파기 시 언론·시의회로 공론화하겠습니다.\n\n",
+    body1: "\n'22.9kV는 전봇대와 같은 전압이라 안전하다'는 주장은 말장난입니다.\n전봇대도 22.9kV 특고압입니다. 전봇대는 220V로 낮춰 분산하지만 데이터센터는 특고압을 건물 내부에서 10MW씩 대용량으로 직접 처리합니다. 전기사업법 제2조: 7,000V 초과 = 특고압.\n\n서울 금천구는 지난 7월 1일, 최기찬 구청장 취임 1호 결재로 '데이터센터 주민참여형 검토체계'와 전담 TF를 즉시 만들었습니다. 반경 200m 내 주민 과반수 동의 없인 허가 자체가 안 되는 구조입니다. 신계용 시장님은 공약까지 해놓고 아직 아무 조치가 없습니다.",
+    body2: "후보 시절 인허가 불허를 공약하셨습니다. 주민들은 그 약속을 믿고 지지했습니다.\n지금 공식 입장을 밝히실 때입니다.\n1. 인허가 불허 방침을 공식 발표해 주십시오.\n2. 방송통신시설 허용용도를 삭제해 주십시오.\n3. 민관협의체를 구성해 주십시오.\n4. 금천구 수준의 전담 TF와 검증체계를 즉시 도입해 주십시오.\n일주일 내 답이 없으면 공약 파기로 간주하고 시의회·언론에 공식 제기하겠습니다.\n\n",
     closings: [
       "공약을 지키는 것이 신뢰받는 시장의 첫걸음입니다.",
       "후보 시절 약속, 잊지 않으셨으리라 믿습니다.",
       "지금 시장님의 공식 입장이 9,700세대의 미래를 결정합니다.",
       "주민이 먼저 손 내밀고 있습니다. 공약으로 화답해 주십시오."
-    ]
-  },
-  {
-    id: "shin",
-    name: "신동욱 의원",
-    role: "국회의원 (서초구을)",
-    label: "02 · 국회의원 · 서초구을",
-    phone: "01091037227",
-    openings: [
-      "신동욱 의원님, 서초 [INFO] 구민입니다.",
-      "신동욱 의원님, 서초구민의 안전을 위해 행동하는 [INFO] 구민입니다.",
-      "의원님 안녕하세요. 데이터센터 건립 문제로 연락드리는 [INFO] 서초구민입니다.",
-      "신동욱 의원님, 서초구 아이들의 건강한 환경을 지켜주십시오. [INFO] 구민입니다."
-    ],
-    body1: "\n양재천 바로 옆 과천 주암지구에 50MW급 데이터센터 5개 블록이 추진 중입니다. 반경 200m 내 어린이집이 있으며 영유아보육법 시행규칙 제9조 위험시설 이격거리(50m 이상) 기준에 해당할 수 있습니다. 냉각탑 소음·유해물질 피해도 서초구민에게 직접 영향을 미칩니다.",
-    body2: "서초구 차원의 조치를 요청드립니다.\n1. 과천시에 공식 반대의견서를 공문으로 발송해 주십시오.\n2. 영유아보육법상 위험시설 해당 여부를 법령 해석을 통해 확인해 주십시오.\n3. 양재천 생태계 영향을 서초구 환경부서에서 검토해 주십시오.\n\n",
-    closings: [
-      "서초구민의 건강권과 거주환경을 반드시 지켜 주십시오.",
-      "지역 주민들의 정당한 우려에 적극 응답해 주십시오. 감사합니다.",
-      "의정 활동에 늘 감사드리며 이번 사안에 강력한 조치를 부탁드립니다.",
-      "서초구민의 방패가 되어 주시길 간곡히 부탁드립니다."
     ]
   }
 ];
@@ -1299,10 +1281,10 @@ if (new Date() > LIVE_UNTIL) {
   document.getElementById("consentOverlay").style.display = "none";
   document.querySelector(".wrap").innerHTML = `
     <header>
-      <h1 style="font-family:'Noto Sans KR',sans-serif; font-size:20px; font-weight:700; margin:0;">과천 주암지구 데이터센터 반대 · 2차 재질의 민원 안내</h1>
+      <h1>과천 주암지구 데이터센터 반대 · 2차 재질의 민원 안내</h1>
     </header>
     <div class="notice">
-      <b>사이트가 폐쇄되었습니다.</b> 
+      <b>사이트가 폐쇄되었습니다.</b> 참여해주신 모든 분들께 감사드립니다. 관련 소식은 별도 채널로 계속 안내드리겠습니다.
     </div>
   `;
 }
