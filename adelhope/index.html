@@ -106,10 +106,10 @@ h1{
 .tab{
   flex:1;
   font-size:14px;
-  font-weight:600;
+  font-weight:700;
   padding:11px 10px;
   cursor:pointer;
-  color:var(--ink-soft);
+  color:#333D4B;
   background:transparent;
   border-radius:12px;
   white-space:nowrap;
@@ -477,9 +477,9 @@ body{padding-top:60px;}
 
 @media (max-width: 600px){
   body{padding-top:56px;}
-  .sticky-bar{padding:8px 12px; gap:6px;}
-  .sticky-bar .sb-label{display:none;}
-  .sticky-bar button, .sticky-bar a{font-size:12px; padding:10px 4px;}
+  .sticky-bar{padding:8px 10px; gap:5px;}
+  .sticky-bar .sb-label{display:block; max-width:64px; overflow:hidden; text-overflow:ellipsis; font-size:11px;}
+  .sticky-bar button, .sticky-bar a{font-size:11.5px; padding:10px 3px;}
   .actions{flex-direction:column; align-items:stretch;}
   .actions button, .actions a{width:100%;}
   .actions .copied-msg{text-align:center;}
