@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -88,6 +86,12 @@
         .personalize-box.flash-required { animation: personalizeFlash 1.2s ease; }
         @keyframes personalizeFlash { 0%, 100% { box-shadow: none; } 30% { box-shadow: 0 0 0 4px rgba(220,38,38,0.35); } 60% { box-shadow: 0 0 0 2px rgba(220,38,38,0.2); } }
         .gate-locked { opacity: 0.45; filter: grayscale(35%); cursor: not-allowed; }
+        /* PC 상단 복사바: 잠긴 상태를 흐림 필터 대신 또렷한 회색 "비활성" 스타일로 표시 (모바일 하단바와 동일한 처리) */
+        .title-action-row .gate-locked {
+            opacity: 1 !important; filter: none !important;
+            background: #e2e8f0 !important; color: #94a3b8 !important;
+            border-color: #cbd5e1 !important; box-shadow: none !important;
+        }
 
         .mode-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
         .mode-btn { position: relative; padding: 13px 8px; font-size: 14px; font-weight: bold; border: 2px solid #cbd5e1; border-radius: 8px; background: white; cursor: pointer; color: #64748b; transition: 0.2s; }
@@ -98,6 +102,24 @@
         .mode-btn.active.mode-kepco { border-color: var(--kepco-color); background-color: var(--kepco-color); color: white; }
         .mode-btn.active.mode-fire { border-color: var(--fire-color); background-color: var(--fire-color); color: white; }
         .new-mode-badge { position: absolute; top: -9px; right: -6px; background: #dc2626; color: white; font-size: 9.5px; font-weight: 800; padding: 3px 7px; border-radius: 999px; box-shadow: 0 2px 6px rgba(220,38,38,0.5); }
+
+        /* 기관별 제출 완료 체크 */
+        .mode-complete-check {
+            position: absolute; top: -10px; right: -8px; width: 25px; height: 25px; border-radius: 50%;
+            background: white; border: 2px solid #cbd5e1; display: flex; align-items: center; justify-content: center;
+            font-size: 13px; line-height: 1; cursor: pointer; z-index: 3; color: #94a3b8;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: 0.15s;
+        }
+        .mode-complete-check:hover { border-color: #16a34a; color: #16a34a; }
+        .mode-complete-check.done { background: #16a34a; border-color: #16a34a; color: white; }
+        .mode-btn.agency-done { opacity: 0.55; filter: grayscale(55%); }
+        .agency-progress-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; }
+        .agency-progress-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
+        .agency-progress-label { font-size: 13px; font-weight: 800; color: #0f766e; }
+        .agency-progress-count { font-size: 13px; font-weight: 800; color: #0f766e; white-space: nowrap; }
+        .agency-progress-track { background: #ccfbf1; border-radius: 999px; height: 10px; overflow: hidden; }
+        .agency-progress-fill { background: linear-gradient(90deg, #14b8a6, #0d9488); height: 100%; border-radius: 999px; transition: width 0.3s; }
+        .agency-progress-hint { font-size: 11.5px; color: #0f766e; margin-top: 8px; line-height: 1.5; }
 
         .meta-info { font-size: 13px; font-weight: bold; color: #0f172a; margin-bottom: 8px; background: #f1f5f9; padding: 10px 14px; border-radius: 6px; }
         .title-row { margin-bottom: 0; }
@@ -292,12 +314,21 @@
     </div>
 
     <div class="mode-tabs">
-        <button id="btnModeLh" class="mode-btn active mode-lh" onclick="switchMode('lh')">🏗️ LH 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
-        <button id="btnModeMoland" class="mode-btn mode-moland" onclick="switchMode('moland')">🏢 국토교통부 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
-        <button id="btnModeGwacheon" class="mode-btn mode-gwacheon" onclick="switchMode('gwacheon')">🏙️ 과천시 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
-        <button id="btnModeKepco" class="mode-btn mode-kepco" onclick="switchMode('kepco')">⚡ 한국전력 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
-        <button id="btnModeFire" class="mode-btn mode-fire" onclick="switchMode('fire')">🚒 과천소방서 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
-        <button id="btnModeBudongsan" class="mode-btn mode-budongsan" onclick="switchMode('budongsan')">🏛️ 부동산원 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeLh" class="mode-btn active mode-lh" onclick="switchMode('lh')"><span class="mode-complete-check" id="agencyCheck_lh" onclick="event.stopPropagation(); toggleAgencyDone('lh');" role="checkbox" aria-checked="false" aria-label="LH 민원 제출 완료 표시">☐</span>🏗️ LH 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeMoland" class="mode-btn mode-moland" onclick="switchMode('moland')"><span class="mode-complete-check" id="agencyCheck_moland" onclick="event.stopPropagation(); toggleAgencyDone('moland');" role="checkbox" aria-checked="false" aria-label="국토교통부 민원 제출 완료 표시">☐</span>🏢 국토교통부 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeGwacheon" class="mode-btn mode-gwacheon" onclick="switchMode('gwacheon')"><span class="mode-complete-check" id="agencyCheck_gwacheon" onclick="event.stopPropagation(); toggleAgencyDone('gwacheon');" role="checkbox" aria-checked="false" aria-label="과천시 민원 제출 완료 표시">☐</span>🏙️ 과천시 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeKepco" class="mode-btn mode-kepco" onclick="switchMode('kepco')"><span class="mode-complete-check" id="agencyCheck_kepco" onclick="event.stopPropagation(); toggleAgencyDone('kepco');" role="checkbox" aria-checked="false" aria-label="한국전력 민원 제출 완료 표시">☐</span>⚡ 한국전력 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeFire" class="mode-btn mode-fire" onclick="switchMode('fire')"><span class="mode-complete-check" id="agencyCheck_fire" onclick="event.stopPropagation(); toggleAgencyDone('fire');" role="checkbox" aria-checked="false" aria-label="과천소방서 민원 제출 완료 표시">☐</span>🚒 과천소방서 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeBudongsan" class="mode-btn mode-budongsan" onclick="switchMode('budongsan')"><span class="mode-complete-check" id="agencyCheck_budongsan" onclick="event.stopPropagation(); toggleAgencyDone('budongsan');" role="checkbox" aria-checked="false" aria-label="부동산원 민원 제출 완료 표시">☐</span>🏛️ 부동산원 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+    </div>
+
+    <div class="agency-progress-box" id="agencyProgressBox">
+        <div class="agency-progress-row">
+            <span class="agency-progress-label">📮 기관별 제출 현황</span>
+            <span class="agency-progress-count" id="agencyProgressText">0 / 6개 기관 제출 완료</span>
+        </div>
+        <div class="agency-progress-track"><div class="agency-progress-fill" id="agencyProgressFill" style="width:0%"></div></div>
+        <div class="agency-progress-hint">위 탭의 동그라미를 눌러 제출을 마친 기관을 체크해두세요. 새로고침해도 이 브라우저에 기억돼요.</div>
     </div>
 
     <div class="personalize-box">
@@ -895,6 +926,62 @@
         }
     };
 
+    /* ===================== 기관별 제출 완료 체크 ===================== */
+    // 6개 기관 중 어디에 이미 제출했는지 이 브라우저에 기억해두고, 완료 표시된 기관은 탭을 딤 처리합니다.
+    const AGENCY_DONE_KEY = 'gwacheon_agency_done_v1';
+    function loadAgencyDone() {
+        try { return new Set(JSON.parse(localStorage.getItem(AGENCY_DONE_KEY) || '[]')); }
+        catch (e) { return new Set(); }
+    }
+    function saveAgencyDone(set) {
+        try { localStorage.setItem(AGENCY_DONE_KEY, JSON.stringify([...set])); } catch (e) {}
+    }
+    let agencyDone = loadAgencyDone();
+
+    function toggleAgencyDone(mode) {
+        if (agencyDone.has(mode)) { agencyDone.delete(mode); } else { agencyDone.add(mode); }
+        saveAgencyDone(agencyDone);
+        renderAgencyDoneUI();
+    }
+
+    function renderAgencyDoneUI() {
+        const modes = Object.keys(MODE_CONFIG);
+        modes.forEach(m => {
+            const done = agencyDone.has(m);
+            const btn = document.getElementById(MODE_CONFIG[m].btnId);
+            const check = document.getElementById('agencyCheck_' + m);
+            if (btn) btn.classList.toggle('agency-done', done);
+            if (check) {
+                check.classList.toggle('done', done);
+                check.textContent = done ? '✅' : '☐';
+                check.setAttribute('aria-checked', done ? 'true' : 'false');
+            }
+        });
+        const total = modes.length;
+        const doneCount = modes.filter(m => agencyDone.has(m)).length;
+        const countEl = document.getElementById('agencyProgressText');
+        if (countEl) countEl.textContent = `${doneCount} / ${total}개 기관 제출 완료`;
+        const fillEl = document.getElementById('agencyProgressFill');
+        if (fillEl) fillEl.style.width = (total ? (doneCount / total * 100) : 0) + '%';
+    }
+
+    // 제목/본문을 둘 다 복사했거나(또는 "제목+본문 한번에 복사"를 눌렀으면) 그 기관은 자동으로 제출 완료 처리합니다.
+    // (직접 국민신문고에 제출을 완료했다는 뜻은 아니지만, 복사=제출 직전 단계라 자동 체크 신호로 사용합니다. 틀렸으면 체크를 다시 눌러 해제할 수 있어요.)
+    const AGENCY_LABELS = { lh: 'LH', moland: '국토교통부', gwacheon: '과천시', kepco: '한국전력', fire: '과천소방서', budongsan: '부동산원' };
+    const copiedParts = {};
+    function markCopied(part) {
+        const m = currentMode;
+        if (!copiedParts[m]) copiedParts[m] = {};
+        copiedParts[m][part] = true;
+        const p = copiedParts[m];
+        if (!agencyDone.has(m) && (p.all || (p.title && p.body))) {
+            agencyDone.add(m);
+            saveAgencyDone(agencyDone);
+            renderAgencyDoneUI();
+            showToast(`✅ ${AGENCY_LABELS[m] || ''} 민원 제출완료로 자동 체크했어요!\n실수라면 탭의 체크 표시를 눌러 해제할 수 있어요.`);
+        }
+    }
+
     function switchMode(mode) {
         currentMode = mode;
         Object.keys(MODE_CONFIG).forEach(m => {
@@ -979,6 +1066,7 @@
             btn.classList.add('copied'); btn.innerHTML = '✅ 복사됨!';
             showToast('📋 제목이 복사됐어요!');
             setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📋 제목만 복사'; }, 1800);
+            markCopied('title');
         });
     }
 
@@ -989,6 +1077,7 @@
             btn.classList.add('copied'); btn.innerHTML = '✅ 복사됨!';
             showToast('📄 본문이 복사됐어요!');
             setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📄 본문만 복사'; }, 1800);
+            markCopied('body');
         });
     }
 
@@ -1000,6 +1089,7 @@
             btn.classList.add('copied'); btn.innerHTML = '✅ 복사됨!';
             showToast('📋 제목+본문이 모두 복사됐어요!');
             setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📋 제목+본문 한번에 복사'; }, 1800);
+            markCopied('all');
         });
     }
 
@@ -1337,6 +1427,7 @@
     initSmsPanel();
     initUsageGuide();
     initUsageGuideSwipe();
+    renderAgencyDoneUI();
     updateStickyOffset();
 </script>
 </body>
