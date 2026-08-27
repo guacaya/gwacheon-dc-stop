@@ -1,1 +1,1434 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과천 주암 데이터센터 대응 민원·의견서 도우미</title>
 
+    <meta name="theme-color" content="#3b5bdb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="주암 민원·의견서">
+
+    <style>
+        :root {
+            --primary-color: #3b5bdb;
+            --primary-hover: #2f4ac7;
+            --accent-color: #0d9488;
+            --accent-hover: #0f766e;
+            --bg-color: #f8fafc;
+            --slate: #475569;
+            --slate-hover: #334155;
+            --lh-color: #7c3aed;
+            --lh-hover: #6d28d9;
+            --moland-color: #be123c;
+            --moland-hover: #9f1239;
+            --gwacheon-color: #ca8a04;
+            --gwacheon-hover: #a16207;
+            --kepco-color: #0369a1;
+            --kepco-hover: #075985;
+            --fire-color: #ea580c;
+            --fire-hover: #c2410c;
+            --sms-sticky-offset: 90px;
+        }
+        body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; padding: 15px; line-height: 1.6; background-color: var(--bg-color); color: #334155; margin: 0; }
+        .container { max-width: 750px; margin: 20px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #1e293b; margin-top: 0; margin-bottom: 5px; font-size: 20px; }
+        p.desc { text-align: center; font-size: 14px; color: #64748b; margin-bottom: 22px; word-break: keep-all; }
+
+        .guide-box { border: 1px solid #fed7aa; background-color: #fffbfe; border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
+        .guide-toggle { width: 100%; background: none; border: none; cursor: pointer; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; font-family: inherit; }
+        .guide-toggle-left { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: bold; color: #c2410c; }
+        .guide-toggle-arrow { font-size: 12px; color: #c2410c; transition: transform 0.3s; }
+        .guide-box.open .guide-toggle-arrow { transform: rotate(180deg); }
+        .guide-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s; padding: 0 20px; }
+        .guide-box.open .guide-content { max-height: 1200px; padding: 0 20px 20px; }
+        .guide-title { font-size: 15px; font-weight: bold; color: #c2410c; margin-top: 14px; margin-bottom: 12px; }
+        .guide-title:first-child { margin-top: 0; }
+        .guide-step ol { margin: 5px 0; padding-left: 20px; font-size: 14px; color: #475569; }
+        .guide-step li { margin-bottom: 8px; }
+        .strong-blue { color: #2563eb; font-weight: bold; }
+        .strong-red { color: #dc2626; font-weight: bold; }
+        .link-epeople { color: #2563eb; font-weight: bold; text-decoration: underline; }
+
+        .usage-guide-box { background: linear-gradient(135deg, #fff7ed, #fffbeb); border: 2px solid #fdba74; border-radius: 10px; margin-bottom: 18px; overflow: hidden; }
+        .usage-guide-toggle { width: 100%; background: none; border: none; cursor: pointer; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-family: inherit; text-align: left; -webkit-tap-highlight-color: transparent; }
+        .usage-guide-toggle-left { font-size: 15px; font-weight: 800; color: #c2410c; line-height: 1.4; }
+        .usage-guide-arrow { font-size: 12px; color: #c2410c; flex-shrink: 0; }
+        .usage-guide-swipe-handle { display: none; }
+        .usage-guide-content { max-height: 2400px; opacity: 1; overflow: hidden; padding: 0 18px 16px; transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.3s ease; }
+        .usage-guide-box.collapsed .usage-guide-content { max-height: 0; opacity: 0; padding: 0 18px; }
+        .usage-guide-steps { margin: 0 0 10px; padding-left: 20px; font-size: 13.5px; color: #7c2d12; line-height: 1.7; }
+        .usage-guide-steps li { margin-bottom: 4px; }
+        .usage-guide-note { font-size: 12px; font-weight: 700; color: #9a3412; background: #fff1e6; border-radius: 6px; padding: 8px 10px; line-height: 1.6; }
+        .highlight-mark { background: #fecaca; color: #b91c1c; padding: 1px 5px; border-radius: 4px; }
+        .usage-guide-screenshot-wrap { margin: 4px 0 10px; text-align: center; }
+        .usage-guide-screenshot { max-width: 100%; height: auto; border: 1px solid #fdba74; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+        .dong-input-box { background: #f1f5f9; padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #2563eb; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .dong-input-box label { font-size: 13px; font-weight: bold; color: #334155; }
+        .dong-input-box select { padding: 6px 8px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; background-color: white; font-weight: bold; color: #334155; }
+        .dong-input-box input { padding: 6px 8px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; width: 56px; text-align: center; font-weight: bold; }
+        .dong-notice { font-size: 12px; color: #64748b; width: 100%; margin-top: 5px; padding-left: 5px; }
+
+        .section-divider { border: none; border-top: 1px dashed #cbd5e1; margin: 22px 0; }
+
+        .personalize-box { background: #fdf4ff; border: 1px solid #e9d5ff; border-radius: 10px; padding: 16px 18px; margin-bottom: 20px; }
+        .personalize-title { font-size: 14.5px; font-weight: 800; color: #7e22ce; margin-bottom: 10px; }
+        .personalize-sub { font-size: 12px; color: #6b21a8; margin-bottom: 12px; }
+        .keyword-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+        .keyword-chip { padding: 9px 13px; font-size: 13px; font-weight: 600; border: 2px solid #d8b4fe; border-radius: 20px; background: white; color: #7e22ce; cursor: pointer; transition: 0.15s; }
+        .keyword-chip:hover { background: #faf5ff; }
+        .keyword-chip.active { background: #9333ea; border-color: #9333ea; color: white; }
+        .freeform-label { font-size: 13px; font-weight: 700; color: #6b21a8; margin-bottom: 6px; display: block; }
+        textarea.freeform-input { width: 100%; height: 70px; border: 1px solid #d8b4fe; border-radius: 8px; padding: 10px 12px; box-sizing: border-box; font-size: 13.5px; resize: vertical; background: white; font-family: inherit; color: #334155; }
+        .personalize-required-note { font-size: 12px; font-weight: 700; margin-bottom: 12px; color: #dc2626; }
+        .personalize-box.flash-required { animation: personalizeFlash 1.2s ease; }
+        @keyframes personalizeFlash { 0%, 100% { box-shadow: none; } 30% { box-shadow: 0 0 0 4px rgba(220,38,38,0.35); } 60% { box-shadow: 0 0 0 2px rgba(220,38,38,0.2); } }
+        .gate-locked { opacity: 0.45; filter: grayscale(35%); cursor: not-allowed; }
+        /* PC 상단 복사바: 잠긴 상태를 흐림 필터 대신 또렷한 회색 "비활성" 스타일로 표시 (모바일 하단바와 동일한 처리) */
+        .title-action-row .gate-locked {
+            opacity: 1 !important; filter: none !important;
+            background: #e2e8f0 !important; color: #94a3b8 !important;
+            border-color: #cbd5e1 !important; box-shadow: none !important;
+        }
+
+        .mode-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
+        .mode-btn { position: relative; padding: 13px 8px; font-size: 14px; font-weight: bold; border: 2px solid #cbd5e1; border-radius: 8px; background: white; cursor: pointer; color: #64748b; transition: 0.2s; }
+        .mode-btn.active.mode-budongsan { border-color: var(--primary-color); background-color: var(--primary-color); color: white; }
+        .mode-btn.active.mode-lh { border-color: var(--lh-color); background-color: var(--lh-color); color: white; }
+        .mode-btn.active.mode-moland { border-color: var(--moland-color); background-color: var(--moland-color); color: white; }
+        .mode-btn.active.mode-gwacheon { border-color: var(--gwacheon-color); background-color: var(--gwacheon-color); color: white; }
+        .mode-btn.active.mode-kepco { border-color: var(--kepco-color); background-color: var(--kepco-color); color: white; }
+        .mode-btn.active.mode-fire { border-color: var(--fire-color); background-color: var(--fire-color); color: white; }
+        .new-mode-badge { position: absolute; top: -9px; right: -6px; background: #dc2626; color: white; font-size: 9.5px; font-weight: 800; padding: 3px 7px; border-radius: 999px; box-shadow: 0 2px 6px rgba(220,38,38,0.5); }
+
+        /* 기관별 제출 완료 체크 */
+        .mode-complete-check {
+            position: absolute; top: -10px; right: -8px; width: 25px; height: 25px; border-radius: 50%;
+            background: white; border: 2px solid #cbd5e1; display: flex; align-items: center; justify-content: center;
+            font-size: 13px; line-height: 1; cursor: pointer; z-index: 3; color: #94a3b8;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: 0.15s;
+        }
+        .mode-complete-check:hover { border-color: #16a34a; color: #16a34a; }
+        .mode-complete-check.done { background: #16a34a; border-color: #16a34a; color: white; }
+        .mode-btn.agency-done { opacity: 0.55; filter: grayscale(55%); }
+        .agency-progress-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; }
+        .agency-progress-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
+        .agency-progress-label { font-size: 13px; font-weight: 800; color: #0f766e; }
+        .agency-progress-count { font-size: 13px; font-weight: 800; color: #0f766e; white-space: nowrap; }
+        .agency-progress-track { background: #ccfbf1; border-radius: 999px; height: 10px; overflow: hidden; }
+        .agency-progress-fill { background: linear-gradient(90deg, #14b8a6, #0d9488); height: 100%; border-radius: 999px; transition: width 0.3s; }
+        .agency-progress-hint { font-size: 11.5px; color: #0f766e; margin-top: 8px; line-height: 1.5; }
+
+        .meta-info { font-size: 13px; font-weight: bold; color: #0f172a; margin-bottom: 8px; background: #f1f5f9; padding: 10px 14px; border-radius: 6px; }
+        .title-row { margin-bottom: 0; }
+        .title-box { background: #eef2ff; border-left: 4px solid var(--primary-color); padding: 10px 14px; font-weight: bold; font-size: 14px; color: #3730a3; border-radius: 0 6px 6px 0; margin-bottom: 10px; }
+        .title-action-row { margin-bottom: 10px; }
+        .copy-hint { font-size: 12.5px; font-weight: 700; color: #475569; margin-bottom: 8px; }
+        .copy-secondary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+        .btn-copy-primary-large { width: 100%; padding: 16px; font-size: 15px; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(59,91,219,0.3); transition: 0.2s; box-sizing: border-box; }
+        .btn-copy-primary-large:hover { filter: brightness(1.05); }
+        .btn-copy-primary-large.copied { background: linear-gradient(135deg, var(--accent-color), var(--accent-hover)); box-shadow: 0 4px 12px rgba(13,148,136,0.3); }
+        .btn-copy-secondary { padding: 11px 8px; font-size: 12.5px; font-weight: 700; border: 1.5px solid #cbd5e1; border-radius: 8px; cursor: pointer; background: white; color: #475569; display: flex; align-items: center; justify-content: center; gap: 5px; transition: 0.2s; box-sizing: border-box; width: 100%; }
+        .btn-copy-secondary:hover { background: #f8fafc; }
+        .btn-copy-secondary.copied { border-color: var(--accent-color); color: var(--accent-color); background: #f0fdfa; }
+        .btn-refresh-inline { width: 100%; padding: 9px; font-size: 12.5px; font-weight: 700; border: 1.5px solid #cbd5e1; border-radius: 8px; cursor: pointer; background: #f8fafc; color: #475569; margin-bottom: 8px; box-sizing: border-box; transition: 0.2s; }
+        .btn-refresh-inline:hover { background: #f1f5f9; }
+        .btn-go-cta-large { width: 100%; padding: 16px; font-size: 15px; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; background: linear-gradient(135deg, var(--accent-color), var(--accent-hover)); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; box-sizing: border-box; box-shadow: 0 4px 12px rgba(13,148,136,0.3); transition: 0.2s; }
+        .btn-go-cta-large:hover { filter: brightness(1.05); }
+        @media (min-width: 601px) {
+            .title-action-row { position: sticky; top: var(--sms-sticky-offset, 90px); z-index: 95; background: white; padding: 10px 0 12px; box-shadow: 0 6px 14px -8px rgba(0,0,0,0.15); }
+        }
+        .btn-copy-inline { padding: 10px 14px; font-size: 13px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; background-color: var(--primary-color); color: white; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-copy-inline:hover { background-color: var(--primary-hover); }
+        .btn-copy-inline.copied { background-color: var(--accent-color); }
+        .btn-go-epeople-title { padding: 10px 14px; font-size: 13px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; background-color: var(--accent-color); color: white; display: inline-flex; align-items: center; justify-content: center; gap: 5px; text-decoration: none; box-sizing: border-box; }
+        .btn-go-epeople-title:hover { background-color: var(--accent-hover); }
+
+        textarea#resultBox { width: 100%; height: 420px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; box-sizing: border-box; font-size: 14px; resize: none; background-color: #fafafa; line-height: 1.6; color: #334155; }
+
+        .btn-group-top { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        button.action-btn, a.action-link-btn { flex: 1; min-width: 150px; padding: 14px; font-size: 14px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; text-align: center; box-sizing: border-box; }
+        .btn-refresh { background-color: var(--slate); color: white; }
+        .btn-refresh:hover { background-color: var(--slate-hover); }
+        .btn-copy { background-color: var(--primary-color); color: white; }
+        .btn-copy:hover { background-color: var(--primary-hover); }
+        .btn-copy.copied { background-color: var(--accent-color); }
+        .btn-copy-body { background-color: #4f6fce; color: white; }
+        .btn-copy-body:hover { background-color: #3b5bdb; }
+        .btn-copy-body.copied { background-color: var(--accent-color); }
+
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1e293b; color: white; padding: 14px 22px; border-radius: 12px; font-size: 14px; font-weight: bold; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 9999; text-align: center; max-width: 320px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); white-space: pre-line; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        .top-index-tabs-wrap { position: sticky; top: 0; z-index: 100; background: white; padding: 10px 0 12px; margin: 0 -25px 18px; padding-left: 25px; padding-right: 25px; box-shadow: 0 4px 10px -4px rgba(0,0,0,0.08); }
+        /* 시의원 문자 보내기 기능 임시 비활성화 — 다시 켜려면 이 규칙과 HTML의 feature-hidden 클래스를 지우면 됩니다. */
+        .top-index-tabs-wrap.feature-hidden { display: none; }
+        .top-index-tabs { display: grid; grid-template-columns: 1.3fr 1fr; gap: 10px; margin-bottom: 0; }
+        .top-tab-btn { padding: 14px; font-size: 14.5px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 10px; background: white; cursor: pointer; color: #64748b; transition: 0.2s; }
+        .top-tab-btn.active { border-color: var(--primary-color); background: var(--primary-color); color: white; box-shadow: 0 4px 12px rgba(59,91,219,0.25); }
+        #topTabAction { position: relative; background: linear-gradient(135deg, #0d9488, #0f766e); color: white; border: 2px solid #0f766e; font-size: 15.5px; box-shadow: 0 4px 16px rgba(15,118,110,0.35); animation: pulseAction 2s infinite; }
+        #topTabAction.active { background: linear-gradient(135deg, #0d9488, #0f766e); border-color: #0f766e; box-shadow: 0 4px 16px rgba(15,118,110,0.45); }
+        @keyframes pulseAction { 0%, 100% { box-shadow: 0 4px 16px rgba(15,118,110,0.35); } 50% { box-shadow: 0 4px 22px rgba(15,118,110,0.6); } }
+        .urgent-badge { position: absolute; top: -9px; right: -6px; background: #dc2626; color: white; font-size: 10px; font-weight: 800; padding: 3px 7px; border-radius: 999px; box-shadow: 0 2px 6px rgba(220,38,38,0.5); animation: badgeBlink 1.6s infinite; white-space: nowrap; }
+        @keyframes badgeBlink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.85; transform: scale(1.06); } }
+        .sms-urgency-banner { background: linear-gradient(135deg, #fff1f2, #ffe4e6); border: 2px solid #fda4af; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; font-weight: 700; color: #9f1239; text-align: center; line-height: 1.6; }
+        .top-panel { display: none; }
+        .top-panel.active { display: block; }
+
+        .sticky-copy-bar { display: none; }
+        button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+        .sms-status-box { background: #ecfeff; border: 1px solid #a5f3fc; border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; position: sticky; top: var(--sms-sticky-offset, 90px); z-index: 90; box-shadow: 0 4px 10px -4px rgba(6,182,212,0.25); }
+        .sms-status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+        .sms-status-label { font-size: 13.5px; font-weight: 800; color: #0e7490; }
+        .sms-status-count { font-size: 14px; font-weight: 800; color: #0e7490; }
+        .sms-progress-track { background: #cffafe; border-radius: 999px; height: 10px; overflow: hidden; }
+        .sms-progress-fill { background: linear-gradient(90deg, #06b6d4, #0891b2); height: 100%; border-radius: 999px; transition: width 0.3s; }
+        .sms-reset-btn { margin-top: 10px; background: none; border: none; font-size: 11.5px; color: #0e7490; text-decoration: underline; cursor: pointer; padding: 0; }
+
+        .sms-guide-sub { font-size: 12px; color: #6b21a8; margin-bottom: 12px; }
+        .sms-intro-sub { padding: 0 2px; }
+        .sms-guide-group-label { font-size: 12.5px; font-weight: 700; color: #6b21a8; margin-bottom: 6px; margin-top: 4px; }
+        .sms-party-block { border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; border: 2px solid; }
+        .sms-party-block.party-ppp { background: #fef2f2; border-color: #fecaca; }
+        .sms-party-block.party-dp { background: #eff6ff; border-color: #bfdbfe; }
+        .sms-party-header { font-size: 15.5px; font-weight: 900; margin-bottom: 12px; }
+        .sms-party-block.party-ppp .sms-party-header { color: #b91c1c; }
+        .sms-party-block.party-dp .sms-party-header { color: #1d4ed8; }
+        .sms-party-sub { font-size: 12px; font-weight: 700; margin: 14px 0 8px; }
+        .sms-party-block.party-ppp .sms-party-sub { color: #b91c1c; }
+        .sms-party-block.party-dp .sms-party-sub { color: #1d4ed8; }
+        .sms-example-box { background: #fffbeb; border: 1px dashed #fcd34d; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
+        .sms-example-label { font-size: 12px; font-weight: 800; color: #92400e; margin-bottom: 6px; }
+        .sms-example-text { font-size: 13px; color: #78350f; line-height: 1.6; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; cursor: default; }
+        .freeform-label-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+        .freeform-label-row .freeform-label { margin-bottom: 0; }
+        .sms-clear-btn { background: none; border: none; font-size: 11.5px; color: #9333ea; text-decoration: underline; cursor: pointer; padding: 0; white-space: nowrap; }
+        .sms-compose-box { height: 100px; margin-top: 4px; }
+        .sms-paste-notice { font-size: 11px; color: #9333ea; margin-top: 5px; }
+        .sms-char-info { font-size: 11.5px; color: #64748b; margin-top: 6px; min-height: 14px; }
+
+        .sms-member-list { display: flex; flex-direction: column; gap: 8px; }
+        .sms-member-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; transition: opacity 0.5s ease, filter 0.5s ease; }
+        .sms-member-row.sent { opacity: 0.35; filter: grayscale(80%); pointer-events: none; }
+        .sms-member-info { display: flex; flex-direction: column; gap: 2px; min-width: 90px; }
+        .sms-member-name { font-size: 13.5px; font-weight: 800; color: #1e293b; }
+        .sms-member-phone { font-size: 11.5px; color: #64748b; }
+        .sms-member-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+        .sms-send-btn { background: #0d9488; color: white; font-size: 12.5px; font-weight: 700; padding: 9px 12px; border-radius: 8px; text-decoration: none; white-space: nowrap; }
+        .sms-send-btn:active { background: #0f766e; }
+        .sms-copy-btn { background: white; border: 1px solid #cbd5e1; color: #475569; font-size: 12px; font-weight: 600; padding: 9px 10px; border-radius: 8px; cursor: pointer; }
+        .sms-sent-badge { font-size: 11.5px; font-weight: 800; color: #16a34a; min-width: 70px; text-align: right; }
+        .sms-need-text-hint { font-size: 11.5px; color: #94a3b8; }
+
+        @media (max-width: 600px) {
+            body { padding: 0; background: white; }
+            .container { margin: 0; padding: 16px; border-radius: 0; box-shadow: none; }
+            .top-index-tabs-wrap { margin: 0 -16px 18px; padding-left: 16px; padding-right: 16px; top: 0; }
+            h2 { font-size: 16.5px; line-height: 1.4; }
+            p.desc { font-size: 13px; margin-bottom: 18px; }
+            .dong-input-box { gap: 6px; padding: 10px; }
+            .dong-input-box select { font-size: 12px; max-width: 100%; flex: 1 1 100%; }
+            .dong-input-box input { font-size: 12px; width: 50px; }
+            .title-action-row { display: none !important; }
+            .title-box { font-size: 13px; padding: 10px 12px; }
+            .usage-guide-swipe-handle { display: block; width: 38px; height: 4px; border-radius: 999px; background: #fdba74; margin: 8px auto -2px; }
+            .usage-guide-box { touch-action: pan-y; }
+            .usage-guide-toggle { padding: 11px 14px 13px; }
+            .usage-guide-toggle-left { font-size: 13.5px; }
+            .usage-guide-content { padding: 0 14px 14px; touch-action: pan-y; }
+            .usage-guide-box.collapsed .usage-guide-content { padding: 0 14px; }
+            .usage-guide-steps { font-size: 13px; padding-left: 18px; }
+            .usage-guide-note { font-size: 11.5px; }
+            textarea#resultBox { height: 280px; font-size: 13px; padding: 12px; }
+            .btn-group-top { margin-top: 10px; }
+            .toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); max-width: 88vw; font-size: 13px; padding: 13px 18px; }
+
+            .sticky-copy-bar {
+                display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: #f8fafc;
+                border-top: 4px solid transparent; border-image: linear-gradient(90deg, var(--primary-color), var(--accent-color)) 1;
+                padding: 11px 12px; padding-bottom: calc(11px + env(safe-area-inset-bottom, 0px));
+                gap: 6px; z-index: 100; box-shadow: 0 -10px 26px rgba(15,23,42,0.22);
+            }
+            .sticky-copy-bar button, .sticky-copy-bar a {
+                flex: 1; padding: 12px 2px; font-size: 10.5px; font-weight: 800; border-radius: 10px;
+                cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center;
+                justify-content: center; flex-direction: column; gap: 2px; line-height: 1.3; white-space: nowrap;
+            }
+            .sticky-bar-title { background: #e0e7ff; color: #3730a3; border: 1.5px solid #a5b4fc !important; }
+            .sticky-bar-body { background: #e0e7ff; color: #3730a3; border: 1.5px solid #a5b4fc !important; }
+            .sticky-bar-all { background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: white; box-shadow: 0 3px 10px rgba(59,91,219,0.4); border: none; }
+            .sticky-bar-epeople { background: linear-gradient(135deg, var(--accent-color), var(--accent-hover)); color: white; box-shadow: 0 3px 10px rgba(13,148,136,0.4); border: none; }
+            .sticky-bar-refresh { background: #fff7ed; color: #c2410c; border: 1.5px solid #fdba74 !important; }
+            /* 잠긴(개인화 전) 상태에서는 색을 흐릿하게 필터링하는 대신 또렷한 회색 "비활성" 스타일로 표시해 흐려 보이지 않게 합니다. */
+            .sticky-copy-bar .gate-locked {
+                opacity: 1 !important; filter: none !important;
+                background: #e2e8f0 !important; color: #94a3b8 !important;
+                border: 1.5px solid #cbd5e1 !important; box-shadow: none !important;
+            }
+            #panelAction { padding-bottom: 85px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🚀 과천 주암 데이터센터 대응 민원·의견서 도우미</h2>
+    <p class="desc">LH·국토교통부·과천시·한국전력·과천소방서·한국부동산원 민원(국민신문고)을 이 페이지 하나로 준비할 수 있습니다. 나만의 사연을 반드시 넣어야 매번 다른 문장으로 생성됩니다.</p>
+
+    <!-- 시의원 문자 보내기 기능 임시 비활성화: feature-hidden 클래스만 지우면 다시 노출됩니다 -->
+    <div class="top-index-tabs-wrap feature-hidden">
+        <div class="top-index-tabs">
+            <button id="topTabWrite" class="top-tab-btn active" onclick="switchTopTab('write')">📝 민원·의견서 작성</button>
+            <button id="topTabAction" class="top-tab-btn" onclick="switchTopTab('sms')">📱 시의원 문자 보내기<span class="urgent-badge">이번주 필수!</span></button>
+        </div>
+    </div>
+
+    <div id="panelWrite" class="top-panel active">
+
+    <!-- ===================== 작성 패널 ===================== -->
+    <div id="panelAction">
+
+    <div class="usage-guide-box" id="usageGuideBox">
+        <div class="usage-guide-swipe-handle" aria-hidden="true"></div>
+        <button type="button" class="usage-guide-toggle" id="usageGuideToggle" onclick="toggleUsageGuide()">
+            <span class="usage-guide-toggle-left">📌 처음이신가요? 이렇게 사용하세요</span>
+            <span class="usage-guide-arrow" id="usageGuideArrow">▲</span>
+        </button>
+        <div class="usage-guide-content" id="usageGuideContent">
+        <ol class="usage-guide-steps">
+            <li><strong>①</strong> 먼저 <strong>"국민신문고 바로가기"</strong> 버튼으로 이동해 <strong>본인 계정으로 로그인</strong>하세요</li>
+            <li><strong>②</strong> 로그인 후 상단 <strong>"민원" → "일반민원"</strong> 메뉴에서 아래 화면처럼 <span class="highlight-mark">"민원신청"</span>을 클릭하세요</li>
+        </ol>
+        <div class="usage-guide-screenshot-wrap"><img src="data:image/png;base64,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" alt="국민신문고 민원신청 클릭 위치 안내" class="usage-guide-screenshot"></div>
+        <ol class="usage-guide-steps" start="3">
+            <li><strong>③</strong> 이 페이지로 돌아와 민원 넣을 <strong>기관을 선택</strong>하고, 보라색 상자에서 <strong>나만의 사연</strong>을 선택·입력하세요 (필수)</li>
+            <li><strong>④</strong> 생성된 <strong>제목·본문 내용을 한 번씩 꼭 읽어보고</strong> 내가 제출하는 내용이 무엇인지 이해한 뒤 진행하세요</li>
+            <li><strong>⑤</strong> <strong>"제목만 복사"</strong>를 눌러 국민신문고 <strong>제목란</strong>에, <strong>"본문만 복사"</strong>를 눌러 <strong>본문란</strong>에 각각 붙여넣고 제출하세요</li>
+            <li><strong>⑥</strong> 위쪽 <strong>6개 기관 탭(LH·국토교통부·과천시·한국전력·과천소방서·부동산원)을 하나씩 눌러가며 ①~⑤ 과정을 반복</strong>해 <strong>6곳 모두 제출</strong>해주세요</li>
+        </ol>
+        <div class="usage-guide-note">⚠️ 이 페이지는 민원을 대신 접수하지 않습니다. 제목과 본문은 <strong>각각 따로 복사</strong>해서 해당 칸에 붙여넣어야 하며, 국민신문고에 <strong>본인이 로그인하여 직접</strong> 제출해야 최종 접수됩니다. <strong>6개 기관 민원을 모두 제출</strong>해야 효과가 커집니다 — 하나도 빠짐없이 부탁드려요!</div>
+        </div>
+    </div>
+
+    <div class="mode-tabs">
+        <button id="btnModeLh" class="mode-btn active mode-lh" onclick="switchMode('lh')"><span class="mode-complete-check" id="agencyCheck_lh" onclick="event.stopPropagation(); toggleAgencyDone('lh');" role="checkbox" aria-checked="false" aria-label="LH 민원 제출 완료 표시">☐</span>🏗️ LH 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeMoland" class="mode-btn mode-moland" onclick="switchMode('moland')"><span class="mode-complete-check" id="agencyCheck_moland" onclick="event.stopPropagation(); toggleAgencyDone('moland');" role="checkbox" aria-checked="false" aria-label="국토교통부 민원 제출 완료 표시">☐</span>🏢 국토교통부 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeGwacheon" class="mode-btn mode-gwacheon" onclick="switchMode('gwacheon')"><span class="mode-complete-check" id="agencyCheck_gwacheon" onclick="event.stopPropagation(); toggleAgencyDone('gwacheon');" role="checkbox" aria-checked="false" aria-label="과천시 민원 제출 완료 표시">☐</span>🏙️ 과천시 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeKepco" class="mode-btn mode-kepco" onclick="switchMode('kepco')"><span class="mode-complete-check" id="agencyCheck_kepco" onclick="event.stopPropagation(); toggleAgencyDone('kepco');" role="checkbox" aria-checked="false" aria-label="한국전력 민원 제출 완료 표시">☐</span>⚡ 한국전력 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeFire" class="mode-btn mode-fire" onclick="switchMode('fire')"><span class="mode-complete-check" id="agencyCheck_fire" onclick="event.stopPropagation(); toggleAgencyDone('fire');" role="checkbox" aria-checked="false" aria-label="과천소방서 민원 제출 완료 표시">☐</span>🚒 과천소방서 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeBudongsan" class="mode-btn mode-budongsan" onclick="switchMode('budongsan')"><span class="mode-complete-check" id="agencyCheck_budongsan" onclick="event.stopPropagation(); toggleAgencyDone('budongsan');" role="checkbox" aria-checked="false" aria-label="부동산원 민원 제출 완료 표시">☐</span>🏛️ 부동산원 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+    </div>
+
+    <div class="agency-progress-box" id="agencyProgressBox">
+        <div class="agency-progress-row">
+            <span class="agency-progress-label">📮 기관별 제출 현황</span>
+            <span class="agency-progress-count" id="agencyProgressText">0 / 6개 기관 제출 완료</span>
+        </div>
+        <div class="agency-progress-track"><div class="agency-progress-fill" id="agencyProgressFill" style="width:0%"></div></div>
+        <div class="agency-progress-hint">위 탭의 동그라미를 눌러 제출을 마친 기관을 체크해두세요. 새로고침해도 이 브라우저에 기억돼요.</div>
+    </div>
+
+    <div class="personalize-box">
+        <div class="personalize-title">✍️ 나만의 이유로 개인화하기 <span style="color:#dc2626;">(필수)</span></div>
+        <div class="personalize-sub">해당하는 항목을 눌러 선택하세요 (복수 선택 가능). 선택한 문장이 본문에 자동으로 들어갑니다.</div>
+        <div class="personalize-required-note" id="personalizeRequiredNote">⚠️ 최소 1개 이상 선택하거나 직접 사연을 적어야 복사·제출이 가능해요.</div>
+        <div class="keyword-grid" id="keywordGrid"></div>
+        <label class="freeform-label" for="freeformInput">📝 직접 사연을 적어주세요</label>
+        <textarea id="freeformInput" class="freeform-input" placeholder="예: 곧 태어날 아이와 함께 이 동네에 오래 살고 싶어서 걱정이 큽니다." oninput="onInputsChanged()"></textarea>
+    </div>
+
+    <div class="title-action-row">
+        <div class="copy-hint">👇 제목·본문을 각각 따로 복사해서 국민신문고 해당 칸에 붙여넣으세요</div>
+        <button class="btn-refresh-inline" onclick="generate(true)">🔄 문장 다시 섞기</button>
+        <button id="btnCopyAll" class="btn-copy-primary-large" onclick="if(checkPersonalized()) copyAll();">📋 제목+본문 한번에 복사</button>
+        <div class="copy-secondary-row">
+            <button id="btnCopyTitle" class="btn-copy-secondary" onclick="if(checkPersonalized()) copyTitle();">📋 제목만 복사</button>
+            <button id="btnCopyBody" class="btn-copy-secondary" onclick="if(checkPersonalized()) copyBody();">📄 본문만 복사</button>
+        </div>
+        <a id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="btn-go-cta-large" onclick="return checkPersonalized();">🏛️ 국민신문고 바로가기 →</a>
+    </div>
+
+    <div class="meta-info" id="metaInfoLine">📍 접수 기관: 한국토지주택공사(LH) 공공택지사업처·의왕과천사업본부</div>
+
+    <div class="title-row">
+        <div id="titleDisplay" class="title-box">민원 제목: 로딩 중...</div>
+    </div>
+
+    <textarea id="resultBox" readonly></textarea>
+
+    </div>
+    <!-- ===================== /작성 패널 ===================== -->
+
+    <!-- 모바일 하단 고정 복사 바 -->
+    <div class="sticky-copy-bar" id="stickyCopyBar">
+        <button class="sticky-bar-refresh" onclick="generate(true)">🔄<br>내용섞기</button>
+        <button id="stickyBtnAll" class="sticky-bar-all" onclick="if(checkPersonalized()) copyAll();">📋<br>전체복사</button>
+        <a id="stickyBtnTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople" onclick="return checkPersonalized();">🏛️<br>신문고이동</a>
+        <button id="stickyBtnTitle" class="sticky-bar-title" onclick="if(checkPersonalized()) copyTitle();">📋<br>제목복사</button>
+        <button id="stickyBtnBody" class="sticky-bar-body" onclick="if(checkPersonalized()) copyBody();">📄<br>본문복사</button>
+    </div>
+
+    <div style="margin-top:24px; padding-top:16px; border-top:1px solid #e2e8f0; font-size:11.5px; color:#94a3b8; line-height:1.8; text-align:center;">
+        본 페이지는 주민 개인이 비영리·공익 목적으로 제작한 참고용 도구입니다. <strong>민원·의견서를 자동으로 발송하거나 대리 제출하지 않습니다.</strong><br>
+        여기서 생성되는 글은 작성을 돕기 위한 참고용 예시 문구일 뿐입니다. <strong>모든 민원·의견서는 이용자 본인이 자신의 이름과 책임으로</strong> 국민신문고 로그인을 통해 직접 제출해야 합니다.<br>
+        제공되는 문구에 포함된 사실관계 주장은 언론보도·공개 법령/판례·공고문 등 공개 자료에 근거한 주민 개인의 우려와 의견 표명입니다. 특정 단체·기업·개인을 비방하거나 영업활동을 방해할 의도가 없습니다.<br>
+        이 사이트 및 제작자는 이용자가 작성·제출한 내용이나 그로 인해 발생하는 결과에 대해 <strong>어떠한 법적 책임도 지지 않습니다.</strong> 사실관계는 관계 기관의 공식 확인을 통해 판단하시고 제출 전 내용을 직접 확인·수정하시기 바랍니다.
+    </div>
+
+    </div>
+    <!-- ===================== /작성 패널(top) ===================== -->
+
+    <!-- ===================== 문자 발송 패널 ===================== -->
+    <div id="panelSms" class="top-panel">
+
+        <div class="sms-urgency-banner">🔥 이번주가 고비입니다! 8월 20일(목) 임시회 전에 최대한 많은 분이 문자를 보내주셔야 힘이 됩니다.</div>
+
+        <div class="sms-status-box">
+            <div class="sms-status-row">
+                <span class="sms-status-label">📊 발송 현황</span>
+                <span class="sms-status-count" id="smsStatusCount">0 / 7명 발송완료</span>
+            </div>
+            <div class="sms-progress-track"><div class="sms-progress-fill" id="smsProgressFill" style="width:0%"></div></div>
+            <button type="button" class="sms-reset-btn" id="smsResetBtn" onclick="resetSmsProgress()">↺ 발송 기록 초기화</button>
+        </div>
+
+        <div class="sms-guide-sub sms-intro-sub">두 정당은 어조가 달라서 문자 내용을 따로 준비하도록 나눴어요. 완성된 문구를 그대로 복사해서 붙여넣는 것은 막아두었습니다 — 지금은 정성이 담긴 직접 쓴 문자가 더 큰 힘이 되는 때라고 생각합니다.</div>
+
+        <div class="sms-party-block party-ppp">
+            <div class="sms-party-header">🔴 국민의힘 의원께</div>
+
+            <div class="sms-example-box">
+                <div class="sms-example-label">💡 예시 문자 (참고용 — 그대로 복사할 수 없어요)</div>
+                <div class="sms-example-text" oncontextmenu="return false;" onselectstart="return false;" oncopy="return false;">의원님, 조례 개정에 힘써주셔서 정말 감사합니다. 지금 주민들이 느끼는 불안과 우려는 한계에 다다랐습니다. 일초가 다급한 사안인 만큼, 하루빨리 개정이 완료되어 실질적인 보호 조치가 이뤄질 수 있도록 신속하게 처리해 주시길 간곡히 부탁드립니다!</div>
+            </div>
+
+            <div class="sms-guide-group-label">👇 눌러서 조합해보세요</div>
+            <div class="keyword-grid" id="smsGuidePpp"></div>
+
+            <div class="freeform-label-row">
+                <label class="freeform-label" for="smsComposeBox_ppp">✏️ 국민의힘 의원께 보낼 문자 (직접 작성)</label>
+                <button type="button" class="sms-clear-btn" onclick="clearSmsCompose('ppp')">✕ 지우고 다시 쓰기</button>
+            </div>
+            <textarea id="smsComposeBox_ppp" class="freeform-input sms-compose-box" placeholder="위 표현을 눌러 조합해보거나, 처음부터 직접 문자 내용을 작성해 주세요. (붙여넣기는 되지 않아요)" oninput="onSmsComposeChanged('ppp')" onpaste="return false;" ondrop="return false;" ondragover="return false;"></textarea>
+            <div class="sms-paste-notice">🚫 붙여넣기 방지 — 진심을 담아 직접 적어주시면 더 큰 힘이 됩니다.</div>
+            <div class="sms-char-info" id="smsCharInfo_ppp"></div>
+
+            <div class="sms-party-sub">✅ 문구를 쓰면 아래 국민의힘 의원 5명께 바로 이어서 보낼 수 있어요.</div>
+            <div class="sms-member-list" id="smsListPpp"></div>
+        </div>
+
+        <div class="sms-party-block party-dp">
+            <div class="sms-party-header">🔵 더불어민주당 의원께</div>
+
+            <div class="sms-example-box">
+                <div class="sms-example-label">💡 예시 문자 (참고용 — 그대로 복사할 수 없어요)</div>
+                <div class="sms-example-text" oncontextmenu="return false;" onselectstart="return false;" oncopy="return false;">의원님, 지금 과천 주민의 안전이 심각한 위기에 직면해 있습니다. 주민의 안전을 지키는 일에는 어떠한 이견도 있을 수 없다고 생각합니다. 더 지체할 시간이 없습니다. 부디 모든 뜻을 하나로 모아 하루속히 조례 개정에 앞장서 주시길 부탁드립니다.</div>
+            </div>
+
+            <div class="sms-guide-group-label">👇 눌러서 조합해보세요</div>
+            <div class="keyword-grid" id="smsGuideDp"></div>
+
+            <div class="freeform-label-row">
+                <label class="freeform-label" for="smsComposeBox_dp">✏️ 더불어민주당 의원께 보낼 문자 (직접 작성)</label>
+                <button type="button" class="sms-clear-btn" onclick="clearSmsCompose('dp')">✕ 지우고 다시 쓰기</button>
+            </div>
+            <textarea id="smsComposeBox_dp" class="freeform-input sms-compose-box" placeholder="위 표현을 눌러 조합해보거나, 처음부터 직접 문자 내용을 작성해 주세요. (붙여넣기는 되지 않아요)" oninput="onSmsComposeChanged('dp')" onpaste="return false;" ondrop="return false;" ondragover="return false;"></textarea>
+            <div class="sms-paste-notice">🚫 붙여넣기 방지 — 진심을 담아 직접 적어주시면 더 큰 힘이 됩니다.</div>
+            <div class="sms-char-info" id="smsCharInfo_dp"></div>
+
+            <div class="sms-party-sub">✅ 문구를 쓰면 아래 더불어민주당 의원 2명께 바로 이어서 보낼 수 있어요.</div>
+            <div class="sms-member-list" id="smsListDp"></div>
+        </div>
+
+        <div style="margin-top:24px; padding-top:16px; border-top:1px solid #e2e8f0; font-size:11.5px; color:#94a3b8; line-height:1.8; text-align:center;">
+            문자 보내기 버튼을 누르면 <strong>이용자 본인의 휴대폰 문자(SMS) 앱</strong>이 열립니다. 실제 발송은 본인이 앱에서 직접 눌러야 완료됩니다. 이 사이트는 문자를 대신 발송하거나 자동으로 전송하지 않습니다. 발송 현황은 <strong>이용자의 브라우저에만 저장</strong>되고 서버로 전송·수집되지 않습니다. 문자 발송 시 통신사 요금이 부과될 수 있습니다.
+        </div>
+
+    </div>
+    <!-- ===================== /문자 발송 패널 ===================== -->
+</div>
+
+<div class="toast" id="toastMsg"></div>
+
+<script>
+    /* ===================== 공통: 개인화 키워드 (두 모드 공용) ===================== */
+    const KEYWORDS = [
+        { id: "kid", label: "🧒 어린 자녀가 있어요", sentence: "본인의 가정에는 어린 자녀가 있어 전자파·소음 등 데이터센터로 인한 환경 변화에 특히 민감할 수밖에 없는 상황입니다." },
+        { id: "baby", label: "🤰 임신 중이거나 영유아가 있어요", sentence: "출산을 앞두고 있거나 영유아를 양육하고 있어 주거지 인근 대규모 전력시설 건립에 대한 우려가 더욱 큽니다." },
+        { id: "elder", label: "🧓 노약자·환자와 함께 살아요", sentence: "고령이거나 건강이 취약한 가족과 함께 거주하고 있어 소음과 전자파 등 환경 변화에 더욱 민감하게 영향을 받을 수 있습니다." },
+        { id: "school", label: "🏫 통학·통근길이 겹쳐요", sentence: "인근 어린이집·학교 통학 동선 및 일상 생활권과 사업 부지가 겹쳐 있어 안전에 대한 우려가 큽니다." },
+        { id: "prior", label: "📨 이미 다른 기관에도 의견을 냈어요", sentence: "이미 관계기관에 동일한 사안으로 민원·의견을 제출한 바 있습니다. 이번에도 동일한 우려가 반드시 반영되기를 바랍니다." }
+    ];
+
+    const selectedKeywords = new Set();
+    let currentMode = 'lh';
+
+    function getRandomIndex(max) { return Math.floor(Math.random() * max); }
+
+    function getPersonalParagraph() {
+        const kwSentences = KEYWORDS.filter(k => selectedKeywords.has(k.id)).map(k => k.sentence);
+        const freeform = document.getElementById('freeformInput').value.trim();
+        if (!kwSentences.length && !freeform) return "";
+        let p = kwSentences.join(" ");
+        if (freeform) p += (kwSentences.length ? " " : "") + freeform;
+        return "\n\n" + p;
+    }
+
+    function buildKeywordGrid() {
+        const grid = document.getElementById('keywordGrid');
+        grid.innerHTML = '';
+        KEYWORDS.forEach(k => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'keyword-chip';
+            btn.innerText = k.label;
+            btn.onclick = () => {
+                if (selectedKeywords.has(k.id)) { selectedKeywords.delete(k.id); btn.classList.remove('active'); }
+                else { selectedKeywords.add(k.id); btn.classList.add('active'); }
+                generate(false);
+            };
+            grid.appendChild(btn);
+        });
+    }
+
+    /* ===================== 모드 ① 한국부동산원 민원 ===================== */
+    const budongsanTitleVariants = [
+        "과천주암지구 데이터센터 리츠 영업·변경인가 보류 및 전력 편법분할·공익성 심사에 대한 구체적 답변 촉구",
+        "한국부동산원 리츠 사업계획 심사 관련 편법 전력쪼개기 검증 및 주거지 근접 공익성 재검토 요청",
+        "과천주암지구 리츠 영업인가·변경인가 신중 처리 및 구체적 심사 답변 재요청",
+        "한국부동산원 리츠심사팀 앞 - 전력계통영향평가 회피 의혹 및 공익성 침해 우려 답변 촉구"
+    ];
+
+    const budongsanOpenings = [
+        "귀 기관의 공정하고 투명한 심사 업무 수행에 감사드립니다. 아래와 같이 민원을 제출합니다.",
+        "국민의 재산권 및 주거 안전을 위해 힘쓰시는 귀 기관의 책임 있는 심사를 신뢰하며 민원을 올립니다.",
+        "과천주암지구 인근 주민 및 입주예정자로서 리츠 사업계획 심사의 공정성을 촉구하고자 민원을 제출합니다.",
+        "귀 기관의 민원 처리 노고에 감사드립니다. 아래 사항에 대한 신중한 검토를 요청드립니다."
+    ];
+
+    const budongsanIntroVariants = [
+        "본 민원인은 경기도 과천시 주암지구에 인접한 공동주택 단지의 입주예정자입니다. 기존에 「부동산투자회사법」상 리츠 사업계획 심사와 관련하여 전력계통영향평가 의무 이행 여부 및 공익성 재검토를 요청하는 민원을 제출한 바 있습니다.",
+        "본 민원인은 과천주암지구 인근에 거주 예정인 주민입니다. 이전에도 리츠 사업계획의 전력계통영향평가 이행 여부와 공익성에 관한 민원을 제출하였으나 보다 구체적인 답변을 다시 한번 요청드리고자 합니다.",
+        "본 민원인은 과천주암지구와 인접한 곳에 거주할 예정인 입주예정자입니다. 리츠 사업계획 심사와 관련하여 이미 한 차례 민원을 접수한 바 있으나 아래 사항에 대한 명확한 답변을 다시 촉구드립니다."
+    ];
+
+    const budongsanStaticNotice = "현재 해당 사업의 자산관리회사(코람코자산신탁, 마스턴자산운용)는 귀 기관에 영업인가 및 변경인가를 신청해 놓은 것으로 파악하고 있습니다. 이에 민원인은 아래 사항에 대한 구체적이고 실질적인 답변 없이 영업인가·변경인가가 처리되지 않도록 신중한 심사를 재차 요청드립니다.";
+
+    const budongsanReq1Variants = [
+        "[요청 1] 편법 전력 쪼개기 여부에 대한 구체적 검증\n\n주암지구 내 데이터센터 사업이 1-1·2블록, 1-9블록 등 복수 블록·복수 법인 명의로 나뉘어 있는바, 이것이 실질적으로 동일 사업임에도 계약전력을 각각 10메가와트 미만으로 분할 신고하여 「분산에너지 활성화 특별법」상 전력계통영향평가 의무를 회피하려는 것은 아닌지 구체적으로 검증해 주시기 바랍니다. \"법령에 따라 검토 중\" 등 원론적 답변이 아니라 각 블록·사업자별 계약전력 신청 현황과 합산 판단 근거를 구체적으로 밝혀 주시기 바랍니다.",
+        "[요청 1] 계약전력 편법 분할(쪼개기) 여부 재확인 요청\n\n복수의 블록과 복수의 법인 명의로 진행되는 이 사업이 사실상 하나의 사업으로서 계약전력을 합산해야 함에도 각각 10메가와트 미만으로 나누어 신고함으로써 전력계통영향평가를 회피하려는 정황은 없는지 다시 한번 면밀히 확인해 주시기 바랍니다. 원론적인 답변이 아닌 실제 신청 현황과 판단 근거에 대한 구체적인 회신을 부탁드립니다."
+    ];
+
+    const budongsanReq2Variants = [
+        "[요청 2] 주거지 밀착 입지에 따른 공익성 심사 반영 여부\n\n가장 인접한 사업부지가 주거지 경계로부터 약 30미터에 불과하고 인근 반경 내 어린이집 약 32개소, 학교 5개교가 밀집해 있는 점을 사업계획 심사에 구체적으로 반영하였는지 확인해 주시기 바랍니다. 이 역시 원론적 답변이 아니라 심사 과정에서 주민 건강·안전에 대한 영향을 어떤 기준과 절차로 검토하였는지 구체적으로 밝혀 주시기 바랍니다.",
+        "[요청 2] 주민 건강·안전을 고려한 공익성 재검토 요청\n\n사업 부지가 주거지와 불과 30여 미터 거리에 있고 인근에 어린이집과 학교가 다수 밀집해 있는 만큼 이러한 입지 특성이 사업계획의 타당성·적정성 심사에 충분히 반영되었는지 다시 한번 검토해 주시기 바랍니다. 어떤 기준과 절차로 주민 건강·안전에 대한 영향을 평가하였는지 구체적으로 답변해 주시기 바랍니다."
+    ];
+
+    const budongsanReq3Variants = [
+        "[요청 3] 영업인가·변경인가 심사의 신중한 처리 요청\n\n위 두 사항(전력계통영향평가 의무 이행 여부, 공익성 침해 우려)에 대한 검토가 명확히 완결되기 전까지 영업인가·변경인가가 성급히 처리되지 않도록 신중을 기해 주시기 바라며 현재 심사 진행 상황(처리 일정 등)을 민원인에게 안내해 주시기 바랍니다.",
+        "[요청 3] 인가 절차의 신중한 진행 촉구\n\n위 사항들에 대한 명확한 확인과 검토 없이 영업인가·변경인가가 서둘러 처리되는 일이 없도록 각별히 유의해 주시기 바라며 향후 심사 일정 및 처리 절차를 안내해 주시기 바랍니다."
+    ];
+
+    const budongsanClosings = [
+        "민원인은 특정 기업의 적법한 사업활동을 부당하게 방해하고자 하는 것이 아니며 다만 대규모 전력수요시설이 주거지 및 보육·교육시설과 매우 근접하여 계획되고 있는 상황에서 관계 법령상 의무가 빠짐없이 이행되었는지, 리츠 사업계획의 공익성이 충분히 검토되었는지를 감독기관으로서 명확히 확인해 주실 것을 요청드립니다. 원론적 답변이 아닌 구체적이고 실질적인 회신을 부탁드립니다.\n\n감사합니다.",
+        "본 민원은 특정 사업자를 비방하거나 그 영업을 방해하려는 목적이 아니라 법과 절차에 따른 공정한 심사를 요청드리는 것입니다. 주민들의 건강과 안전이 걸린 문제인 만큼 형식적인 답변이 아닌 구체적이고 실효성 있는 검토와 회신을 부탁드립니다.\n\n감사합니다.",
+        "민원인은 적법한 절차를 존중하며 다만 심사 과정에서 위 사항들이 누락 없이 충실히 검토되기를 바랄 뿐입니다. 원론적인 답변이 아닌 구체적인 근거와 절차에 기반한 회신을 간곡히 요청드립니다.\n\n감사합니다."
+    ];
+
+    let stateB = {};
+    function rerollBudongsan() {
+        stateB = {
+            titleIdx: getRandomIndex(budongsanTitleVariants.length),
+            openIdx: getRandomIndex(budongsanOpenings.length),
+            introIdx: getRandomIndex(budongsanIntroVariants.length),
+            req1Idx: getRandomIndex(budongsanReq1Variants.length),
+            req2Idx: getRandomIndex(budongsanReq2Variants.length),
+            req3Idx: getRandomIndex(budongsanReq3Variants.length),
+            closeIdx: getRandomIndex(budongsanClosings.length)
+        };
+    }
+
+    function buildBudongsan() {
+        const intro = budongsanIntroVariants[stateB.introIdx];
+        const body = budongsanOpenings[stateB.openIdx] + "\n\n" + intro + " " + budongsanStaticNotice + getPersonalParagraph()
+            + "\n\n" + budongsanReq1Variants[stateB.req1Idx]
+            + "\n\n" + budongsanReq2Variants[stateB.req2Idx]
+            + "\n\n" + budongsanReq3Variants[stateB.req3Idx]
+            + "\n\n" + budongsanClosings[stateB.closeIdx];
+        return { title: budongsanTitleVariants[stateB.titleIdx], body };
+    }
+
+    /* ===================== 공통: 강경 대응 사유 뱅크 (LH·국토부·과천시·한전 공용) ===================== */
+    const REASON_BANK = [
+        { title: "수도권 집중 완화 국정과제 위배", text: "정부는 국토 균형발전과 수도권 인구·기능 분산을 핵심 국정과제로 추진하고 있습니다. 대규모 전력을 소비하는 첨단 인프라 시설을 수도권 한복판에 신축하는 것은 이러한 국정 기조에 정면으로 배치되는 것으로 보입니다." },
+        { title: "RE100·에너지 전환 정책 역행", text: "글로벌 기업들은 RE100 달성을 위해 신재생에너지 사용을 사실상 필수 요건으로 요구하고 있습니다. 신재생에너지 공급이 구조적으로 제한적인 수도권에 대규모 데이터센터를 신축하는 것은 정부의 탄소중립 목표 및 에너지 전환 정책과 역행하는 방향이라고 판단됩니다." },
+        { title: "수도권 전력계통 과부하 우려", text: "수도권 전력망은 이미 한계에 가까운 상황입니다. 단일 시설로 수십 메가와트 이상을 지속 소비하는 데이터센터가 들어설 경우 지역 전력계통의 안정성과 수급에 상당한 부담을 줄 것으로 우려됩니다. 「분산에너지 활성화 특별법」 및 「전기사업법」에서도 전력 계통에 과도한 부담을 주는 대용량 시설에 대해서는 신중한 접근이 필요하다고 규정하고 있는 것으로 알고 있습니다." },
+        { title: "주거 밀집지역 인접에 따른 주민안전 위협", text: "데이터센터 예정 부지는 인근 주거지 및 양재천 수변공원 등 주민 생활권과 불과 수십 미터 거리에 위치해 있습니다. 24시간 가동되는 냉각설비의 소음·진동, 송전선로에 따른 전자파, 비상발전기 배출가스 등은 주민 건강과 일상생활에 실질적인 영향을 줄 수 있어 우려가 큽니다." },
+        { title: "공공택지 취지에 맞지 않는 특혜성 개발 우려", text: "공공주택지구 부지는 본래 공공적 목적을 위해 조성된 것입니다. 이 부지에 대규모 민간 데이터센터 개발이 허용될 경우 공공사업의 취지와 맞지 않는 특혜성 개발로 비칠 소지가 있다고 생각합니다. 신재생에너지 자원과 부지가 확보된 지방에 데이터센터를 구축해도 서비스 제공에는 지장이 없다는 점에서 더욱 그렇습니다." },
+        { title: "수도권 데이터센터 난립의 악선례", text: "주거 쾌적성이 최우선되어야 할 공공주택지구 내 데이터센터 신축을 허용할 경우 수도권 전역의 주택지구·준주거지역에 유사 시설이 확산되는 나쁜 선례가 될 수 있습니다. 이는 향후 되돌리기 어려운 결과를 낳을 수 있어 신중한 판단이 필요합니다." }
+    ];
+
+    function pickReasonIndices(n) {
+        const idxs = [...Array(REASON_BANK.length).keys()];
+        for (let i = idxs.length - 1; i > 0; i--) {
+            const j = getRandomIndex(i + 1);
+            [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
+        }
+        return idxs.slice(0, n);
+    }
+
+    function buildReasonsBlock(idxArr) {
+        return idxArr.map((idx, i) => {
+            const r = REASON_BANK[idx];
+            return `[문제 제기 ${i + 1}] ${r.title}\n\n${r.text}`;
+        }).join('\n\n');
+    }
+
+    const WARNING_VARIANTS = [
+        "만약 이러한 정당한 요구가 받아들여지지 않고 주민의 주거환경과 안전을 도외시한 채 관련 절차가 그대로 강행될 경우 주민들은 행정처분의 효력정지 및 취소를 구하는 법적 절차를 포함하여 가능한 모든 정당한 수단을 검토하지 않을 수 없다는 점을 말씀드립니다.",
+        "주민들의 정당한 우려에도 불구하고 관련 절차가 일방적으로 강행될 경우 부득이하게 법적 대응을 포함한 모든 수단을 검토할 수밖에 없다는 점을 미리 말씀드립니다."
+    ];
+
+    /* ===================== 모드 ② LH(한국토지주택공사) 민원 ===================== */
+    const lhTitleVariants = [
+        "장군마을 민관협의체 요청사항(데이터센터 삭제) 중간검토 결과 공유 및 신속 처리 촉구",
+        "미매각 업무시설용지 데이터센터 허용용도 삭제 요청 건 - 중간검토 진행상황 확인 및 조속 처리 요청",
+        "장군마을 민관협의체(7월) 요청사항에 대한 무응답 관련 신속한 검토결과 공유 촉구"
+    ];
+
+    const lhOpenings = [
+        "공공택지 개발과 지역 상생을 위해 힘쓰시는 귀 공사(LH)의 노고에 감사드립니다. 아래와 같이 민원을 제출합니다.",
+        "귀 공사(LH)의 공정하고 투명한 업무 처리를 신뢰합니다. 아래와 같이 민원을 제출합니다."
+    ];
+
+    const lhNotice = "지난 7월 개최된 민관협의체(사전회의)에서 귀 공사는 장군마을 주민들이 요청한 사항에 대해 검토를 진행하겠다고 약속하였습니다. 그러나 회의 이후 현재까지 중간 검토 결과 공유 등 어떠한 진행 상황 안내도 이루어지지 않아 검토 진행 과정을 확인하고 긍정적인 검토 결과를 이끌어내고자 이 민원을 제출합니다.";
+
+    const lhReq1Variants = [
+        "[요청 1] 민관협의체(7월) 요청사항에 대한 중간 검토 결과 공유\n\n장군마을 주민이 민관협의체(7월)를 통해 귀 공사에 요청한 사항에 대한 중간 검토 내용을 알려주시기 바랍니다. 저희가 요청한 사항은 미매각 업무시설용지의 허용용도 중 '데이터센터'의 삭제와, 매각 여부와 관계없이 업무시설용지에 업무시설을 주용도로 설정하는 것입니다.",
+        "[요청 1] 데이터센터 허용용도 삭제 요청 건 중간 검토 결과 안내\n\n지난 7월 민관협의체를 통해 귀 공사에 요청드린 사항—미매각 업무시설용지의 허용용도 중 '데이터센터' 삭제 및 매각 여부와 관계없는 업무시설 주용도 설정—에 대한 중간 검토 내용을 안내해 주시기 바랍니다."
+    ];
+
+    const lhReq2 = "[요청 2] 연접 부지(과천주암지구) 용도 변경 추진 현황 공유\n\n이밖에도 지난 회의 이후로 장군마을과 연접한 과천주암지구의 업무시설용지 변경을 추진하는 사항이 있다면 그 내용도 함께 알려주시기 바랍니다.";
+
+    const lhReq3Variants = [
+        "[요청 3] 신속하고 투명한 진행상황 공유 촉구\n\n주민과의 약속은 검토 착수만으로 끝나는 것이 아니라 그 결과를 성실히 공유하는 데까지 이어져야 합니다. 회의 이후 한 달이 넘도록 아무런 회신이 없는 상황은 주민들의 신뢰를 크게 저해하고 있습니다. 하루빨리 중간 검토 결과를 공유해 주시고 향후 처리 일정도 함께 안내해 주시기를 강력히 촉구합니다.",
+        "[요청 3] 조속한 답변을 강력히 요청드립니다\n\n검토를 약속하신 지 이미 상당한 시간이 지났음에도 아무런 진행 상황 안내가 없는 것은 행정에 대한 신뢰를 무너뜨리는 일입니다. 주민들이 더 이상 불안 속에 기다리지 않도록 하루빨리 명확한 답변을 주시기를 강력히 요청드립니다."
+    ];
+
+    const lhClosings = [
+        "본 민원은 귀 공사의 적법한 업무 수행을 방해하고자 하는 것이 아니라 이미 약속하신 사항에 대한 투명하고 신속한 이행을 요청드리는 주민의 정당한 요구입니다. 지연되는 시간만큼 주민들의 불안과 불신이 커지고 있는 만큼 조속한 회신을 부탁드립니다.\n\n감사합니다.",
+        "적법한 절차를 존중하나 이미 하신 약속의 이행 여부조차 확인할 수 없는 현재 상황은 결코 가볍게 넘길 문제가 아닙니다. 주민들과의 신뢰 회복을 위해서라도 하루빨리 명확한 답변을 주시기를 요청드립니다.\n\n감사합니다."
+    ];
+
+    const lhStrongAskVariants = [
+        "아울러 귀 공사께서는 위와 같은 사유들을 종합적으로 고려하시어 주암지구 지구단위계획상 해당 부지의 허용용도에서 데이터센터를 명시적으로 제외하는 지구계획 변경 절차를 조속히 검토하고 추진해 주시기 바랍니다.",
+        "아울러 귀 공사께서는 앞서 말씀드린 여러 우려를 충분히 반영하시어 지구단위계획상 허용용도에서 데이터센터를 제외하는 방향으로 조속히 절차를 진행해 주시기를 강력히 요청드립니다."
+    ];
+
+    let stateL = {};
+    function rerollLh() {
+        stateL = {
+            titleIdx: getRandomIndex(lhTitleVariants.length),
+            openIdx: getRandomIndex(lhOpenings.length),
+            req1Idx: getRandomIndex(lhReq1Variants.length),
+            req3Idx: getRandomIndex(lhReq3Variants.length),
+            closeIdx: getRandomIndex(lhClosings.length),
+            reasonIdxs: pickReasonIndices(2),
+            askIdx: getRandomIndex(lhStrongAskVariants.length),
+            warnIdx: getRandomIndex(WARNING_VARIANTS.length)
+        };
+    }
+
+    function buildLh() {
+        const body = lhOpenings[stateL.openIdx] + "\n\n" + lhNotice + getPersonalParagraph()
+            + "\n\n" + lhReq1Variants[stateL.req1Idx]
+            + "\n\n" + lhReq2
+            + "\n\n" + lhReq3Variants[stateL.req3Idx]
+            + "\n\n" + buildReasonsBlock(stateL.reasonIdxs)
+            + "\n\n" + lhStrongAskVariants[stateL.askIdx]
+            + "\n\n" + WARNING_VARIANTS[stateL.warnIdx]
+            + "\n\n" + lhClosings[stateL.closeIdx];
+        return { title: lhTitleVariants[stateL.titleIdx], body };
+    }
+
+    /* ===================== 모드 ③ 국토교통부 민원 ===================== */
+    const molandTitleVariants = [
+        "과천주암지구 데이터센터 관련 민관협의체 정상 운영 촉구 및 LH 조속한 인허가 변경 요청",
+        "장군마을-과천시-LH 민관협의체 파행 우려 - 인허가권자 국토교통부의 관리·감독 촉구",
+        "과천주암지구 인허가권자 국토교통부에 데이터센터 민원 심각성 및 신속 처리 촉구"
+    ];
+
+    const molandOpenings = [
+        "국민의 주거 안전과 공정한 인허가 행정을 위해 힘쓰시는 귀 부의 노고에 감사드립니다. 아래와 같이 민원을 제출합니다.",
+        "귀 부의 공정하고 투명한 인허가 행정을 신뢰합니다. 아래와 같이 민원을 제출합니다."
+    ];
+
+    const molandNotice = "과천주암지구의 인허가권자인 국토교통부는 지난 7월 장군마을재개발조합·과천시·LH 간 상호 합의하여 추진하기로 한 '민관협의체'의 정상 운영을 위해 힘써주시기 바랍니다.";
+
+    const molandReq1 = "[요청 1] 민관협의체 요청사항 이행 여부에 대한 관리·감독\n\n지난 7월 장군마을 주민은 LH에게 미매각 업무시설용지의 허용용도 중 '데이터센터'의 삭제를 요청하였습니다. 매각 여부와 관계없이 업무시설용지에 업무시설을 주용도로 설정하는 것 또한 요청하였습니다. 이에 따라 LH는 해당 요청 건에 대하여 검토하기로 약속하였으나 현재까지 중간 검토 결과 공유 등이 전무합니다.";
+
+    const molandReq2 = "[요청 2] 사업시행자에 대한 수시 감독 요청\n\n투명하고 오로지 주민을 위한 민관협의체 운영이 이루어질 수 있도록 사업시행자(LH)의 민관협의체 운영 방향 등에 대하여 수시로 감독하여 주시기 바랍니다.";
+
+    const molandReq3Variants = [
+        "[요청 3] 데이터센터 관련 민원의 심각성 제고 및 조속한 처리 촉구\n\n과천주암지구 인근에는 다수의 주거지와 보육·교육시설이 밀집해 있어 대규모 전력수요시설인 데이터센터의 입지에 대한 주민들의 우려가 매우 큽니다. 인허가권자인 국토교통부께서 이러한 상황의 심각성을 충분히 인지하시고 사업시행자인 LH의 인허가 변경 절차가 조속히 진행될 수 있도록 강력히 지도해 주시기를 촉구합니다.",
+        "[요청 3] 신속한 관리·감독을 강력히 촉구합니다\n\n민관협의체가 형식적인 절차에 그치지 않고 실질적인 결과로 이어지도록 인허가권자인 국토교통부께서 사업시행자를 강력하게 지도·감독하여 주시기 바랍니다. 주민들은 더 이상 지연되는 상황을 지켜볼 수만은 없습니다."
+    ];
+
+    const molandClosings = [
+        "본 민원은 특정 기관·기업의 적법한 업무를 방해하고자 하는 것이 아니라 인허가권자로서의 관리·감독 책임을 다해주실 것을 요청드리는 주민의 정당한 의견입니다. 조속한 검토와 회신을 부탁드립니다.\n\n감사합니다.",
+        "적법한 절차를 존중하며 다만 주민의 안전과 직결된 사안인 만큼 인허가권자의 적극적인 역할을 요청드립니다. 형식적인 답변이 아닌 실질적인 조치로 이어지기를 강력히 바랍니다.\n\n감사합니다."
+    ];
+
+    const molandStrongAskVariants = [
+        "아울러 국토교통부께서는 인허가권자로서 위와 같은 사유들을 종합적으로 검토하시어 사업시행자인 LH가 지구단위계획상 허용용도에서 데이터센터를 제외하는 방향으로 조속히 절차를 진행할 수 있도록 강력하게 관리·감독해 주시기 바랍니다.",
+        "인허가권자인 국토교통부께서는 위 사유들의 심각성을 인지하시고 사업시행자가 데이터센터를 허용용도에서 제외하는 지구계획 변경에 나서도록 적극적으로 지도해 주시기를 강력히 촉구합니다."
+    ];
+
+    let stateM = {};
+    function rerollMoland() {
+        stateM = {
+            titleIdx: getRandomIndex(molandTitleVariants.length),
+            openIdx: getRandomIndex(molandOpenings.length),
+            req3Idx: getRandomIndex(molandReq3Variants.length),
+            closeIdx: getRandomIndex(molandClosings.length),
+            reasonIdxs: pickReasonIndices(2),
+            askIdx: getRandomIndex(molandStrongAskVariants.length),
+            warnIdx: getRandomIndex(WARNING_VARIANTS.length)
+        };
+    }
+
+    function buildMoland() {
+        const body = molandOpenings[stateM.openIdx] + "\n\n" + molandNotice + getPersonalParagraph()
+            + "\n\n" + molandReq1
+            + "\n\n" + molandReq2
+            + "\n\n" + molandReq3Variants[stateM.req3Idx]
+            + "\n\n" + buildReasonsBlock(stateM.reasonIdxs)
+            + "\n\n" + molandStrongAskVariants[stateM.askIdx]
+            + "\n\n" + WARNING_VARIANTS[stateM.warnIdx]
+            + "\n\n" + molandClosings[stateM.closeIdx];
+        return { title: molandTitleVariants[stateM.titleIdx], body };
+    }
+
+    /* ===================== 모드 ④ 과천시 민원 (시장) ===================== */
+    const gwacheonTitleVariants = [
+        "과천주암지구 데이터센터 입지 추진 철회 및 지구단위계획 변경 관련 시 차원의 적극적 대응 촉구",
+        "주암지구 데이터센터 관련 주민 안전 보호를 위한 과천시의 적극적 협의 주도 촉구"
+    ];
+
+    const gwacheonOpenings = [
+        "시민의 안전과 편안한 주거환경을 위해 힘쓰시는 귀 시의 노고에 감사드립니다. 아래와 같이 민원을 제출합니다.",
+        "과천시의 공정하고 책임 있는 행정을 신뢰하며 아래와 같이 민원을 제출합니다."
+    ];
+
+    const gwacheonNotice = "과천 주암 공공주택지구 내 준주거용지(방송통신시설)에 대규모 데이터센터 건립이 추진되고 있다는 사실에 대해 지역 주민들은 깊은 우려를 갖고 있습니다. 아래와 같은 이유로 과천시께서 이 사안에 보다 적극적으로 대응해 주시기를 요청드립니다.";
+
+    const gwacheonStrongAskVariants = [
+        "과천시께서는 주민의 안전과 주거환경을 최우선에 두시어 데이터센터 입지와 관련한 모든 인허가·협의 절차에서 신중한 입장을 명확히 하시고 LH 및 국토교통부와의 협의를 적극적으로 주도해 주시기 바랍니다.",
+        "과천시께서는 위와 같은 사유들을 무겁게 받아들이시어 데이터센터 입지에 대한 불허 방침을 명확히 하시고 관계기관과의 협의 과정에서 주민의 입장을 강력하게 대변해 주시기 바랍니다."
+    ];
+
+    const gwacheonClosings = [
+        "본 민원은 특정 기관이나 기업의 적법한 업무를 방해하고자 하는 것이 아니라 주민의 안전과 주거환경을 지키기 위한 정당한 우려와 요구를 전달드리는 것입니다. 조속하고 신중한 검토를 부탁드립니다.\n\n감사합니다.",
+        "적법한 절차를 존중하며 다만 주민의 생존권과 직결된 사안인 만큼 시의 적극적인 역할을 요청드립니다. 형식적인 답변이 아닌 실질적인 조치로 이어지기를 강력히 바랍니다.\n\n감사합니다."
+    ];
+
+    let stateG = {};
+    function rerollGwacheon() {
+        stateG = {
+            titleIdx: getRandomIndex(gwacheonTitleVariants.length),
+            openIdx: getRandomIndex(gwacheonOpenings.length),
+            askIdx: getRandomIndex(gwacheonStrongAskVariants.length),
+            closeIdx: getRandomIndex(gwacheonClosings.length),
+            reasonIdxs: pickReasonIndices(3),
+            warnIdx: getRandomIndex(WARNING_VARIANTS.length)
+        };
+    }
+
+    function buildGwacheon() {
+        const body = gwacheonOpenings[stateG.openIdx] + "\n\n" + gwacheonNotice + getPersonalParagraph()
+            + "\n\n" + buildReasonsBlock(stateG.reasonIdxs)
+            + "\n\n" + gwacheonStrongAskVariants[stateG.askIdx]
+            + "\n\n" + WARNING_VARIANTS[stateG.warnIdx]
+            + "\n\n" + gwacheonClosings[stateG.closeIdx];
+        return { title: gwacheonTitleVariants[stateG.titleIdx], body };
+    }
+
+    /* ===================== 모드 ⑤ 한국전력공사 민원 ===================== */
+    const kepcoTitleVariants = [
+        "과천주암지구 데이터센터 전력공급 관련 신중한 재검토 요청",
+        "수도권 전력계통 안정을 위한 과천주암지구 데이터센터 전력공급 여부 재검토 촉구"
+    ];
+
+    const kepcoOpenings = [
+        "안정적인 전력 공급을 위해 힘쓰시는 귀 공사의 노고에 감사드립니다. 아래와 같이 민원을 제출합니다.",
+        "귀 공사의 공정하고 안정적인 전력 수급 관리를 신뢰하며 아래와 같이 민원을 제출합니다."
+    ];
+
+    const kepcoNotice = "과천 주암 공공주택지구 내 준주거용지(방송통신시설)에 대규모 데이터센터 건립이 추진되고 있다는 사실에 대해 지역 주민들은 깊은 우려를 갖고 있습니다. 특히 아래와 같은 전력 수급 관련 사유로 한국전력공사께서 이 사안을 신중하게 검토해 주시기를 요청드립니다.";
+
+    const kepcoStrongAskVariants = [
+        "한국전력공사께서는 수도권 전력계통 안정화와 분산에너지 활성화 특별법의 취지에 따라 해당 사업장에 대한 전력 공급 여부를 신중하게 재검토해 주시기 바랍니다.",
+        "한국전력공사께서는 수도권 전력망이 이미 한계에 가까운 상황임을 고려하시어 해당 사업장의 계약전력 신청 현황과 전력계통영향평가 이행 여부를 면밀히 재검토해 주시기 바랍니다."
+    ];
+
+    const kepcoClosings = [
+        "본 민원은 귀 공사의 적법한 업무를 방해하고자 하는 것이 아니라 수도권 전력계통의 안정과 주민 안전을 지키기 위한 정당한 요청입니다. 신중한 검토와 회신을 부탁드립니다.\n\n감사합니다.",
+        "적법한 절차를 존중하며 다만 전력 수급 안정성과 직결된 사안인 만큼 면밀한 검토를 요청드립니다. 형식적인 답변이 아닌 실질적인 검토로 이어지기를 바랍니다.\n\n감사합니다."
+    ];
+
+    let stateK = {};
+    function rerollKepco() {
+        stateK = {
+            titleIdx: getRandomIndex(kepcoTitleVariants.length),
+            openIdx: getRandomIndex(kepcoOpenings.length),
+            askIdx: getRandomIndex(kepcoStrongAskVariants.length),
+            closeIdx: getRandomIndex(kepcoClosings.length),
+            reasonIdxs: pickReasonIndices(3),
+            warnIdx: getRandomIndex(WARNING_VARIANTS.length)
+        };
+    }
+
+    function buildKepco() {
+        const body = kepcoOpenings[stateK.openIdx] + "\n\n" + kepcoNotice + getPersonalParagraph()
+            + "\n\n" + buildReasonsBlock(stateK.reasonIdxs)
+            + "\n\n" + kepcoStrongAskVariants[stateK.askIdx]
+            + "\n\n" + WARNING_VARIANTS[stateK.warnIdx]
+            + "\n\n" + kepcoClosings[stateK.closeIdx];
+        return { title: kepcoTitleVariants[stateK.titleIdx], body };
+    }
+
+    /* ===================== 모드 ⑥ 과천소방서 민원 ===================== */
+    const fireClosings = [
+        "이 민원은 소방당국의 적법한 업무를 방해하고자 하는 것이 아니라 주민의 생명과 안전을 위해 신중한 검토를 요청드리는 것입니다. 성실한 답변을 부탁드립니다.\n\n감사합니다.",
+        "적법한 절차를 존중하며 다만 주민의 생존권이 걸린 사안인 만큼 각별히 신중한 검토를 요청드립니다. 형식적인 답변이 아닌 실질적인 확인으로 이어지기를 바랍니다.\n\n감사합니다."
+    ];
+
+    const fireVersionA = {
+        title: "데이터센터 건립 인근 소방자동차 진입 및 소화용수 확보에 대한 현장 중심 검토 요청",
+        buildBody: (personal, closing) =>
+            "주민 안전을 위해 힘쓰시는 귀 서의 노고에 감사드리며 아래와 같이 민원을 제출합니다." + "\n\n" +
+            "현행 소방시설 관계 법령에 따른 건축허가 동의 자료에는 소방자동차 진입 동선도 및 부서 공간 위치도 등이 포함되며, 소방시설 계통도 및 계산서 등도 제출 대상 설계도서에 포함됩니다." + "\n\n" +
+            "따라서 단순히 설계도면상 소방차량 진입이 가능한지를 확인하는 것에 그치지 않고 실제 현장조건을 반영하여 검토하여 주시기 바랍니다." + personal + "\n\n" +
+            "특히 다음 사항을 확인하여 주시기 바랍니다.\n\n" +
+            "- 대형 소방차량의 실제 진입 가능 여부\n" +
+            "- 여러 대의 소방차량이 동시에 진입하고 부서할 수 있는지 여부\n" +
+            "- 고가사다리차 등 특수소방장비의 전개 가능 여부\n" +
+            "- 소방차량 회차 가능 여부\n" +
+            "- 소화전 및 소방용수 확보 위치와 용량\n" +
+            "- 화재 발생 시 소방차량과 인근 주민 차량의 동선 충돌 가능성\n" +
+            "- 화재 진압에 따른 인근 주거지역 도로 통제 가능성\n" +
+            "- 인근 아파트 주민의 대피동선과 소방차량 진입동선의 충돌 가능성" + "\n\n" +
+            "특히 약 30m라는 짧은 거리로 인해 데이터센터와 주거지역이 사실상 하나의 생활권 안에 위치하게 되는 만큼, 화재 발생 시 소방활동 자체가 인근 주민의 대피를 방해하거나 반대로 주민 대피가 소방활동을 방해하는 상황이 발생하지 않는지도 검토해 주시기 바랍니다. 아델스타 입주민의 생존권이 달려있으므로 과천소방서는 답변을 충실히 하여 주시기를 바랍니다." + "\n\n" +
+            closing
+    };
+
+    const fireVersionB = {
+        title: "과천 주암지구 데이터센터 건립 관련 건축허가 '부동의(불가)' 촉구 민원",
+        buildBody: (personal, closing) =>
+            "과천 주암지구 내 데이터센터 건립과 관련하여 과천시청에서 과천소방서로 전송될 건축물 소방 동의(건축허가 동의)에 대해 강력한 반대 의사를 표명하며, 주민의 생명과 안전을 위해 최종 부동의(불가) 처분을 내려줄 것을 촉구합니다." + personal + "\n\n" +
+            "[민원 요지 및 부동의 요청 사유]\n\n" +
+            "1. 법적 소방시설 기준의 한계와 실질적 화재 위험성\n\n" +
+            "데이터센터는 다량의 리튬이온 배터리와 고전압 수전설비가 밀집되어 있어 화재 위험이 높은 시설로 알려져 있습니다. 현행 소방관계 법령에 맞춰 건립되더라도, 화재 발생 시 배터리 열폭주로 인한 초고온 화재 및 대량의 유독가스가 발생할 경우 기존 소방설비만으로는 초기 진압이 어려울 수 있다는 우려가 큽니다. 단순히 법적 요건을 충족했다고 해서 실제 안전까지 충분히 보장된다고 보기는 어렵다고 생각합니다." + "\n\n" +
+            "2. 주거지 30m 연접에 따른 치명적 위험과 대피령 기준의 의문\n\n" +
+            "최근 쿠팡 인천 물류센터 화재 당시, 반경 150m 내 붕괴 위험으로 인한 긴급 재난문자가 발송된 바 있습니다. 아델스타아파트는 데이터센터 예정지와 불과 30m 떨어진 초연접 고층아파트입니다. 대형 특수화재 사례에서 보듯 화재 발생 시 유독가스 확산 속도와 열기는 예상을 뛰어넘습니다. 과천소방서에 묻습니다. 데이터센터 화재 발생 시 인근 주민에 대한 비상 대피령 발령 기준과 골든타임 확보 대책은 수립되어 있습니까?" + "\n\n" +
+            "과천에서는 지난 2014년 삼성SDS 데이터센터 화재라는 대형 사고가 발생한 바 있어 주민들의 불안감은 매우 큽니다. 주민들은 데이터센터 건립으로 생존권을 위협받고 있음을 과천소방서에 지속해서 알리고 있습니다. 화재가 발생할 경우 과천소방서장 역시 그 책임에서 자유로울 수 없음을 엄중히 인지하셔야 합니다." + "\n\n" +
+            "2014년 삼성SDS 화재 당시의 출동 차량 및 대응 과정을 타임라인으로 상세히 밝혀주시기 바랍니다. 아울러 데이터센터 화재를 즉시 진압할 수 있는 실질적인 방안이 있는지, 2014년 당시와 비교해 현재 어떤 발전된 화재 진압 기술 및 대응 체계가 마련되어 있는지 답변을 요청합니다." + "\n\n" +
+            "유독가스 및 폭발 위험이 발생했을 때 영유아와 어르신들이 다수 거주하는 만큼 주민들이 즉각 대피할 수 있을지 걱정이 큽니다. 다량의 위험물 및 고압 전력 설비가 주거 밀집 지역과 이토록 인접하여 들어서는 것은 주민들을 상시적인 위험에 노출시킬 수 있다고 우려됩니다." + "\n\n" +
+            "과천소방서가 본 건축허가에 동의한다면 이는 명백한 과천소방서의 책임입니다. 아델스타 주민과 우면동에 거주하는 1만 5천 세대는 이를 엄중히 경고합니다." + "\n\n" +
+            "데이터센터가 초연접한 30m 내에 들어오지 못하도록 과천소방서에 건축물허가 부동의하여 주시기 바랍니다." + "\n\n" +
+            closing
+    };
+
+    const fireVersions = [fireVersionA, fireVersionB];
+
+    let stateF = {};
+    function rerollFire() {
+        stateF = {
+            versionIdx: getRandomIndex(fireVersions.length),
+            closeIdx: getRandomIndex(fireClosings.length)
+        };
+    }
+
+    function buildFire() {
+        const v = fireVersions[stateF.versionIdx];
+        const body = v.buildBody(getPersonalParagraph(), fireClosings[stateF.closeIdx]);
+        return { title: v.title, body };
+    }
+
+    /* ===================== 공통 생성/복사 로직 ===================== */
+    let currentTitle = "";
+
+    const EPEOPLE_URL = 'https://www.epeople.go.kr/index.paid';
+
+    const MODE_CONFIG = {
+        lh: {
+            btnId: 'btnModeLh',
+            meta: '📍 접수 기관: 한국토지주택공사(LH) 공공택지사업처·의왕과천사업본부',
+            target: 'epeople',
+            goLabel: '🏛️ 국민신문고 바로가기 →',
+            stickyLabel: '🏛️<br>신문고이동',
+            titlePrefix: '민원 제목',
+            reroll: rerollLh,
+            build: buildLh
+        },
+        moland: {
+            btnId: 'btnModeMoland',
+            meta: '📍 접수 기관: 국토교통부 (민간임대정책과)',
+            target: 'epeople',
+            goLabel: '🏛️ 국민신문고 바로가기 →',
+            stickyLabel: '🏛️<br>신문고이동',
+            titlePrefix: '민원 제목',
+            reroll: rerollMoland,
+            build: buildMoland
+        },
+        gwacheon: {
+            btnId: 'btnModeGwacheon',
+            meta: '📍 접수 기관: 과천시 (시장)',
+            target: 'epeople',
+            goLabel: '🏛️ 국민신문고 바로가기 →',
+            stickyLabel: '🏛️<br>신문고이동',
+            titlePrefix: '민원 제목',
+            reroll: rerollGwacheon,
+            build: buildGwacheon
+        },
+        kepco: {
+            btnId: 'btnModeKepco',
+            meta: '📍 접수 기관: 한국전력공사',
+            target: 'epeople',
+            goLabel: '🏛️ 국민신문고 바로가기 →',
+            stickyLabel: '🏛️<br>신문고이동',
+            titlePrefix: '민원 제목',
+            reroll: rerollKepco,
+            build: buildKepco
+        },
+        fire: {
+            btnId: 'btnModeFire',
+            meta: '📍 접수 기관: 과천소방서 · ✨ 매번 두 버전(현장검토 요청 / 부동의 촉구) 중 하나가 무작위로 나옵니다',
+            target: 'epeople',
+            goLabel: '🏛️ 국민신문고 바로가기 →',
+            stickyLabel: '🏛️<br>신문고이동',
+            titlePrefix: '민원 제목',
+            reroll: rerollFire,
+            build: buildFire
+        },
+        budongsan: {
+            btnId: 'btnModeBudongsan',
+            meta: '📍 접수 기관: 한국부동산원 (리츠심사팀) · ✨ 매번 다른 문장으로 자동 다변화됩니다',
+            target: 'epeople',
+            goLabel: '🏛️ 국민신문고 바로가기 →',
+            stickyLabel: '🏛️<br>신문고이동',
+            titlePrefix: '민원 제목',
+            reroll: rerollBudongsan,
+            build: buildBudongsan
+        }
+    };
+
+    /* ===================== 기관별 제출 완료 체크 ===================== */
+    // 6개 기관 중 어디에 이미 제출했는지 이 브라우저에 기억해두고, 완료 표시된 기관은 탭을 딤 처리합니다.
+    const AGENCY_DONE_KEY = 'gwacheon_agency_done_v1';
+    function loadAgencyDone() {
+        try { return new Set(JSON.parse(localStorage.getItem(AGENCY_DONE_KEY) || '[]')); }
+        catch (e) { return new Set(); }
+    }
+    function saveAgencyDone(set) {
+        try { localStorage.setItem(AGENCY_DONE_KEY, JSON.stringify([...set])); } catch (e) {}
+    }
+    let agencyDone = loadAgencyDone();
+
+    function toggleAgencyDone(mode) {
+        if (agencyDone.has(mode)) { agencyDone.delete(mode); } else { agencyDone.add(mode); }
+        saveAgencyDone(agencyDone);
+        renderAgencyDoneUI();
+    }
+
+    function renderAgencyDoneUI() {
+        const modes = Object.keys(MODE_CONFIG);
+        modes.forEach(m => {
+            const done = agencyDone.has(m);
+            const btn = document.getElementById(MODE_CONFIG[m].btnId);
+            const check = document.getElementById('agencyCheck_' + m);
+            if (btn) btn.classList.toggle('agency-done', done);
+            if (check) {
+                check.classList.toggle('done', done);
+                check.textContent = done ? '✅' : '☐';
+                check.setAttribute('aria-checked', done ? 'true' : 'false');
+            }
+        });
+        const total = modes.length;
+        const doneCount = modes.filter(m => agencyDone.has(m)).length;
+        const countEl = document.getElementById('agencyProgressText');
+        if (countEl) countEl.textContent = `${doneCount} / ${total}개 기관 제출 완료`;
+        const fillEl = document.getElementById('agencyProgressFill');
+        if (fillEl) fillEl.style.width = (total ? (doneCount / total * 100) : 0) + '%';
+    }
+
+    // 제목/본문을 둘 다 복사했거나(또는 "제목+본문 한번에 복사"를 눌렀으면) 그 기관은 자동으로 제출 완료 처리합니다.
+    // (직접 국민신문고에 제출을 완료했다는 뜻은 아니지만, 복사=제출 직전 단계라 자동 체크 신호로 사용합니다. 틀렸으면 체크를 다시 눌러 해제할 수 있어요.)
+    const AGENCY_LABELS = { lh: 'LH', moland: '국토교통부', gwacheon: '과천시', kepco: '한국전력', fire: '과천소방서', budongsan: '부동산원' };
+    const copiedParts = {};
+    function markCopied(part) {
+        const m = currentMode;
+        if (!copiedParts[m]) copiedParts[m] = {};
+        copiedParts[m][part] = true;
+        const p = copiedParts[m];
+        if (!agencyDone.has(m) && (p.all || (p.title && p.body))) {
+            agencyDone.add(m);
+            saveAgencyDone(agencyDone);
+            renderAgencyDoneUI();
+            showToast(`✅ ${AGENCY_LABELS[m] || ''} 민원 제출완료로 자동 체크했어요!\n실수라면 탭의 체크 표시를 눌러 해제할 수 있어요.`);
+        }
+    }
+
+    function switchMode(mode) {
+        currentMode = mode;
+        Object.keys(MODE_CONFIG).forEach(m => {
+            document.getElementById(MODE_CONFIG[m].btnId).classList.toggle('active', m === mode);
+        });
+
+        const cfg = MODE_CONFIG[mode];
+        const meta = document.getElementById('metaInfoLine');
+        const goBtn = document.getElementById('btnGoTarget');
+        const stickyBtn = document.getElementById('stickyBtnTarget');
+
+        meta.innerText = cfg.meta;
+        goBtn.innerText = cfg.goLabel;
+        stickyBtn.innerHTML = cfg.stickyLabel;
+        goBtn.href = EPEOPLE_URL;
+        stickyBtn.href = EPEOPLE_URL;
+
+        generate(true);
+    }
+
+    function generate(reroll) {
+        const cfg = MODE_CONFIG[currentMode];
+        if (reroll) cfg.reroll();
+        const r = cfg.build();
+        currentTitle = r.title;
+        document.getElementById('titleDisplay').innerText = `${cfg.titlePrefix}: ${r.title}`;
+        document.getElementById('resultBox').value = r.body;
+        document.getElementById('btnGoTarget').href = EPEOPLE_URL;
+        document.getElementById('stickyBtnTarget').href = EPEOPLE_URL;
+        resetCopyButtons();
+        updatePersonalizeGateUI();
+    }
+
+    function onInputsChanged() { generate(false); }
+
+    /* ===================== 개인화 필수 처리 ===================== */
+    function isPersonalized() {
+        return selectedKeywords.size > 0 || document.getElementById('freeformInput').value.trim().length > 0;
+    }
+
+    function updatePersonalizeGateUI() {
+        const ok = isPersonalized();
+        ['btnCopyTitle', 'btnCopyBody', 'btnCopyAll', 'btnGoTarget', 'stickyBtnTitle', 'stickyBtnBody', 'stickyBtnAll', 'stickyBtnTarget'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.toggle('gate-locked', !ok);
+        });
+        const note = document.getElementById('personalizeRequiredNote');
+        if (!note) return;
+        if (ok) {
+            note.innerText = '✅ 준비 완료! 이제 제목·본문 복사와 신문고 이동이 가능해요.';
+            note.style.color = '#15803d';
+        } else {
+            note.innerText = '⚠️ 최소 1개 이상 선택하거나 직접 사연을 적어야 복사·제출이 가능해요.';
+            note.style.color = '#dc2626';
+        }
+    }
+
+    function checkPersonalized() {
+        if (isPersonalized()) return true;
+        showToast('⚠️ 먼저 나만의 이유를 선택하거나 적어주세요!');
+        const box = document.querySelector('.personalize-box');
+        if (box) {
+            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            box.classList.add('flash-required');
+            setTimeout(() => box.classList.remove('flash-required'), 1200);
+        }
+        return false;
+    }
+
+    function resetCopyButtons() {
+        const t = document.getElementById('btnCopyTitle');
+        const b = document.getElementById('btnCopyBody');
+        const a = document.getElementById('btnCopyAll');
+        if (t) { t.classList.remove('copied'); t.innerHTML = '📋 제목만 복사'; }
+        if (b) { b.classList.remove('copied'); b.innerHTML = '📄 본문만 복사'; }
+        if (a) { a.classList.remove('copied'); a.innerHTML = '📋 제목+본문 한번에 복사'; }
+    }
+
+    function copyTitle() {
+        navigator.clipboard.writeText(currentTitle).then(() => {
+            const btn = document.getElementById('btnCopyTitle');
+            btn.classList.add('copied'); btn.innerHTML = '✅ 복사됨!';
+            showToast('📋 제목이 복사됐어요!');
+            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📋 제목만 복사'; }, 1800);
+            markCopied('title');
+        });
+    }
+
+    function copyBody() {
+        const body = document.getElementById('resultBox').value;
+        navigator.clipboard.writeText(body).then(() => {
+            const btn = document.getElementById('btnCopyBody');
+            btn.classList.add('copied'); btn.innerHTML = '✅ 복사됨!';
+            showToast('📄 본문이 복사됐어요!');
+            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📄 본문만 복사'; }, 1800);
+            markCopied('body');
+        });
+    }
+
+    function copyAll() {
+        const body = document.getElementById('resultBox').value;
+        const full = `[제목]\n${currentTitle}\n\n[본문]\n${body}`;
+        navigator.clipboard.writeText(full).then(() => {
+            const btn = document.getElementById('btnCopyAll');
+            btn.classList.add('copied'); btn.innerHTML = '✅ 복사됨!';
+            showToast('📋 제목+본문이 모두 복사됐어요!');
+            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📋 제목+본문 한번에 복사'; }, 1800);
+            markCopied('all');
+        });
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toastMsg');
+        t.innerText = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    /* ===================== 상단 탭 전환 (작성 ⇄ 문자 보내기) ===================== */
+    function switchTopTab(tab) {
+        const btnWrite = document.getElementById('topTabWrite');
+        const btnSms = document.getElementById('topTabAction');
+        const panelWrite = document.getElementById('panelWrite');
+        const panelSms = document.getElementById('panelSms');
+        if (tab === 'sms') {
+            btnWrite.classList.remove('active'); btnSms.classList.add('active');
+            panelWrite.classList.remove('active'); panelSms.classList.add('active');
+        } else {
+            btnWrite.classList.add('active'); btnSms.classList.remove('active');
+            panelWrite.classList.add('active'); panelSms.classList.remove('active');
+        }
+        updateStickyOffset();
+    }
+
+    /* ===================== 이용 방법 가이드 접기/펼치기 ===================== */
+    // 처음 방문(이 브라우저에서 처음 여는 경우)이면 펼친 상태로 보여주고,
+    // 재방문이면 접어서 모바일에서 화면을 덜 차지하도록 합니다. 언제든 눌러서 다시 펼 수 있습니다.
+    const USAGE_GUIDE_SEEN_KEY = 'juam_usage_guide_seen_v1';
+    function initUsageGuide() {
+        const box = document.getElementById('usageGuideBox');
+        if (!box) return;
+        let seenBefore = false;
+        try { seenBefore = localStorage.getItem(USAGE_GUIDE_SEEN_KEY) === '1'; } catch (e) {}
+        if (seenBefore) {
+            box.classList.add('collapsed');
+        } else {
+            try { localStorage.setItem(USAGE_GUIDE_SEEN_KEY, '1'); } catch (e) {}
+        }
+        updateUsageGuideArrow();
+    }
+    function toggleUsageGuide() {
+        const box = document.getElementById('usageGuideBox');
+        if (!box) return;
+        box.classList.toggle('collapsed');
+        updateUsageGuideArrow();
+    }
+    function updateUsageGuideArrow() {
+        const box = document.getElementById('usageGuideBox');
+        const arrow = document.getElementById('usageGuideArrow');
+        const toggleBtn = document.getElementById('usageGuideToggle');
+        if (!box || !arrow) return;
+        const collapsed = box.classList.contains('collapsed');
+        arrow.textContent = collapsed ? '▼' : '▲';
+        if (toggleBtn) toggleBtn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    }
+
+    // 모바일에서 가이드 박스를 위로 스와이프하면 접히고, 아래로 스와이프하면 펼쳐집니다.
+    // 페이지 스크롤을 막지 않도록 preventDefault는 쓰지 않고, 짧고 확실한 수직 제스처만 감지합니다.
+    function initUsageGuideSwipe() {
+        const box = document.getElementById('usageGuideBox');
+        if (!box) return;
+        let startX = null, startY = null, startTime = 0;
+        box.addEventListener('touchstart', (e) => {
+            if (!e.touches || e.touches.length !== 1) { startY = null; return; }
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            startTime = Date.now();
+        }, { passive: true });
+        box.addEventListener('touchend', (e) => {
+            if (startY === null) return;
+            const touch = e.changedTouches && e.changedTouches[0];
+            const sX = startX, sY = startY, sTime = startTime;
+            startX = null; startY = null;
+            if (!touch) return;
+            const deltaY = touch.clientY - sY;
+            const deltaX = touch.clientX - sX;
+            const elapsed = Date.now() - sTime;
+            if (Math.abs(deltaX) > Math.abs(deltaY)) return; // 가로 스와이프는 무시
+            if (elapsed > 700) return; // 너무 느리면 의도치 않은 드래그로 간주
+            const collapsed = box.classList.contains('collapsed');
+            if (!collapsed && deltaY < -45) {
+                box.classList.add('collapsed');
+                updateUsageGuideArrow();
+            } else if (collapsed && deltaY > 45) {
+                box.classList.remove('collapsed');
+                updateUsageGuideArrow();
+            }
+        }, { passive: true });
+    }
+
+    // 상단 탭바 높이를 재서 "발송 현황" 바가 그 바로 아래에 겹치지 않고 고정되도록 맞춥니다.
+    // (기기 폭/글자 줄바꿈에 따라 탭바 높이가 달라질 수 있어 고정값 대신 매번 측정합니다.)
+    function updateStickyOffset() {
+        const wrap = document.querySelector('.top-index-tabs-wrap');
+        if (!wrap) return;
+        document.documentElement.style.setProperty('--sms-sticky-offset', wrap.getBoundingClientRect().height + 'px');
+    }
+    window.addEventListener('resize', updateStickyOffset);
+    window.addEventListener('orientationchange', updateStickyOffset);
+
+    /* ===================== 모드 ③ 과천시의원 문자 보내기 ===================== */
+    const COUNCIL_MEMBERS = [
+        { id: 'ji',    party: 'ppp', name: '지태훈', phone: '010-4429-1766' },
+        { id: 'hwang', party: 'ppp', name: '황선희', phone: '010-8227-5139' },
+        { id: 'yoo',   party: 'ppp', name: '유부임', phone: '010-5186-8058' },
+        { id: 'kimdj', party: 'ppp', name: '김동진', phone: '010-7933-7536' },
+        { id: 'kimdh', party: 'ppp', name: '김동현', phone: '010-8826-6826' },
+        { id: 'lee',   party: 'dp',  name: '이주연', phone: '010-9310-4087' },
+        { id: 'choi',  party: 'dp',  name: '최지희', phone: '010-2661-4133' }
+    ];
+
+    // 완성된 문장을 통째로 불러오는 대신, 조합해서 직접 쓰도록 짧은 표현 조각만 제공합니다.
+    const SMS_KEYWORDS = {
+        ppp: [
+            "조례 개정에 힘써주셔서 감사합니다.",
+            "주민들의 불안과 우려가 한계에 다다랐습니다.",
+            "일초가 다급한 사안이라고 생각합니다.",
+            "실질적인 보호 조치가 꼭 필요합니다.",
+            "하루빨리 개정이 완료되길 부탁드립니다."
+        ],
+        dp: [
+            "과천 주민의 안전이 심각한 위기에 직면해 있습니다.",
+            "더는 지체할 시간이 없습니다.",
+            "주민의 생명과 안전이 최우선입니다.",
+            "조속한 조례 개정에 앞장서 주세요."
+        ]
+    };
+
+    const SMS_SENT_KEY = 'gwacheon_sms_sent_v1';
+    const SMS_SPLIT_LIMIT = 180; // 이 길이(자)를 넘으면 아이폰/갤럭시에서 잘리지 않도록 문자를 2건으로 나눕니다.
+
+    function loadSmsSent() {
+        try { return new Set(JSON.parse(localStorage.getItem(SMS_SENT_KEY) || '[]')); }
+        catch (e) { return new Set(); }
+    }
+    function saveSmsSent(set) {
+        try { localStorage.setItem(SMS_SENT_KEY, JSON.stringify([...set])); } catch (e) {}
+    }
+    let smsSent = loadSmsSent();
+
+    function isIOS() {
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+
+    // 아이폰은 sms:번호&body=..., 갤럭시(안드로이드)는 sms:번호?body=... 형식을 사용해야 문자 앱에 내용이 정상적으로 채워집니다.
+    function buildSmsHref(phone, body) {
+        const sep = isIOS() ? '&' : '?';
+        return `sms:${phone}${sep}body=${encodeURIComponent(body)}`;
+    }
+
+    // 문장이 길어지면(기본 180자 초과) 문자 앱에서 잘리지 않도록 자연스러운 위치에서 2건으로 나눕니다.
+    function splitSmsBody(text) {
+        const trimmed = text.trim();
+        const chars = [...trimmed];
+        if (chars.length <= SMS_SPLIT_LIMIT) return [trimmed];
+
+        let cut = -1;
+        for (let i = Math.max(Math.floor(chars.length / 2) - 25, 0); i < chars.length; i++) {
+            if ('.!?\n'.includes(chars[i])) { cut = i + 1; break; }
+        }
+        if (cut === -1) {
+            for (let i = Math.floor(chars.length / 2); i < chars.length; i++) {
+                if (chars[i] === ' ') { cut = i + 1; break; }
+            }
+        }
+        if (cut === -1) cut = Math.floor(chars.length / 2);
+
+        const part1 = chars.slice(0, cut).join('').trim();
+        const part2 = chars.slice(cut).join('').trim();
+        return [`(1/2) ${part1}`, `(2/2) ${part2}`];
+    }
+
+    function buildSmsKeywordGrid(containerId, party) {
+        const grid = document.getElementById(containerId);
+        grid.innerHTML = '';
+        SMS_KEYWORDS[party].forEach(text => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'keyword-chip';
+            btn.innerText = text;
+            btn.onclick = () => insertSmsKeyword(text, party);
+            grid.appendChild(btn);
+        });
+    }
+
+    // 클릭한 표현을 해당 정당 편집창 끝에 이어붙입니다(전체를 덮어쓰지 않음) — 직접 문장을 조합해서 쓰도록 돕는 용도입니다.
+    function insertSmsKeyword(text, party) {
+        const box = document.getElementById('smsComposeBox_' + party);
+        let current = box.value;
+        if (current && !/\s$/.test(current)) current += ' ';
+        box.value = current + text;
+        box.focus();
+        box.selectionStart = box.selectionEnd = box.value.length;
+        onSmsComposeChanged(party);
+    }
+
+    function clearSmsCompose(party) {
+        const box = document.getElementById('smsComposeBox_' + party);
+        box.value = '';
+        onSmsComposeChanged(party);
+        box.focus();
+    }
+
+    function onSmsComposeChanged(party) {
+        const len = [...document.getElementById('smsComposeBox_' + party).value.trim()].length;
+        const info = document.getElementById('smsCharInfo_' + party);
+        if (len === 0) {
+            info.innerText = '';
+        } else if (len > SMS_SPLIT_LIMIT) {
+            info.innerText = `현재 ${len}자 · 문자 앱에서 잘리지 않도록 2건으로 나눠 보내드려요.`;
+            info.style.color = '#b45309';
+        } else {
+            info.innerText = `현재 ${len}자 · 문자 1건으로 보내드려요.`;
+            info.style.color = '#64748b';
+        }
+        COUNCIL_MEMBERS.filter(m => m.party === party).forEach(renderSmsMemberActions);
+    }
+
+    function renderSmsMemberLists() {
+        const listPpp = document.getElementById('smsListPpp');
+        const listDp = document.getElementById('smsListDp');
+        listPpp.innerHTML = '';
+        listDp.innerHTML = '';
+
+        COUNCIL_MEMBERS.forEach(m => {
+            const target = m.party === 'ppp' ? listPpp : listDp;
+            const row = document.createElement('div');
+            row.className = 'sms-member-row' + (smsSent.has(m.id) ? ' sent' : '');
+            row.id = 'smsRow_' + m.id;
+            if (smsSent.has(m.id)) row.style.display = 'none'; // 이미 보낸 의원은 목록에서 바로 숨김
+
+            const info = document.createElement('div');
+            info.className = 'sms-member-info';
+            info.innerHTML = `<span class="sms-member-name">${m.name} 의원</span><span class="sms-member-phone">${m.phone}</span>`;
+
+            const actions = document.createElement('div');
+            actions.className = 'sms-member-actions';
+            actions.id = 'smsActions_' + m.id;
+
+            const badge = document.createElement('span');
+            badge.className = 'sms-sent-badge';
+            badge.id = 'smsBadge_' + m.id;
+            badge.innerText = smsSent.has(m.id) ? '✅ 발송완료' : '';
+
+            row.appendChild(info);
+            row.appendChild(actions);
+            row.appendChild(badge);
+            target.appendChild(row);
+
+            renderSmsMemberActions(m);
+        });
+    }
+
+    function renderSmsMemberActions(m) {
+        const actions = document.getElementById('smsActions_' + m.id);
+        if (!actions) return;
+        actions.innerHTML = '';
+        const box = document.getElementById('smsComposeBox_' + m.party);
+        const body = box ? box.value.trim() : '';
+
+        if (!body) {
+            const hint = document.createElement('span');
+            hint.className = 'sms-need-text-hint';
+            hint.innerText = '문구를 먼저 준비해 주세요';
+            actions.appendChild(hint);
+            return;
+        }
+
+        const parts = splitSmsBody(body);
+        parts.forEach((part, idx) => {
+            const btn = document.createElement('a');
+            btn.className = 'sms-send-btn';
+            btn.href = buildSmsHref(m.phone, part);
+            btn.innerText = parts.length > 1 ? `📱 문자 보내기 (${idx + 1}/2)` : '📱 문자 보내기';
+            btn.onclick = () => { markSmsSent(m.id); };
+            actions.appendChild(btn);
+        });
+
+        const copyBtn = document.createElement('button');
+        copyBtn.type = 'button';
+        copyBtn.className = 'sms-copy-btn';
+        copyBtn.innerText = '복사';
+        copyBtn.onclick = () => {
+            navigator.clipboard.writeText(parts.join('\n\n')).then(() => showToast('📱 문자 내용이 복사됐어요!'));
+        };
+        actions.appendChild(copyBtn);
+    }
+
+    function markSmsSent(id) {
+        smsSent.add(id);
+        saveSmsSent(smsSent);
+        updateSmsStatus();
+        const row = document.getElementById('smsRow_' + id);
+        const badge = document.getElementById('smsBadge_' + id);
+        if (badge) badge.innerText = '✅ 발송완료';
+        if (row) {
+            row.classList.add('sent'); // 먼저 딤 처리로 보낸 걸 알려주고
+            setTimeout(() => { row.style.display = 'none'; }, 900); // 잠시 후 목록에서 숨김
+        }
+    }
+
+    function updateSmsStatus() {
+        const total = COUNCIL_MEMBERS.length;
+        const done = COUNCIL_MEMBERS.filter(m => smsSent.has(m.id)).length;
+        document.getElementById('smsStatusCount').innerText = `${done} / ${total}명 발송완료`;
+        document.getElementById('smsProgressFill').style.width = `${Math.round(done / total * 100)}%`;
+    }
+
+    function resetSmsProgress() {
+        if (!confirm('발송 기록을 모두 초기화할까요? (실제로 보낸 문자에는 영향이 없습니다)')) return;
+        smsSent = new Set();
+        saveSmsSent(smsSent);
+        renderSmsMemberLists();
+        updateSmsStatus();
+    }
+
+    function initSmsPanel() {
+        buildSmsKeywordGrid('smsGuidePpp', 'ppp');
+        buildSmsKeywordGrid('smsGuideDp', 'dp');
+        renderSmsMemberLists();
+        updateSmsStatus();
+    }
+
+    /* ===================== 초기화 ===================== */
+    buildKeywordGrid();
+    rerollBudongsan();
+    rerollLh();
+    rerollMoland();
+    rerollGwacheon();
+    rerollKepco();
+    rerollFire();
+    switchMode('lh');
+    initSmsPanel();
+    initUsageGuide();
+    initUsageGuideSwipe();
+    renderAgencyDoneUI();
+    updateStickyOffset();
+</script>
+</body>
+</html>
