@@ -74,7 +74,13 @@
         .section-divider { border: none; border-top: 1px dashed #cbd5e1; margin: 22px 0; }
 
         .personalize-box { background: #fdf4ff; border: 1px solid #e9d5ff; border-radius: 10px; padding: 16px 18px; margin-bottom: 20px; }
-        .personalize-title { font-size: 14.5px; font-weight: 800; color: #7e22ce; margin-bottom: 10px; }
+        .personalize-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer; }
+        .personalize-title { font-size: 14.5px; font-weight: 800; color: #7e22ce; margin-bottom: 0; }
+        .personalize-arrow { font-size: 12px; color: #a855f7; flex-shrink: 0; user-select: none; padding: 2px 4px; }
+        .personalize-required-note { font-size: 12px; font-weight: 700; margin: 8px 0 0; color: #dc2626; cursor: pointer; }
+        .personalize-box.collapsed .personalize-required-note { margin-bottom: 0; }
+        .personalize-body { max-height: 900px; opacity: 1; overflow: hidden; margin-top: 12px; transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.3s ease; }
+        .personalize-box.collapsed .personalize-body { max-height: 0; opacity: 0; margin-top: 0; }
         .personalize-sub { font-size: 12px; color: #6b21a8; margin-bottom: 12px; }
         .keyword-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
         .keyword-chip { padding: 9px 13px; font-size: 13px; font-weight: 600; border: 2px solid #d8b4fe; border-radius: 20px; background: white; color: #7e22ce; cursor: pointer; transition: 0.15s; }
@@ -82,7 +88,6 @@
         .keyword-chip.active { background: #9333ea; border-color: #9333ea; color: white; }
         .freeform-label { font-size: 13px; font-weight: 700; color: #6b21a8; margin-bottom: 6px; display: block; }
         textarea.freeform-input { width: 100%; height: 70px; border: 1px solid #d8b4fe; border-radius: 8px; padding: 10px 12px; box-sizing: border-box; font-size: 13.5px; resize: vertical; background: white; font-family: inherit; color: #334155; }
-        .personalize-required-note { font-size: 12px; font-weight: 700; margin-bottom: 12px; color: #dc2626; }
         .personalize-box.flash-required { animation: personalizeFlash 1.2s ease; }
         @keyframes personalizeFlash { 0%, 100% { box-shadow: none; } 30% { box-shadow: 0 0 0 4px rgba(220,38,38,0.35); } 60% { box-shadow: 0 0 0 2px rgba(220,38,38,0.2); } }
         .gate-locked { opacity: 0.45; filter: grayscale(35%); cursor: not-allowed; }
@@ -113,7 +118,11 @@
         .mode-complete-check:hover { border-color: #16a34a; color: #16a34a; }
         .mode-complete-check.done { background: #16a34a; border-color: #16a34a; color: white; }
         .mode-btn.agency-done { opacity: 0.55; filter: grayscale(55%); }
-        .agency-progress-box { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 12px 16px; margin-bottom: 18px; }
+        .agency-progress-box {
+            background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 12px 16px; margin-bottom: 18px;
+            position: sticky; top: var(--sms-sticky-offset, 0px); z-index: 97;
+            box-shadow: 0 4px 10px -4px rgba(15,118,110,0.25);
+        }
         .agency-progress-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
         .agency-progress-label { font-size: 13px; font-weight: 800; color: #0f766e; }
         .agency-progress-count { font-size: 13px; font-weight: 800; color: #0f766e; white-space: nowrap; }
@@ -125,8 +134,15 @@
         .title-row { margin-bottom: 0; }
         .title-box { background: #eef2ff; border-left: 4px solid var(--primary-color); padding: 10px 14px; font-weight: bold; font-size: 14px; color: #3730a3; border-radius: 0 6px 6px 0; margin-bottom: 10px; }
         .title-action-row { margin-bottom: 10px; }
+        /* 지금 어떤 기관의 제목/본문을 복사하는 중인지 복사 버튼들 바로 위에 항상 보이도록 표시합니다.
+           title-action-row가 PC에서는 스크롤해도 고정(sticky)되므로 이 칩도 계속 함께 떠 있습니다. */
+        .current-agency-chip { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e3a8a; font-size: 12.5px; font-weight: 800; padding: 8px 12px; border-radius: 8px; margin-bottom: 10px; text-align: center; }
+        .current-agency-chip strong { color: #1e40af; }
         .copy-hint { font-size: 12.5px; font-weight: 700; color: #475569; margin-bottom: 8px; }
-        .copy-secondary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+        .copy-secondary-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 8px 0; }
+        .btn-copy-secondary.btn-copy-agency-inline { background: #eff6ff; border-color: #93c5fd; color: #1e3a8a; }
+        .btn-copy-secondary.btn-copy-agency-inline:hover { background: #dbeafe; }
+        .btn-copy-secondary.btn-copy-agency-inline.copied { border-color: var(--accent-color); color: var(--accent-color); background: #f0fdfa; }
         .btn-copy-primary-large { width: 100%; padding: 16px; font-size: 15px; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(59,91,219,0.3); transition: 0.2s; box-sizing: border-box; }
         .btn-copy-primary-large:hover { filter: brightness(1.05); }
         .btn-copy-primary-large.copied { background: linear-gradient(135deg, var(--accent-color), var(--accent-hover)); box-shadow: 0 4px 12px rgba(13,148,136,0.3); }
@@ -138,7 +154,7 @@
         .btn-go-cta-large { width: 100%; padding: 16px; font-size: 15px; font-weight: 800; border: none; border-radius: 10px; cursor: pointer; background: linear-gradient(135deg, var(--accent-color), var(--accent-hover)); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; box-sizing: border-box; box-shadow: 0 4px 12px rgba(13,148,136,0.3); transition: 0.2s; }
         .btn-go-cta-large:hover { filter: brightness(1.05); }
         @media (min-width: 601px) {
-            .title-action-row { position: sticky; top: var(--sms-sticky-offset, 90px); z-index: 95; background: white; padding: 10px 0 12px; box-shadow: 0 6px 14px -8px rgba(0,0,0,0.15); }
+            .title-action-row { position: sticky; top: var(--agency-sticky-offset, 90px); z-index: 95; background: white; padding: 10px 0 12px; box-shadow: 0 6px 14px -8px rgba(0,0,0,0.15); }
         }
         .btn-copy-inline { padding: 10px 14px; font-size: 13px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; background-color: var(--primary-color); color: white; display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
         .btn-copy-inline:hover { background-color: var(--primary-hover); }
@@ -247,18 +263,26 @@
             .toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); max-width: 88vw; font-size: 13px; padding: 13px 18px; }
 
             .sticky-copy-bar {
-                display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: #f8fafc;
+                display: flex; flex-direction: column; position: fixed; bottom: 0; left: 0; right: 0; background: #f8fafc;
                 border-top: 4px solid transparent; border-image: linear-gradient(90deg, var(--primary-color), var(--accent-color)) 1;
-                padding: 11px 12px; padding-bottom: calc(11px + env(safe-area-inset-bottom, 0px));
-                gap: 6px; z-index: 100; box-shadow: 0 -10px 26px rgba(15,23,42,0.22);
+                padding: 8px 12px; padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+                gap: 5px; z-index: 100; box-shadow: 0 -10px 26px rgba(15,23,42,0.22);
             }
-            .sticky-copy-bar button, .sticky-copy-bar a {
-                flex: 1; padding: 12px 2px; font-size: 10.5px; font-weight: 800; border-radius: 10px;
+            /* 지금 복사 중인 기관이 무엇인지 하단 고정 바에도 항상 떠 있게 표시합니다 (스크롤해도 안 사라짐). */
+            .sticky-agency-label {
+                font-size: 10.5px; font-weight: 800; color: #1e3a8a; text-align: center;
+                background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 7px; padding: 3px 6px;
+            }
+            .sticky-agency-label strong { color: #1e40af; }
+            .sticky-copy-bar-buttons { display: flex; gap: 5px; }
+            .sticky-copy-bar-buttons button, .sticky-copy-bar-buttons a {
+                flex: 1; padding: 10px 2px; font-size: 9.5px; font-weight: 800; border-radius: 10px;
                 cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center;
                 justify-content: center; flex-direction: column; gap: 2px; line-height: 1.3; white-space: nowrap;
             }
             .sticky-bar-title { background: #e0e7ff; color: #3730a3; border: 1.5px solid #a5b4fc !important; }
             .sticky-bar-body { background: #e0e7ff; color: #3730a3; border: 1.5px solid #a5b4fc !important; }
+            .sticky-bar-agency { background: #dbeafe; color: #1e3a8a; border: 1.5px solid #93c5fd !important; }
             .sticky-bar-all { background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: white; box-shadow: 0 3px 10px rgba(59,91,219,0.4); border: none; }
             .sticky-bar-epeople { background: linear-gradient(135deg, var(--accent-color), var(--accent-hover)); color: white; box-shadow: 0 3px 10px rgba(13,148,136,0.4); border: none; }
             .sticky-bar-refresh { background: #fff7ed; color: #c2410c; border: 1.5px solid #fdba74 !important; }
@@ -268,7 +292,7 @@
                 background: #e2e8f0 !important; color: #94a3b8 !important;
                 border: 1.5px solid #cbd5e1 !important; box-shadow: none !important;
             }
-            #panelAction { padding-bottom: 85px; }
+            #panelAction { padding-bottom: 110px; }
         }
     </style>
 </head>
@@ -314,12 +338,12 @@
     </div>
 
     <div class="mode-tabs">
-        <button id="btnModeLh" class="mode-btn active mode-lh" onclick="switchMode('lh')"><span class="mode-complete-check" id="agencyCheck_lh" onclick="event.stopPropagation(); toggleAgencyDone('lh');" role="checkbox" aria-checked="false" aria-label="LH 민원 제출 완료 표시">☐</span>🏗️ LH 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
-        <button id="btnModeMoland" class="mode-btn mode-moland" onclick="switchMode('moland')"><span class="mode-complete-check" id="agencyCheck_moland" onclick="event.stopPropagation(); toggleAgencyDone('moland');" role="checkbox" aria-checked="false" aria-label="국토교통부 민원 제출 완료 표시">☐</span>🏢 국토교통부 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
-        <button id="btnModeGwacheon" class="mode-btn mode-gwacheon" onclick="switchMode('gwacheon')"><span class="mode-complete-check" id="agencyCheck_gwacheon" onclick="event.stopPropagation(); toggleAgencyDone('gwacheon');" role="checkbox" aria-checked="false" aria-label="과천시 민원 제출 완료 표시">☐</span>🏙️ 과천시 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
-        <button id="btnModeKepco" class="mode-btn mode-kepco" onclick="switchMode('kepco')"><span class="mode-complete-check" id="agencyCheck_kepco" onclick="event.stopPropagation(); toggleAgencyDone('kepco');" role="checkbox" aria-checked="false" aria-label="한국전력 민원 제출 완료 표시">☐</span>⚡ 한국전력 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
-        <button id="btnModeFire" class="mode-btn mode-fire" onclick="switchMode('fire')"><span class="mode-complete-check" id="agencyCheck_fire" onclick="event.stopPropagation(); toggleAgencyDone('fire');" role="checkbox" aria-checked="false" aria-label="과천소방서 민원 제출 완료 표시">☐</span>🚒 과천소방서 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
-        <button id="btnModeBudongsan" class="mode-btn mode-budongsan" onclick="switchMode('budongsan')"><span class="mode-complete-check" id="agencyCheck_budongsan" onclick="event.stopPropagation(); toggleAgencyDone('budongsan');" role="checkbox" aria-checked="false" aria-label="부동산원 민원 제출 완료 표시">☐</span>🏛️ 부동산원 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeLh" class="mode-btn active mode-lh" onclick="switchMode('lh')"><span class="mode-complete-check" id="agencyCheck_lh" onclick="event.stopPropagation(); toggleAgencyDone('lh');" role="checkbox" aria-checked="false" aria-label="한국토지주택공사 민원 제출 완료 표시">☐</span>한국토지주택공사 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeMoland" class="mode-btn mode-moland" onclick="switchMode('moland')"><span class="mode-complete-check" id="agencyCheck_moland" onclick="event.stopPropagation(); toggleAgencyDone('moland');" role="checkbox" aria-checked="false" aria-label="국토교통부 민원 제출 완료 표시">☐</span>국토교통부 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeGwacheon" class="mode-btn mode-gwacheon" onclick="switchMode('gwacheon')"><span class="mode-complete-check" id="agencyCheck_gwacheon" onclick="event.stopPropagation(); toggleAgencyDone('gwacheon');" role="checkbox" aria-checked="false" aria-label="과천시 민원 제출 완료 표시">☐</span>과천시 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeKepco" class="mode-btn mode-kepco" onclick="switchMode('kepco')"><span class="mode-complete-check" id="agencyCheck_kepco" onclick="event.stopPropagation(); toggleAgencyDone('kepco');" role="checkbox" aria-checked="false" aria-label="한국전력공사 민원 제출 완료 표시">☐</span>한국전력공사 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeFire" class="mode-btn mode-fire" onclick="switchMode('fire')"><span class="mode-complete-check" id="agencyCheck_fire" onclick="event.stopPropagation(); toggleAgencyDone('fire');" role="checkbox" aria-checked="false" aria-label="경기도(과천소방서) 민원 제출 완료 표시">☐</span>경기도 (과천소방서 민원)<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeBudongsan" class="mode-btn mode-budongsan" onclick="switchMode('budongsan')"><span class="mode-complete-check" id="agencyCheck_budongsan" onclick="event.stopPropagation(); toggleAgencyDone('budongsan');" role="checkbox" aria-checked="false" aria-label="한국부동산원 민원 제출 완료 표시">☐</span>한국부동산원 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
     </div>
 
     <div class="agency-progress-box" id="agencyProgressBox">
@@ -331,22 +355,29 @@
         <div class="agency-progress-hint">위 탭의 동그라미를 눌러 제출을 마친 기관을 체크해두세요. 새로고침해도 이 브라우저에 기억돼요.</div>
     </div>
 
-    <div class="personalize-box">
-        <div class="personalize-title">✍️ 나만의 이유로 개인화하기 <span style="color:#dc2626;">(필수)</span></div>
-        <div class="personalize-sub">해당하는 항목을 눌러 선택하세요 (복수 선택 가능). 선택한 문장이 본문에 자동으로 들어갑니다.</div>
-        <div class="personalize-required-note" id="personalizeRequiredNote">⚠️ 최소 1개 이상 선택하거나 직접 사연을 적어야 복사·제출이 가능해요.</div>
-        <div class="keyword-grid" id="keywordGrid"></div>
-        <label class="freeform-label" for="freeformInput">📝 직접 사연을 적어주세요</label>
-        <textarea id="freeformInput" class="freeform-input" placeholder="예: 곧 태어날 아이와 함께 이 동네에 오래 살고 싶어서 걱정이 큽니다." oninput="onInputsChanged()"></textarea>
+    <div class="personalize-box" id="personalizeBox">
+        <div class="personalize-header" onclick="togglePersonalizeBox()">
+            <div class="personalize-title">✍️ 나만의 이유로 개인화하기 <span style="color:#dc2626;">(필수)</span></div>
+            <span class="personalize-arrow" id="personalizeArrow">▲</span>
+        </div>
+        <div class="personalize-required-note" id="personalizeRequiredNote" onclick="togglePersonalizeBox()">⚠️ 최소 1개 이상 선택하거나 직접 사연을 적어야 복사·제출이 가능해요.</div>
+        <div class="personalize-body" id="personalizeBody">
+            <div class="personalize-sub">해당하는 항목을 눌러 선택하세요 (복수 선택 가능). 선택한 문장이 본문에 자동으로 들어갑니다.</div>
+            <div class="keyword-grid" id="keywordGrid"></div>
+            <label class="freeform-label" for="freeformInput">📝 직접 사연을 적어주세요</label>
+            <textarea id="freeformInput" class="freeform-input" placeholder="예: 곧 태어날 아이와 함께 이 동네에 오래 살고 싶어서 걱정이 큽니다." oninput="onInputsChanged()"></textarea>
+        </div>
     </div>
 
     <div class="title-action-row">
-        <div class="copy-hint">👇 제목·본문을 각각 따로 복사해서 국민신문고 해당 칸에 붙여넣으세요</div>
+        <div class="current-agency-chip">📍 지금 복사할 기관: <strong id="currentAgencyNameChip">한국토지주택공사</strong></div>
+        <div class="copy-hint">👇 제목·본문·기관명을 각각 따로 복사해서 국민신문고 해당 칸에 붙여넣으세요</div>
         <button class="btn-refresh-inline" onclick="generate(true)">🔄 문장 다시 섞기</button>
         <button id="btnCopyAll" class="btn-copy-primary-large" onclick="if(checkPersonalized()) copyAll();">📋 제목+본문 한번에 복사</button>
         <div class="copy-secondary-row">
             <button id="btnCopyTitle" class="btn-copy-secondary" onclick="if(checkPersonalized()) copyTitle();">📋 제목만 복사</button>
             <button id="btnCopyBody" class="btn-copy-secondary" onclick="if(checkPersonalized()) copyBody();">📄 본문만 복사</button>
+            <button id="btnCopyAgencyName" class="btn-copy-secondary btn-copy-agency-inline" onclick="copyCurrentAgencyName();">🏢 기관명 복사</button>
         </div>
         <a id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="btn-go-cta-large" onclick="return checkPersonalized();">🏛️ 국민신문고 바로가기 →</a>
     </div>
@@ -364,11 +395,15 @@
 
     <!-- 모바일 하단 고정 복사 바 -->
     <div class="sticky-copy-bar" id="stickyCopyBar">
-        <button class="sticky-bar-refresh" onclick="generate(true)">🔄<br>내용섞기</button>
-        <button id="stickyBtnAll" class="sticky-bar-all" onclick="if(checkPersonalized()) copyAll();">📋<br>전체복사</button>
-        <a id="stickyBtnTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople" onclick="return checkPersonalized();">🏛️<br>신문고이동</a>
-        <button id="stickyBtnTitle" class="sticky-bar-title" onclick="if(checkPersonalized()) copyTitle();">📋<br>제목복사</button>
-        <button id="stickyBtnBody" class="sticky-bar-body" onclick="if(checkPersonalized()) copyBody();">📄<br>본문복사</button>
+        <div class="sticky-agency-label">📍 지금 복사할 기관: <strong id="stickyAgencyName">한국토지주택공사</strong></div>
+        <div class="sticky-copy-bar-buttons">
+            <button class="sticky-bar-refresh" onclick="generate(true)">🔄<br>내용섞기</button>
+            <button id="stickyBtnAll" class="sticky-bar-all" onclick="if(checkPersonalized()) copyAll();">📋<br>전체복사</button>
+            <a id="stickyBtnTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople" onclick="return checkPersonalized();">🏛️<br>신문고이동</a>
+            <button id="stickyBtnTitle" class="sticky-bar-title" onclick="if(checkPersonalized()) copyTitle();">📋<br>제목복사</button>
+            <button id="stickyBtnBody" class="sticky-bar-body" onclick="if(checkPersonalized()) copyBody();">📄<br>본문복사</button>
+            <button id="stickyBtnAgency" class="sticky-bar-agency" onclick="copyCurrentAgencyName();">🏢<br>기관명복사</button>
+        </div>
     </div>
 
     <div style="margin-top:24px; padding-top:16px; border-top:1px solid #e2e8f0; font-size:11.5px; color:#94a3b8; line-height:1.8; text-align:center;">
@@ -506,16 +541,19 @@
         "귀 기관의 공정하고 투명한 심사 업무 수행에 감사드립니다. 아래와 같이 민원을 제출합니다.",
         "국민의 재산권 및 주거 안전을 위해 힘쓰시는 귀 기관의 책임 있는 심사를 신뢰하며 민원을 올립니다.",
         "과천주암지구 인근 주민 및 입주예정자로서 리츠 사업계획 심사의 공정성을 촉구하고자 민원을 제출합니다.",
-        "귀 기관의 민원 처리 노고에 감사드립니다. 아래 사항에 대한 신중한 검토를 요청드립니다."
+        "귀 기관의 노고에 감사드립니다. 아래 사항에 대한 신중하고 엄정한 재검토를 강력히 요청합니다."
     ];
 
     const budongsanIntroVariants = [
         "본 민원인은 경기도 과천시 주암지구에 인접한 공동주택 단지의 입주예정자입니다. 기존에 「부동산투자회사법」상 리츠 사업계획 심사와 관련하여 전력계통영향평가 의무 이행 여부 및 공익성 재검토를 요청하는 민원을 제출한 바 있습니다.",
-        "본 민원인은 과천주암지구 인근에 거주 예정인 주민입니다. 이전에도 리츠 사업계획의 전력계통영향평가 이행 여부와 공익성에 관한 민원을 제출하였으나 보다 구체적인 답변을 다시 한번 요청드리고자 합니다.",
+        "본 민원인은 과천주암지구 인근에 거주 예정인 주민입니다. 이전에도 데이터센터 리츠 사업계획의 전력계통영향평가 이행 여부 및 공익성에 관한 민원을 제출하였으나, 실질적인 해소가 이루어지지 않아 보다 구체적인 답변과 책임 있는 행정을 재차 요청드립니다.",
         "본 민원인은 과천주암지구와 인접한 곳에 거주할 예정인 입주예정자입니다. 리츠 사업계획 심사와 관련하여 이미 한 차례 민원을 접수한 바 있으나 아래 사항에 대한 명확한 답변을 다시 촉구드립니다."
     ];
 
-    const budongsanStaticNotice = "현재 해당 사업의 자산관리회사(코람코자산신탁, 마스턴자산운용)는 귀 기관에 영업인가 및 변경인가를 신청해 놓은 것으로 파악하고 있습니다. 이에 민원인은 아래 사항에 대한 구체적이고 실질적인 답변 없이 영업인가·변경인가가 처리되지 않도록 신중한 심사를 재차 요청드립니다.";
+    // 1-9블록 영업(변경)인가가 실제로 승인된 이후의 상황을 반영한 고정 문단입니다 (변동 사항이라 랜덤 배리에이션 없이 항상 포함).
+    const budongsanEscalationNotice = "최근 귀 기관에서 1-9블록에 대한 영업인가(변경인가)를 승인함에 따라, 사업자는 이를 발판 삼아 과천시에 건축허가를 접수했습니다. 이로 인해 인근 예정 주민과 아이들의 안전권 및 생존권은 벼랑 끝에 몰리게 되었으며, 주민의 목소리를 외면한 귀 기관의 안일한 인가 처분에 강력한 유감과 규탄의 뜻을 전합니다.";
+
+    const budongsanStaticNotice = "현재 1-1·2블록 등에 대한 자산관리회사(코람코자산신탁, 마스턴자산운용 등)의 영업인가 및 변경인가 신청건이 진행 중인 것으로 파악하고 있습니다. 이에 민원인은 동일한 우를 범하지 않도록 아래 사항에 대한 명확한 검증 없이 추가 인가가 처리되지 않기를 바라며, 공익성 재검토를 통한 '인가 불허'를 강력히 요구합니다.";
 
     const budongsanReq1Variants = [
         "[요청 1] 편법 전력 쪼개기 여부에 대한 구체적 검증\n\n주암지구 내 데이터센터 사업이 1-1·2블록, 1-9블록 등 복수 블록·복수 법인 명의로 나뉘어 있는바, 이것이 실질적으로 동일 사업임에도 계약전력을 각각 10메가와트 미만으로 분할 신고하여 「분산에너지 활성화 특별법」상 전력계통영향평가 의무를 회피하려는 것은 아닌지 구체적으로 검증해 주시기 바랍니다. \"법령에 따라 검토 중\" 등 원론적 답변이 아니라 각 블록·사업자별 계약전력 신청 현황과 합산 판단 근거를 구체적으로 밝혀 주시기 바랍니다.",
@@ -553,7 +591,9 @@
 
     function buildBudongsan() {
         const intro = budongsanIntroVariants[stateB.introIdx];
-        const body = budongsanOpenings[stateB.openIdx] + "\n\n" + intro + " " + budongsanStaticNotice + getPersonalParagraph()
+        const body = budongsanOpenings[stateB.openIdx] + "\n\n" + intro
+            + "\n\n" + budongsanEscalationNotice
+            + "\n\n" + budongsanStaticNotice + getPersonalParagraph()
             + "\n\n" + budongsanReq1Variants[stateB.req1Idx]
             + "\n\n" + budongsanReq2Variants[stateB.req2Idx]
             + "\n\n" + budongsanReq3Variants[stateB.req3Idx]
@@ -713,47 +753,24 @@
     }
 
     /* ===================== 모드 ④ 과천시 민원 (시장) ===================== */
-    const gwacheonTitleVariants = [
-        "과천주암지구 데이터센터 입지 추진 철회 및 지구단위계획 변경 관련 시 차원의 적극적 대응 촉구",
-        "주암지구 데이터센터 관련 주민 안전 보호를 위한 과천시의 적극적 협의 주도 촉구"
-    ];
+    // 시장 공약 이행 촉구 민원 — 고정된 하나의 문안이며, 개인화 문단만 삽입 지점에 반영됩니다.
+    const gwacheonFixedTitle = "신계용 시장님 데이터센터 공약 이행 관련 촉구";
 
-    const gwacheonOpenings = [
-        "시민의 안전과 편안한 주거환경을 위해 힘쓰시는 귀 시의 노고에 감사드립니다. 아래와 같이 민원을 제출합니다.",
-        "과천시의 공정하고 책임 있는 행정을 신뢰하며 아래와 같이 민원을 제출합니다."
-    ];
-
-    const gwacheonNotice = "과천 주암 공공주택지구 내 준주거용지(방송통신시설)에 대규모 데이터센터 건립이 추진되고 있다는 사실에 대해 지역 주민들은 깊은 우려를 갖고 있습니다. 아래와 같은 이유로 과천시께서 이 사안에 보다 적극적으로 대응해 주시기를 요청드립니다.";
-
-    const gwacheonStrongAskVariants = [
-        "과천시께서는 주민의 안전과 주거환경을 최우선에 두시어 데이터센터 입지와 관련한 모든 인허가·협의 절차에서 신중한 입장을 명확히 하시고 LH 및 국토교통부와의 협의를 적극적으로 주도해 주시기 바랍니다.",
-        "과천시께서는 위와 같은 사유들을 무겁게 받아들이시어 데이터센터 입지에 대한 불허 방침을 명확히 하시고 관계기관과의 협의 과정에서 주민의 입장을 강력하게 대변해 주시기 바랍니다."
-    ];
-
-    const gwacheonClosings = [
-        "본 민원은 특정 기관이나 기업의 적법한 업무를 방해하고자 하는 것이 아니라 주민의 안전과 주거환경을 지키기 위한 정당한 우려와 요구를 전달드리는 것입니다. 조속하고 신중한 검토를 부탁드립니다.\n\n감사합니다.",
-        "적법한 절차를 존중하며 다만 주민의 생존권과 직결된 사안인 만큼 시의 적극적인 역할을 요청드립니다. 형식적인 답변이 아닌 실질적인 조치로 이어지기를 강력히 바랍니다.\n\n감사합니다."
-    ];
-
-    let stateG = {};
-    function rerollGwacheon() {
-        stateG = {
-            titleIdx: getRandomIndex(gwacheonTitleVariants.length),
-            openIdx: getRandomIndex(gwacheonOpenings.length),
-            askIdx: getRandomIndex(gwacheonStrongAskVariants.length),
-            closeIdx: getRandomIndex(gwacheonClosings.length),
-            reasonIdxs: pickReasonIndices(3),
-            warnIdx: getRandomIndex(WARNING_VARIANTS.length)
-        };
-    }
+    function rerollGwacheon() { /* 고정 문안이라 다시 섞기는 개인화 문단 반영 외 변화가 없습니다. */ }
 
     function buildGwacheon() {
-        const body = gwacheonOpenings[stateG.openIdx] + "\n\n" + gwacheonNotice + getPersonalParagraph()
-            + "\n\n" + buildReasonsBlock(stateG.reasonIdxs)
-            + "\n\n" + gwacheonStrongAskVariants[stateG.askIdx]
-            + "\n\n" + WARNING_VARIANTS[stateG.warnIdx]
-            + "\n\n" + gwacheonClosings[stateG.closeIdx];
-        return { title: gwacheonTitleVariants[stateG.titleIdx], body };
+        const personal = getPersonalParagraph();
+        const body =
+            "안녕하십니까. 과천 주암지구 디에이치 아델스타 입주예정자입니다. 신계용 시장님께서 후보 시절 밝히신 데이터센터 인허가 불허 공약의 이행을 강력히 촉구합니다." + personal + "\n\n" +
+            "최근 서울 금천구에서도 저희와 유사한 데이터센터 입지 갈등이 있었습니다. 금천구 최기찬 구청장은 지난 7월 1일 취임 1호 결재로 '데이터센터 주민참여형 검토체계 구축 및 제도개선'을 발표했습니다. 주요 내용은 다음과 같습니다." + "\n\n" +
+            "- 건축허가 접수 시 반경 200m 이내 주민 과반수 동의서·체크리스트 제출 의무화\n" +
+            "- 전문가 서면검토 → 갈등조정협의회(구청·주민대표·전문가·사업자 공동) → 건축위원회 자문의 3단계 검증 체계\n" +
+            "- 부구청장 직속 데이터센터 전담 TF 신설 (전담반·인허가반·관리지원반)\n" +
+            "- 주거지역 데이터센터 입지 원천 차단을 위한 상위법령 개정 건의" + "\n\n" +
+            "취임하자마자 1호 결재로 이런 제도를 만든 겁니다. 금천구는 취임 첫날 바로 실행에 옮겼습니다. 공약까지 하신 과천시는 왜 아직도 답이 없습니까." + "\n\n" +
+            "신계용 시장님께서 후보 시절 밝히신 데이터센터 관련 인허가 불허 공약, 지금 어느 단계까지 이행되고 있습니까. 실행 계획이 아직 없다면, 지금이라도 금천구의 TF·검증체계를 참고해 즉시 도입해주시기 바랍니다. 더 이상 검토만 하고 있을 시간이 없습니다." + "\n\n" +
+            "공약 이행, 지금 확인하겠습니다. 이행 계획과 일정을 명확히 밝혀주십시오. 공약이 지켜지지 않는다면, 주민들은 이 사실을 시의회와 언론에 알리고 책임을 물을 것입니다.";
+        return { title: gwacheonFixedTitle, body };
     }
 
     /* ===================== 모드 ⑤ 한국전력공사 민원 ===================== */
@@ -906,7 +923,7 @@
         },
         fire: {
             btnId: 'btnModeFire',
-            meta: '📍 접수 기관: 과천소방서 · ✨ 매번 두 버전(현장검토 요청 / 부동의 촉구) 중 하나가 무작위로 나옵니다',
+            meta: '📍 접수 기관: 경기도 (과천소방서) · ✨ 매번 두 버전(현장검토 요청 / 부동의 촉구) 중 하나가 무작위로 나옵니다',
             target: 'epeople',
             goLabel: '🏛️ 국민신문고 바로가기 →',
             stickyLabel: '🏛️<br>신문고이동',
@@ -967,7 +984,7 @@
 
     // 제목/본문을 둘 다 복사했거나(또는 "제목+본문 한번에 복사"를 눌렀으면) 그 기관은 자동으로 제출 완료 처리합니다.
     // (직접 국민신문고에 제출을 완료했다는 뜻은 아니지만, 복사=제출 직전 단계라 자동 체크 신호로 사용합니다. 틀렸으면 체크를 다시 눌러 해제할 수 있어요.)
-    const AGENCY_LABELS = { lh: 'LH', moland: '국토교통부', gwacheon: '과천시', kepco: '한국전력', fire: '과천소방서', budongsan: '부동산원' };
+    const AGENCY_FULL_NAMES = { lh: '한국토지주택공사', moland: '국토교통부', gwacheon: '과천시', kepco: '한국전력공사', fire: '경기도', budongsan: '한국부동산원' };
     const copiedParts = {};
     function markCopied(part) {
         const m = currentMode;
@@ -978,8 +995,25 @@
             agencyDone.add(m);
             saveAgencyDone(agencyDone);
             renderAgencyDoneUI();
-            showToast(`✅ ${AGENCY_LABELS[m] || ''} 민원 제출완료로 자동 체크했어요!\n실수라면 탭의 체크 표시를 눌러 해제할 수 있어요.`);
+            showToast(`✅ ${AGENCY_FULL_NAMES[m] || ''} 민원 제출완료로 자동 체크했어요!\n실수라면 탭의 체크 표시를 눌러 해제할 수 있어요.`);
         }
+    }
+
+    // 국민신문고 접수 시 공식 기관명을 그대로 검색·입력할 수 있도록, 제목·본문 복사 버튼 바로 옆(PC)과
+    // 하단 고정 바(모바일)에 기관명 복사 버튼을 둡니다. 지금 어떤 기관을 복사하는 중인지도 같은 자리에
+    // 계속 떠 있게 표시해, 제목복사→본문복사→기관명복사 순서로 헷갈리지 않고 진행할 수 있게 합니다.
+    function copyCurrentAgencyName() {
+        const name = AGENCY_FULL_NAMES[currentMode] || '';
+        if (!name) return;
+        navigator.clipboard.writeText(name).then(() => {
+            const btn = document.getElementById('btnCopyAgencyName');
+            if (btn) {
+                btn.classList.add('copied');
+                btn.innerHTML = '✅ 복사됨!';
+                setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '🏢 기관명 복사'; }, 1800);
+            }
+            showToast(`📋 "${name}" 기관명이 복사됐어요!`);
+        });
     }
 
     function switchMode(mode) {
@@ -992,12 +1026,17 @@
         const meta = document.getElementById('metaInfoLine');
         const goBtn = document.getElementById('btnGoTarget');
         const stickyBtn = document.getElementById('stickyBtnTarget');
+        const agencyNameChip = document.getElementById('currentAgencyNameChip');
+        const stickyAgencyName = document.getElementById('stickyAgencyName');
 
         meta.innerText = cfg.meta;
         goBtn.innerText = cfg.goLabel;
         stickyBtn.innerHTML = cfg.stickyLabel;
         goBtn.href = EPEOPLE_URL;
         stickyBtn.href = EPEOPLE_URL;
+        const agencyName = AGENCY_FULL_NAMES[mode] || '';
+        if (agencyNameChip) agencyNameChip.textContent = agencyName;
+        if (stickyAgencyName) stickyAgencyName.textContent = agencyName;
 
         generate(true);
     }
@@ -1022,6 +1061,19 @@
         return selectedKeywords.size > 0 || document.getElementById('freeformInput').value.trim().length > 0;
     }
 
+    // 개인화 조건을 "처음" 만족하는 순간(false→true)에는 자동으로 접어 화면 공간을 아끼고,
+    // 반대로 조건이 다시 풀리면(true→false, 예: 입력을 지운 경우) 자동으로 펼칩니다.
+    let wasPersonalized = false;
+
+    function togglePersonalizeBox(forceCollapsed) {
+        const box = document.getElementById('personalizeBox');
+        if (!box) return;
+        const collapsed = typeof forceCollapsed === 'boolean' ? forceCollapsed : !box.classList.contains('collapsed');
+        box.classList.toggle('collapsed', collapsed);
+        const arrow = document.getElementById('personalizeArrow');
+        if (arrow) arrow.textContent = collapsed ? '▼' : '▲';
+    }
+
     function updatePersonalizeGateUI() {
         const ok = isPersonalized();
         ['btnCopyTitle', 'btnCopyBody', 'btnCopyAll', 'btnGoTarget', 'stickyBtnTitle', 'stickyBtnBody', 'stickyBtnAll', 'stickyBtnTarget'].forEach(id => {
@@ -1029,21 +1081,29 @@
             if (el) el.classList.toggle('gate-locked', !ok);
         });
         const note = document.getElementById('personalizeRequiredNote');
-        if (!note) return;
-        if (ok) {
-            note.innerText = '✅ 준비 완료! 이제 제목·본문 복사와 신문고 이동이 가능해요.';
-            note.style.color = '#15803d';
-        } else {
-            note.innerText = '⚠️ 최소 1개 이상 선택하거나 직접 사연을 적어야 복사·제출이 가능해요.';
-            note.style.color = '#dc2626';
+        if (note) {
+            if (ok) {
+                note.innerText = '✅ 준비 완료! 이제 제목·본문 복사와 신문고 이동이 가능해요. (다시 펼치려면 여기를 눌러주세요)';
+                note.style.color = '#15803d';
+            } else {
+                note.innerText = '⚠️ 최소 1개 이상 선택하거나 직접 사연을 적어야 복사·제출이 가능해요.';
+                note.style.color = '#dc2626';
+            }
         }
+        if (ok && !wasPersonalized) {
+            togglePersonalizeBox(true);
+        } else if (!ok && wasPersonalized) {
+            togglePersonalizeBox(false);
+        }
+        wasPersonalized = ok;
     }
 
     function checkPersonalized() {
         if (isPersonalized()) return true;
         showToast('⚠️ 먼저 나만의 이유를 선택하거나 적어주세요!');
-        const box = document.querySelector('.personalize-box');
+        const box = document.getElementById('personalizeBox');
         if (box) {
+            togglePersonalizeBox(false);
             box.scrollIntoView({ behavior: 'smooth', block: 'center' });
             box.classList.add('flash-required');
             setTimeout(() => box.classList.remove('flash-required'), 1200);
@@ -1058,6 +1118,8 @@
         if (t) { t.classList.remove('copied'); t.innerHTML = '📋 제목만 복사'; }
         if (b) { b.classList.remove('copied'); b.innerHTML = '📄 본문만 복사'; }
         if (a) { a.classList.remove('copied'); a.innerHTML = '📋 제목+본문 한번에 복사'; }
+        const agencyBtn = document.getElementById('btnCopyAgencyName');
+        if (agencyBtn) { agencyBtn.classList.remove('copied'); agencyBtn.innerHTML = '🏢 기관명 복사'; }
     }
 
     function copyTitle() {
@@ -1184,10 +1246,15 @@
 
     // 상단 탭바 높이를 재서 "발송 현황" 바가 그 바로 아래에 겹치지 않고 고정되도록 맞춥니다.
     // (기기 폭/글자 줄바꿈에 따라 탭바 높이가 달라질 수 있어 고정값 대신 매번 측정합니다.)
+    // 기관별 제출 현황 박스도 상단에 고정되므로, 그 아래에 붙는 제목/복사 영역은
+    // "탭바 높이 + 진행 현황 박스 높이"만큼 더 내려서 고정해야 서로 겹치지 않습니다.
     function updateStickyOffset() {
         const wrap = document.querySelector('.top-index-tabs-wrap');
-        if (!wrap) return;
-        document.documentElement.style.setProperty('--sms-sticky-offset', wrap.getBoundingClientRect().height + 'px');
+        const wrapH = wrap ? wrap.getBoundingClientRect().height : 0;
+        document.documentElement.style.setProperty('--sms-sticky-offset', wrapH + 'px');
+        const progressBox = document.getElementById('agencyProgressBox');
+        const progressH = progressBox ? progressBox.getBoundingClientRect().height : 0;
+        document.documentElement.style.setProperty('--agency-sticky-offset', (wrapH + progressH + 10) + 'px');
     }
     window.addEventListener('resize', updateStickyOffset);
     window.addEventListener('orientationchange', updateStickyOffset);
