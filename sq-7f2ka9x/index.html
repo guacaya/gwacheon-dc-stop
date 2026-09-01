@@ -144,6 +144,7 @@
         .top-panel.active { display: block; }
 
         button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        .sticky-copy-bar { display: none; }
 
         .sms-status-box { background: #ecfeff; border: 1px solid #a5f3fc; border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; position: sticky; top: var(--sms-sticky-offset, 90px); z-index: 90; box-shadow: 0 4px 10px -4px rgba(6,182,212,0.25); }
         .sms-status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
@@ -225,6 +226,37 @@
             .personalize-box { padding: 12px 14px; margin-bottom: 14px; }
             .top-index-tabs { gap: 6px; }
             .top-tab-btn { padding: 10px; font-size: 12.5px; }
+
+            /* 모바일 하단 고정 복사 바 */
+            .sticky-copy-bar {
+                display: flex; flex-direction: column; position: fixed; bottom: 0; left: 0; right: 0; background: #f8fafc;
+                border-top: 4px solid transparent; border-image: linear-gradient(90deg, var(--primary-color), var(--accent-color)) 1;
+                padding: 8px 12px; padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+                gap: 5px; z-index: 100; box-shadow: 0 -10px 26px rgba(15,23,42,0.22);
+            }
+            .sticky-agency-label {
+                font-size: 10.5px; font-weight: 800; color: #1e3a8a; text-align: center;
+                background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 7px; padding: 3px 6px;
+            }
+            .sticky-agency-label strong { color: #1e40af; }
+            .sticky-copy-bar-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+            .sticky-copy-bar-buttons button, .sticky-copy-bar-buttons a {
+                padding: 10px 2px; font-size: 9.5px; font-weight: 800; border-radius: 10px;
+                cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center;
+                justify-content: center; flex-direction: column; gap: 2px; line-height: 1.3; white-space: nowrap;
+            }
+            .sticky-bar-title { background: #f2f4f6; color: #333d4b; border: none !important; }
+            .sticky-bar-body { background: #f2f4f6; color: #333d4b; border: none !important; }
+            .sticky-bar-agency { background: #3182f6; color: white; border: none !important; }
+            .sticky-bar-combo { background: #eef2ff; color: #4338ca; border: none !important; }
+            .sticky-bar-epeople { background: var(--accent-color); color: white; border: none !important; }
+            .sticky-bar-refresh { background: white; color: #4e5968; border: 1.5px solid #e5e8eb !important; }
+            .sticky-copy-bar .gate-locked {
+                opacity: 1 !important; filter: none !important;
+                background: #e2e8f0 !important; color: #94a3b8 !important;
+                border: 1.5px solid #cbd5e1 !important; box-shadow: none !important;
+            }
+            #panelAction { padding-bottom: 110px; }
         }
     </style>
 </head>
@@ -317,6 +349,19 @@
 
     <textarea id="resultBox" readonly></textarea>
 
+    </div>
+
+    <!-- 모바일 하단 고정 복사 바 -->
+    <div class="sticky-copy-bar" id="stickyCopyBar">
+        <div class="sticky-agency-label">📍 지금 복사할 기관: <strong id="stickyAgencyName">한국토지주택공사</strong></div>
+        <div class="sticky-copy-bar-buttons">
+            <a id="stickyBtnTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople" onclick="return checkPersonalized();">🏛️<br>신문고이동</a>
+            <button id="stickyBtnTitle" class="sticky-bar-title" onclick="if(checkPersonalized()) copyTitle();">📋<br>제목복사</button>
+            <button id="stickyBtnBody" class="sticky-bar-body" onclick="if(checkPersonalized()) copyBody();">📄<br>본문복사</button>
+            <button id="stickyBtnAgency" class="sticky-bar-agency" onclick="copyCurrentAgencyName();">🏢<br>기관명복사</button>
+            <button id="stickyBtnTitleBody" class="sticky-bar-combo" onclick="if(checkPersonalized()) copyTitleAndBody();">📑<br>한번에복사</button>
+            <button class="sticky-bar-refresh" onclick="generate(true)">🔄<br>내용섞기</button>
+        </div>
     </div>
 
     <div style="margin-top:24px; padding-top:16px; border-top:1px solid #e2e8f0; font-size:11.5px; color:#94a3b8; line-height:1.8; text-align:center;">
@@ -810,13 +855,17 @@
         const cfg = MODE_CONFIG[mode];
         const meta = document.getElementById('metaInfoLine');
         const goBtn = document.getElementById('btnGoTarget');
+        const stickyBtn = document.getElementById('stickyBtnTarget');
         const agencyNameChip = document.getElementById('currentAgencyNameChip');
+        const stickyAgencyName = document.getElementById('stickyAgencyName');
 
         meta.innerText = cfg.meta;
         goBtn.innerText = cfg.goLabel;
         goBtn.href = EPEOPLE_URL;
+        if (stickyBtn) stickyBtn.href = EPEOPLE_URL;
         const agencyName = AGENCY_FULL_NAMES[mode] || '';
         if (agencyNameChip) agencyNameChip.textContent = agencyName;
+        if (stickyAgencyName) stickyAgencyName.textContent = agencyName;
 
         generate(true);
     }
@@ -829,6 +878,8 @@
         document.getElementById('titleDisplay').innerText = `${cfg.titlePrefix}: ${r.title}`;
         document.getElementById('resultBox').value = r.body;
         document.getElementById('btnGoTarget').href = EPEOPLE_URL;
+        const stickyBtn = document.getElementById('stickyBtnTarget');
+        if (stickyBtn) stickyBtn.href = EPEOPLE_URL;
         resetCopyButtons();
         updatePersonalizeGateUI();
     }
@@ -852,7 +903,7 @@
 
     function updatePersonalizeGateUI() {
         const ok = isPersonalized();
-        ['btnCopyTitle', 'btnCopyBody', 'btnCopyTitleBody', 'btnGoTarget'].forEach(id => {
+        ['btnCopyTitle', 'btnCopyBody', 'btnCopyTitleBody', 'btnGoTarget', 'stickyBtnTitle', 'stickyBtnBody', 'stickyBtnTitleBody', 'stickyBtnTarget'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.classList.toggle('gate-locked', !ok);
         });
