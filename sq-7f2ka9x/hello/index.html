@@ -80,10 +80,6 @@
         .personalize-body { max-height: 900px; opacity: 1; overflow: hidden; margin-top: 12px; transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.3s ease; }
         .personalize-box.collapsed .personalize-body { max-height: 0; opacity: 0; margin-top: 0; }
         .personalize-sub { font-size: 12px; color: #6b21a8; margin-bottom: 12px; }
-        .keyword-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-        .keyword-chip { padding: 9px 13px; font-size: 13px; font-weight: 600; border: 2px solid #d8b4fe; border-radius: 20px; background: white; color: #7e22ce; cursor: pointer; transition: 0.15s; }
-        .keyword-chip:hover { background: #faf5ff; }
-        .keyword-chip.active { background: #9333ea; border-color: #9333ea; color: white; }
         .freeform-label { font-size: 13px; font-weight: 700; color: #6b21a8; margin-bottom: 6px; display: block; }
         textarea.freeform-input { width: 100%; height: 70px; border: 1px solid #d8b4fe; border-radius: 8px; padding: 10px 12px; box-sizing: border-box; font-size: 13.5px; resize: vertical; background: white; font-family: inherit; color: #334155; }
         .personalize-box.flash-required { animation: personalizeFlash 1.2s ease; }
@@ -390,11 +386,9 @@
             <div class="personalize-title">✍️ 나만의 이유로 개인화하기 <span style="color:#dc2626;">(필수)</span></div>
             <span class="personalize-arrow" id="personalizeArrow">▲</span>
         </div>
-        <div class="personalize-required-note" id="personalizeRequiredNote" onclick="togglePersonalizeBox()">⚠️ 최소 1개 이상 선택하거나 직접 사연을 적어야 복사·제출이 가능해요.</div>
+        <div class="personalize-required-note" id="personalizeRequiredNote" onclick="togglePersonalizeBox()">⚠️ 나만의 사연을 한 문장 이상 적어야 복사·제출이 가능해요.</div>
         <div class="personalize-body" id="personalizeBody">
-            <div class="personalize-sub">해당하는 항목을 눌러 선택하세요 (복수 선택 가능). 선택한 문장이 본문에 자동으로 들어갑니다.</div>
-            <div class="keyword-grid" id="keywordGrid"></div>
-            <div class="personalize-sub" style="margin-top:4px;">✏️ 아래 칸을 채우면 <strong>나만의 문장</strong>이 자동으로 만들어집니다. 아는 것만 적으셔도 됩니다.</div>
+            <div class="personalize-sub">✏️ 아래 칸을 채우면 <strong>나만의 문장</strong>이 자동으로 만들어져 본문에 들어갑니다. 전부 선택 입력이니 <strong>아는 것만</strong> 적으셔도 됩니다.</div>
             <div class="guided-grid" id="guidedGrid"></div>
             <div class="guided-preview" id="guidedPreview"></div>
             <label class="freeform-label" for="freeformInput" style="margin-top:10px;">📝 그 밖에 하고 싶은 말 (자유롭게)</label>
@@ -493,14 +487,6 @@
 <div class="toast" id="toastMsg"></div>
 
 <script>
-    const KEYWORDS = [
-        { id: "kid", label: "🧒 어린 자녀가 있어요", sentence: "본인의 가정에는 어린 자녀가 있어 전자파·소음 등 데이터센터로 인한 환경 변화에 특히 민감할 수밖에 없는 상황입니다." },
-        { id: "baby", label: "🤰 임신 중이거나 영유아가 있어요", sentence: "출산을 앞두고 있거나 영유아를 양육하고 있어 주거지 인근 대규모 전력시설 건립에 대한 우려가 더욱 큽니다." },
-        { id: "elder", label: "🧓 노약자·환자와 함께 살아요", sentence: "고령이거나 건강이 취약한 가족과 함께 거주하고 있어 소음과 전자파 등 환경 변화에 더욱 민감하게 영향을 받을 수 있습니다." },
-        { id: "school", label: "🏫 통학·통근길이 겹쳐요", sentence: "인근 어린이집·학교 통학 동선 및 일상 생활권과 사업 부지가 겹쳐 있어 안전에 대한 우려가 큽니다." },
-        { id: "prior", label: "📨 이미 다른 기관에도 의견을 냈어요", sentence: "이미 관계기관에 동일한 사안으로 민원·의견을 제출한 바 있습니다. 이번에도 동일한 우려가 반드시 반영되기를 바랍니다." }
-    ];
-
     // 빈칸을 채우면 사람마다 다른 문장이 자동으로 만들어집니다 (아는 것만 적어도 됨)
     const GUIDED_FIELDS = [
         { id: 'where',    label: '① 어디에 사시나요? (단지·동 이름)', ph: '예: 디에이치 아델스타 105동 / 장군마을 / 인근 ○○아파트',
@@ -515,7 +501,6 @@
           make: v => `무엇보다 ${v}.` }
     ];
 
-    const selectedKeywords = new Set();
     let currentMode = 'lh';
 
     function getRandomIndex(max) { return Math.floor(Math.random() * max); }
@@ -529,18 +514,20 @@
     }
     function getGuidedParagraph() { return getGuidedSentences().join(' '); }
 
-    // 이용자가 '직접 쓴' 분량 (게이트 강도 판정용 — 고정 문장인 키워드 칩은 제외)
+    // 이용자가 '직접 입력한 원문' 분량 (게이트 강도 판정용 — 자동 완성 문구는 제외)
     function getPersonalText() {
+        const guidedRaw = GUIDED_FIELDS.map(f => {
+            const el = document.getElementById('guided_' + f.id);
+            return el ? el.value.trim() : '';
+        }).join(' ');
         const ff = document.getElementById('freeformInput');
-        return (getGuidedParagraph() + ' ' + (ff ? ff.value : '')).trim();
+        return (guidedRaw + ' ' + (ff ? ff.value : '')).trim();
     }
 
     function getPersonalParagraph() {
-        const guided = getGuidedSentences();
-        const kwSentences = KEYWORDS.filter(k => selectedKeywords.has(k.id)).map(k => k.sentence);
+        const parts = getGuidedSentences();
         const ff = document.getElementById('freeformInput');
         const freeform = ff ? ff.value.trim() : '';
-        const parts = guided.concat(kwSentences);
         if (freeform) parts.push(freeform);
         if (!parts.length) return "";
         return "\n\n" + parts.join(" ");
@@ -571,23 +558,6 @@
     function renderGuidedPreview() {
         const p = document.getElementById('guidedPreview');
         if (p) p.textContent = getGuidedParagraph();
-    }
-
-    function buildKeywordGrid() {
-        const grid = document.getElementById('keywordGrid');
-        grid.innerHTML = '';
-        KEYWORDS.forEach(k => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'keyword-chip';
-            btn.innerText = k.label;
-            btn.onclick = () => {
-                if (selectedKeywords.has(k.id)) { selectedKeywords.delete(k.id); btn.classList.remove('active'); }
-                else { selectedKeywords.add(k.id); btn.classList.add('active'); }
-                generate(false);
-            };
-            grid.appendChild(btn);
-        });
     }
 
     const budongsanTitleVariants = [
@@ -1017,18 +987,15 @@
         _inputDebounce = setTimeout(() => generate(false), 220);
     }
 
-    // 'none'  = 아무것도 없음  ·  'weak' = 칩 1개뿐이거나 직접 쓴 글이 너무 짧음  ·  'ok' = 충분
+    // 'none' = 아무것도 없음 · 'weak' = 직접 쓴 글이 너무 짧음 · 'ok' = 충분
     function personalizeStrength() {
         const own = getPersonalText().length;
-        const chips = selectedKeywords.size;
-        if (own >= 25 || chips >= 2) return 'ok';
-        if (own > 0 || chips === 1) return 'weak';
+        if (own >= 12) return 'ok';
+        if (own > 0) return 'weak';
         return 'none';
     }
     function isPersonalized() { return personalizeStrength() !== 'none'; }
     function isStrongEnough() { return personalizeStrength() === 'ok'; }
-
-    let wasPersonalized = false;
 
     function togglePersonalizeBox(forceCollapsed) {
         const box = document.getElementById('personalizeBox');
@@ -1050,32 +1017,26 @@
         if (strEl) {
             strEl.className = 'personalize-strength' + (strength === 'ok' ? ' ok' : (strength === 'weak' ? ' weak' : ''));
             if (strength === 'ok') strEl.textContent = '✅ 좋아요! 다른 분들과 구분되는 민원이 됩니다. 이제 복사·제출이 가능해요.';
-            else if (strength === 'weak') strEl.textContent = '✍️ 거의 다 됐어요. 위 칸 중 한 곳에 한 문장만 더 적거나, 위 항목을 하나 더 선택해 주세요. (지금은 다른 분들과 문장이 거의 같습니다)';
+            else if (strength === 'weak') strEl.textContent = '✍️ 거의 다 됐어요. 위 칸 중 한 곳에 한 문장만 더 적어주세요. (지금은 내용이 너무 짧습니다)';
             else strEl.textContent = '';
         }
         const note = document.getElementById('personalizeRequiredNote');
         if (note) {
             if (ok) {
-                note.innerText = '✅ 준비 완료! 이제 제목·본문 복사와 신문고 이동이 가능해요. (다시 펼치려면 여기를 눌러주세요)';
+                note.innerText = '✅ 준비 완료! 이제 제목·본문 복사와 신문고 이동이 가능해요.';
                 note.style.color = '#15803d';
             } else {
-                note.innerText = '⚠️ 나만의 사연을 한 문장 이상 적거나, 위 항목을 2개 이상 선택해야 복사·제출이 가능해요.';
+                note.innerText = '⚠️ 나만의 사연을 한 문장 이상 적어야 복사·제출이 가능해요.';
                 note.style.color = '#dc2626';
             }
         }
-        if (ok && !wasPersonalized) {
-            togglePersonalizeBox(true);
-        } else if (!ok && wasPersonalized) {
-            togglePersonalizeBox(false);
-        }
-        wasPersonalized = ok;
     }
 
     function checkPersonalized() {
         if (isStrongEnough()) return true;
         showToast(personalizeStrength() === 'weak'
-            ? '✍️ 한 문장만 더 적거나 항목을 하나 더 선택해 주세요.\n지금은 다른 분들과 거의 똑같은 민원이 됩니다.'
-            : '⚠️ 먼저 나만의 사연을 한 문장 이상 적어주세요! (또는 항목 2개 이상 선택)');
+            ? '✍️ 한 문장만 더 적어주세요. 지금은 내용이 너무 짧습니다.'
+            : '⚠️ 먼저 나만의 사연을 한 문장 이상 적어주세요!');
         const box = document.getElementById('personalizeBox');
         if (box) {
             togglePersonalizeBox(false);
@@ -1146,7 +1107,7 @@
     // 모바일 하단바: 본문 복사 후 <a> 링크 이동을 그대로 허용
     function stickyCopyBodyThenGo() {
         const body = document.getElementById('resultBox').value;
-        try { navigator.clipboard.writeText(body); } catch (e) {}
+        try { navigator.clipboard.writeText(body).catch(function(){}); } catch (e) {}
         markCopied('body');
         showToast('📄 본문 복사됨 · 국민신문고로 이동합니다');
         return true;
@@ -1207,7 +1168,7 @@
         try {
             window.name = JSON.stringify({ __juam: true, title: currentTitle, body: body, agency: AGENCY_FULL_NAMES[currentMode] || '', ts: Date.now() });
         } catch (e) {}
-        try { navigator.clipboard.writeText(body); } catch (e) {}
+        try { navigator.clipboard.writeText(body).catch(function(){}); } catch (e) {}
         markCopied('body');
         showToast('국민신문고로 이동합니다.\n로그인 → 민원신청 폼에서 북마크바의 "주암민원 자동채우기"를 누르세요.');
         setTimeout(() => { window.location.href = EPEOPLE_URL; }, 900);
@@ -1401,7 +1362,6 @@
         updateSmsStatus();
     }
 
-    buildKeywordGrid();
     buildGuidedGrid();
     initBookmarklet();
     rerollBudongsan();
