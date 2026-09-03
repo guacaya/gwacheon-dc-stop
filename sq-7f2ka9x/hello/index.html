@@ -388,7 +388,7 @@
         </div>
         <div class="personalize-required-note" id="personalizeRequiredNote" onclick="togglePersonalizeBox()">⚠️ 나만의 사연을 한 문장 이상 적어야 복사·제출이 가능해요.</div>
         <div class="personalize-body" id="personalizeBody">
-            <div class="personalize-sub">✏️ 아래 칸을 채우면 <strong>나만의 문장</strong>이 자동으로 만들어져 본문에 들어갑니다. 전부 선택 입력이니 <strong>아는 것만</strong> 적으셔도 됩니다.</div>
+            <div class="personalize-sub">✏️ 아래에 <strong>편하게 적어주세요.</strong> 적으신 문장이 <strong>그대로</strong> 민원 본문에 들어갑니다. (한 칸만 채워도 됩니다)</div>
             <div class="guided-grid" id="guidedGrid"></div>
             <div class="guided-preview" id="guidedPreview"></div>
             <label class="freeform-label" for="freeformInput" style="margin-top:10px;">📝 그 밖에 하고 싶은 말 (자유롭게)</label>
@@ -487,18 +487,12 @@
 <div class="toast" id="toastMsg"></div>
 
 <script>
-    // 빈칸을 채우면 사람마다 다른 문장이 자동으로 만들어집니다 (아는 것만 적어도 됨)
+    // 적은 문장이 가공 없이 그대로 본문에 들어갑니다 (사람이 쓴 것처럼 보이도록)
     const GUIDED_FIELDS = [
-        { id: 'where',    label: '① 어디에 사시나요? (단지·동 이름)', ph: '예: 디에이치 아델스타 105동 / 장군마을 / 인근 ○○아파트',
-          make: v => `저는 과천 주암지구 인근 ${v}에 거주(예정)하는 주민입니다.` },
-        { id: 'years',    label: '② 이 동네와의 인연 (거주 기간·이사 온 이유 등)', ph: '예: 아이 학교 때문에 3년 전 이사 와 정착했습니다',
-          make: v => `${v}.` },
-        { id: 'family',   label: '③ 함께 사는 가족', ph: '예: 7살·4살 두 아이 / 연로하신 부모님을 모시고 삽니다',
-          make: v => `가족으로는 ${v}이(가) 있어 소음·전자파 등 환경 변화에 특히 민감할 수밖에 없습니다.` },
-        { id: 'distance', label: '④ 집·생활동선과 사업부지의 관계', ph: '예: 안방 창문에서 부지가 보이고 아이 어린이집이 도보 5분 거리입니다',
-          make: v => `${v}.` },
-        { id: 'worry',    label: '⑤ 가장 걱정되는 점', ph: '예: 24시간 냉각팬 소음과 화재 위험이 가장 두렵습니다',
-          make: v => `무엇보다 ${v}.` }
+        { id: 'family', label: '🏠 내 상황 (한두 문장으로 편하게)',
+          ph: '예: 13개월 아기를 키우고 있어 소음과 전자파가 특히 걱정됩니다' },
+        { id: 'worry', label: '😟 가장 걱정되는 점 (한두 문장으로 편하게)',
+          ph: '예: 안방 창문 바로 앞이 부지라 24시간 시설 소음에 잠을 못 잘까 두렵습니다' }
     ];
 
     let currentMode = 'lh';
@@ -508,8 +502,9 @@
     function getGuidedSentences() {
         return GUIDED_FIELDS.map(f => {
             const el = document.getElementById('guided_' + f.id);
-            const v = el ? el.value.trim().replace(/[.\s]+$/, '') : '';
-            return v ? f.make(v) : '';
+            const v = el ? el.value.replace(/\s+$/, '').replace(/^\s+/, '') : '';
+            if (!v) return '';
+            return /[.!?…]$/.test(v) ? v : v + '.';   // 사용자가 적은 그대로, 마침표만 보정
         }).filter(Boolean);
     }
     function getGuidedParagraph() { return getGuidedSentences().join(' '); }
