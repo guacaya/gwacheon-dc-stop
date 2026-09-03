@@ -109,8 +109,6 @@
         .advanced-steps { margin: 0 0 10px; padding-left: 20px; font-size: 12.5px; color: #475569; line-height: 1.7; }
         .bookmarklet-link { display: inline-block; padding: 10px 16px; background: #334155; color: #fff; border-radius: 10px; font-weight: 800; font-size: 13px; text-decoration: none; margin: 4px 0 8px; }
         .advanced-warn { font-size: 11.5px; font-weight: 700; color: #9a3412; background: #fff7ed; border: 1px solid #fdba74; border-radius: 6px; padding: 8px 10px; line-height: 1.6; }
-        .btn-handoff { width: 100%; padding: 13px; font-size: 13.5px; font-weight: 800; border: 2px solid #334155; border-radius: 12px; background: white; color: #334155; cursor: pointer; margin-top: 8px; }
-        .btn-handoff:hover { background: #e2e8f0; }
 
         .gate-locked { opacity: 0.45; filter: grayscale(35%); cursor: not-allowed; }
         .action-primary-row .gate-locked, .action-secondary-row .gate-locked, .copy-hint .gate-locked {
@@ -159,6 +157,11 @@
         .desktop-only { display: block; }
         .action-primary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
         .action-primary-row .btn-toss { padding: 13px 6px; font-size: 14px; }
+        .btn-autofill { display: block; width: 100%; margin: 0 0 8px; padding: 12px; font-size: 13.5px; font-weight: 800; border: 2px dashed #7c3aed; border-radius: 12px; background: #faf5ff; color: #6b21a8; cursor: pointer; }
+        .btn-autofill:hover { background: #f3e8ff; }
+        .btn-autofill.gate-locked { opacity: 1; filter: none; background: #f1f5f9; border-color: #cbd5e1; color: #94a3b8; }
+        .btn-bm-ready { padding: 6px 12px; font-size: 12px; font-weight: 700; border: 1.5px solid #7c3aed; border-radius: 8px; background: #fff; color: #6b21a8; cursor: pointer; }
+        .btn-bm-ready:disabled { border-color: #86efac; color: #16a34a; background: #f0fdf4; cursor: default; }
         .action-secondary-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 8px; }
         .action-secondary-row .btn-toss { flex: 1 1 auto; min-width: 84px; padding: 8px 6px; font-size: 12px; border-radius: 10px; }
         @media (min-width: 601px) {
@@ -354,23 +357,17 @@
 
     <div class="advanced-box collapsed" id="advancedBox">
         <button type="button" class="advanced-toggle" onclick="toggleAdvancedBox()">
-            <span class="advanced-toggle-left">⚡ (고급·선택) 국민신문고 제목·본문·기관 자동 채우기</span>
+            <span class="advanced-toggle-left">⚙️ 자동채우기 설정 (최초 1회 · 선택)</span>
             <span class="advanced-arrow" id="advancedArrow">▼</span>
         </button>
         <div class="advanced-content">
-            <p>복사·붙여넣기가 번거로우면, <strong>본인 브라우저에서 본인이 검토한 내용</strong>을 국민신문고 민원신청 폼에 한 번에 채워주는 북마클릿을 쓸 수 있습니다. 자동 <em>제출</em>은 하지 않으며, 처리기관 최종 선택·공개여부·제출은 본인이 직접 합니다.</p>
-            <p><strong>1) 설치 (최초 1회)</strong> — 아래 버튼을 브라우저 <strong>북마크바로 드래그</strong>하세요. (모바일은 지원이 제한적입니다)</p>
+            <p>위 <strong>"⚡ 국민신문고에 자동으로 채우기"</strong> 버튼을 쓰려면 북마클릿을 <strong>딱 한 번</strong> 설치하면 됩니다. 자동 <em>제출</em>은 하지 않고, 폼의 제목·본문·기관명만 채워줍니다. (모바일은 지원이 제한적)</p>
+            <p><strong>1.</strong> 아래 버튼을 브라우저 <strong>북마크바로 드래그</strong>해 저장하세요.</p>
             <a class="bookmarklet-link" id="bookmarkletLink" href="#" onclick="return false;">📌 주암민원 자동채우기</a>
-            <p><strong>2) 사용</strong></p>
-            <ol class="advanced-steps">
-                <li>기관을 고르고 사연을 넣은 뒤, 아래 <strong>"이 민원 자동채우기로 넘기기"</strong>를 누르면 국민신문고가 같은 탭에서 열립니다.</li>
-                <li>로그인 → <strong>민원 → 일반민원 → 민원신청</strong> 폼까지 이동합니다.</li>
-                <li><strong>제목·본문 입력 화면</strong>에서 북마크바의 <strong>"주암민원 자동채우기"</strong>를 누르면 제목·본문이 채워집니다.</li>
-                <li>"다음"을 눌러 <strong>처리기관 입력 화면</strong>이 나오면 <strong>북마클릿을 한 번 더</strong> 누르세요. 기관명이 검색창에 입력됩니다 — <strong>뜨는 목록에서 해당 기관을 직접 클릭해 선택</strong>하세요. (엉뚱한 기관 자동 선택을 막기 위해 선택은 사람이 합니다)</li>
-                <li>내용·공개여부를 확인하고 <strong>본인이 제출</strong>하세요.</li>
-            </ol>
-            <button type="button" class="btn-handoff" id="btnHandoff" onclick="handoffToEpeople();">이 민원 자동채우기로 넘기기 →</button>
-            <p class="advanced-warn" style="margin-top:10px;">⚠️ 국민신문고 화면이 개편되면 자동 채우기가 안 될 수 있습니다. 그럴 땐 위쪽 복사·붙여넣기 방식을 쓰세요. 칸을 잘못 찾으면 채워진 내용을 지우고 수동으로 붙여넣어 주세요. 처리기관은 <strong>반드시 목록에서 직접 확인 후 선택</strong>하세요.</p>
+            <p><strong>2.</strong> 저장했으면 눌러주세요 →
+                <button type="button" class="btn-bm-ready" id="btnBmReady" onclick="markBookmarkletReady();">✅ 설치했어요</button></p>
+            <p style="font-size:11.5px;color:#64748b;line-height:1.7;">이후 흐름: <strong>⚡ 자동으로 채우기</strong> → 국민신문고 로그인 → <strong>민원 → 일반민원 → 민원신청</strong> 폼에서 북마크바의 <strong>"주암민원 자동채우기"</strong> 클릭 → 제목·본문 채워짐. "다음"으로 <strong>처리기관 화면</strong>이 나오면 <strong>한 번 더</strong> 눌러 기관명 입력 → <strong>뜨는 목록에서 직접 선택</strong> → 내용·공개여부 확인 후 <strong>본인이 제출</strong>.</p>
+            <p class="advanced-warn">⚠️ 국민신문고 화면이 개편되면 자동채우기가 안 될 수 있어요. 그때는 위의 복사·붙여넣기를 쓰세요. 칸을 잘못 찾으면 지우고 수동 입력. 처리기관은 반드시 목록에서 직접 확인 후 선택하세요.</p>
         </div>
     </div>
 
@@ -414,11 +411,12 @@
         <div id="titleDisplay" class="title-box">민원 제목: 로딩 중...</div>
     </div>
 
-    <div class="copy-hint desktop-only">본문·제목을 국민신문고 해당 칸에 각각 붙여넣으세요 · <a id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" onclick="return checkPersonalized();">국민신문고 열기 ↗</a></div>
+    <div class="copy-hint desktop-only">제목·본문을 국민신문고 해당 칸에 각각 붙여넣으세요 · <a id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" onclick="return checkPersonalized();">국민신문고 열기 ↗</a></div>
     <div class="action-primary-row desktop-only">
-        <button id="btnCopyBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyBody();">📄 본문 복사</button>
         <button id="btnCopyTitle" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyTitle();">📋 제목 복사</button>
+        <button id="btnCopyBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyBody();">📄 본문 복사</button>
     </div>
+    <button id="btnAutofill" class="btn-autofill desktop-only" onclick="startAutofill();">⚡ 국민신문고에 자동으로 채우기 →</button>
 
     <div class="body-label">📄 민원 본문 — 제출 전 꼭 읽어보세요</div>
     <textarea id="resultBox" readonly></textarea>
@@ -1039,7 +1037,7 @@
     function updatePersonalizeGateUI() {
         const strength = personalizeStrength();
         const ok = strength === 'ok';
-        ['btnCopyTitle', 'btnCopyBody', 'btnGoTarget', 'btnHandoff', 'stickyBtnTitle', 'stickyBtnBody', 'stickyBtnTarget'].forEach(id => {
+        ['btnCopyTitle', 'btnCopyBody', 'btnGoTarget', 'btnAutofill', 'stickyBtnTitle', 'stickyBtnBody', 'stickyBtnTarget'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.classList.toggle('gate-locked', !ok);
         });
@@ -1151,7 +1149,7 @@
     // window.name 은 같은 탭에서 다른 도메인으로 이동해도 유지됩니다.
     // 도우미가 window.name 에 민원을 담아 국민신문고로 이동시키고,
     // 이용자가 북마크바의 북마클릿을 눌러 로그인된 자기 브라우저에서 폼을 채웁니다.
-    const BOOKMARKLET = "javascript:(function(){try{var d=JSON.parse(window.name||'{}');if(!d||!d.__juam){alert('넘겨받은 민원 내용이 없습니다.\\n도우미 페이지에서 [이 민원 자동채우기로 넘기기]를 먼저 눌러주세요.');return;}var vis=function(el){return el&&!el.disabled&&!el.readOnly&&el.offsetParent!==null;};var fire=function(el){['input','change','keydown','keyup'].forEach(function(t){el.dispatchEvent(new Event(t,{bubbles:true}));});};var setV=function(el,v){el.focus();try{el.value=v;}catch(e){}fire(el);};var txtIn=function(x){var t=(x.type||'text').toLowerCase();return (t==='text'||t==='search'||t==='')&&vis(x);};var pick=function(kw,avoid){var ins=[].slice.call(document.querySelectorAll('input')).filter(function(x){return txtIn(x)&&x!==avoid;});var a=ins.filter(function(x){return kw.test((x.id||'')+' '+(x.name||'')+' '+(x.placeholder||'')+' '+(x.title||'')+' '+(x.getAttribute('aria-label')||''));});if(a[0])return a[0];var labs=[].slice.call(document.querySelectorAll('label[for]'));for(var i=0;i<labs.length;i++){if(kw.test((labs[i].textContent||'').replace(/\\s/g,''))){var t=document.getElementById(labs[i].getAttribute('for'));if(t&&t.tagName==='INPUT'&&txtIn(t)&&t!==avoid)return t;}}var ths=[].slice.call(document.querySelectorAll('th'));for(var j=0;j<ths.length;j++){if(kw.test((ths[j].textContent||'').replace(/\\s/g,''))){var tr=ths[j].closest&&ths[j].closest('tr');var inp=tr&&tr.querySelector('input[type=text],input[type=search],input:not([type])');if(inp&&txtIn(inp)&&inp!==avoid)return inp;}}return null;};var done=[];if(d.body){var tas=[].slice.call(document.querySelectorAll('textarea')).filter(vis).sort(function(a,b){return b.offsetWidth*b.offsetHeight-a.offsetWidth*a.offsetHeight;});var bt=tas[0];if(bt&&bt.offsetWidth*bt.offsetHeight>60000&&(bt.value.trim()===''||bt.value===d.body)){setV(bt,d.body);done.push('본문');}}var title=pick(/제목|titl|subj/i);if(title&&d.title){setV(title,d.title);done.push('제목');}var ag=pick(/처리기관|기관명|소관기관|접수기관/,title);if(ag&&d.agency){setV(ag,d.agency);done.push('기관명(입력만 됨-목록에서 직접 선택)');}alert((done.length?done.join(', ')+' 을(를) 채웠습니다.':'이 화면에서는 채울 칸을 찾지 못했습니다.')+'\\n\\n※ 처리기관은 검색창에 글자만 입력됩니다. 뜨는 목록에서 해당 기관을 직접 눌러 선택하세요.\\n※ 제목·본문 내용을 꼭 확인하고, 공개여부 등 나머지 항목을 정한 뒤 본인이 제출하세요.\\n※ 칸을 잘못 찾았으면 지우고 수동으로 붙여넣으세요.');}catch(e){alert('자동채우기 오류: '+e.message+'\\n복사·붙여넣기 방식을 이용해 주세요.');}})();";
+    const BOOKMARKLET = "javascript:(function(){try{var d=JSON.parse(window.name||'{}');if(!d||!d.__juam){alert('넘겨받은 민원 내용이 없습니다.\\n도우미 페이지에서 [⚡ 국민신문고에 자동으로 채우기]를 먼저 눌러주세요.');return;}var vis=function(el){return el&&!el.disabled&&!el.readOnly&&el.offsetParent!==null;};var fire=function(el){['input','change','keydown','keyup'].forEach(function(t){el.dispatchEvent(new Event(t,{bubbles:true}));});};var setV=function(el,v){el.focus();try{el.value=v;}catch(e){}fire(el);};var txtIn=function(x){var t=(x.type||'text').toLowerCase();return (t==='text'||t==='search'||t==='')&&vis(x);};var pick=function(kw,avoid){var ins=[].slice.call(document.querySelectorAll('input')).filter(function(x){return txtIn(x)&&x!==avoid;});var a=ins.filter(function(x){return kw.test((x.id||'')+' '+(x.name||'')+' '+(x.placeholder||'')+' '+(x.title||'')+' '+(x.getAttribute('aria-label')||''));});if(a[0])return a[0];var labs=[].slice.call(document.querySelectorAll('label[for]'));for(var i=0;i<labs.length;i++){if(kw.test((labs[i].textContent||'').replace(/\\s/g,''))){var t=document.getElementById(labs[i].getAttribute('for'));if(t&&t.tagName==='INPUT'&&txtIn(t)&&t!==avoid)return t;}}var ths=[].slice.call(document.querySelectorAll('th'));for(var j=0;j<ths.length;j++){if(kw.test((ths[j].textContent||'').replace(/\\s/g,''))){var tr=ths[j].closest&&ths[j].closest('tr');var inp=tr&&tr.querySelector('input[type=text],input[type=search],input:not([type])');if(inp&&txtIn(inp)&&inp!==avoid)return inp;}}return null;};var done=[];if(d.body){var tas=[].slice.call(document.querySelectorAll('textarea')).filter(vis).sort(function(a,b){return b.offsetWidth*b.offsetHeight-a.offsetWidth*a.offsetHeight;});var bt=tas[0];if(bt&&bt.offsetWidth*bt.offsetHeight>60000&&(bt.value.trim()===''||bt.value===d.body)){setV(bt,d.body);done.push('본문');}}var title=pick(/제목|titl|subj/i);if(title&&d.title){setV(title,d.title);done.push('제목');}var ag=pick(/처리기관|기관명|소관기관|접수기관/,title);if(ag&&d.agency){setV(ag,d.agency);done.push('기관명(입력만 됨-목록에서 직접 선택)');}alert((done.length?done.join(', ')+' 을(를) 채웠습니다.':'이 화면에서는 채울 칸을 찾지 못했습니다.')+'\\n\\n※ 처리기관은 검색창에 글자만 입력됩니다. 뜨는 목록에서 해당 기관을 직접 눌러 선택하세요.\\n※ 제목·본문 내용을 꼭 확인하고, 공개여부 등 나머지 항목을 정한 뒤 본인이 제출하세요.\\n※ 칸을 잘못 찾았으면 지우고 수동으로 붙여넣으세요.');}catch(e){alert('자동채우기 오류: '+e.message+'\\n복사·붙여넣기 방식을 이용해 주세요.');}})();";
 
     function initBookmarklet() {
         const a = document.getElementById('bookmarkletLink');
@@ -1168,6 +1166,37 @@
         markCopied('body');
         showToast('국민신문고로 이동합니다.\n로그인 → 민원신청 폼에서 북마크바의 "주암민원 자동채우기"를 누르세요.');
         setTimeout(() => { window.location.href = EPEOPLE_URL; }, 900);
+    }
+
+    const BM_READY_KEY = 'juam_bm_ready_v1';
+    function bmReady() { try { return localStorage.getItem(BM_READY_KEY) === '1'; } catch (e) { return false; } }
+    function markBookmarkletReady() {
+        try { localStorage.setItem(BM_READY_KEY, '1'); } catch (e) {}
+        const b = document.getElementById('btnBmReady');
+        if (b) { b.textContent = '✅ 설치 완료'; b.disabled = true; }
+        refreshAutofillBtn();
+        showToast('자동채우기가 켜졌어요.\n이제 위의 "⚡ 자동으로 채우기" 버튼을 쓸 수 있어요.');
+    }
+    function refreshAutofillBtn() {
+        const b = document.getElementById('btnAutofill');
+        if (b) b.textContent = bmReady() ? '⚡ 국민신문고에 자동으로 채우기 →' : '⚡ 자동채우기 켜기 (최초 1회 설정) ↓';
+        const rb = document.getElementById('btnBmReady');
+        if (rb && bmReady()) { rb.textContent = '✅ 설치 완료'; rb.disabled = true; }
+    }
+    function startAutofill() {
+        if (!checkPersonalized()) return;
+        if (!bmReady()) {
+            const box = document.getElementById('advancedBox');
+            if (box) {
+                box.classList.remove('collapsed');
+                const ar = document.getElementById('advancedArrow');
+                if (ar) ar.textContent = '▲';
+                box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            showToast('먼저 자동채우기를 켜주세요 (아래 상자).\n북마클릿을 북마크바에 저장하고 "설치했어요"를 누르면 돼요.');
+            return;
+        }
+        handoffToEpeople();
     }
 
     function toggleAdvancedBox() {
@@ -1360,6 +1389,7 @@
 
     buildGuidedGrid();
     initBookmarklet();
+    refreshAutofillBtn();
     rerollBudongsan();
     rerollLh();
     rerollMoland();
