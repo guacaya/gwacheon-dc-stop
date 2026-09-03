@@ -1,0 +1,15 @@
+{
+  "name": "과천 주암 데이터센터 대응 민원·의견서 도우미",
+  "short_name": "주암 민원 도우미",
+  "description": "과천 주암 공공주택지구 데이터센터 건립에 반대하는 민원·의견서를 6개 기관별로 준비하는 도우미. 국민신문고에 본인이 직접 제출합니다.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#0d9488",
+  "lang": "ko",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
