@@ -157,7 +157,8 @@
         .body-label { font-size: 12.5px; font-weight: 800; color: #475569; margin: 12px 0 6px; }
         .mobile-extra-actions { display: none; }
         .desktop-only { display: block; }
-        .action-primary-row { display: grid; grid-template-columns: 1.9fr 1fr; gap: 8px; margin-bottom: 8px; }
+        .action-primary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+        .action-primary-row .btn-toss { padding: 13px 6px; font-size: 14px; }
         .action-secondary-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 8px; }
         .action-secondary-row .btn-toss { flex: 1 1 auto; min-width: 84px; padding: 8px 6px; font-size: 12px; border-radius: 10px; }
         @media (min-width: 601px) {
@@ -180,8 +181,6 @@
         .btn-toss-outline.copied { background: #eef2ff; color: #4338ca; border-color: #c7d2fe !important; }
         .btn-toss-cta { padding: 14px; font-size: 15px; background: var(--accent-color); color: white; }
         .btn-toss-cta:hover { background: var(--accent-hover); }
-        .btn-toss-combo { padding: 13px 8px; font-size: 14px; background: #1e293b; color: white; }
-        .btn-toss-combo:hover { background: #0f172a; }
 
         textarea#resultBox { width: 100%; height: 400px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; box-sizing: border-box; font-size: 14px; resize: vertical; background-color: #fafafa; line-height: 1.6; color: #334155; }
 
@@ -355,21 +354,23 @@
 
     <div class="advanced-box collapsed" id="advancedBox">
         <button type="button" class="advanced-toggle" onclick="toggleAdvancedBox()">
-            <span class="advanced-toggle-left">⚡ (고급·선택) 국민신문고 제목·본문 자동 채우기</span>
+            <span class="advanced-toggle-left">⚡ (고급·선택) 국민신문고 제목·본문·기관 자동 채우기</span>
             <span class="advanced-arrow" id="advancedArrow">▼</span>
         </button>
         <div class="advanced-content">
-            <p>복사·붙여넣기가 번거로우면, <strong>본인 브라우저에서 본인이 검토한 내용</strong>을 국민신문고 민원신청 폼에 한 번에 채워주는 북마클릿을 쓸 수 있습니다. 자동 <em>제출</em>은 하지 않으며, 처리기관·공개여부 선택과 최종 제출은 본인이 직접 합니다.</p>
+            <p>복사·붙여넣기가 번거로우면, <strong>본인 브라우저에서 본인이 검토한 내용</strong>을 국민신문고 민원신청 폼에 한 번에 채워주는 북마클릿을 쓸 수 있습니다. 자동 <em>제출</em>은 하지 않으며, 처리기관 최종 선택·공개여부·제출은 본인이 직접 합니다.</p>
             <p><strong>1) 설치 (최초 1회)</strong> — 아래 버튼을 브라우저 <strong>북마크바로 드래그</strong>하세요. (모바일은 지원이 제한적입니다)</p>
             <a class="bookmarklet-link" id="bookmarkletLink" href="#" onclick="return false;">📌 주암민원 자동채우기</a>
             <p><strong>2) 사용</strong></p>
             <ol class="advanced-steps">
                 <li>기관을 고르고 사연을 넣은 뒤, 아래 <strong>"이 민원 자동채우기로 넘기기"</strong>를 누르면 국민신문고가 같은 탭에서 열립니다.</li>
                 <li>로그인 → <strong>민원 → 일반민원 → 민원신청</strong> 폼까지 이동합니다.</li>
-                <li>북마크바의 <strong>"주암민원 자동채우기"</strong>를 누르면 제목·본문이 채워집니다. <strong>내용을 반드시 확인</strong>하고 나머지 항목을 채워 제출하세요.</li>
+                <li><strong>제목·본문 입력 화면</strong>에서 북마크바의 <strong>"주암민원 자동채우기"</strong>를 누르면 제목·본문이 채워집니다.</li>
+                <li>"다음"을 눌러 <strong>처리기관 입력 화면</strong>이 나오면 <strong>북마클릿을 한 번 더</strong> 누르세요. 기관명이 검색창에 입력됩니다 — <strong>뜨는 목록에서 해당 기관을 직접 클릭해 선택</strong>하세요. (엉뚱한 기관 자동 선택을 막기 위해 선택은 사람이 합니다)</li>
+                <li>내용·공개여부를 확인하고 <strong>본인이 제출</strong>하세요.</li>
             </ol>
             <button type="button" class="btn-handoff" id="btnHandoff" onclick="handoffToEpeople();">이 민원 자동채우기로 넘기기 →</button>
-            <p class="advanced-warn" style="margin-top:10px;">⚠️ 국민신문고 화면이 개편되면 자동 채우기가 동작하지 않을 수 있습니다. 그럴 땐 위쪽의 복사·붙여넣기 방식을 그대로 쓰시면 됩니다. 자동 채우기가 제목·본문 칸을 잘못 찾으면, 채워진 내용을 지우고 수동으로 붙여넣어 주세요.</p>
+            <p class="advanced-warn" style="margin-top:10px;">⚠️ 국민신문고 화면이 개편되면 자동 채우기가 안 될 수 있습니다. 그럴 땐 위쪽 복사·붙여넣기 방식을 쓰세요. 칸을 잘못 찾으면 채워진 내용을 지우고 수동으로 붙여넣어 주세요. 처리기관은 <strong>반드시 목록에서 직접 확인 후 선택</strong>하세요.</p>
         </div>
     </div>
 
@@ -396,9 +397,9 @@
             <div class="personalize-title">✍️ 나만의 이유로 개인화하기 <span style="color:#dc2626;">(필수)</span></div>
             <span class="personalize-arrow" id="personalizeArrow">▲</span>
         </div>
-        <div class="personalize-required-note" id="personalizeRequiredNote" onclick="togglePersonalizeBox()">⚠️ 나만의 사연을 한 문장 이상 적어야 복사·제출이 가능해요.</div>
+        <div class="personalize-required-note" id="personalizeRequiredNote" onclick="togglePersonalizeBox()">⚠️ 나만의 사연을 두 문장 이상 적어야 복사·제출이 가능해요.</div>
         <div class="personalize-body" id="personalizeBody">
-            <div class="personalize-sub">✏️ 아래에 <strong>편하게 적어주세요.</strong> 적으신 문장이 <strong>그대로</strong> 민원 본문에 들어갑니다. (한 칸만 채워도 됩니다)</div>
+            <div class="personalize-sub">✏️ 아래에 <strong>최소 두 문장</strong> 적어주세요. 적으신 문장이 <strong>그대로</strong> 민원 본문에 들어갑니다. (두 칸을 채우거나 한 칸에 두 문장)</div>
             <div class="guided-grid" id="guidedGrid"></div>
             <div class="guided-preview" id="guidedPreview"></div>
             <label class="freeform-label" for="freeformInput" style="margin-top:10px;">📝 그 밖에 하고 싶은 말 (자유롭게)</label>
@@ -413,9 +414,9 @@
         <div id="titleDisplay" class="title-box">민원 제목: 로딩 중...</div>
     </div>
 
-    <div class="copy-hint desktop-only">① 본문 복사 → 국민신문고 <strong>내용란</strong> · ② 돌아와 제목 복사 → <strong>제목란</strong> · <a id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" onclick="return checkPersonalized();">국민신문고 열기 ↗</a></div>
+    <div class="copy-hint desktop-only">본문·제목을 국민신문고 해당 칸에 각각 붙여넣으세요 · <a id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" onclick="return checkPersonalized();">국민신문고 열기 ↗</a></div>
     <div class="action-primary-row desktop-only">
-        <button id="btnCopyBodyOpen" class="btn-toss btn-toss-combo" onclick="if(checkPersonalized()) copyBodyAndOpen();">📄 본문 복사 → 국민신문고 열기</button>
+        <button id="btnCopyBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyBody();">📄 본문 복사</button>
         <button id="btnCopyTitle" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyTitle();">📋 제목 복사</button>
     </div>
 
@@ -423,9 +424,7 @@
     <textarea id="resultBox" readonly></textarea>
 
     <div class="action-secondary-row desktop-only">
-        <button id="btnCopyBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyBody();">본문만</button>
-        <button id="btnCopyTitleBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyTitleAndBody();">📑 제목+본문</button>
-        <button id="btnCopyAgencyName" class="btn-toss btn-toss-gray" onclick="copyCurrentAgencyName();">🏢 기관명</button>
+        <button id="btnCopyAgencyName" class="btn-toss btn-toss-gray" onclick="copyCurrentAgencyName();">🏢 기관명 복사</button>
         <button class="btn-toss btn-toss-gray" onclick="generate(true)">🔄 다시 섞기</button>
     </div>
     <div class="next-agency-row desktop-only" id="nextAgencyRow" style="display:none;">
@@ -433,21 +432,20 @@
     </div>
 
     <div class="mobile-extra-actions">
-        <button id="stickyBtnBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyBody();">본문만 복사</button>
-        <button id="stickyBtnTitleBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyTitleAndBody();">📑 제목+본문</button>
-        <button id="stickyBtnAgency" class="btn-toss btn-toss-gray" onclick="copyCurrentAgencyName();">🏢 기관명</button>
+        <button id="stickyBtnAgency" class="btn-toss btn-toss-gray" onclick="copyCurrentAgencyName();">🏢 기관명 복사</button>
+        <button class="btn-toss btn-toss-gray" onclick="generate(true)">🔄 다시 섞기</button>
     </div>
 
     </div>
 
     <!-- 모바일 하단 고정 복사 바 -->
     <div class="sticky-copy-bar" id="stickyCopyBar">
-        <div class="sticky-agency-label">📍 <strong id="stickyAgencyName">한국토지주택공사</strong> · <span style="color:#0f766e;">본문 먼저, 그다음 제목</span></div>
+        <div class="sticky-agency-label">📍 <strong id="stickyAgencyName">한국토지주택공사</strong> · <span style="color:#0f766e;">본문·제목 각각 붙여넣기</span></div>
         <button type="button" class="sticky-next-agency" id="stickyNextAgency" style="display:none;" onclick="goNextAgency();">✅ 제출했어요 · 다음 기관으로 →</button>
         <div class="sticky-copy-bar-buttons">
-            <a id="stickyBtnTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople" onclick="return checkPersonalized() &amp;&amp; stickyCopyBodyThenGo();">📄→🏛️<br>본문복사+이동</a>
-            <button id="stickyBtnTitle" class="sticky-bar-title" onclick="if(checkPersonalized()) copyTitle();">📋<br>제목복사</button>
-            <button class="sticky-bar-refresh" onclick="generate(true)">🔄<br>다시섞기</button>
+            <a id="stickyBtnTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople" onclick="return checkPersonalized();">🏛️<br>신문고 열기</a>
+            <button id="stickyBtnBody" class="sticky-bar-title" onclick="if(checkPersonalized()) copyBody();">📄<br>본문 복사</button>
+            <button id="stickyBtnTitle" class="sticky-bar-title" onclick="if(checkPersonalized()) copyTitle();">📋<br>제목 복사</button>
         </div>
     </div>
 
@@ -926,7 +924,7 @@
         if (!copiedParts[m]) copiedParts[m] = {};
         copiedParts[m][part] = true;
         const p = copiedParts[m];
-        if (!agencyDone.has(m) && (p.all || (p.title && p.body))) {
+        if (!agencyDone.has(m) && p.title && p.body) {
             agencyDone.add(m);
             saveAgencyDone(agencyDone);
             renderAgencyDoneUI();
@@ -996,11 +994,23 @@
         _inputDebounce = setTimeout(() => generate(false), 220);
     }
 
-    // 'none' = 아무것도 없음 · 'weak' = 직접 쓴 글이 너무 짧음 · 'ok' = 충분
+    // 최소 두 문장 분량이어야 'ok'. 한 문장 = 4자 이상 조각 하나.
+    function countSentences(v) {
+        if (!v) return 0;
+        return v.split(/[.!?。…\n]+/).filter(x => x.trim().length >= 4).length || (v.trim().length >= 4 ? 1 : 0);
+    }
     function personalizeStrength() {
-        const own = getPersonalText().length;
-        if (own >= 12) return 'ok';
-        if (own > 0) return 'weak';
+        let sentences = 0, chars = 0;
+        GUIDED_FIELDS.forEach(f => {
+            const el = document.getElementById('guided_' + f.id);
+            const v = el ? el.value.trim() : '';
+            chars += v.length; sentences += countSentences(v);
+        });
+        const ff = document.getElementById('freeformInput');
+        const fv = ff ? ff.value.trim() : '';
+        chars += fv.length; sentences += countSentences(fv);
+        if (sentences >= 2 && chars >= 20) return 'ok';
+        if (chars > 0) return 'weak';
         return 'none';
     }
     function isPersonalized() { return personalizeStrength() !== 'none'; }
@@ -1029,24 +1039,24 @@
     function updatePersonalizeGateUI() {
         const strength = personalizeStrength();
         const ok = strength === 'ok';
-        ['btnCopyTitle', 'btnCopyBody', 'btnCopyTitleBody', 'btnCopyBodyOpen', 'btnGoTarget', 'btnHandoff', 'stickyBtnTitle', 'stickyBtnBody', 'stickyBtnTitleBody', 'stickyBtnTarget'].forEach(id => {
+        ['btnCopyTitle', 'btnCopyBody', 'btnGoTarget', 'btnHandoff', 'stickyBtnTitle', 'stickyBtnBody', 'stickyBtnTarget'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.classList.toggle('gate-locked', !ok);
         });
         const strEl = document.getElementById('personalizeStrength');
         if (strEl) {
             strEl.className = 'personalize-strength' + (strength === 'ok' ? ' ok' : (strength === 'weak' ? ' weak' : ''));
-            if (strength === 'ok') strEl.textContent = '✅ 좋아요! 다른 분들과 구분되는 민원이 됩니다. 이제 복사·제출이 가능해요.';
-            else if (strength === 'weak') strEl.textContent = '✍️ 거의 다 됐어요. 위 칸 중 한 곳에 한 문장만 더 적어주세요. (지금은 내용이 너무 짧습니다)';
+            if (strength === 'ok') strEl.textContent = '✅ 좋아요! 두 문장 이상 적으셨어요. 이제 복사·제출이 가능해요.';
+            else if (strength === 'weak') strEl.textContent = '✍️ 한 문장 더 필요해요. 두 칸을 모두 채우거나, 한 칸에 두 문장 이상 적어주세요.';
             else strEl.textContent = '';
         }
         const note = document.getElementById('personalizeRequiredNote');
         if (note) {
             if (ok) {
-                note.innerText = '✅ 준비 완료! 이제 제목·본문 복사와 신문고 이동이 가능해요.';
+                note.innerText = '✅ 준비 완료! 이제 제목·본문 복사가 가능해요.';
                 note.style.color = '#15803d';
             } else {
-                note.innerText = '⚠️ 나만의 사연을 한 문장 이상 적어야 복사·제출이 가능해요.';
+                note.innerText = '⚠️ 나만의 사연을 두 문장 이상 적어야 복사·제출이 가능해요.';
                 note.style.color = '#dc2626';
             }
         }
@@ -1055,8 +1065,8 @@
     function checkPersonalized() {
         if (isStrongEnough()) return true;
         showToast(personalizeStrength() === 'weak'
-            ? '✍️ 한 문장만 더 적어주세요. 지금은 내용이 너무 짧습니다.'
-            : '⚠️ 먼저 나만의 사연을 한 문장 이상 적어주세요!');
+            ? '✍️ 한 문장 더 적어주세요. 두 칸을 채우거나 한 칸에 두 문장 이상이면 돼요.'
+            : '⚠️ 먼저 나만의 사연을 두 문장 이상 적어주세요!');
         const box = document.getElementById('personalizeBox');
         if (box) {
             togglePersonalizeBox(false);
@@ -1071,11 +1081,9 @@
         const t = document.getElementById('btnCopyTitle');
         const b = document.getElementById('btnCopyBody');
         if (t) { t.classList.remove('copied'); t.innerHTML = '📋 제목 복사'; }
-        if (b) { b.classList.remove('copied'); b.innerHTML = '본문만'; }
+        if (b) { b.classList.remove('copied'); b.innerHTML = '📄 본문 복사'; }
         const agencyBtn = document.getElementById('btnCopyAgencyName');
-        if (agencyBtn) { agencyBtn.classList.remove('copied'); agencyBtn.innerHTML = '🏢 기관명'; }
-        const allBtn = document.getElementById('btnCopyTitleBody');
-        if (allBtn) { allBtn.classList.remove('copied'); allBtn.innerHTML = '📑 제목+본문'; }
+        if (agencyBtn) { agencyBtn.classList.remove('copied'); agencyBtn.innerHTML = '🏢 기관명 복사'; }
     }
 
     function copyTitle() {
@@ -1092,45 +1100,13 @@
         const body = document.getElementById('resultBox').value;
         navigator.clipboard.writeText(body).then(() => {
             const btn = document.getElementById('btnCopyBody');
-            btn.classList.add('copied'); btn.innerHTML = '복사됨!';
-            showToast('📄 본문이 복사됐어요!');
-            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '본문만'; }, 1800);
-            markCopied('body');
-        });
-    }
-
-    function copyTitleAndBody() {
-        const body = document.getElementById('resultBox').value;
-        const combined = `${currentTitle}\n\n${body}`;
-        navigator.clipboard.writeText(combined).then(() => {
-            const btn = document.getElementById('btnCopyTitleBody');
             if (btn) {
-                btn.classList.add('copied'); btn.innerHTML = '📑 복사됨!';
-                setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📑 제목+본문'; }, 1800);
+                btn.classList.add('copied'); btn.innerHTML = '복사됨!';
+                setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📄 본문 복사'; }, 1800);
             }
-            showToast('📑 제목+본문을 함께 복사했어요.\n첫 줄이 제목, 나머지가 본문입니다. 각각 나눠서 붙여넣으세요.');
-            markCopied('all');
-        });
-    }
-
-    // 본문 복사 + 국민신문고 새 탭 열기 (붙여넣기 릴레이 단축)
-    function copyBodyAndOpen() {
-        const body = document.getElementById('resultBox').value;
-        const done = () => {
-            showToast('📄 본문을 복사했어요!\n국민신문고 "내용"란에 붙여넣으세요.\n제목은 이 페이지로 돌아와 "제목만 복사"로 넣으면 됩니다.');
+            showToast('📄 본문이 복사됐어요!\n국민신문고 "내용"란에 붙여넣으세요.');
             markCopied('body');
-            window.open(EPEOPLE_URL, '_blank', 'noopener');
-        };
-        navigator.clipboard.writeText(body).then(done).catch(done);
-    }
-
-    // 모바일 하단바: 본문 복사 후 <a> 링크 이동을 그대로 허용
-    function stickyCopyBodyThenGo() {
-        const body = document.getElementById('resultBox').value;
-        try { navigator.clipboard.writeText(body).catch(function(){}); } catch (e) {}
-        markCopied('body');
-        showToast('📄 본문 복사됨 · 국민신문고로 이동합니다');
-        return true;
+        });
     }
 
     function goNextAgency() {
@@ -1175,7 +1151,7 @@
     // window.name 은 같은 탭에서 다른 도메인으로 이동해도 유지됩니다.
     // 도우미가 window.name 에 민원을 담아 국민신문고로 이동시키고,
     // 이용자가 북마크바의 북마클릿을 눌러 로그인된 자기 브라우저에서 폼을 채웁니다.
-    const BOOKMARKLET = "javascript:(function(){try{var d=JSON.parse(window.name||'{}');if(!d||!d.__juam||!d.body){alert('넘겨받은 민원 내용이 없습니다.\\n도우미 페이지에서 \\\"이 민원 자동채우기로 넘기기\\\"를 먼저 눌러주세요.');return;}var vis=function(el){return el&&!el.disabled&&!el.readOnly&&el.offsetParent!==null;};var tas=[].slice.call(document.querySelectorAll('textarea')).filter(vis);tas.sort(function(a,b){return b.offsetWidth*b.offsetHeight-a.offsetWidth*a.offsetHeight;});var setV=function(el,v){el.focus();try{el.value=v;}catch(e){}el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));el.dispatchEvent(new KeyboardEvent('keyup',{bubbles:true}));};if(tas[0])setV(tas[0],d.body);var title=null,labs=document.querySelectorAll('label,th,span,strong,div');for(var i=0;i<labs.length;i++){var t=(labs[i].textContent||'').replace(/\\s/g,'');if(t&&t.length<12&&t.indexOf('제목')>-1){var sc=labs[i];for(var k=0;k<5&&sc;k++){var inp=sc.querySelector&&sc.querySelector('input[type=text],input:not([type]),input[type=search]');if(vis(inp)){title=inp;break;}sc=sc.parentElement;}if(title)break;}}if(!title){var ins=[].slice.call(document.querySelectorAll('input[type=text],input:not([type])')).filter(vis);title=ins.filter(function(x){return /titl|subj|제목/i.test(x.id+' '+x.name+' '+(x.placeholder||''));})[0]||ins[0];}if(title){title.focus();try{title.value=d.title||'';}catch(e){}title.dispatchEvent(new Event('input',{bubbles:true}));title.dispatchEvent(new Event('change',{bubbles:true}));}alert((title?'제목과 본문':'본문')+'을 채웠습니다.\\n\\n반드시 내용을 확인하시고 처리기관·공개여부 등 나머지 항목을 직접 선택한 뒤 제출하세요.\\n칸을 잘못 찾았다면 채워진 내용을 지우고 수동으로 붙여넣어 주세요.');}catch(e){alert('자동채우기 중 오류: '+e.message+'\\n복사·붙여넣기 방식을 이용해 주세요.');}})();";
+    const BOOKMARKLET = "javascript:(function(){try{var d=JSON.parse(window.name||'{}');if(!d||!d.__juam){alert('넘겨받은 민원 내용이 없습니다.\\n도우미 페이지에서 [이 민원 자동채우기로 넘기기]를 먼저 눌러주세요.');return;}var vis=function(el){return el&&!el.disabled&&!el.readOnly&&el.offsetParent!==null;};var fire=function(el){['input','change','keydown','keyup'].forEach(function(t){el.dispatchEvent(new Event(t,{bubbles:true}));});};var setV=function(el,v){el.focus();try{el.value=v;}catch(e){}fire(el);};var txtIn=function(x){var t=(x.type||'text').toLowerCase();return (t==='text'||t==='search'||t==='')&&vis(x);};var pick=function(kw,avoid){var ins=[].slice.call(document.querySelectorAll('input')).filter(function(x){return txtIn(x)&&x!==avoid;});var a=ins.filter(function(x){return kw.test((x.id||'')+' '+(x.name||'')+' '+(x.placeholder||'')+' '+(x.title||'')+' '+(x.getAttribute('aria-label')||''));});if(a[0])return a[0];var labs=[].slice.call(document.querySelectorAll('label[for]'));for(var i=0;i<labs.length;i++){if(kw.test((labs[i].textContent||'').replace(/\\s/g,''))){var t=document.getElementById(labs[i].getAttribute('for'));if(t&&t.tagName==='INPUT'&&txtIn(t)&&t!==avoid)return t;}}var ths=[].slice.call(document.querySelectorAll('th'));for(var j=0;j<ths.length;j++){if(kw.test((ths[j].textContent||'').replace(/\\s/g,''))){var tr=ths[j].closest&&ths[j].closest('tr');var inp=tr&&tr.querySelector('input[type=text],input[type=search],input:not([type])');if(inp&&txtIn(inp)&&inp!==avoid)return inp;}}return null;};var done=[];if(d.body){var tas=[].slice.call(document.querySelectorAll('textarea')).filter(vis).sort(function(a,b){return b.offsetWidth*b.offsetHeight-a.offsetWidth*a.offsetHeight;});var bt=tas[0];if(bt&&bt.offsetWidth*bt.offsetHeight>60000&&(bt.value.trim()===''||bt.value===d.body)){setV(bt,d.body);done.push('본문');}}var title=pick(/제목|titl|subj/i);if(title&&d.title){setV(title,d.title);done.push('제목');}var ag=pick(/처리기관|기관명|소관기관|접수기관/,title);if(ag&&d.agency){setV(ag,d.agency);done.push('기관명(입력만 됨-목록에서 직접 선택)');}alert((done.length?done.join(', ')+' 을(를) 채웠습니다.':'이 화면에서는 채울 칸을 찾지 못했습니다.')+'\\n\\n※ 처리기관은 검색창에 글자만 입력됩니다. 뜨는 목록에서 해당 기관을 직접 눌러 선택하세요.\\n※ 제목·본문 내용을 꼭 확인하고, 공개여부 등 나머지 항목을 정한 뒤 본인이 제출하세요.\\n※ 칸을 잘못 찾았으면 지우고 수동으로 붙여넣으세요.');}catch(e){alert('자동채우기 오류: '+e.message+'\\n복사·붙여넣기 방식을 이용해 주세요.');}})();";
 
     function initBookmarklet() {
         const a = document.getElementById('bookmarkletLink');
