@@ -98,8 +98,6 @@
         .next-agency-row { margin-bottom: 12px; }
         .btn-next-agency { width: 100%; padding: 13px; font-size: 14px; font-weight: 800; border: 2px dashed #0d9488; border-radius: 12px; background: #f0fdfa; color: #0f766e; cursor: pointer; }
         .btn-next-agency:hover { background: #ccfbf1; }
-        .btn-toss-combo { padding: 16px; font-size: 15px; background: #1e293b; color: white; }
-        .btn-toss-combo:hover { background: #0f172a; }
 
         .advanced-box { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
         .advanced-toggle { width: 100%; background: none; border: none; cursor: pointer; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-family: inherit; text-align: left; }
@@ -115,11 +113,12 @@
         .btn-handoff:hover { background: #e2e8f0; }
 
         .gate-locked { opacity: 0.45; filter: grayscale(35%); cursor: not-allowed; }
-        .title-action-row .gate-locked {
+        .action-primary-row .gate-locked, .action-secondary-row .gate-locked, .copy-hint .gate-locked {
             opacity: 1 !important; filter: none !important;
             background: #e2e8f0 !important; color: #94a3b8 !important;
             border-color: #cbd5e1 !important; box-shadow: none !important;
         }
+        .copy-hint .gate-locked { background: none !important; text-decoration: none; }
 
         .mode-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
         .mode-btn { position: relative; padding: 13px 8px; font-size: 14px; font-weight: bold; border: 2px solid #cbd5e1; border-radius: 8px; background: white; cursor: pointer; color: #64748b; transition: 0.2s; }
@@ -150,33 +149,41 @@
         .agency-progress-fill { background: linear-gradient(90deg, #14b8a6, #0d9488); height: 100%; border-radius: 999px; transition: width 0.3s; }
         .agency-progress-hint { font-size: 11.5px; color: #0f766e; margin-top: 8px; line-height: 1.5; }
 
-        .meta-info { font-size: 13px; font-weight: bold; color: #0f172a; margin-bottom: 8px; background: #f1f5f9; padding: 10px 14px; border-radius: 6px; }
+        .meta-info { font-size: 12.5px; font-weight: bold; color: #0f172a; margin-bottom: 6px; background: #f1f5f9; padding: 8px 12px; border-radius: 6px; }
         .title-row { margin-bottom: 0; }
-        .title-box { background: #eef2ff; border-left: 4px solid var(--primary-color); padding: 10px 14px; font-weight: bold; font-size: 14px; color: #3730a3; border-radius: 0 6px 6px 0; margin-bottom: 10px; }
-        .title-action-row { margin-bottom: 10px; }
-        .current-agency-chip { display: inline-flex; align-items: center; gap: 6px; background: #e8f3ff; color: #1b64da; font-size: 13px; font-weight: 700; padding: 7px 14px; border-radius: 999px; margin-bottom: 10px; }
-        .current-agency-chip strong { font-weight: 800; }
-        .copy-hint { font-size: 13px; font-weight: 500; color: #8b95a1; margin-bottom: 12px; }
-        .copy-secondary-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-        .btn-toss { border: none; border-radius: 14px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; box-sizing: border-box; transition: transform 0.08s ease, background-color 0.15s ease; text-decoration: none; }
+        .title-box { background: #eef2ff; border-left: 4px solid var(--primary-color); padding: 9px 12px; font-weight: bold; font-size: 13.5px; color: #3730a3; border-radius: 0 6px 6px 0; margin-bottom: 8px; }
+        .copy-hint { font-size: 12px; font-weight: 500; color: #8b95a1; margin-bottom: 8px; line-height: 1.5; }
+        .copy-hint a { color: var(--accent-color); font-weight: 700; white-space: nowrap; }
+        .body-label { font-size: 12.5px; font-weight: 800; color: #475569; margin: 12px 0 6px; }
+        .mobile-extra-actions { display: none; }
+        .desktop-only { display: block; }
+        .action-primary-row { display: grid; grid-template-columns: 1.9fr 1fr; gap: 8px; margin-bottom: 8px; }
+        .action-secondary-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 8px; }
+        .action-secondary-row .btn-toss { flex: 1 1 auto; min-width: 84px; padding: 8px 6px; font-size: 12px; border-radius: 10px; }
+        @media (min-width: 601px) {
+            .action-primary-row {
+                position: sticky; top: var(--agency-sticky-offset, 90px); z-index: 95;
+                background: white; padding: 8px 0; box-shadow: 0 8px 14px -10px rgba(0,0,0,0.25);
+            }
+        }
+        .btn-toss { border: none; border-radius: 12px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; box-sizing: border-box; transition: transform 0.08s ease, background-color 0.15s ease; text-decoration: none; }
         .btn-toss:active { transform: scale(0.97); }
         .btn-toss-full { width: 100%; margin-bottom: 8px; }
-        .btn-toss-gray { padding: 14px 4px; font-size: 14px; background: #f2f4f6; color: #333d4b; }
+        .btn-toss-gray { padding: 12px 6px; font-size: 13.5px; background: #f2f4f6; color: #333d4b; }
         .btn-toss-gray:hover { background: #e5e8eb; }
         .btn-toss-gray.copied { background: #e6f9f1; color: #05966f; }
-        .btn-toss-blue { padding: 14px 4px; font-size: 14px; background: #3182f6; color: white; }
+        .btn-toss-blue { padding: 12px 6px; font-size: 13.5px; background: #3182f6; color: white; }
         .btn-toss-blue:hover { background: #1b64da; }
         .btn-toss-blue.copied { background: #05966f; }
-        .btn-toss-outline { padding: 13px; font-size: 14px; background: white; color: #4e5968; border: 1.5px solid #e5e8eb !important; }
+        .btn-toss-outline { padding: 12px; font-size: 13.5px; background: white; color: #4e5968; border: 1.5px solid #e5e8eb !important; }
         .btn-toss-outline:hover { background: #f9fafb; }
         .btn-toss-outline.copied { background: #eef2ff; color: #4338ca; border-color: #c7d2fe !important; }
-        .btn-toss-cta { padding: 16px; font-size: 15.5px; background: var(--accent-color); color: white; }
+        .btn-toss-cta { padding: 14px; font-size: 15px; background: var(--accent-color); color: white; }
         .btn-toss-cta:hover { background: var(--accent-hover); }
-        @media (min-width: 601px) {
-            .title-action-row { position: sticky; top: var(--agency-sticky-offset, 90px); z-index: 95; background: white; padding: 10px 0 12px; box-shadow: 0 6px 14px -8px rgba(0,0,0,0.15); }
-        }
+        .btn-toss-combo { padding: 13px 8px; font-size: 14px; background: #1e293b; color: white; }
+        .btn-toss-combo:hover { background: #0f172a; }
 
-        textarea#resultBox { width: 100%; height: 420px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; box-sizing: border-box; font-size: 14px; resize: none; background-color: #fafafa; line-height: 1.6; color: #334155; }
+        textarea#resultBox { width: 100%; height: 400px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; box-sizing: border-box; font-size: 14px; resize: vertical; background-color: #fafafa; line-height: 1.6; color: #334155; }
 
         .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1e293b; color: white; padding: 14px 22px; border-radius: 12px; font-size: 14px; font-weight: bold; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 9999; text-align: center; max-width: 320px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); white-space: pre-line; }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -234,8 +241,11 @@
             .top-index-tabs-wrap { margin: 0 -16px 18px; padding-left: 16px; padding-right: 16px; top: 0; }
             h2 { font-size: 16.5px; line-height: 1.4; }
             p.desc { font-size: 13px; margin-bottom: 18px; }
-            .title-action-row { display: none !important; }
+            .desktop-only { display: none !important; }
             .title-box { font-size: 13px; padding: 10px 12px; }
+            .body-label { font-size: 12px; margin: 8px 0 6px; }
+            .mobile-extra-actions { display: flex; gap: 6px; margin-top: 10px; }
+            .mobile-extra-actions .btn-toss { flex: 1; padding: 10px 4px; font-size: 12px; border-radius: 10px; }
             .usage-guide-swipe-handle { display: block; width: 38px; height: 4px; border-radius: 999px; background: #fdba74; margin: 8px auto -2px; }
             .usage-guide-box { touch-action: pan-y; }
             .usage-guide-toggle { padding: 11px 14px 13px; }
@@ -287,9 +297,9 @@
             }
             .sticky-agency-label strong { color: #1e40af; }
             .sticky-next-agency { width: 100%; padding: 10px; font-size: 12.5px; font-weight: 800; border: none; border-radius: 10px; background: #0d9488; color: #fff; cursor: pointer; }
-            .sticky-copy-bar-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+            .sticky-copy-bar-buttons { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 6px; }
             .sticky-copy-bar-buttons button, .sticky-copy-bar-buttons a {
-                padding: 10px 2px; font-size: 9.5px; font-weight: 800; border-radius: 10px;
+                padding: 11px 3px; font-size: 10.5px; font-weight: 800; border-radius: 10px;
                 cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center;
                 justify-content: center; flex-direction: column; gap: 2px; line-height: 1.3; white-space: nowrap;
             }
@@ -304,7 +314,7 @@
                 background: #e2e8f0 !important; color: #94a3b8 !important;
                 border: 1.5px solid #cbd5e1 !important; box-shadow: none !important;
             }
-            #panelAction { padding-bottom: 110px; }
+            #panelAction { padding-bottom: 116px; }
         }
     </style>
 </head>
@@ -397,44 +407,47 @@
         </div>
     </div>
 
-    <div class="title-action-row">
-        <div class="current-agency-chip">지금 넣을 기관 · <strong id="currentAgencyNameChip">한국토지주택공사</strong></div>
-        <div class="copy-hint">① 본문 복사 → 국민신문고 내용란에 붙여넣기 · ② 돌아와서 제목 복사 → 제목란에 붙여넣기</div>
-        <button id="btnCopyBodyOpen" class="btn-toss btn-toss-combo btn-toss-full" onclick="if(checkPersonalized()) copyBodyAndOpen();">📄 본문 복사하고 국민신문고 열기 →</button>
-        <button id="btnCopyTitle" class="btn-toss btn-toss-gray btn-toss-full" onclick="if(checkPersonalized()) copyTitle();">📋 제목만 복사 (제목란용)</button>
-        <div class="copy-secondary-row">
-            <button id="btnCopyBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyBody();">본문만 복사</button>
-            <button id="btnCopyAgencyName" class="btn-toss btn-toss-blue" onclick="copyCurrentAgencyName();">기관명 복사</button>
-            <button id="btnCopyTitleBody" class="btn-toss btn-toss-outline" onclick="if(checkPersonalized()) copyTitleAndBody();">📑 제목+본문</button>
-        </div>
-        <button class="btn-toss btn-toss-outline btn-toss-full" onclick="generate(true)">🔄 문장 다시 섞기</button>
-        <a id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="btn-toss btn-toss-outline btn-toss-full" onclick="return checkPersonalized();">국민신문고만 열기 →</a>
-        <div class="next-agency-row" id="nextAgencyRow" style="display:none;">
-            <button type="button" class="btn-next-agency" id="btnNextAgency" onclick="goNextAgency();">✅ 제출했어요 · 다음 기관으로 →</button>
-        </div>
-    </div>
-
     <div class="meta-info" id="metaInfoLine">📍 접수 기관: 한국토지주택공사(LH) 공공택지사업처·의왕과천사업본부</div>
 
     <div class="title-row">
         <div id="titleDisplay" class="title-box">민원 제목: 로딩 중...</div>
     </div>
 
+    <div class="copy-hint desktop-only">① 본문 복사 → 국민신문고 <strong>내용란</strong> · ② 돌아와 제목 복사 → <strong>제목란</strong> · <a id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" onclick="return checkPersonalized();">국민신문고 열기 ↗</a></div>
+    <div class="action-primary-row desktop-only">
+        <button id="btnCopyBodyOpen" class="btn-toss btn-toss-combo" onclick="if(checkPersonalized()) copyBodyAndOpen();">📄 본문 복사 → 국민신문고 열기</button>
+        <button id="btnCopyTitle" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyTitle();">📋 제목 복사</button>
+    </div>
+
+    <div class="body-label">📄 민원 본문 — 제출 전 꼭 읽어보세요</div>
     <textarea id="resultBox" readonly></textarea>
+
+    <div class="action-secondary-row desktop-only">
+        <button id="btnCopyBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyBody();">본문만</button>
+        <button id="btnCopyTitleBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyTitleAndBody();">📑 제목+본문</button>
+        <button id="btnCopyAgencyName" class="btn-toss btn-toss-gray" onclick="copyCurrentAgencyName();">🏢 기관명</button>
+        <button class="btn-toss btn-toss-gray" onclick="generate(true)">🔄 다시 섞기</button>
+    </div>
+    <div class="next-agency-row desktop-only" id="nextAgencyRow" style="display:none;">
+        <button type="button" class="btn-next-agency" id="btnNextAgency" onclick="goNextAgency();">✅ 제출했어요 · 다음 기관으로 →</button>
+    </div>
+
+    <div class="mobile-extra-actions">
+        <button id="stickyBtnBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyBody();">본문만 복사</button>
+        <button id="stickyBtnTitleBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyTitleAndBody();">📑 제목+본문</button>
+        <button id="stickyBtnAgency" class="btn-toss btn-toss-gray" onclick="copyCurrentAgencyName();">🏢 기관명</button>
+    </div>
 
     </div>
 
     <!-- 모바일 하단 고정 복사 바 -->
     <div class="sticky-copy-bar" id="stickyCopyBar">
-        <div class="sticky-agency-label">📍 지금 넣을 기관: <strong id="stickyAgencyName">한국토지주택공사</strong> · <span style="color:#0f766e;">본문 → 제목 순서</span></div>
+        <div class="sticky-agency-label">📍 <strong id="stickyAgencyName">한국토지주택공사</strong> · <span style="color:#0f766e;">본문 먼저, 그다음 제목</span></div>
         <button type="button" class="sticky-next-agency" id="stickyNextAgency" style="display:none;" onclick="goNextAgency();">✅ 제출했어요 · 다음 기관으로 →</button>
         <div class="sticky-copy-bar-buttons">
             <a id="stickyBtnTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople" onclick="return checkPersonalized() &amp;&amp; stickyCopyBodyThenGo();">📄→🏛️<br>본문복사+이동</a>
             <button id="stickyBtnTitle" class="sticky-bar-title" onclick="if(checkPersonalized()) copyTitle();">📋<br>제목복사</button>
-            <button id="stickyBtnBody" class="sticky-bar-body" onclick="if(checkPersonalized()) copyBody();">📄<br>본문복사</button>
-            <button id="stickyBtnAgency" class="sticky-bar-agency" onclick="copyCurrentAgencyName();">🏢<br>기관명복사</button>
-            <button id="stickyBtnTitleBody" class="sticky-bar-combo" onclick="if(checkPersonalized()) copyTitleAndBody();">📑<br>한번에복사</button>
-            <button class="sticky-bar-refresh" onclick="generate(true)">🔄<br>내용섞기</button>
+            <button class="sticky-bar-refresh" onclick="generate(true)">🔄<br>다시섞기</button>
         </div>
     </div>
 
@@ -919,6 +932,7 @@
             renderAgencyDoneUI();
             showToast(`✅ ${AGENCY_FULL_NAMES[m] || ''} 민원 제출완료로 자동 체크했어요!\n실수라면 탭의 체크 표시를 눌러 해제할 수 있어요.`);
         }
+        maybeCollapsePersonalize();
     }
 
     function copyCurrentAgencyName() {
@@ -929,7 +943,7 @@
             if (btn) {
                 btn.classList.add('copied');
                 btn.innerHTML = '복사됨!';
-                setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '기관명 복사'; }, 1800);
+                setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '🏢 기관명'; }, 1800);
             }
             showToast(`📋 "${name}" 기관명이 복사됐어요!`);
         });
@@ -949,14 +963,14 @@
         const stickyAgencyName = document.getElementById('stickyAgencyName');
 
         meta.innerText = cfg.meta;
-        goBtn.innerText = cfg.goLabel;
-        goBtn.href = EPEOPLE_URL;
+        if (goBtn) goBtn.href = EPEOPLE_URL;
         if (stickyBtn) stickyBtn.href = EPEOPLE_URL;
         const agencyName = AGENCY_FULL_NAMES[mode] || '';
         if (agencyNameChip) agencyNameChip.textContent = agencyName;
         if (stickyAgencyName) stickyAgencyName.textContent = agencyName;
 
         generate(true);
+        maybeCollapsePersonalize();
     }
 
     function generate(reroll) {
@@ -991,6 +1005,17 @@
     }
     function isPersonalized() { return personalizeStrength() !== 'none'; }
     function isStrongEnough() { return personalizeStrength() === 'ok'; }
+
+    // 사연을 충분히 적었으면 개인화 상자를 딱 한 번 접어 민원 본문이 잘 보이게 함 (헤더를 눌러 다시 펼칠 수 있음)
+    let _personalizeCollapsedOnce = false;
+    function maybeCollapsePersonalize() {
+        if (_personalizeCollapsedOnce) return;
+        if (!isStrongEnough()) return;
+        const box = document.getElementById('personalizeBox');
+        if (!box || box.classList.contains('collapsed')) return;
+        _personalizeCollapsedOnce = true;
+        togglePersonalizeBox(true);
+    }
 
     function togglePersonalizeBox(forceCollapsed) {
         const box = document.getElementById('personalizeBox');
@@ -1045,20 +1070,20 @@
     function resetCopyButtons() {
         const t = document.getElementById('btnCopyTitle');
         const b = document.getElementById('btnCopyBody');
-        if (t) { t.classList.remove('copied'); t.innerHTML = '제목만 복사'; }
-        if (b) { b.classList.remove('copied'); b.innerHTML = '본문만 복사'; }
+        if (t) { t.classList.remove('copied'); t.innerHTML = '📋 제목 복사'; }
+        if (b) { b.classList.remove('copied'); b.innerHTML = '본문만'; }
         const agencyBtn = document.getElementById('btnCopyAgencyName');
-        if (agencyBtn) { agencyBtn.classList.remove('copied'); agencyBtn.innerHTML = '기관명 복사'; }
+        if (agencyBtn) { agencyBtn.classList.remove('copied'); agencyBtn.innerHTML = '🏢 기관명'; }
         const allBtn = document.getElementById('btnCopyTitleBody');
-        if (allBtn) { allBtn.classList.remove('copied'); allBtn.innerHTML = '📑 제목+본문 한번에 복사'; }
+        if (allBtn) { allBtn.classList.remove('copied'); allBtn.innerHTML = '📑 제목+본문'; }
     }
 
     function copyTitle() {
         navigator.clipboard.writeText(currentTitle).then(() => {
             const btn = document.getElementById('btnCopyTitle');
             btn.classList.add('copied'); btn.innerHTML = '복사됨!';
-            showToast('📋 제목이 복사됐어요!');
-            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '제목만 복사'; }, 1800);
+            showToast('📋 제목이 복사됐어요!\n국민신문고 "제목"란에 붙여넣으세요.');
+            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📋 제목 복사'; }, 1800);
             markCopied('title');
         });
     }
@@ -1069,7 +1094,7 @@
             const btn = document.getElementById('btnCopyBody');
             btn.classList.add('copied'); btn.innerHTML = '복사됨!';
             showToast('📄 본문이 복사됐어요!');
-            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '본문만 복사'; }, 1800);
+            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '본문만'; }, 1800);
             markCopied('body');
         });
     }
@@ -1385,6 +1410,17 @@
             }
         });
     });
+
+    // 개인화 상자에서 포커스가 벗어나면(다른 곳 클릭 등) 충분히 적었을 때 한 번만 접어 본문이 잘 보이게 함
+    (function () {
+        const box = document.getElementById('personalizeBox');
+        if (!box) return;
+        box.addEventListener('focusout', () => {
+            setTimeout(() => {
+                if (!box.contains(document.activeElement)) maybeCollapsePersonalize();
+            }, 90);
+        });
+    })();
 </script>
 </body>
 </html>
