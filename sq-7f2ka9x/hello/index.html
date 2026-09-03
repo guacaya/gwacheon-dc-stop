@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>과천 주암 데이터센터 대응 민원·의견서 도우미</title>
+    <meta name="description" content="과천 주암 공공주택지구 데이터센터 건립에 반대하는 민원·의견서를 LH·국토교통부·과천시·한국전력·소방청·한국부동산원 6개 기관별로 준비하는 도우미. 국민신문고에 본인이 직접 로그인해 제출합니다.">
+    <link rel="canonical" href="https://guacaya.github.io/gwacheon-dc-stop/sq-7f2ka9x/">
+
+    <!-- 카카오톡·문자·SNS 공유 시 미리보기 카드 -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://guacaya.github.io/gwacheon-dc-stop/sq-7f2ka9x/">
+    <meta property="og:title" content="과천 주암 데이터센터 대응 민원·의견서 도우미">
+    <meta property="og:description" content="6개 기관 민원을 한 페이지에서 준비 → 국민신문고에 본인이 직접 제출. 나만의 사연을 넣으면 매번 다른 문장으로 생성됩니다.">
+    <meta property="og:image" content="https://guacaya.github.io/gwacheon-dc-stop/sq-7f2ka9x/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="ko_KR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="과천 주암 데이터센터 대응 민원·의견서 도우미">
+    <meta name="twitter:description" content="6개 기관 민원을 한 페이지에서 준비 → 국민신문고에 본인이 직접 제출.">
+    <meta name="twitter:image" content="https://guacaya.github.io/gwacheon-dc-stop/sq-7f2ka9x/og-image.png">
+
+    <meta name="theme-color" content="#0d9488">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="주암 민원·의견서">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <link rel="apple-touch-icon" href="icon-180.png">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <style>
+        :root {
+            --primary-color: #3b5bdb;
+            --primary-hover: #2f4ac7;
+            --accent-color: #0d9488;
+            --accent-hover: #0f766e;
+            --bg-color: #f8fafc;
+            --slate: #475569;
+            --slate-hover: #334155;
+            --lh-color: #7c3aed;
+            --lh-hover: #6d28d9;
+            --moland-color: #be123c;
+            --moland-hover: #9f1239;
+            --gwacheon-color: #ca8a04;
+            --gwacheon-hover: #a16207;
+            --kepco-color: #0369a1;
+            --kepco-hover: #075985;
+            --fire-color: #ea580c;
+            --fire-hover: #c2410c;
+            --sms-sticky-offset: 90px;
+        }
+        body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; padding: 15px; line-height: 1.6; background-color: var(--bg-color); color: #334155; margin: 0; }
+        .container { max-width: 750px; margin: 20px auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #1e293b; margin-top: 0; margin-bottom: 5px; font-size: 20px; }
+        p.desc { text-align: center; font-size: 14px; color: #64748b; margin-bottom: 22px; word-break: keep-all; }
+
+        .usage-guide-box { background: linear-gradient(135deg, #fff7ed, #fffbeb); border: 2px solid #fdba74; border-radius: 10px; margin-bottom: 18px; overflow: hidden; }
+        .usage-guide-toggle { width: 100%; background: none; border: none; cursor: pointer; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-family: inherit; text-align: left; -webkit-tap-highlight-color: transparent; }
+        .usage-guide-toggle-left { font-size: 15px; font-weight: 800; color: #c2410c; line-height: 1.4; }
+        .usage-guide-arrow { font-size: 12px; color: #c2410c; flex-shrink: 0; }
+        .usage-guide-swipe-handle { display: none; }
+        .usage-guide-content { max-height: 2400px; opacity: 1; overflow: hidden; padding: 0 18px 16px; transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.3s ease; }
+        .usage-guide-box.collapsed .usage-guide-content { max-height: 0; opacity: 0; padding: 0 18px; }
+        .usage-guide-steps { margin: 0 0 10px; padding-left: 20px; font-size: 13.5px; color: #7c2d12; line-height: 1.7; }
+        .usage-guide-steps li { margin-bottom: 4px; }
+        .usage-guide-note { font-size: 12px; font-weight: 700; color: #9a3412; background: #fff1e6; border-radius: 6px; padding: 8px 10px; line-height: 1.6; }
+        .highlight-mark { background: #fecaca; color: #b91c1c; padding: 1px 5px; border-radius: 4px; }
+        .usage-guide-screenshot-wrap { margin: 4px 0 10px; text-align: center; }
+        .usage-guide-screenshot { max-width: 100%; height: auto; border: 1px solid #fdba74; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+        .personalize-box { background: #fdf4ff; border: 1px solid #e9d5ff; border-radius: 10px; padding: 16px 18px; margin-bottom: 20px; }
+        .personalize-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer; }
+        .personalize-title { font-size: 14.5px; font-weight: 800; color: #7e22ce; margin-bottom: 0; }
+        .personalize-arrow { font-size: 12px; color: #a855f7; flex-shrink: 0; user-select: none; padding: 2px 4px; }
+        .personalize-required-note { font-size: 12px; font-weight: 700; margin: 8px 0 0; color: #dc2626; cursor: pointer; }
+        .personalize-box.collapsed .personalize-required-note { margin-bottom: 0; }
+        .personalize-body { max-height: 900px; opacity: 1; overflow: hidden; margin-top: 12px; transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.3s ease; }
+        .personalize-box.collapsed .personalize-body { max-height: 0; opacity: 0; margin-top: 0; }
+        .personalize-sub { font-size: 12px; color: #6b21a8; margin-bottom: 12px; }
+        .keyword-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+        .keyword-chip { padding: 9px 13px; font-size: 13px; font-weight: 600; border: 2px solid #d8b4fe; border-radius: 20px; background: white; color: #7e22ce; cursor: pointer; transition: 0.15s; }
+        .keyword-chip:hover { background: #faf5ff; }
+        .keyword-chip.active { background: #9333ea; border-color: #9333ea; color: white; }
+        .freeform-label { font-size: 13px; font-weight: 700; color: #6b21a8; margin-bottom: 6px; display: block; }
+        textarea.freeform-input { width: 100%; height: 70px; border: 1px solid #d8b4fe; border-radius: 8px; padding: 10px 12px; box-sizing: border-box; font-size: 13.5px; resize: vertical; background: white; font-family: inherit; color: #334155; }
+        .personalize-box.flash-required { animation: personalizeFlash 1.2s ease; }
+        @keyframes personalizeFlash { 0%, 100% { box-shadow: none; } 30% { box-shadow: 0 0 0 4px rgba(220,38,38,0.35); } 60% { box-shadow: 0 0 0 2px rgba(220,38,38,0.2); } }
+        .guided-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+        .guided-field { display: flex; flex-direction: column; gap: 4px; }
+        .guided-field label { font-size: 12.5px; font-weight: 700; color: #6b21a8; }
+        .guided-field input { width: 100%; box-sizing: border-box; border: 1px solid #d8b4fe; border-radius: 8px; padding: 9px 11px; font-size: 13.5px; background: white; font-family: inherit; color: #334155; }
+        .guided-field input:focus, textarea.freeform-input:focus { outline: 2px solid #a855f7; outline-offset: 1px; border-color: #a855f7; }
+        .personalize-strength { font-size: 12px; font-weight: 700; border-radius: 8px; padding: 9px 11px; margin: 4px 0 12px; line-height: 1.55; display: none; }
+        .personalize-strength.weak { display: block; background: #fff7ed; border: 1px solid #fdba74; color: #9a3412; }
+        .personalize-strength.ok { display: block; background: #ecfdf5; border: 1px solid #6ee7b7; color: #047857; }
+        .guided-preview { font-size: 12px; color: #6b21a8; background: #faf5ff; border: 1px dashed #d8b4fe; border-radius: 8px; padding: 9px 11px; margin-bottom: 4px; line-height: 1.6; white-space: pre-wrap; }
+        .guided-preview:empty { display: none; }
+
+        .next-agency-row { margin-bottom: 12px; }
+        .btn-next-agency { width: 100%; padding: 13px; font-size: 14px; font-weight: 800; border: 2px dashed #0d9488; border-radius: 12px; background: #f0fdfa; color: #0f766e; cursor: pointer; }
+        .btn-next-agency:hover { background: #ccfbf1; }
+        .btn-toss-combo { padding: 16px; font-size: 15px; background: #1e293b; color: white; }
+        .btn-toss-combo:hover { background: #0f172a; }
+
+        .advanced-box { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+        .advanced-toggle { width: 100%; background: none; border: none; cursor: pointer; padding: 13px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-family: inherit; text-align: left; }
+        .advanced-toggle-left { font-size: 13.5px; font-weight: 800; color: #334155; }
+        .advanced-arrow { font-size: 12px; color: #64748b; flex-shrink: 0; }
+        .advanced-content { max-height: 1600px; opacity: 1; overflow: hidden; padding: 0 16px 16px; transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.3s ease; }
+        .advanced-box.collapsed .advanced-content { max-height: 0; opacity: 0; padding: 0 16px; }
+        .advanced-content p { font-size: 12.5px; color: #475569; line-height: 1.7; margin: 0 0 10px; }
+        .advanced-steps { margin: 0 0 10px; padding-left: 20px; font-size: 12.5px; color: #475569; line-height: 1.7; }
+        .bookmarklet-link { display: inline-block; padding: 10px 16px; background: #334155; color: #fff; border-radius: 10px; font-weight: 800; font-size: 13px; text-decoration: none; margin: 4px 0 8px; }
+        .advanced-warn { font-size: 11.5px; font-weight: 700; color: #9a3412; background: #fff7ed; border: 1px solid #fdba74; border-radius: 6px; padding: 8px 10px; line-height: 1.6; }
+        .btn-handoff { width: 100%; padding: 13px; font-size: 13.5px; font-weight: 800; border: 2px solid #334155; border-radius: 12px; background: white; color: #334155; cursor: pointer; margin-top: 8px; }
+        .btn-handoff:hover { background: #e2e8f0; }
+
+        .gate-locked { opacity: 0.45; filter: grayscale(35%); cursor: not-allowed; }
+        .title-action-row .gate-locked {
+            opacity: 1 !important; filter: none !important;
+            background: #e2e8f0 !important; color: #94a3b8 !important;
+            border-color: #cbd5e1 !important; box-shadow: none !important;
+        }
+
+        .mode-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
+        .mode-btn { position: relative; padding: 13px 8px; font-size: 14px; font-weight: bold; border: 2px solid #cbd5e1; border-radius: 8px; background: white; cursor: pointer; color: #64748b; transition: 0.2s; }
+        .mode-btn.active.mode-budongsan { border-color: var(--primary-color); background-color: var(--primary-color); color: white; }
+        .mode-btn.active.mode-lh { border-color: var(--lh-color); background-color: var(--lh-color); color: white; }
+        .mode-btn.active.mode-moland { border-color: var(--moland-color); background-color: var(--moland-color); color: white; }
+        .mode-btn.active.mode-gwacheon { border-color: var(--gwacheon-color); background-color: var(--gwacheon-color); color: white; }
+        .mode-btn.active.mode-kepco { border-color: var(--kepco-color); background-color: var(--kepco-color); color: white; }
+        .mode-btn.active.mode-fire { border-color: var(--fire-color); background-color: var(--fire-color); color: white; }
+        .mode-complete-check {
+            position: absolute; top: -10px; right: -8px; width: 25px; height: 25px; border-radius: 50%;
+            background: white; border: 2px solid #cbd5e1; display: flex; align-items: center; justify-content: center;
+            font-size: 13px; line-height: 1; cursor: pointer; z-index: 3; color: #94a3b8;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: 0.15s;
+        }
+        .mode-complete-check:hover { border-color: #16a34a; color: #16a34a; }
+        .mode-complete-check.done { background: #16a34a; border-color: #16a34a; color: white; }
+        .mode-btn.agency-done { opacity: 0.55; filter: grayscale(55%); }
+        .agency-progress-box {
+            background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 10px; padding: 12px 16px; margin-bottom: 18px;
+            position: sticky; top: var(--sms-sticky-offset, 0px); z-index: 97;
+            box-shadow: 0 4px 10px -4px rgba(15,118,110,0.25);
+        }
+        .agency-progress-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 8px; }
+        .agency-progress-label { font-size: 13px; font-weight: 800; color: #0f766e; }
+        .agency-progress-count { font-size: 13px; font-weight: 800; color: #0f766e; white-space: nowrap; }
+        .agency-progress-track { background: #ccfbf1; border-radius: 999px; height: 10px; overflow: hidden; }
+        .agency-progress-fill { background: linear-gradient(90deg, #14b8a6, #0d9488); height: 100%; border-radius: 999px; transition: width 0.3s; }
+        .agency-progress-hint { font-size: 11.5px; color: #0f766e; margin-top: 8px; line-height: 1.5; }
+
+        .meta-info { font-size: 13px; font-weight: bold; color: #0f172a; margin-bottom: 8px; background: #f1f5f9; padding: 10px 14px; border-radius: 6px; }
+        .title-row { margin-bottom: 0; }
+        .title-box { background: #eef2ff; border-left: 4px solid var(--primary-color); padding: 10px 14px; font-weight: bold; font-size: 14px; color: #3730a3; border-radius: 0 6px 6px 0; margin-bottom: 10px; }
+        .title-action-row { margin-bottom: 10px; }
+        .current-agency-chip { display: inline-flex; align-items: center; gap: 6px; background: #e8f3ff; color: #1b64da; font-size: 13px; font-weight: 700; padding: 7px 14px; border-radius: 999px; margin-bottom: 10px; }
+        .current-agency-chip strong { font-weight: 800; }
+        .copy-hint { font-size: 13px; font-weight: 500; color: #8b95a1; margin-bottom: 12px; }
+        .copy-secondary-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .btn-toss { border: none; border-radius: 14px; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; box-sizing: border-box; transition: transform 0.08s ease, background-color 0.15s ease; text-decoration: none; }
+        .btn-toss:active { transform: scale(0.97); }
+        .btn-toss-full { width: 100%; margin-bottom: 8px; }
+        .btn-toss-gray { padding: 14px 4px; font-size: 14px; background: #f2f4f6; color: #333d4b; }
+        .btn-toss-gray:hover { background: #e5e8eb; }
+        .btn-toss-gray.copied { background: #e6f9f1; color: #05966f; }
+        .btn-toss-blue { padding: 14px 4px; font-size: 14px; background: #3182f6; color: white; }
+        .btn-toss-blue:hover { background: #1b64da; }
+        .btn-toss-blue.copied { background: #05966f; }
+        .btn-toss-outline { padding: 13px; font-size: 14px; background: white; color: #4e5968; border: 1.5px solid #e5e8eb !important; }
+        .btn-toss-outline:hover { background: #f9fafb; }
+        .btn-toss-outline.copied { background: #eef2ff; color: #4338ca; border-color: #c7d2fe !important; }
+        .btn-toss-cta { padding: 16px; font-size: 15.5px; background: var(--accent-color); color: white; }
+        .btn-toss-cta:hover { background: var(--accent-hover); }
+        @media (min-width: 601px) {
+            .title-action-row { position: sticky; top: var(--agency-sticky-offset, 90px); z-index: 95; background: white; padding: 10px 0 12px; box-shadow: 0 6px 14px -8px rgba(0,0,0,0.15); }
+        }
+
+        textarea#resultBox { width: 100%; height: 420px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 15px; box-sizing: border-box; font-size: 14px; resize: none; background-color: #fafafa; line-height: 1.6; color: #334155; }
+
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1e293b; color: white; padding: 14px 22px; border-radius: 12px; font-size: 14px; font-weight: bold; opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 9999; text-align: center; max-width: 320px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); white-space: pre-line; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        .top-index-tabs-wrap { position: sticky; top: 0; z-index: 100; background: white; padding: 10px 0 12px; margin: 0 -25px 18px; padding-left: 25px; padding-right: 25px; box-shadow: 0 4px 10px -4px rgba(0,0,0,0.08); }
+        .top-index-tabs { display: grid; grid-template-columns: 1.3fr 1fr; gap: 10px; margin-bottom: 0; }
+        .top-tab-btn { padding: 14px; font-size: 14.5px; font-weight: 700; border: 2px solid #e2e8f0; border-radius: 10px; background: white; cursor: pointer; color: #64748b; transition: 0.2s; }
+        .top-tab-btn.active { border-color: var(--primary-color); background: var(--primary-color); color: white; box-shadow: 0 4px 12px rgba(59,91,219,0.25); }
+        #topTabAction { background: linear-gradient(135deg, #0d9488, #0f766e); color: white; border: 2px solid #0f766e; font-size: 14.5px; }
+        #topTabAction.active { background: linear-gradient(135deg, #0d9488, #0f766e); border-color: #0f766e; box-shadow: 0 4px 12px rgba(15,118,110,0.25); }
+        .top-panel { display: none; }
+        .top-panel.active { display: block; }
+
+        button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        .sticky-copy-bar { display: none; }
+
+        .sms-status-box { background: #ecfeff; border: 1px solid #a5f3fc; border-radius: 10px; padding: 14px 16px; margin-bottom: 18px; position: sticky; top: var(--sms-sticky-offset, 90px); z-index: 90; box-shadow: 0 4px 10px -4px rgba(6,182,212,0.25); }
+        .sms-status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+        .sms-status-label { font-size: 13.5px; font-weight: 800; color: #0e7490; }
+        .sms-status-count { font-size: 14px; font-weight: 800; color: #0e7490; }
+        .sms-progress-track { background: #cffafe; border-radius: 999px; height: 10px; overflow: hidden; }
+        .sms-progress-fill { background: linear-gradient(90deg, #06b6d4, #0891b2); height: 100%; border-radius: 999px; transition: width 0.3s; }
+        .sms-reset-btn { margin-top: 10px; background: none; border: none; font-size: 11.5px; color: #0e7490; text-decoration: underline; cursor: pointer; padding: 0; }
+
+        .sms-guide-sub { font-size: 12px; color: #6b21a8; margin-bottom: 12px; }
+        .sms-intro-sub { padding: 0 2px; }
+        .sms-party-block { border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; border: 2px solid; }
+        .sms-party-block.party-ppp { background: #fef2f2; border-color: #fecaca; }
+        .sms-party-block.party-dp { background: #eff6ff; border-color: #bfdbfe; }
+        .sms-party-block.party-etc { background: #f8fafc; border-color: #cbd5e1; }
+        .sms-party-header { font-size: 15.5px; font-weight: 900; margin-bottom: 12px; }
+        .sms-party-block.party-ppp .sms-party-header { color: #b91c1c; }
+        .sms-party-block.party-dp .sms-party-header { color: #1d4ed8; }
+        .sms-party-block.party-etc .sms-party-header { color: #334155; }
+        .sms-party-sub { font-size: 12px; font-weight: 700; margin: 14px 0 8px; }
+        .sms-party-block.party-ppp .sms-party-sub { color: #b91c1c; }
+        .sms-party-block.party-dp .sms-party-sub { color: #1d4ed8; }
+        .sms-party-block.party-etc .sms-party-sub { color: #334155; }
+        .sms-member-role { font-size: 11px; color: #94a3b8; margin-left: 4px; }
+        .sms-member-list { display: flex; flex-direction: column; gap: 8px; }
+        .sms-member-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; transition: opacity 0.5s ease, filter 0.5s ease; }
+        .sms-member-row.sent { opacity: 0.35; filter: grayscale(80%); pointer-events: none; }
+        .sms-member-info { display: flex; flex-direction: column; gap: 2px; min-width: 90px; }
+        .sms-member-name { font-size: 13.5px; font-weight: 800; color: #1e293b; }
+        .sms-member-phone { font-size: 11.5px; color: #64748b; }
+        .sms-member-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+        .sms-send-btn { background: #0d9488; color: white; font-size: 12.5px; font-weight: 700; padding: 9px 12px; border-radius: 8px; text-decoration: none; white-space: nowrap; }
+        .sms-send-btn:active { background: #0f766e; }
+        .sms-copy-btn { background: white; border: 1px solid #cbd5e1; color: #475569; font-size: 12px; font-weight: 600; padding: 9px 10px; border-radius: 8px; cursor: pointer; }
+        .sms-sent-badge { font-size: 11.5px; font-weight: 800; color: #16a34a; min-width: 70px; text-align: right; }
+
+        @media (max-width: 600px) {
+            body { padding: 0; background: white; }
+            .container { margin: 0; padding: 16px; border-radius: 0; box-shadow: none; }
+            .top-index-tabs-wrap { margin: 0 -16px 18px; padding-left: 16px; padding-right: 16px; top: 0; }
+            h2 { font-size: 16.5px; line-height: 1.4; }
+            p.desc { font-size: 13px; margin-bottom: 18px; }
+            .title-action-row { display: none !important; }
+            .title-box { font-size: 13px; padding: 10px 12px; }
+            .usage-guide-swipe-handle { display: block; width: 38px; height: 4px; border-radius: 999px; background: #fdba74; margin: 8px auto -2px; }
+            .usage-guide-box { touch-action: pan-y; }
+            .usage-guide-toggle { padding: 11px 14px 13px; }
+            .usage-guide-toggle-left { font-size: 13.5px; }
+            .usage-guide-content { padding: 0 14px 14px; touch-action: pan-y; }
+            .usage-guide-box.collapsed .usage-guide-content { padding: 0 14px; }
+            .usage-guide-steps { font-size: 13px; padding-left: 18px; }
+            .usage-guide-note { font-size: 11.5px; }
+            textarea#resultBox { height: 280px; font-size: 13px; padding: 12px; }
+            .toast { bottom: calc(env(safe-area-inset-bottom, 0px) + 80px); max-width: 88vw; font-size: 13px; padding: 13px 18px; }
+
+            /* 문자 보내기 패널 컴팩트화 */
+            .sms-status-box { padding: 10px 12px; margin-bottom: 12px; }
+            .sms-status-label { font-size: 12.5px; }
+            .sms-status-count { font-size: 12.5px; }
+            .sms-guide-sub { font-size: 11px; margin-bottom: 10px; }
+            .sms-party-block { padding: 10px 12px; margin-bottom: 10px; border-radius: 10px; }
+            .sms-party-header { font-size: 13.5px; margin-bottom: 8px; }
+            .sms-party-sub { font-size: 11px; margin: 0 0 8px; }
+            .sms-member-list { gap: 6px; }
+            .sms-member-row { padding: 8px 10px; border-radius: 8px; }
+            .sms-member-info { min-width: 70px; }
+            .sms-member-name { font-size: 12.5px; }
+            .sms-member-role { font-size: 10px; }
+            .sms-member-phone { font-size: 10.5px; }
+            .sms-send-btn { font-size: 11.5px; padding: 7px 10px; }
+            .sms-copy-btn { font-size: 11px; padding: 7px 8px; }
+            .sms-sent-badge { font-size: 10.5px; min-width: 56px; }
+            .sms-reset-btn { font-size: 10.5px; }
+
+            /* 전반적 여백 축소 */
+            .mode-tabs { gap: 6px; margin-bottom: 14px; padding-bottom: 10px; }
+            .mode-btn { padding: 10px 6px; font-size: 12.5px; }
+            .agency-progress-box { padding: 8px 12px; margin-bottom: 12px; }
+            .personalize-box { padding: 12px 14px; margin-bottom: 14px; }
+            .top-index-tabs { gap: 6px; }
+            .top-tab-btn { padding: 10px; font-size: 12.5px; }
+
+            /* 모바일 하단 고정 복사 바 */
+            .sticky-copy-bar {
+                display: flex; flex-direction: column; position: fixed; bottom: 0; left: 0; right: 0; background: #f8fafc;
+                border-top: 4px solid transparent; border-image: linear-gradient(90deg, var(--primary-color), var(--accent-color)) 1;
+                padding: 8px 12px; padding-bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+                gap: 5px; z-index: 100; box-shadow: 0 -10px 26px rgba(15,23,42,0.22);
+            }
+            .sticky-agency-label {
+                font-size: 10.5px; font-weight: 800; color: #1e3a8a; text-align: center;
+                background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 7px; padding: 3px 6px;
+            }
+            .sticky-agency-label strong { color: #1e40af; }
+            .sticky-next-agency { width: 100%; padding: 10px; font-size: 12.5px; font-weight: 800; border: none; border-radius: 10px; background: #0d9488; color: #fff; cursor: pointer; }
+            .sticky-copy-bar-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+            .sticky-copy-bar-buttons button, .sticky-copy-bar-buttons a {
+                padding: 10px 2px; font-size: 9.5px; font-weight: 800; border-radius: 10px;
+                cursor: pointer; text-align: center; text-decoration: none; display: flex; align-items: center;
+                justify-content: center; flex-direction: column; gap: 2px; line-height: 1.3; white-space: nowrap;
+            }
+            .sticky-bar-title { background: #f2f4f6; color: #333d4b; border: none !important; }
+            .sticky-bar-body { background: #f2f4f6; color: #333d4b; border: none !important; }
+            .sticky-bar-agency { background: #3182f6; color: white; border: none !important; }
+            .sticky-bar-combo { background: #eef2ff; color: #4338ca; border: none !important; }
+            .sticky-bar-epeople { background: var(--accent-color); color: white; border: none !important; }
+            .sticky-bar-refresh { background: white; color: #4e5968; border: 1.5px solid #e5e8eb !important; }
+            .sticky-copy-bar .gate-locked {
+                opacity: 1 !important; filter: none !important;
+                background: #e2e8f0 !important; color: #94a3b8 !important;
+                border: 1.5px solid #cbd5e1 !important; box-shadow: none !important;
+            }
+            #panelAction { padding-bottom: 110px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🚀 과천 주암 데이터센터 대응 민원·의견서 도우미</h2>
+    <p class="desc">LH·국토교통부·과천시·한국전력·과천소방서·한국부동산원 민원(국민신문고)을 이 페이지 하나로 준비할 수 있습니다. 나만의 사연을 반드시 넣어야 매번 다른 문장으로 생성됩니다.</p>
+
+    <div class="top-index-tabs-wrap">
+        <div class="top-index-tabs">
+            <button id="topTabWrite" class="top-tab-btn active" onclick="switchTopTab('write')">📝 민원·의견서 작성</button>
+            <button id="topTabAction" class="top-tab-btn" onclick="switchTopTab('sms')">📱 시의원 문자 보내기</button>
+        </div>
+    </div>
+
+    <div id="panelWrite" class="top-panel active">
+
+    <div id="panelAction">
+
+    <div class="usage-guide-box" id="usageGuideBox">
+        <div class="usage-guide-swipe-handle" aria-hidden="true"></div>
+        <button type="button" class="usage-guide-toggle" id="usageGuideToggle" onclick="toggleUsageGuide()">
+            <span class="usage-guide-toggle-left">📌 처음이신가요? 이렇게 사용하세요</span>
+            <span class="usage-guide-arrow" id="usageGuideArrow">▲</span>
+        </button>
+        <div class="usage-guide-content" id="usageGuideContent">
+        <ol class="usage-guide-steps">
+            <li><strong>①</strong> 먼저 보라색 상자에서 <strong>나만의 사연</strong>을 적어주세요 (필수). 사연이 서로 달라야 민원이 스팸으로 묶이지 않습니다.</li>
+            <li><strong>②</strong> 민원 넣을 <strong>기관 탭을 선택</strong>하고, 생성된 <strong>제목·본문을 꼭 한 번 읽어보세요</strong>.</li>
+            <li><strong>③</strong> <strong>"본문 복사하고 국민신문고 열기"</strong> 버튼을 누르면 본문이 복사되고 국민신문고가 새 창으로 열립니다. <strong>본인 계정으로 로그인</strong> → 상단 <strong>"민원 → 일반민원 → <span class="highlight-mark">민원신청</span>"</strong>으로 이동하세요.</li>
+            <li><strong>④</strong> 국민신문고 <strong>내용란에 붙여넣기</strong> → 이 페이지로 돌아와 <strong>"제목만 복사"</strong> → 국민신문고 <strong>제목란에 붙여넣기</strong> → 제출.</li>
+            <li><strong>⑤</strong> 제출 후 이 페이지의 <strong>"다음 기관으로"</strong> 버튼을 눌러 나머지 기관도 <strong>6곳 모두</strong> 반복하세요.</li>
+        </ol>
+        <div class="usage-guide-note">⚠️ 이 페이지는 민원을 대신 접수하지 않습니다. 국민신문고에 <strong>본인이 로그인하여 직접</strong> 제출해야 최종 접수됩니다.</div>
+        </div>
+    </div>
+
+    <div class="advanced-box collapsed" id="advancedBox">
+        <button type="button" class="advanced-toggle" onclick="toggleAdvancedBox()">
+            <span class="advanced-toggle-left">⚡ (고급·선택) 국민신문고 제목·본문 자동 채우기</span>
+            <span class="advanced-arrow" id="advancedArrow">▼</span>
+        </button>
+        <div class="advanced-content">
+            <p>복사·붙여넣기가 번거로우면, <strong>본인 브라우저에서 본인이 검토한 내용</strong>을 국민신문고 민원신청 폼에 한 번에 채워주는 북마클릿을 쓸 수 있습니다. 자동 <em>제출</em>은 하지 않으며, 처리기관·공개여부 선택과 최종 제출은 본인이 직접 합니다.</p>
+            <p><strong>1) 설치 (최초 1회)</strong> — 아래 버튼을 브라우저 <strong>북마크바로 드래그</strong>하세요. (모바일은 지원이 제한적입니다)</p>
+            <a class="bookmarklet-link" id="bookmarkletLink" href="#" onclick="return false;">📌 주암민원 자동채우기</a>
+            <p><strong>2) 사용</strong></p>
+            <ol class="advanced-steps">
+                <li>기관을 고르고 사연을 넣은 뒤, 아래 <strong>"이 민원 자동채우기로 넘기기"</strong>를 누르면 국민신문고가 같은 탭에서 열립니다.</li>
+                <li>로그인 → <strong>민원 → 일반민원 → 민원신청</strong> 폼까지 이동합니다.</li>
+                <li>북마크바의 <strong>"주암민원 자동채우기"</strong>를 누르면 제목·본문이 채워집니다. <strong>내용을 반드시 확인</strong>하고 나머지 항목을 채워 제출하세요.</li>
+            </ol>
+            <button type="button" class="btn-handoff" id="btnHandoff" onclick="handoffToEpeople();">이 민원 자동채우기로 넘기기 →</button>
+            <p class="advanced-warn" style="margin-top:10px;">⚠️ 국민신문고 화면이 개편되면 자동 채우기가 동작하지 않을 수 있습니다. 그럴 땐 위쪽의 복사·붙여넣기 방식을 그대로 쓰시면 됩니다. 자동 채우기가 제목·본문 칸을 잘못 찾으면, 채워진 내용을 지우고 수동으로 붙여넣어 주세요.</p>
+        </div>
+    </div>
+
+    <div class="mode-tabs">
+        <button id="btnModeLh" class="mode-btn active mode-lh" onclick="switchMode('lh')"><span class="mode-complete-check" id="agencyCheck_lh" onclick="event.stopPropagation(); toggleAgencyDone('lh');" role="checkbox" aria-checked="false" aria-label="한국토지주택공사 민원 제출 완료 표시">☐</span>한국토지주택공사 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeMoland" class="mode-btn mode-moland" onclick="switchMode('moland')"><span class="mode-complete-check" id="agencyCheck_moland" onclick="event.stopPropagation(); toggleAgencyDone('moland');" role="checkbox" aria-checked="false" aria-label="국토교통부 민원 제출 완료 표시">☐</span>국토교통부 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeGwacheon" class="mode-btn mode-gwacheon" onclick="switchMode('gwacheon')"><span class="mode-complete-check" id="agencyCheck_gwacheon" onclick="event.stopPropagation(); toggleAgencyDone('gwacheon');" role="checkbox" aria-checked="false" aria-label="과천시 민원 제출 완료 표시">☐</span>과천시 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeKepco" class="mode-btn mode-kepco" onclick="switchMode('kepco')"><span class="mode-complete-check" id="agencyCheck_kepco" onclick="event.stopPropagation(); toggleAgencyDone('kepco');" role="checkbox" aria-checked="false" aria-label="한국전력공사 민원 제출 완료 표시">☐</span>한국전력공사 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeFire" class="mode-btn mode-fire" onclick="switchMode('fire')"><span class="mode-complete-check" id="agencyCheck_fire" onclick="event.stopPropagation(); toggleAgencyDone('fire');" role="checkbox" aria-checked="false" aria-label="소방청(과천소방서) 민원 제출 완료 표시">☐</span>소방청 (과천소방서 민원)<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+        <button id="btnModeBudongsan" class="mode-btn mode-budongsan" onclick="switchMode('budongsan')"><span class="mode-complete-check" id="agencyCheck_budongsan" onclick="event.stopPropagation(); toggleAgencyDone('budongsan');" role="checkbox" aria-checked="false" aria-label="한국부동산원 민원 제출 완료 표시">☐</span>한국부동산원 민원<br><span style="font-weight:400; font-size:11.5px;">(국민신문고)</span></button>
+    </div>
+
+    <div class="agency-progress-box" id="agencyProgressBox">
+        <div class="agency-progress-row">
+            <span class="agency-progress-label">📮 기관별 제출 현황</span>
+            <span class="agency-progress-count" id="agencyProgressText">0 / 6개 기관 제출 완료</span>
+        </div>
+        <div class="agency-progress-track"><div class="agency-progress-fill" id="agencyProgressFill" style="width:0%"></div></div>
+        <div class="agency-progress-hint">위 탭의 동그라미를 눌러 제출을 마친 기관을 체크해두세요. 새로고침해도 이 브라우저에 기억돼요.</div>
+    </div>
+
+    <div class="personalize-box" id="personalizeBox">
+        <div class="personalize-header" onclick="togglePersonalizeBox()">
+            <div class="personalize-title">✍️ 나만의 이유로 개인화하기 <span style="color:#dc2626;">(필수)</span></div>
+            <span class="personalize-arrow" id="personalizeArrow">▲</span>
+        </div>
+        <div class="personalize-required-note" id="personalizeRequiredNote" onclick="togglePersonalizeBox()">⚠️ 최소 1개 이상 선택하거나 직접 사연을 적어야 복사·제출이 가능해요.</div>
+        <div class="personalize-body" id="personalizeBody">
+            <div class="personalize-sub">해당하는 항목을 눌러 선택하세요 (복수 선택 가능). 선택한 문장이 본문에 자동으로 들어갑니다.</div>
+            <div class="keyword-grid" id="keywordGrid"></div>
+            <div class="personalize-sub" style="margin-top:4px;">✏️ 아래 칸을 채우면 <strong>나만의 문장</strong>이 자동으로 만들어집니다. 아는 것만 적으셔도 됩니다.</div>
+            <div class="guided-grid" id="guidedGrid"></div>
+            <div class="guided-preview" id="guidedPreview"></div>
+            <label class="freeform-label" for="freeformInput" style="margin-top:10px;">📝 그 밖에 하고 싶은 말 (자유롭게)</label>
+            <textarea id="freeformInput" class="freeform-input" placeholder="예: 곧 태어날 아이와 함께 이 동네에 오래 살고 싶어서 걱정이 큽니다." oninput="onInputsChanged()"></textarea>
+            <div class="personalize-strength" id="personalizeStrength"></div>
+        </div>
+    </div>
+
+    <div class="title-action-row">
+        <div class="current-agency-chip">지금 넣을 기관 · <strong id="currentAgencyNameChip">한국토지주택공사</strong></div>
+        <div class="copy-hint">① 본문 복사 → 국민신문고 내용란에 붙여넣기 · ② 돌아와서 제목 복사 → 제목란에 붙여넣기</div>
+        <button id="btnCopyBodyOpen" class="btn-toss btn-toss-combo btn-toss-full" onclick="if(checkPersonalized()) copyBodyAndOpen();">📄 본문 복사하고 국민신문고 열기 →</button>
+        <button id="btnCopyTitle" class="btn-toss btn-toss-gray btn-toss-full" onclick="if(checkPersonalized()) copyTitle();">📋 제목만 복사 (제목란용)</button>
+        <div class="copy-secondary-row">
+            <button id="btnCopyBody" class="btn-toss btn-toss-gray" onclick="if(checkPersonalized()) copyBody();">본문만 복사</button>
+            <button id="btnCopyAgencyName" class="btn-toss btn-toss-blue" onclick="copyCurrentAgencyName();">기관명 복사</button>
+            <button id="btnCopyTitleBody" class="btn-toss btn-toss-outline" onclick="if(checkPersonalized()) copyTitleAndBody();">📑 제목+본문</button>
+        </div>
+        <button class="btn-toss btn-toss-outline btn-toss-full" onclick="generate(true)">🔄 문장 다시 섞기</button>
+        <a id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="btn-toss btn-toss-outline btn-toss-full" onclick="return checkPersonalized();">국민신문고만 열기 →</a>
+        <div class="next-agency-row" id="nextAgencyRow" style="display:none;">
+            <button type="button" class="btn-next-agency" id="btnNextAgency" onclick="goNextAgency();">✅ 제출했어요 · 다음 기관으로 →</button>
+        </div>
+    </div>
+
+    <div class="meta-info" id="metaInfoLine">📍 접수 기관: 한국토지주택공사(LH) 공공택지사업처·의왕과천사업본부</div>
+
+    <div class="title-row">
+        <div id="titleDisplay" class="title-box">민원 제목: 로딩 중...</div>
+    </div>
+
+    <textarea id="resultBox" readonly></textarea>
+
+    </div>
+
+    <!-- 모바일 하단 고정 복사 바 -->
+    <div class="sticky-copy-bar" id="stickyCopyBar">
+        <div class="sticky-agency-label">📍 지금 넣을 기관: <strong id="stickyAgencyName">한국토지주택공사</strong> · <span style="color:#0f766e;">본문 → 제목 순서</span></div>
+        <button type="button" class="sticky-next-agency" id="stickyNextAgency" style="display:none;" onclick="goNextAgency();">✅ 제출했어요 · 다음 기관으로 →</button>
+        <div class="sticky-copy-bar-buttons">
+            <a id="stickyBtnTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" class="sticky-bar-epeople" onclick="return checkPersonalized() &amp;&amp; stickyCopyBodyThenGo();">📄→🏛️<br>본문복사+이동</a>
+            <button id="stickyBtnTitle" class="sticky-bar-title" onclick="if(checkPersonalized()) copyTitle();">📋<br>제목복사</button>
+            <button id="stickyBtnBody" class="sticky-bar-body" onclick="if(checkPersonalized()) copyBody();">📄<br>본문복사</button>
+            <button id="stickyBtnAgency" class="sticky-bar-agency" onclick="copyCurrentAgencyName();">🏢<br>기관명복사</button>
+            <button id="stickyBtnTitleBody" class="sticky-bar-combo" onclick="if(checkPersonalized()) copyTitleAndBody();">📑<br>한번에복사</button>
+            <button class="sticky-bar-refresh" onclick="generate(true)">🔄<br>내용섞기</button>
+        </div>
+    </div>
+
+    <div style="margin-top:24px; padding-top:16px; border-top:1px solid #e2e8f0; font-size:11.5px; color:#94a3b8; line-height:1.8; text-align:center;">
+        본 페이지는 주민 개인이 비영리·공익 목적으로 제작한 참고용 도구입니다. <strong>민원·의견서를 자동으로 발송하거나 대리 제출하지 않습니다.</strong><br>
+        모든 민원·의견서는 이용자 본인이 자신의 이름과 책임으로 국민신문고 로그인을 통해 직접 제출해야 합니다.<br>
+        이 사이트 및 제작자는 이용자가 작성·제출한 내용이나 그로 인해 발생하는 결과에 대해 <strong>어떠한 법적 책임도 지지 않습니다.</strong>
+    </div>
+
+    </div>
+
+    <div id="panelSms" class="top-panel">
+
+        <div class="sms-status-box">
+            <div class="sms-status-row">
+                <span class="sms-status-label">📊 발송 현황</span>
+                <span class="sms-status-count" id="smsStatusCount">0 / 10명 발송완료</span>
+            </div>
+            <div class="sms-progress-track"><div class="sms-progress-fill" id="smsProgressFill" style="width:0%"></div></div>
+            <button type="button" class="sms-reset-btn" id="smsResetBtn" onclick="resetSmsProgress()">↺ 발송 기록 초기화</button>
+        </div>
+
+        <div class="sms-guide-sub sms-intro-sub">이름을 누르면 문자 앱이 바로 열려요. 내용은 미리 채워져 있지 않으니 직접 하고 싶은 말을 적어서 보내주세요.</div>
+
+        <div class="sms-party-block party-ppp">
+            <div class="sms-party-header">🔴 국민의힘</div>
+            <div class="sms-party-sub" style="margin-top:0;">✅ 이름을 누르면 문자 앱이 바로 열려요. 내용은 비어있으니 직접 적어서 보내주세요.</div>
+            <div class="sms-member-list" id="smsListPpp"></div>
+        </div>
+
+        <div class="sms-party-block party-dp">
+            <div class="sms-party-header">🔵 더불어민주당</div>
+            <div class="sms-party-sub" style="margin-top:0;">✅ 이름을 누르면 문자 앱이 바로 열려요. 내용은 비어있으니 직접 적어서 보내주세요.</div>
+            <div class="sms-member-list" id="smsListDp"></div>
+        </div>
+
+        <div class="sms-party-block party-etc">
+            <div class="sms-party-header">⚪ 그 외</div>
+            <div class="sms-party-sub" style="margin-top:0;">✅ 이름을 누르면 문자 앱이 바로 열려요. 내용은 비어있으니 직접 적어서 보내주세요.</div>
+            <div class="sms-member-list" id="smsListEtc"></div>
+        </div>
+
+        <div style="margin-top:24px; padding-top:16px; border-top:1px solid #e2e8f0; font-size:11.5px; color:#94a3b8; line-height:1.8; text-align:center;">
+            문자 보내기 버튼을 누르면 <strong>이용자 본인의 휴대폰 문자(SMS) 앱</strong>이 열립니다. 실제 발송은 본인이 앱에서 직접 눌러야 완료됩니다. 발송 현황은 <strong>이용자의 브라우저에만 저장</strong>됩니다.
+        </div>
+
+    </div>
+</div>
+
+<div class="toast" id="toastMsg"></div>
+
+<script>
+    const KEYWORDS = [
+        { id: "kid", label: "🧒 어린 자녀가 있어요", sentence: "본인의 가정에는 어린 자녀가 있어 전자파·소음 등 데이터센터로 인한 환경 변화에 특히 민감할 수밖에 없는 상황입니다." },
+        { id: "baby", label: "🤰 임신 중이거나 영유아가 있어요", sentence: "출산을 앞두고 있거나 영유아를 양육하고 있어 주거지 인근 대규모 전력시설 건립에 대한 우려가 더욱 큽니다." },
+        { id: "elder", label: "🧓 노약자·환자와 함께 살아요", sentence: "고령이거나 건강이 취약한 가족과 함께 거주하고 있어 소음과 전자파 등 환경 변화에 더욱 민감하게 영향을 받을 수 있습니다." },
+        { id: "school", label: "🏫 통학·통근길이 겹쳐요", sentence: "인근 어린이집·학교 통학 동선 및 일상 생활권과 사업 부지가 겹쳐 있어 안전에 대한 우려가 큽니다." },
+        { id: "prior", label: "📨 이미 다른 기관에도 의견을 냈어요", sentence: "이미 관계기관에 동일한 사안으로 민원·의견을 제출한 바 있습니다. 이번에도 동일한 우려가 반드시 반영되기를 바랍니다." }
+    ];
+
+    // 빈칸을 채우면 사람마다 다른 문장이 자동으로 만들어집니다 (아는 것만 적어도 됨)
+    const GUIDED_FIELDS = [
+        { id: 'where',    label: '① 어디에 사시나요? (단지·동 이름)', ph: '예: 디에이치 아델스타 105동 / 장군마을 / 인근 ○○아파트',
+          make: v => `저는 과천 주암지구 인근 ${v}에 거주(예정)하는 주민입니다.` },
+        { id: 'years',    label: '② 이 동네와의 인연 (거주 기간·이사 온 이유 등)', ph: '예: 아이 학교 때문에 3년 전 이사 와 정착했습니다',
+          make: v => `${v}.` },
+        { id: 'family',   label: '③ 함께 사는 가족', ph: '예: 7살·4살 두 아이 / 연로하신 부모님을 모시고 삽니다',
+          make: v => `가족으로는 ${v}이(가) 있어 소음·전자파 등 환경 변화에 특히 민감할 수밖에 없습니다.` },
+        { id: 'distance', label: '④ 집·생활동선과 사업부지의 관계', ph: '예: 안방 창문에서 부지가 보이고 아이 어린이집이 도보 5분 거리입니다',
+          make: v => `${v}.` },
+        { id: 'worry',    label: '⑤ 가장 걱정되는 점', ph: '예: 24시간 냉각팬 소음과 화재 위험이 가장 두렵습니다',
+          make: v => `무엇보다 ${v}.` }
+    ];
+
+    const selectedKeywords = new Set();
+    let currentMode = 'lh';
+
+    function getRandomIndex(max) { return Math.floor(Math.random() * max); }
+
+    function getGuidedSentences() {
+        return GUIDED_FIELDS.map(f => {
+            const el = document.getElementById('guided_' + f.id);
+            const v = el ? el.value.trim().replace(/[.\s]+$/, '') : '';
+            return v ? f.make(v) : '';
+        }).filter(Boolean);
+    }
+    function getGuidedParagraph() { return getGuidedSentences().join(' '); }
+
+    // 이용자가 '직접 쓴' 분량 (게이트 강도 판정용 — 고정 문장인 키워드 칩은 제외)
+    function getPersonalText() {
+        const ff = document.getElementById('freeformInput');
+        return (getGuidedParagraph() + ' ' + (ff ? ff.value : '')).trim();
+    }
+
+    function getPersonalParagraph() {
+        const guided = getGuidedSentences();
+        const kwSentences = KEYWORDS.filter(k => selectedKeywords.has(k.id)).map(k => k.sentence);
+        const ff = document.getElementById('freeformInput');
+        const freeform = ff ? ff.value.trim() : '';
+        const parts = guided.concat(kwSentences);
+        if (freeform) parts.push(freeform);
+        if (!parts.length) return "";
+        return "\n\n" + parts.join(" ");
+    }
+
+    function buildGuidedGrid() {
+        const grid = document.getElementById('guidedGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        GUIDED_FIELDS.forEach(f => {
+            const wrap = document.createElement('div');
+            wrap.className = 'guided-field';
+            const lab = document.createElement('label');
+            lab.setAttribute('for', 'guided_' + f.id);
+            lab.textContent = f.label;
+            const inp = document.createElement('input');
+            inp.type = 'text';
+            inp.id = 'guided_' + f.id;
+            inp.placeholder = f.ph;
+            inp.setAttribute('autocomplete', 'off');
+            inp.oninput = onInputsChanged;
+            wrap.appendChild(lab);
+            wrap.appendChild(inp);
+            grid.appendChild(wrap);
+        });
+    }
+
+    function renderGuidedPreview() {
+        const p = document.getElementById('guidedPreview');
+        if (p) p.textContent = getGuidedParagraph();
+    }
+
+    function buildKeywordGrid() {
+        const grid = document.getElementById('keywordGrid');
+        grid.innerHTML = '';
+        KEYWORDS.forEach(k => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'keyword-chip';
+            btn.innerText = k.label;
+            btn.onclick = () => {
+                if (selectedKeywords.has(k.id)) { selectedKeywords.delete(k.id); btn.classList.remove('active'); }
+                else { selectedKeywords.add(k.id); btn.classList.add('active'); }
+                generate(false);
+            };
+            grid.appendChild(btn);
+        });
+    }
+
+    const budongsanTitleVariants = [
+        "과천주암지구 데이터센터 리츠 영업·변경인가 보류 및 전력 편법분할·공익성 심사에 대한 구체적 답변 촉구",
+        "한국부동산원 리츠 사업계획 심사 관련 편법 전력쪼개기 검증 및 주거지 근접 공익성 재검토 요청",
+        "과천주암지구 리츠 영업인가·변경인가 신중 처리 및 구체적 심사 답변 재요청",
+        "한국부동산원 리츠심사팀 앞 - 전력계통영향평가 회피 의혹 및 공익성 침해 우려 답변 촉구"
+    ];
+
+    const budongsanOpenings = [
+        "귀 기관의 공정하고 투명한 심사 업무 수행에 감사드립니다. 아래와 같이 민원을 제출합니다.",
+        "국민의 재산권 및 주거 안전을 위해 힘쓰시는 귀 기관의 책임 있는 심사를 신뢰하며 민원을 올립니다.",
+        "과천주암지구 인근 주민 및 입주예정자로서 리츠 사업계획 심사의 공정성을 촉구하고자 민원을 제출합니다.",
+        "귀 기관의 노고에 감사드립니다. 아래 사항에 대한 신중하고 엄정한 재검토를 강력히 요청합니다."
+    ];
+
+    const budongsanIntroVariants = [
+        "본 민원인은 경기도 과천시 주암지구에 인접한 공동주택 단지의 입주예정자입니다. 기존에 「부동산투자회사법」상 리츠 사업계획 심사와 관련하여 전력계통영향평가 의무 이행 여부 및 공익성 재검토를 요청하는 민원을 제출한 바 있습니다.",
+        "본 민원인은 과천주암지구 인근에 거주 예정인 주민입니다. 이전에도 데이터센터 리츠 사업계획의 전력계통영향평가 이행 여부 및 공익성에 관한 민원을 제출하였으나 실질적인 해소가 이루어지지 않아 보다 구체적인 답변과 책임 있는 행정을 재차 요청드립니다.",
+        "본 민원인은 과천주암지구와 인접한 곳에 거주할 예정인 입주예정자입니다. 리츠 사업계획 심사와 관련하여 이미 한 차례 민원을 접수한 바 있으나 아래 사항에 대한 명확한 답변을 다시 촉구드립니다."
+    ];
+
+    const budongsanEscalationNotice = "최근 귀 기관에서 1-9블록에 대한 영업인가(변경인가)를 승인함에 따라 사업자는 이를 발판 삼아 과천시에 건축허가를 접수했습니다. 이로 인해 인근 예정 주민과 아이들의 안전권 및 생존권은 벼랑 끝에 몰리게 되었으며 주민의 목소리를 외면한 귀 기관의 안일한 인가 처분에 강력한 유감과 규탄의 뜻을 전합니다.";
+
+    const budongsanStaticNotice = "현재 1-1·2블록 등에 대한 자산관리회사(코람코자산신탁, 마스턴자산운용 등)의 영업인가 및 변경인가 신청건이 진행 중인 것으로 파악하고 있습니다. 이에 민원인은 동일한 우를 범하지 않도록 아래 사항에 대한 명확한 검증 없이 추가 인가가 처리되지 않기를 바라며 공익성 재검토를 통한 '인가 불허'를 강력히 요구합니다.";
+
+    const budongsanReq1Variants = [
+        "[요청 1] 편법 전력 쪼개기 여부에 대한 구체적 검증\n\n주암지구 내 데이터센터 사업이 1-1·2블록, 1-9블록 등 복수 블록·복수 법인 명의로 나뉘어 있는바 이것이 실질적으로 동일 사업임에도 계약전력을 각각 10메가와트 미만으로 분할 신고하여 「분산에너지 활성화 특별법」상 전력계통영향평가 의무를 회피하려는 것은 아닌지 구체적으로 검증해 주시기 바랍니다.",
+        "[요청 1] 계약전력 편법 분할(쪼개기) 여부 재확인 요청\n\n복수의 블록과 복수의 법인 명의로 진행되는 이 사업이 사실상 하나의 사업으로서 계약전력을 합산해야 함에도 각각 10메가와트 미만으로 나누어 신고함으로써 전력계통영향평가를 회피하려는 정황은 없는지 다시 한번 면밀히 확인해 주시기 바랍니다."
+    ];
+
+    const budongsanReq2Variants = [
+        "[요청 2] 주거지 밀착 입지에 따른 공익성 심사 반영 여부\n\n가장 인접한 사업부지가 주거지 경계로부터 약 30미터에 불과하고 인근 반경 내 어린이집 약 32개소, 학교 5개교가 밀집해 있는 점을 사업계획 심사에 구체적으로 반영하였는지 확인해 주시기 바랍니다.",
+        "[요청 2] 주민 건강·안전을 고려한 공익성 재검토 요청\n\n사업 부지가 주거지와 불과 30여 미터 거리에 있고 인근에 어린이집과 학교가 다수 밀집해 있는 만큼 이러한 입지 특성이 사업계획의 타당성·적정성 심사에 충분히 반영되었는지 다시 한번 검토해 주시기 바랍니다."
+    ];
+
+    const budongsanReq3Variants = [
+        "[요청 3] 영업인가·변경인가 심사의 신중한 처리 요청\n\n위 두 사항에 대한 검토가 명확히 완결되기 전까지 영업인가·변경인가가 성급히 처리되지 않도록 신중을 기해 주시기 바랍니다.",
+        "[요청 3] 인가 절차의 신중한 진행 촉구\n\n위 사항들에 대한 명확한 확인과 검토 없이 영업인가·변경인가가 서둘러 처리되는 일이 없도록 각별히 유의해 주시기 바랍니다."
+    ];
+
+    const budongsanClosings = [
+        "민원인은 특정 기업의 적법한 사업활동을 부당하게 방해하고자 하는 것이 아니며 다만 관계 법령상 의무가 빠짐없이 이행되었는지를 감독기관으로서 명확히 확인해 주실 것을 요청드립니다.\n\n감사합니다.",
+        "본 민원은 특정 사업자를 비방하거나 그 영업을 방해하려는 목적이 아니라 법과 절차에 따른 공정한 심사를 요청드리는 것입니다.\n\n감사합니다.",
+        "민원인은 적법한 절차를 존중하며 다만 심사 과정에서 위 사항들이 누락 없이 충실히 검토되기를 바랄 뿐입니다.\n\n감사합니다."
+    ];
+
+    let stateB = {};
+    function rerollBudongsan() {
+        stateB = {
+            titleIdx: getRandomIndex(budongsanTitleVariants.length),
+            openIdx: getRandomIndex(budongsanOpenings.length),
+            introIdx: getRandomIndex(budongsanIntroVariants.length),
+            req1Idx: getRandomIndex(budongsanReq1Variants.length),
+            req2Idx: getRandomIndex(budongsanReq2Variants.length),
+            req3Idx: getRandomIndex(budongsanReq3Variants.length),
+            closeIdx: getRandomIndex(budongsanClosings.length)
+        };
+    }
+
+    function buildBudongsan() {
+        const intro = budongsanIntroVariants[stateB.introIdx];
+        const body = budongsanOpenings[stateB.openIdx] + "\n\n" + intro
+            + "\n\n" + budongsanEscalationNotice
+            + "\n\n" + budongsanStaticNotice + getPersonalParagraph()
+            + "\n\n" + budongsanReq1Variants[stateB.req1Idx]
+            + "\n\n" + budongsanReq2Variants[stateB.req2Idx]
+            + "\n\n" + budongsanReq3Variants[stateB.req3Idx]
+            + "\n\n" + budongsanClosings[stateB.closeIdx];
+        return { title: budongsanTitleVariants[stateB.titleIdx], body };
+    }
+
+    const REASON_BANK = [
+        { title: "수도권 집중 완화 국정과제 위배", text: "정부는 국토 균형발전과 수도권 인구·기능 분산을 핵심 국정과제로 추진하고 있습니다. 대규모 전력을 소비하는 첨단 인프라 시설을 수도권 한복판에 신축하는 것은 이러한 국정 기조에 정면으로 배치되는 것으로 보입니다." },
+        { title: "RE100·에너지 전환 정책 역행", text: "글로벌 기업들은 RE100 달성을 위해 신재생에너지 사용을 사실상 필수 요건으로 요구하고 있습니다. 신재생에너지 공급이 구조적으로 제한적인 수도권에 대규모 데이터센터를 신축하는 것은 정부의 탄소중립 목표 및 에너지 전환 정책과 역행하는 방향이라고 판단됩니다." },
+        { title: "수도권 전력계통 과부하 우려", text: "수도권 전력망은 이미 한계에 가까운 상황입니다. 단일 시설로 수십 메가와트 이상을 지속 소비하는 데이터센터가 들어설 경우 지역 전력계통의 안정성과 수급에 상당한 부담을 줄 것으로 우려됩니다." },
+        { title: "주거 밀집지역 인접에 따른 주민안전 위협", text: "데이터센터 예정 부지는 인근 주거지 및 양재천 수변공원 등 주민 생활권과 불과 수십 미터 거리에 위치해 있습니다. 24시간 가동되는 냉각설비의 소음·진동, 송전선로에 따른 전자파, 비상발전기 배출가스 등은 주민 건강과 일상생활에 실질적인 영향을 줄 수 있어 우려가 큽니다." },
+        { title: "공공택지 취지에 맞지 않는 특혜성 개발 우려", text: "공공주택지구 부지는 본래 공공적 목적을 위해 조성된 것입니다. 이 부지에 대규모 민간 데이터센터 개발이 허용될 경우 공공사업의 취지와 맞지 않는 특혜성 개발로 비칠 소지가 있다고 생각합니다." },
+        { title: "수도권 데이터센터 난립의 악선례", text: "주거 쾌적성이 최우선되어야 할 공공주택지구 내 데이터센터 신축을 허용할 경우 수도권 전역의 주택지구·준주거지역에 유사 시설이 확산되는 나쁜 선례가 될 수 있습니다." }
+    ];
+
+    function pickReasonIndices(n) {
+        const idxs = [...Array(REASON_BANK.length).keys()];
+        for (let i = idxs.length - 1; i > 0; i--) {
+            const j = getRandomIndex(i + 1);
+            [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
+        }
+        return idxs.slice(0, n);
+    }
+
+    function buildReasonsBlock(idxArr) {
+        return idxArr.map((idx, i) => {
+            const r = REASON_BANK[idx];
+            return `[문제 제기 ${i + 1}] ${r.title}\n\n${r.text}`;
+        }).join('\n\n');
+    }
+
+    const WARNING_VARIANTS = [
+        "만약 이러한 정당한 요구가 받아들여지지 않고 주민의 주거환경과 안전을 도외시한 채 관련 절차가 그대로 강행될 경우 주민들은 행정처분의 효력정지 및 취소를 구하는 법적 절차를 포함하여 가능한 모든 정당한 수단을 검토하지 않을 수 없다는 점을 말씀드립니다.",
+        "주민들의 정당한 우려에도 불구하고 관련 절차가 일방적으로 강행될 경우 부득이하게 법적 대응을 포함한 모든 수단을 검토할 수밖에 없다는 점을 미리 말씀드립니다."
+    ];
+
+    const lhTitleVariants = [
+        "장군마을 민관협의체 요청사항(데이터센터 삭제) 중간검토 결과 공유 및 신속 처리 촉구",
+        "미매각 업무시설용지 데이터센터 허용용도 삭제 요청 건 - 중간검토 진행상황 확인 및 조속 처리 요청",
+        "장군마을 민관협의체(7월) 요청사항에 대한 무응답 관련 신속한 검토결과 공유 촉구"
+    ];
+
+    const lhOpenings = [
+        "공공택지 개발과 지역 상생을 위해 힘쓰시는 귀 공사(LH)의 노고에 감사드립니다. 아래와 같이 민원을 제출합니다.",
+        "귀 공사(LH)의 공정하고 투명한 업무 처리를 신뢰합니다. 아래와 같이 민원을 제출합니다."
+    ];
+
+    const lhNotice = "지난 7월 개최된 민관협의체(사전회의)에서 귀 공사는 장군마을 주민들이 요청한 사항에 대해 검토를 진행하겠다고 약속하였습니다. 그러나 회의 이후 현재까지 중간 검토 결과 공유 등 어떠한 진행 상황 안내도 이루어지지 않아 검토 진행 과정을 확인하고 긍정적인 검토 결과를 이끌어내고자 이 민원을 제출합니다.";
+
+    const lhReq1Variants = [
+        "[요청 1] 민관협의체(7월) 요청사항에 대한 중간 검토 결과 공유\n\n장군마을 주민이 민관협의체(7월)를 통해 귀 공사에 요청한 사항에 대한 중간 검토 내용을 알려주시기 바랍니다.",
+        "[요청 1] 데이터센터 허용용도 삭제 요청 건 중간 검토 결과 안내\n\n지난 7월 민관협의체를 통해 귀 공사에 요청드린 사항에 대한 중간 검토 내용을 안내해 주시기 바랍니다."
+    ];
+
+    const lhReq2 = "[요청 2] 연접 부지(과천주암지구) 용도 변경 추진 현황 공유\n\n이밖에도 지난 회의 이후로 장군마을과 연접한 과천주암지구의 업무시설용지 변경을 추진하는 사항이 있다면 그 내용도 함께 알려주시기 바랍니다.";
+
+    const lhReq3Variants = [
+        "[요청 3] 신속하고 투명한 진행상황 공유 촉구\n\n회의 이후 한 달이 넘도록 아무런 회신이 없는 상황은 주민들의 신뢰를 크게 저해하고 있습니다. 하루빨리 중간 검토 결과를 공유해 주시기를 강력히 촉구합니다.",
+        "[요청 3] 조속한 답변을 강력히 요청드립니다\n\n검토를 약속하신 지 이미 상당한 시간이 지났음에도 아무런 진행 상황 안내가 없는 것은 행정에 대한 신뢰를 무너뜨리는 일입니다."
+    ];
+
+    const lhClosings = [
+        "본 민원은 귀 공사의 적법한 업무 수행을 방해하고자 하는 것이 아니라 이미 약속하신 사항에 대한 투명하고 신속한 이행을 요청드리는 주민의 정당한 요구입니다.\n\n감사합니다.",
+        "적법한 절차를 존중하나 이미 하신 약속의 이행 여부조차 확인할 수 없는 현재 상황은 결코 가볍게 넘길 문제가 아닙니다.\n\n감사합니다."
+    ];
+
+    const lhStrongAskVariants = [
+        "아울러 귀 공사께서는 위와 같은 사유들을 종합적으로 고려하시어 주암지구 지구단위계획상 해당 부지의 허용용도에서 데이터센터를 명시적으로 제외하는 지구계획 변경 절차를 조속히 검토하고 추진해 주시기 바랍니다.",
+        "아울러 귀 공사께서는 앞서 말씀드린 여러 우려를 충분히 반영하시어 지구단위계획상 허용용도에서 데이터센터를 제외하는 방향으로 조속히 절차를 진행해 주시기를 강력히 요청드립니다."
+    ];
+
+    let stateL = {};
+    function rerollLh() {
+        stateL = {
+            titleIdx: getRandomIndex(lhTitleVariants.length),
+            openIdx: getRandomIndex(lhOpenings.length),
+            req1Idx: getRandomIndex(lhReq1Variants.length),
+            req3Idx: getRandomIndex(lhReq3Variants.length),
+            closeIdx: getRandomIndex(lhClosings.length),
+            reasonIdxs: pickReasonIndices(2),
+            askIdx: getRandomIndex(lhStrongAskVariants.length),
+            warnIdx: getRandomIndex(WARNING_VARIANTS.length)
+        };
+    }
+
+    function buildLh() {
+        const body = lhOpenings[stateL.openIdx] + "\n\n" + lhNotice + getPersonalParagraph()
+            + "\n\n" + lhReq1Variants[stateL.req1Idx]
+            + "\n\n" + lhReq2
+            + "\n\n" + lhReq3Variants[stateL.req3Idx]
+            + "\n\n" + buildReasonsBlock(stateL.reasonIdxs)
+            + "\n\n" + lhStrongAskVariants[stateL.askIdx]
+            + "\n\n" + WARNING_VARIANTS[stateL.warnIdx]
+            + "\n\n" + lhClosings[stateL.closeIdx];
+        return { title: lhTitleVariants[stateL.titleIdx], body };
+    }
+
+    const molandTitleVariants = [
+        "과천주암지구 데이터센터 관련 민관협의체 정상 운영 촉구 및 LH 조속한 인허가 변경 요청",
+        "장군마을-과천시-LH 민관협의체 파행 우려 - 인허가권자 국토교통부의 관리·감독 촉구",
+        "과천주암지구 인허가권자 국토교통부에 데이터센터 민원 심각성 및 신속 처리 촉구"
+    ];
+
+    const molandOpenings = [
+        "국민의 주거 안전과 공정한 인허가 행정을 위해 힘쓰시는 귀 부의 노고에 감사드립니다. 아래와 같이 민원을 제출합니다.",
+        "귀 부의 공정하고 투명한 인허가 행정을 신뢰합니다. 아래와 같이 민원을 제출합니다."
+    ];
+
+    const molandNotice = "과천주암지구의 인허가권자인 국토교통부는 지난 7월 장군마을재개발조합·과천시·LH 간 상호 합의하여 추진하기로 한 '민관협의체'의 정상 운영을 위해 힘써주시기 바랍니다.";
+
+    const molandReq1 = "[요청 1] 민관협의체 요청사항 이행 여부에 대한 관리·감독\n\n지난 7월 장군마을 주민은 LH에게 미매각 업무시설용지의 허용용도 중 '데이터센터'의 삭제를 요청하였습니다.";
+
+    const molandReq2 = "[요청 2] 사업시행자에 대한 수시 감독 요청\n\n투명하고 오로지 주민을 위한 민관협의체 운영이 이루어질 수 있도록 사업시행자(LH)의 민관협의체 운영 방향 등에 대하여 수시로 감독하여 주시기 바랍니다.";
+
+    const molandReq3Variants = [
+        "[요청 3] 데이터센터 관련 민원의 심각성 제고 및 조속한 처리 촉구\n\n인허가권자인 국토교통부께서 이러한 상황의 심각성을 충분히 인지하시고 사업시행자인 LH의 인허가 변경 절차가 조속히 진행될 수 있도록 강력히 지도해 주시기를 촉구합니다.",
+        "[요청 3] 신속한 관리·감독을 강력히 촉구합니다\n\n민관협의체가 형식적인 절차에 그치지 않고 실질적인 결과로 이어지도록 인허가권자인 국토교통부께서 사업시행자를 강력하게 지도·감독하여 주시기 바랍니다."
+    ];
+
+    const molandClosings = [
+        "본 민원은 특정 기관·기업의 적법한 업무를 방해하고자 하는 것이 아니라 인허가권자로서의 관리·감독 책임을 다해주실 것을 요청드리는 주민의 정당한 의견입니다.\n\n감사합니다.",
+        "적법한 절차를 존중하며 다만 주민의 안전과 직결된 사안인 만큼 인허가권자의 적극적인 역할을 요청드립니다.\n\n감사합니다."
+    ];
+
+    const molandStrongAskVariants = [
+        "아울러 국토교통부께서는 인허가권자로서 위와 같은 사유들을 종합적으로 검토하시어 사업시행자인 LH가 지구단위계획상 허용용도에서 데이터센터를 제외하는 방향으로 조속히 절차를 진행할 수 있도록 강력하게 관리·감독해 주시기 바랍니다.",
+        "인허가권자인 국토교통부께서는 위 사유들의 심각성을 인지하시고 사업시행자가 데이터센터를 허용용도에서 제외하는 지구계획 변경에 나서도록 적극적으로 지도해 주시기를 강력히 촉구합니다."
+    ];
+
+    let stateM = {};
+    function rerollMoland() {
+        stateM = {
+            titleIdx: getRandomIndex(molandTitleVariants.length),
+            openIdx: getRandomIndex(molandOpenings.length),
+            req3Idx: getRandomIndex(molandReq3Variants.length),
+            closeIdx: getRandomIndex(molandClosings.length),
+            reasonIdxs: pickReasonIndices(2),
+            askIdx: getRandomIndex(molandStrongAskVariants.length),
+            warnIdx: getRandomIndex(WARNING_VARIANTS.length)
+        };
+    }
+
+    function buildMoland() {
+        const body = molandOpenings[stateM.openIdx] + "\n\n" + molandNotice + getPersonalParagraph()
+            + "\n\n" + molandReq1
+            + "\n\n" + molandReq2
+            + "\n\n" + molandReq3Variants[stateM.req3Idx]
+            + "\n\n" + buildReasonsBlock(stateM.reasonIdxs)
+            + "\n\n" + molandStrongAskVariants[stateM.askIdx]
+            + "\n\n" + WARNING_VARIANTS[stateM.warnIdx]
+            + "\n\n" + molandClosings[stateM.closeIdx];
+        return { title: molandTitleVariants[stateM.titleIdx], body };
+    }
+
+    const gwacheonFixedTitle = "신계용 시장님 데이터센터 공약 이행 관련 촉구";
+
+    function rerollGwacheon() { }
+
+    function buildGwacheon() {
+        const personal = getPersonalParagraph();
+        const body =
+            "안녕하십니까. 과천 주암지구 디에이치 아델스타 입주예정자입니다. 신계용 시장님께서 후보 시절 밝히신 데이터센터 인허가 불허 공약의 이행을 강력히 촉구합니다." + personal + "\n\n" +
+            "최근 서울 금천구에서도 저희와 유사한 데이터센터 입지 갈등이 있었습니다. 금천구 최기찬 구청장은 지난 7월 1일 취임 1호 결재로 '데이터센터 주민참여형 검토체계 구축 및 제도개선'을 발표했습니다." + "\n\n" +
+            "신계용 시장님께서 후보 시절 밝히신 데이터센터 관련 인허가 불허 공약, 지금 어느 단계까지 이행되고 있습니까. 더 이상 검토만 하고 있을 시간이 없습니다." + "\n\n" +
+            "공약 이행, 지금 확인하겠습니다. 이행 계획과 일정을 명확히 밝혀주십시오.";
+        return { title: gwacheonFixedTitle, body };
+    }
+
+    const kepcoFixedTitle = "과천주암지구 데이터센터 사업주체 분할(쪼개기) 수전 의혹 조사 및 전력공급 신중 재검토 요청";
+
+    function rerollKepco() { /* 고정 문안이라 다시 섞기는 개인화 문단 반영 외 변화가 없습니다. */ }
+
+    function buildKepco() {
+        const personal = getPersonalParagraph();
+        const body =
+            "과천 주암 공공주택지구 내 업무시설용지(방송통신시설)에 대규모 데이터센터 건립이 추진되고 있다는 사실에 대해 지역 주민들은 깊은 우려를 갖고 있습니다." + personal + "\n\n" +
+            "[핵심 문제 제기] 사업주체 분할을 통한 수전 신청 ‘쪼개기’ 의혹 조사 요청" + "\n\n" +
+            "이 사업은 과천 주암지구 업무시설용지의 여러 필지(1-1BL, 1-2BL, 1-7BL, 1-8BL, 1-9BL)에서 개별 필지 단위로 데이터센터가 추진되고 있으며, 이를 위한 전기사용(수전) 신청 또한 필지별로 개별적으로 이루어진 것으로 파악됩니다." + "\n\n" +
+            "그런데 확인된 바에 따르면, 1-7BL·1-8BL·1-9BL은 동일한 법인(주식회사 과천주암대토개발제1호위탁관리부동산투자회사)이 시행하고 있고, 1-1BL·1-2BL은 각각 별도 법인이나 모두 동일한 자산운용사(마스턴투자운용)가 운용하는 것으로 보입니다. 즉 실질적으로 동일하거나 밀접히 관련된 사업주체가 인접한 필지에서 하나의 데이터센터 단지를 개발하면서, 형식상 필지·법인을 분할하여 개별적으로 수전을 신청한 정황이 있습니다." + "\n\n" +
+            "이 경우 인접 필지의 계약전력을 합산하면 상당한 규모에 이르러 「분산에너지 활성화 특별법」 제25조에 따른 전력계통영향평가 대상(계약전력 10MW 이상)에 해당할 수 있음에도, 개별 수전 신청으로 이를 회피한 것은 아닌지 하는 의혹이 제기됩니다." + "\n\n" +
+            "이에 귀 공사께 다음을 요청드립니다.\n" +
+            "① 위 5개 필지(1-1·1-2·1-7·1-8·1-9BL)에 대한 전기사용 신청 및 계약전력 현황을 확인하여 주시기 바랍니다.\n" +
+            "② 동일 법인 또는 동일 자산운용사가 시행·운용하는 인접 필지의 전력수요를 합산하여 심사하고, 필지 분할을 통한 수전 신청이 전력계통영향평가 등 관련 심사를 회피하기 위한 것은 아닌지 전수조사하여 주시기 바랍니다.\n" +
+            "③ 조사 결과 실질적으로 하나의 사업에 해당한다고 판단될 경우, 개별 수전 승인을 재검토하고 합산 기준에 따라 전력계통 영향을 다시 평가하여 주시기 바랍니다." + "\n\n" +
+            "[문제 제기 1] RE100·에너지 전환 정책 역행\n" +
+            "글로벌 기업들은 RE100 달성을 위해 신재생에너지 사용을 사실상 필수 요건으로 요구하고 있습니다. 신재생에너지 공급이 구조적으로 제한적인 수도권에 대규모 데이터센터를 신축하는 것은 정부의 탄소중립 목표 및 에너지 전환 정책과 역행하는 방향이라고 판단됩니다." + "\n\n" +
+            "[문제 제기 2] 공공택지 취지에 맞지 않는 특혜성 개발 우려\n" +
+            "공공주택지구 부지는 본래 공공적 목적을 위해 조성된 것입니다. 이 부지에 대규모 민간 데이터센터 개발이 허용될 경우 공공사업의 취지와 맞지 않는 특혜성 개발로 비칠 소지가 있다고 생각합니다." + "\n\n" +
+            "[문제 제기 3] 수도권 집중 완화 국정과제 위배\n" +
+            "정부는 국토 균형발전과 수도권 인구·기능 분산을 핵심 국정과제로 추진하고 있습니다. 대규모 전력을 소비하는 첨단 인프라 시설을 수도권 한복판에 신축하는 것은 이러한 국정 기조에 정면으로 배치되는 것으로 보입니다." + "\n\n" +
+            "한국전력공사께서는 수도권 전력계통 안정화와 「분산에너지 활성화 특별법」의 취지에 따라, 위 쪼개기 의혹에 대한 조사와 함께 해당 사업장에 대한 전력 공급 여부를 신중하게 재검토해 주시기 바랍니다." + "\n\n" +
+            "주민들의 정당한 우려에도 불구하고 관련 절차가 면밀한 검토 없이 진행될 경우, 주민들은 정당한 절차를 통해 필요한 대응을 검토할 수밖에 없다는 점을 말씀드립니다. 적법한 절차를 존중하며, 다만 전력 수급 안정성과 시민 안전에 직결된 사안인 만큼 신중한 검토를 요청드립니다." + "\n\n" +
+            "감사합니다.";
+        return { title: kepcoFixedTitle, body };
+    }
+
+    const fireClosings = [
+        "이 민원은 소방당국의 적법한 업무를 방해하고자 하는 것이 아니라 주민의 생명과 안전을 위해 신중한 검토를 요청드리는 것입니다.\n\n감사합니다.",
+        "적법한 절차를 존중하며 다만 주민의 생존권이 걸린 사안인 만큼 각별히 신중한 검토를 요청드립니다.\n\n감사합니다."
+    ];
+
+    const fireVersionA = {
+        title: "데이터센터 건립 인근 소방자동차 진입 및 소화용수 확보에 대한 현장 중심 검토 요청 (과천소방서)",
+        buildBody: (personal, closing) =>
+            "주민 안전을 위해 힘쓰시는 귀 서의 노고에 감사드리며 아래와 같이 민원을 제출합니다." + "\n\n" +
+            "현행 소방시설 관계 법령에 따른 건축허가 동의 자료에는 소방자동차 진입 동선도 및 부서 공간 위치도 등이 포함됩니다." + personal + "\n\n" +
+            "특히 약 30m라는 짧은 거리로 인해 데이터센터와 주거지역이 사실상 하나의 생활권 안에 위치하게 되는 만큼, 화재 발생 시 소방활동 자체가 인근 주민의 대피를 방해하지 않는지도 검토해 주시기 바랍니다." + "\n\n" +
+            closing
+    };
+
+    const fireVersionB = {
+        title: "과천 주암지구 데이터센터 건립 관련 건축허가 '부동의(불가)' 촉구 민원 (과천소방서)",
+        buildBody: (personal, closing) =>
+            "과천 주암지구 내 데이터센터 건립과 관련하여 과천시청에서 과천소방서로 전송될 건축물 소방 동의(건축허가 동의)에 대해 강력한 반대 의사를 표명하며, 주민의 생명과 안전을 위해 최종 부동의(불가) 처분을 내려줄 것을 촉구합니다." + personal + "\n\n" +
+            "데이터센터는 다량의 리튬이온 배터리와 고전압 수전설비가 밀집되어 있어 화재 위험이 높은 시설로 알려져 있습니다." + "\n\n" +
+            "과천에서는 지난 2014년 삼성SDS 데이터센터 화재라는 대형 사고가 발생한 바 있어 주민들의 불안감은 매우 큽니다." + "\n\n" +
+            "데이터센터가 초연접한 30m 내에 들어오지 못하도록 과천소방서에 건축물허가 부동의하여 주시기 바랍니다." + "\n\n" +
+            closing
+    };
+
+    const fireVersions = [fireVersionA, fireVersionB];
+
+    let stateF = {};
+    function rerollFire() {
+        stateF = {
+            versionIdx: getRandomIndex(fireVersions.length),
+            closeIdx: getRandomIndex(fireClosings.length)
+        };
+    }
+
+    function buildFire() {
+        const v = fireVersions[stateF.versionIdx];
+        const body = v.buildBody(getPersonalParagraph(), fireClosings[stateF.closeIdx]);
+        return { title: v.title, body };
+    }
+
+    let currentTitle = "";
+
+    const EPEOPLE_URL = 'https://www.epeople.go.kr/index.paid';
+
+    const MODE_CONFIG = {
+        lh: { btnId: 'btnModeLh', meta: '📍 접수 기관: 한국토지주택공사(LH) 공공택지사업처·의왕과천사업본부', target: 'epeople', goLabel: '🏛️ 국민신문고 바로가기 →', titlePrefix: '민원 제목', reroll: rerollLh, build: buildLh },
+        moland: { btnId: 'btnModeMoland', meta: '📍 접수 기관: 국토교통부 (민간임대정책과)', target: 'epeople', goLabel: '🏛️ 국민신문고 바로가기 →', titlePrefix: '민원 제목', reroll: rerollMoland, build: buildMoland },
+        gwacheon: { btnId: 'btnModeGwacheon', meta: '📍 접수 기관: 과천시 (시장)', target: 'epeople', goLabel: '🏛️ 국민신문고 바로가기 →', titlePrefix: '민원 제목', reroll: rerollGwacheon, build: buildGwacheon },
+        kepco: { btnId: 'btnModeKepco', meta: '📍 접수 기관: 한국전력공사', target: 'epeople', goLabel: '🏛️ 국민신문고 바로가기 →', titlePrefix: '민원 제목', reroll: rerollKepco, build: buildKepco },
+        fire: { btnId: 'btnModeFire', meta: '📍 접수 기관: 소방청 (과천소방서) · ✨ 매번 두 버전 중 하나가 무작위로 나옵니다', target: 'epeople', goLabel: '🏛️ 국민신문고 바로가기 →', titlePrefix: '민원 제목', reroll: rerollFire, build: buildFire },
+        budongsan: { btnId: 'btnModeBudongsan', meta: '📍 접수 기관: 한국부동산원 (리츠심사팀)', target: 'epeople', goLabel: '🏛️ 국민신문고 바로가기 →', titlePrefix: '민원 제목', reroll: rerollBudongsan, build: buildBudongsan }
+    };
+
+    const AGENCY_DONE_KEY = 'gwacheon_agency_done_v1';
+    function loadAgencyDone() {
+        try { return new Set(JSON.parse(localStorage.getItem(AGENCY_DONE_KEY) || '[]')); }
+        catch (e) { return new Set(); }
+    }
+    function saveAgencyDone(set) {
+        try { localStorage.setItem(AGENCY_DONE_KEY, JSON.stringify([...set])); } catch (e) {}
+    }
+    let agencyDone = loadAgencyDone();
+
+    function toggleAgencyDone(mode) {
+        if (agencyDone.has(mode)) { agencyDone.delete(mode); } else { agencyDone.add(mode); }
+        saveAgencyDone(agencyDone);
+        renderAgencyDoneUI();
+    }
+
+    function renderAgencyDoneUI() {
+        const modes = Object.keys(MODE_CONFIG);
+        modes.forEach(m => {
+            const done = agencyDone.has(m);
+            const btn = document.getElementById(MODE_CONFIG[m].btnId);
+            const check = document.getElementById('agencyCheck_' + m);
+            if (btn) btn.classList.toggle('agency-done', done);
+            if (check) {
+                check.classList.toggle('done', done);
+                check.textContent = done ? '✅' : '☐';
+                check.setAttribute('aria-checked', done ? 'true' : 'false');
+            }
+        });
+        const total = modes.length;
+        const doneCount = modes.filter(m => agencyDone.has(m)).length;
+        const countEl = document.getElementById('agencyProgressText');
+        if (countEl) countEl.textContent = `${doneCount} / ${total}개 기관 제출 완료`;
+        const fillEl = document.getElementById('agencyProgressFill');
+        if (fillEl) fillEl.style.width = (total ? (doneCount / total * 100) : 0) + '%';
+        updateNextAgencyUI();
+    }
+
+    const AGENCY_FULL_NAMES = { lh: '한국토지주택공사', moland: '국토교통부', gwacheon: '과천시', kepco: '한국전력공사', fire: '소방청', budongsan: '한국부동산원' };
+    const copiedParts = {};
+    function markCopied(part) {
+        const m = currentMode;
+        if (!copiedParts[m]) copiedParts[m] = {};
+        copiedParts[m][part] = true;
+        const p = copiedParts[m];
+        if (!agencyDone.has(m) && (p.all || (p.title && p.body))) {
+            agencyDone.add(m);
+            saveAgencyDone(agencyDone);
+            renderAgencyDoneUI();
+            showToast(`✅ ${AGENCY_FULL_NAMES[m] || ''} 민원 제출완료로 자동 체크했어요!\n실수라면 탭의 체크 표시를 눌러 해제할 수 있어요.`);
+        }
+    }
+
+    function copyCurrentAgencyName() {
+        const name = AGENCY_FULL_NAMES[currentMode] || '';
+        if (!name) return;
+        navigator.clipboard.writeText(name).then(() => {
+            const btn = document.getElementById('btnCopyAgencyName');
+            if (btn) {
+                btn.classList.add('copied');
+                btn.innerHTML = '복사됨!';
+                setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '기관명 복사'; }, 1800);
+            }
+            showToast(`📋 "${name}" 기관명이 복사됐어요!`);
+        });
+    }
+
+    function switchMode(mode) {
+        currentMode = mode;
+        Object.keys(MODE_CONFIG).forEach(m => {
+            document.getElementById(MODE_CONFIG[m].btnId).classList.toggle('active', m === mode);
+        });
+
+        const cfg = MODE_CONFIG[mode];
+        const meta = document.getElementById('metaInfoLine');
+        const goBtn = document.getElementById('btnGoTarget');
+        const stickyBtn = document.getElementById('stickyBtnTarget');
+        const agencyNameChip = document.getElementById('currentAgencyNameChip');
+        const stickyAgencyName = document.getElementById('stickyAgencyName');
+
+        meta.innerText = cfg.meta;
+        goBtn.innerText = cfg.goLabel;
+        goBtn.href = EPEOPLE_URL;
+        if (stickyBtn) stickyBtn.href = EPEOPLE_URL;
+        const agencyName = AGENCY_FULL_NAMES[mode] || '';
+        if (agencyNameChip) agencyNameChip.textContent = agencyName;
+        if (stickyAgencyName) stickyAgencyName.textContent = agencyName;
+
+        generate(true);
+    }
+
+    function generate(reroll) {
+        const cfg = MODE_CONFIG[currentMode];
+        if (reroll) cfg.reroll();
+        const r = cfg.build();
+        currentTitle = r.title;
+        document.getElementById('titleDisplay').innerText = `${cfg.titlePrefix}: ${r.title}`;
+        document.getElementById('resultBox').value = r.body;
+        document.getElementById('btnGoTarget').href = EPEOPLE_URL;
+        const stickyBtn = document.getElementById('stickyBtnTarget');
+        if (stickyBtn) stickyBtn.href = EPEOPLE_URL;
+        resetCopyButtons();
+        updatePersonalizeGateUI();
+        updateNextAgencyUI();
+    }
+
+    let _inputDebounce = null;
+    function onInputsChanged() {
+        renderGuidedPreview();
+        updatePersonalizeGateUI();
+        clearTimeout(_inputDebounce);
+        _inputDebounce = setTimeout(() => generate(false), 220);
+    }
+
+    // 'none'  = 아무것도 없음  ·  'weak' = 칩 1개뿐이거나 직접 쓴 글이 너무 짧음  ·  'ok' = 충분
+    function personalizeStrength() {
+        const own = getPersonalText().length;
+        const chips = selectedKeywords.size;
+        if (own >= 25 || chips >= 2) return 'ok';
+        if (own > 0 || chips === 1) return 'weak';
+        return 'none';
+    }
+    function isPersonalized() { return personalizeStrength() !== 'none'; }
+    function isStrongEnough() { return personalizeStrength() === 'ok'; }
+
+    let wasPersonalized = false;
+
+    function togglePersonalizeBox(forceCollapsed) {
+        const box = document.getElementById('personalizeBox');
+        if (!box) return;
+        const collapsed = typeof forceCollapsed === 'boolean' ? forceCollapsed : !box.classList.contains('collapsed');
+        box.classList.toggle('collapsed', collapsed);
+        const arrow = document.getElementById('personalizeArrow');
+        if (arrow) arrow.textContent = collapsed ? '▼' : '▲';
+    }
+
+    function updatePersonalizeGateUI() {
+        const strength = personalizeStrength();
+        const ok = strength === 'ok';
+        ['btnCopyTitle', 'btnCopyBody', 'btnCopyTitleBody', 'btnCopyBodyOpen', 'btnGoTarget', 'btnHandoff', 'stickyBtnTitle', 'stickyBtnBody', 'stickyBtnTitleBody', 'stickyBtnTarget'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.toggle('gate-locked', !ok);
+        });
+        const strEl = document.getElementById('personalizeStrength');
+        if (strEl) {
+            strEl.className = 'personalize-strength' + (strength === 'ok' ? ' ok' : (strength === 'weak' ? ' weak' : ''));
+            if (strength === 'ok') strEl.textContent = '✅ 좋아요! 다른 분들과 구분되는 민원이 됩니다. 이제 복사·제출이 가능해요.';
+            else if (strength === 'weak') strEl.textContent = '✍️ 거의 다 됐어요. 위 칸 중 한 곳에 한 문장만 더 적거나, 위 항목을 하나 더 선택해 주세요. (지금은 다른 분들과 문장이 거의 같습니다)';
+            else strEl.textContent = '';
+        }
+        const note = document.getElementById('personalizeRequiredNote');
+        if (note) {
+            if (ok) {
+                note.innerText = '✅ 준비 완료! 이제 제목·본문 복사와 신문고 이동이 가능해요. (다시 펼치려면 여기를 눌러주세요)';
+                note.style.color = '#15803d';
+            } else {
+                note.innerText = '⚠️ 나만의 사연을 한 문장 이상 적거나, 위 항목을 2개 이상 선택해야 복사·제출이 가능해요.';
+                note.style.color = '#dc2626';
+            }
+        }
+        if (ok && !wasPersonalized) {
+            togglePersonalizeBox(true);
+        } else if (!ok && wasPersonalized) {
+            togglePersonalizeBox(false);
+        }
+        wasPersonalized = ok;
+    }
+
+    function checkPersonalized() {
+        if (isStrongEnough()) return true;
+        showToast(personalizeStrength() === 'weak'
+            ? '✍️ 한 문장만 더 적거나 항목을 하나 더 선택해 주세요.\n지금은 다른 분들과 거의 똑같은 민원이 됩니다.'
+            : '⚠️ 먼저 나만의 사연을 한 문장 이상 적어주세요! (또는 항목 2개 이상 선택)');
+        const box = document.getElementById('personalizeBox');
+        if (box) {
+            togglePersonalizeBox(false);
+            box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            box.classList.add('flash-required');
+            setTimeout(() => box.classList.remove('flash-required'), 1200);
+        }
+        return false;
+    }
+
+    function resetCopyButtons() {
+        const t = document.getElementById('btnCopyTitle');
+        const b = document.getElementById('btnCopyBody');
+        if (t) { t.classList.remove('copied'); t.innerHTML = '제목만 복사'; }
+        if (b) { b.classList.remove('copied'); b.innerHTML = '본문만 복사'; }
+        const agencyBtn = document.getElementById('btnCopyAgencyName');
+        if (agencyBtn) { agencyBtn.classList.remove('copied'); agencyBtn.innerHTML = '기관명 복사'; }
+        const allBtn = document.getElementById('btnCopyTitleBody');
+        if (allBtn) { allBtn.classList.remove('copied'); allBtn.innerHTML = '📑 제목+본문 한번에 복사'; }
+    }
+
+    function copyTitle() {
+        navigator.clipboard.writeText(currentTitle).then(() => {
+            const btn = document.getElementById('btnCopyTitle');
+            btn.classList.add('copied'); btn.innerHTML = '복사됨!';
+            showToast('📋 제목이 복사됐어요!');
+            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '제목만 복사'; }, 1800);
+            markCopied('title');
+        });
+    }
+
+    function copyBody() {
+        const body = document.getElementById('resultBox').value;
+        navigator.clipboard.writeText(body).then(() => {
+            const btn = document.getElementById('btnCopyBody');
+            btn.classList.add('copied'); btn.innerHTML = '복사됨!';
+            showToast('📄 본문이 복사됐어요!');
+            setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '본문만 복사'; }, 1800);
+            markCopied('body');
+        });
+    }
+
+    function copyTitleAndBody() {
+        const body = document.getElementById('resultBox').value;
+        const combined = `${currentTitle}\n\n${body}`;
+        navigator.clipboard.writeText(combined).then(() => {
+            const btn = document.getElementById('btnCopyTitleBody');
+            if (btn) {
+                btn.classList.add('copied'); btn.innerHTML = '📑 복사됨!';
+                setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '📑 제목+본문'; }, 1800);
+            }
+            showToast('📑 제목+본문을 함께 복사했어요.\n첫 줄이 제목, 나머지가 본문입니다. 각각 나눠서 붙여넣으세요.');
+            markCopied('all');
+        });
+    }
+
+    // 본문 복사 + 국민신문고 새 탭 열기 (붙여넣기 릴레이 단축)
+    function copyBodyAndOpen() {
+        const body = document.getElementById('resultBox').value;
+        const done = () => {
+            showToast('📄 본문을 복사했어요!\n국민신문고 "내용"란에 붙여넣으세요.\n제목은 이 페이지로 돌아와 "제목만 복사"로 넣으면 됩니다.');
+            markCopied('body');
+            window.open(EPEOPLE_URL, '_blank', 'noopener');
+        };
+        navigator.clipboard.writeText(body).then(done).catch(done);
+    }
+
+    // 모바일 하단바: 본문 복사 후 <a> 링크 이동을 그대로 허용
+    function stickyCopyBodyThenGo() {
+        const body = document.getElementById('resultBox').value;
+        try { navigator.clipboard.writeText(body); } catch (e) {}
+        markCopied('body');
+        showToast('📄 본문 복사됨 · 국민신문고로 이동합니다');
+        return true;
+    }
+
+    function goNextAgency() {
+        const modes = Object.keys(MODE_CONFIG);
+        if (!agencyDone.has(currentMode)) {
+            agencyDone.add(currentMode);
+            saveAgencyDone(agencyDone);
+            renderAgencyDoneUI();
+        }
+        if (modes.every(m => agencyDone.has(m))) {
+            showToast('🎉 6개 기관 모두 제출 완료! 정말 수고하셨어요.');
+            updateNextAgencyUI();
+            return;
+        }
+        const ci = modes.indexOf(currentMode);
+        let next = null;
+        for (let i = 1; i <= modes.length; i++) {
+            const m = modes[(ci + i) % modes.length];
+            if (!agencyDone.has(m)) { next = m; break; }
+        }
+        if (next) {
+            switchMode(next);
+            const tabs = document.querySelector('.mode-tabs');
+            if (tabs) tabs.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            showToast('➡️ 다음 기관: ' + (AGENCY_FULL_NAMES[next] || ''));
+        }
+    }
+
+    function updateNextAgencyUI() {
+        const done = agencyDone.has(currentMode);
+        const allDone = Object.keys(MODE_CONFIG).every(m => agencyDone.has(m));
+        const label = allDone ? '🎉 6곳 모두 완료!' : '✅ 제출했어요 · 다음 기관으로 →';
+        const row = document.getElementById('nextAgencyRow');
+        if (row) row.style.display = done ? 'block' : 'none';
+        const btn = document.getElementById('btnNextAgency');
+        if (btn) btn.textContent = label;
+        const srow = document.getElementById('stickyNextAgency');
+        if (srow) { srow.style.display = done ? 'block' : 'none'; srow.textContent = label; }
+    }
+
+    // ── 고급: 국민신문고 폼 자동 채우기 북마클릿 ────────────────────────────
+    // window.name 은 같은 탭에서 다른 도메인으로 이동해도 유지됩니다.
+    // 도우미가 window.name 에 민원을 담아 국민신문고로 이동시키고,
+    // 이용자가 북마크바의 북마클릿을 눌러 로그인된 자기 브라우저에서 폼을 채웁니다.
+    const BOOKMARKLET = "javascript:(function(){try{var d=JSON.parse(window.name||'{}');if(!d||!d.__juam||!d.body){alert('넘겨받은 민원 내용이 없습니다.\\n도우미 페이지에서 \\\"이 민원 자동채우기로 넘기기\\\"를 먼저 눌러주세요.');return;}var vis=function(el){return el&&!el.disabled&&!el.readOnly&&el.offsetParent!==null;};var tas=[].slice.call(document.querySelectorAll('textarea')).filter(vis);tas.sort(function(a,b){return b.offsetWidth*b.offsetHeight-a.offsetWidth*a.offsetHeight;});var setV=function(el,v){el.focus();try{el.value=v;}catch(e){}el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));el.dispatchEvent(new KeyboardEvent('keyup',{bubbles:true}));};if(tas[0])setV(tas[0],d.body);var title=null,labs=document.querySelectorAll('label,th,span,strong,div');for(var i=0;i<labs.length;i++){var t=(labs[i].textContent||'').replace(/\\s/g,'');if(t&&t.length<12&&t.indexOf('제목')>-1){var sc=labs[i];for(var k=0;k<5&&sc;k++){var inp=sc.querySelector&&sc.querySelector('input[type=text],input:not([type]),input[type=search]');if(vis(inp)){title=inp;break;}sc=sc.parentElement;}if(title)break;}}if(!title){var ins=[].slice.call(document.querySelectorAll('input[type=text],input:not([type])')).filter(vis);title=ins.filter(function(x){return /titl|subj|제목/i.test(x.id+' '+x.name+' '+(x.placeholder||''));})[0]||ins[0];}if(title){title.focus();try{title.value=d.title||'';}catch(e){}title.dispatchEvent(new Event('input',{bubbles:true}));title.dispatchEvent(new Event('change',{bubbles:true}));}alert((title?'제목과 본문':'본문')+'을 채웠습니다.\\n\\n반드시 내용을 확인하시고 처리기관·공개여부 등 나머지 항목을 직접 선택한 뒤 제출하세요.\\n칸을 잘못 찾았다면 채워진 내용을 지우고 수동으로 붙여넣어 주세요.');}catch(e){alert('자동채우기 중 오류: '+e.message+'\\n복사·붙여넣기 방식을 이용해 주세요.');}})();";
+
+    function initBookmarklet() {
+        const a = document.getElementById('bookmarkletLink');
+        if (a) a.setAttribute('href', BOOKMARKLET);
+    }
+
+    function handoffToEpeople() {
+        if (!checkPersonalized()) return;
+        const body = document.getElementById('resultBox').value;
+        try {
+            window.name = JSON.stringify({ __juam: true, title: currentTitle, body: body, agency: AGENCY_FULL_NAMES[currentMode] || '', ts: Date.now() });
+        } catch (e) {}
+        try { navigator.clipboard.writeText(body); } catch (e) {}
+        markCopied('body');
+        showToast('국민신문고로 이동합니다.\n로그인 → 민원신청 폼에서 북마크바의 "주암민원 자동채우기"를 누르세요.');
+        setTimeout(() => { window.location.href = EPEOPLE_URL; }, 900);
+    }
+
+    function toggleAdvancedBox() {
+        const box = document.getElementById('advancedBox');
+        if (!box) return;
+        box.classList.toggle('collapsed');
+        const ar = document.getElementById('advancedArrow');
+        if (ar) ar.textContent = box.classList.contains('collapsed') ? '▼' : '▲';
+    }
+
+    function showToast(msg) {
+        const t = document.getElementById('toastMsg');
+        t.innerText = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    function switchTopTab(tab) {
+        const btnWrite = document.getElementById('topTabWrite');
+        const btnSms = document.getElementById('topTabAction');
+        const panelWrite = document.getElementById('panelWrite');
+        const panelSms = document.getElementById('panelSms');
+        if (tab === 'sms') {
+            btnWrite.classList.remove('active'); btnSms.classList.add('active');
+            panelWrite.classList.remove('active'); panelSms.classList.add('active');
+        } else {
+            btnWrite.classList.add('active'); btnSms.classList.remove('active');
+            panelWrite.classList.add('active'); panelSms.classList.remove('active');
+        }
+        updateStickyOffset();
+    }
+
+    const USAGE_GUIDE_SEEN_KEY = 'juam_usage_guide_seen_v1';
+    function initUsageGuide() {
+        const box = document.getElementById('usageGuideBox');
+        if (!box) return;
+        let seenBefore = false;
+        try { seenBefore = localStorage.getItem(USAGE_GUIDE_SEEN_KEY) === '1'; } catch (e) {}
+        if (seenBefore) {
+            box.classList.add('collapsed');
+        } else {
+            try { localStorage.setItem(USAGE_GUIDE_SEEN_KEY, '1'); } catch (e) {}
+        }
+        updateUsageGuideArrow();
+    }
+    function toggleUsageGuide() {
+        const box = document.getElementById('usageGuideBox');
+        if (!box) return;
+        box.classList.toggle('collapsed');
+        updateUsageGuideArrow();
+    }
+    function updateUsageGuideArrow() {
+        const box = document.getElementById('usageGuideBox');
+        const arrow = document.getElementById('usageGuideArrow');
+        if (!box || !arrow) return;
+        arrow.textContent = box.classList.contains('collapsed') ? '▼' : '▲';
+    }
+
+    function updateStickyOffset() {
+        const wrap = document.querySelector('.top-index-tabs-wrap');
+        const wrapH = wrap ? wrap.getBoundingClientRect().height : 0;
+        document.documentElement.style.setProperty('--sms-sticky-offset', wrapH + 'px');
+        const progressBox = document.getElementById('agencyProgressBox');
+        const progressH = progressBox ? progressBox.getBoundingClientRect().height : 0;
+        document.documentElement.style.setProperty('--agency-sticky-offset', (wrapH + progressH + 10) + 'px');
+    }
+    window.addEventListener('resize', updateStickyOffset);
+    window.addEventListener('orientationchange', updateStickyOffset);
+
+    const COUNCIL_MEMBERS = [
+        { id: 'ji',      party: 'ppp', name: '지태훈', phone: '010-4429-1766' },
+        { id: 'hwang',   party: 'ppp', name: '황선희', phone: '010-8227-5139' },
+        { id: 'yoo',     party: 'ppp', name: '유부임', phone: '010-5186-8058' },
+        { id: 'kimdj',   party: 'ppp', name: '김동진', phone: '010-7933-7536' },
+        { id: 'kimdh',   party: 'ppp', name: '김동현', phone: '010-8826-6826' },
+        { id: 'lee',     party: 'dp',  name: '이주연', phone: '010-9310-4087' },
+        { id: 'choi',    party: 'dp',  name: '최지희', phone: '010-2661-4133' },
+        { id: 'choigs',  party: 'etc', name: '최기식', phone: '010-6462-0381', role: '국힘 당협위원장' },
+        { id: 'kimhs',   party: 'etc', name: '김현석', phone: '010-4597-1659', role: '도의원' },
+        { id: 'kimeh',   party: 'etc', name: '김은혜', phone: '010-8900-1351', role: '국회의원' }
+    ];
+
+    const SMS_SENT_KEY = 'gwacheon_sms_sent_v1';
+
+    function loadSmsSent() {
+        try { return new Set(JSON.parse(localStorage.getItem(SMS_SENT_KEY) || '[]')); }
+        catch (e) { return new Set(); }
+    }
+    function saveSmsSent(set) {
+        try { localStorage.setItem(SMS_SENT_KEY, JSON.stringify([...set])); } catch (e) {}
+    }
+    let smsSent = loadSmsSent();
+
+    function buildSmsHref(phone) {
+        return `sms:${phone}`;
+    }
+
+    function renderSmsMemberLists() {
+        const listPpp = document.getElementById('smsListPpp');
+        const listDp = document.getElementById('smsListDp');
+        const listEtc = document.getElementById('smsListEtc');
+        listPpp.innerHTML = '';
+        listDp.innerHTML = '';
+        listEtc.innerHTML = '';
+
+        COUNCIL_MEMBERS.forEach(m => {
+            const target = m.party === 'ppp' ? listPpp : (m.party === 'dp' ? listDp : listEtc);
+            const row = document.createElement('div');
+            row.className = 'sms-member-row' + (smsSent.has(m.id) ? ' sent' : '');
+            row.id = 'smsRow_' + m.id;
+            if (smsSent.has(m.id)) row.style.display = 'none';
+
+            const info = document.createElement('div');
+            info.className = 'sms-member-info';
+            const roleHtml = m.role ? `<span class="sms-member-role">${m.role}</span>` : '';
+            info.innerHTML = `<span class="sms-member-name">${m.name}${roleHtml}</span><span class="sms-member-phone">${m.phone}</span>`;
+
+            const actions = document.createElement('div');
+            actions.className = 'sms-member-actions';
+            actions.id = 'smsActions_' + m.id;
+
+            const badge = document.createElement('span');
+            badge.className = 'sms-sent-badge';
+            badge.id = 'smsBadge_' + m.id;
+            badge.innerText = smsSent.has(m.id) ? '✅ 발송완료' : '';
+
+            row.appendChild(info);
+            row.appendChild(actions);
+            row.appendChild(badge);
+            target.appendChild(row);
+
+            renderSmsMemberActions(m);
+        });
+    }
+
+    function renderSmsMemberActions(m) {
+        const actions = document.getElementById('smsActions_' + m.id);
+        if (!actions) return;
+        actions.innerHTML = '';
+
+        const btn = document.createElement('a');
+        btn.className = 'sms-send-btn';
+        btn.href = buildSmsHref(m.phone);
+        btn.innerText = '📱 문자 보내기';
+        btn.onclick = () => { markSmsSent(m.id); };
+        actions.appendChild(btn);
+
+        const copyBtn = document.createElement('button');
+        copyBtn.type = 'button';
+        copyBtn.className = 'sms-copy-btn';
+        copyBtn.innerText = '번호 복사';
+        copyBtn.onclick = () => {
+            navigator.clipboard.writeText(m.phone).then(() => showToast('📱 번호가 복사됐어요!'));
+        };
+        actions.appendChild(copyBtn);
+    }
+
+    function markSmsSent(id) {
+        smsSent.add(id);
+        saveSmsSent(smsSent);
+        updateSmsStatus();
+        const row = document.getElementById('smsRow_' + id);
+        const badge = document.getElementById('smsBadge_' + id);
+        if (badge) badge.innerText = '✅ 발송완료';
+        if (row) {
+            row.classList.add('sent');
+            setTimeout(() => { row.style.display = 'none'; }, 900);
+        }
+    }
+
+    function updateSmsStatus() {
+        const total = COUNCIL_MEMBERS.length;
+        const done = COUNCIL_MEMBERS.filter(m => smsSent.has(m.id)).length;
+        document.getElementById('smsStatusCount').innerText = `${done} / ${total}명 발송완료`;
+        document.getElementById('smsProgressFill').style.width = `${Math.round(done / total * 100)}%`;
+    }
+
+    function resetSmsProgress() {
+        if (!confirm('발송 기록을 모두 초기화할까요? (실제로 보낸 문자에는 영향이 없습니다)')) return;
+        smsSent = new Set();
+        saveSmsSent(smsSent);
+        renderSmsMemberLists();
+        updateSmsStatus();
+    }
+
+    function initSmsPanel() {
+        renderSmsMemberLists();
+        updateSmsStatus();
+    }
+
+    buildKeywordGrid();
+    buildGuidedGrid();
+    initBookmarklet();
+    rerollBudongsan();
+    rerollLh();
+    rerollMoland();
+    rerollGwacheon();
+    rerollKepco();
+    rerollFire();
+    switchMode('lh');
+    renderGuidedPreview();
+    initSmsPanel();
+    initUsageGuide();
+    renderAgencyDoneUI();
+    updateStickyOffset();
+
+    // 기관 완료 체크 동그라미 키보드 지원 (Enter/Space)
+    Object.keys(MODE_CONFIG).forEach(m => {
+        const c = document.getElementById('agencyCheck_' + m);
+        if (!c) return;
+        c.setAttribute('tabindex', '0');
+        c.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleAgencyDone(m);
+            }
+        });
+    });
+</script>
+</body>
+</html>
