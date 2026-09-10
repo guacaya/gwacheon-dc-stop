@@ -100,6 +100,19 @@
       .sms-send-btn{background:var(--acc);color:#fff;font-size:12.5px;font-weight:800;padding:9px 13px;border-radius:10px;text-decoration:none;white-space:nowrap}
       .sms-copy-btn{background:#f3f4f6;border:none;color:#374151;font-size:11.5px;font-weight:700;padding:9px 10px;border-radius:10px;cursor:pointer}
       .sms-sent-badge{font-size:11px;font-weight:800;color:var(--ok)}
+      .pick-tools{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
+      .pick-tool{font-size:12px;font-weight:700;color:var(--acc-d);background:var(--acc-l);border:none;border-radius:999px;padding:7px 12px;cursor:pointer;font-family:inherit}
+      .pick-tool:active{transform:scale(.97)}
+      #pickGrid{display:flex;flex-direction:column;gap:9px}
+      .pick-row{display:flex;align-items:center;gap:9px;width:100%;text-align:left;border:1.5px solid var(--line);background:#fafafa;border-radius:13px;padding:15px 14px;font-family:inherit;font-size:15px;font-weight:700;color:var(--sub);cursor:pointer}
+      .pick-row:active{transform:scale(.99)}
+      .pick-row-name{flex:1;word-break:keep-all}
+      .pick-row-badge{font-size:10.5px;font-weight:800;color:var(--sub);background:#eceff2;border-radius:999px;padding:3px 8px;white-space:nowrap}
+      .pick-row-check{width:24px;height:24px;border-radius:999px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:14px;color:transparent;flex-shrink:0}
+      .pick-row.on{border-color:var(--acc);background:var(--acc-l);color:var(--ink)}
+      .pick-row.on .pick-row-check{background:var(--acc);border-color:var(--acc);color:#fff}
+      .pick-row.on .pick-row-badge{background:#fff}
+      .pick-pc{display:block;text-align:center;font-size:12.5px;font-weight:700;color:var(--acc-d);text-decoration:none;margin-top:18px;padding:12px;border:1.5px dashed var(--acc);border-radius:12px}
     </style>
 </head>
 <body>
@@ -120,9 +133,21 @@
 
       <section class="screen" id="scStory">
         <h1 class="q">왜 반대하시나요?</h1>
-        <p class="lead">두세 문장, 나만의 이유를 적어주세요. 적은 글이 그대로 6개 민원에 들어갑니다. (동·호수는 안 적어도 돼요)</p>
+        <p class="lead">두세 문장, 나만의 이유를 적어주세요. 적은 글이 그대로 민원 본문에 들어갑니다. (동·호수는 안 적어도 돼요)</p>
         <textarea id="freeformInput" class="story" placeholder="예) 어린 아기를 키우고 있어 냉각팬 소음과 전자파가 특히 걱정됩니다. 아이 어린이집이 부지 바로 옆이라 통학길 안전도 불안합니다." oninput="onStoryInput()"></textarea>
         <div class="hint" id="storyHint">문장 2개 이상이면 다음으로 넘어갈 수 있어요.</div>
+      </section>
+
+      <section class="screen" id="scPick" hidden>
+        <h1 class="q">어디에 넣을까요?</h1>
+        <p class="lead">오늘 민원 넣을 기관을 고르세요. 격일로 나눠 넣어도 됩니다.</p>
+        <div class="pick-tools">
+          <button type="button" class="pick-tool" onclick="pickSet('all')">전체 선택</button>
+          <button type="button" class="pick-tool" onclick="pickSet('undone')">아직 안 넣은 곳만</button>
+          <button type="button" class="pick-tool" onclick="pickSet('none')">모두 해제</button>
+        </div>
+        <div id="pickGrid"></div>
+        <a class="pick-pc" href="bookmark.html" target="_blank" rel="noopener">💻 PC라면 · 6곳 한 번에 채우는 북마크 →</a>
       </section>
 
       <section class="screen" id="scAgency" hidden>
@@ -138,7 +163,8 @@
           <div class="done-big" id="doneBig">🎉</div>
           <div class="done-h" id="doneH">6곳 모두 제출 완료!</div>
           <p class="lead" id="doneP" style="margin-bottom:18px">정말 수고하셨어요.</p>
-          <button class="btn btn-ghost btn-lg" style="width:100%" onclick="restartWizard()">처음부터 다시 하기</button>
+          <button class="btn btn-acc btn-lg" id="btnMorePick" style="width:100%;margin-bottom:10px" onclick="goPickMore()">다른 기관에도 넣기 →</button>
+          <button class="btn btn-ghost btn-lg" style="width:100%" onclick="restartWizard()">제출 기록 초기화</button>
           <div class="daily">
             <div class="daily-l">🌱 오늘의 한마디</div>
             <div class="daily-m" id="dailyMsg">…</div>
@@ -166,7 +192,11 @@
   </main>
 
   <div class="bar" id="barStory" hidden>
-    <button class="btn btn-acc btn-lg" id="btnStoryNext" onclick="storyNext()" disabled>민원 만들기 →</button>
+    <button class="btn btn-acc btn-lg" id="btnStoryNext" onclick="storyNext()" disabled>기관 고르기 →</button>
+  </div>
+
+  <div class="bar" id="barPick" hidden>
+    <button class="btn btn-acc btn-lg" id="btnPickStart" onclick="pickStart()">선택한 곳 민원 만들기 →</button>
   </div>
 
   <div class="bar" id="barAgency" hidden>
@@ -607,65 +637,127 @@
     try{ localStorage.setItem(STORY_KEY,v); }catch(e){}
     var h=document.getElementById('storyHint'), nx=document.getElementById('btnStoryNext');
     if(!h||!nx) return;
-    if(storyOk()){ h.className='hint ok'; h.textContent='좋아요! 아래 버튼으로 6개 민원을 만드세요.'; nx.disabled=false; }
+    if(storyOk()){ h.className='hint ok'; h.textContent='좋아요! 다음 화면에서 넣을 기관을 고르세요.'; nx.disabled=false; }
     else if(v.length>0){ h.className='hint warn'; h.textContent='한 문장만 더 — 두세 문장이면 충분해요.'; nx.disabled=true; }
     else { h.className='hint'; h.textContent='문장 2개 이상이면 다음으로 넘어갈 수 있어요.'; nx.disabled=true; }
   }
 
   /* ── 마법사 ── */
-  /* wizIndex: -1=사연, 0..5=기관, 6=완료 */
-  var wizIndex=-1, _seen={};
+  /* wizPhase: 'story' → 'pick' → 'agency'(queue 순회) → 'done' */
+  var wizPhase='story', _seen={};
+  var queue=[], qi=0;
+  var pickSel=new Set();
+
+  function defaultPick(){
+    pickSel=new Set();
+    MODES.forEach(function(k){ if(!agencyDone.has(k)) pickSel.add(k); });
+    if(pickSel.size===0) MODES.forEach(function(k){ pickSel.add(k); });
+  }
+  function pickSet(which){
+    pickSel=new Set();
+    if(which==='all') MODES.forEach(function(k){ pickSel.add(k); });
+    else if(which==='undone') MODES.forEach(function(k){ if(!agencyDone.has(k)) pickSel.add(k); });
+    renderPickGrid();
+  }
+  function updatePickBtn(){
+    var n=pickSel.size, btn=document.getElementById('btnPickStart');
+    btn.disabled = n===0;
+    btn.textContent = n===0 ? '기관을 하나 이상 고르세요' : ('선택한 '+n+'곳 민원 만들기 →');
+  }
+  function renderPickGrid(){
+    var g=document.getElementById('pickGrid'); if(!g) return;
+    g.innerHTML='';
+    MODES.forEach(function(k){
+      var b=document.createElement('button');
+      b.type='button'; b.className='pick-row'+(pickSel.has(k)?' on':''); b.dataset.k=k;
+      b.innerHTML='<span class="pick-row-name">'+AGENCY_FULL_NAMES[k]+'</span>'
+        + (agencyDone.has(k)?'<span class="pick-row-badge">지난번 완료</span>':'')
+        + '<span class="pick-row-check">✓</span>';
+      b.onclick=function(){
+        if(pickSel.has(k)) pickSel.delete(k); else pickSel.add(k);
+        b.classList.toggle('on'); updatePickBtn();
+      };
+      g.appendChild(b);
+    });
+    updatePickBtn();
+  }
+
   function renderWiz(){
     var dots=document.getElementById('dots'); dots.innerHTML='';
-    for(var i=0;i<7;i++){
+    var inQueue=(wizPhase==='agency'||wizPhase==='done') && queue.length;
+    var segs = inQueue ? queue.length : 6;
+    var curDot = wizPhase==='done' ? segs+1 : (wizPhase==='agency' ? qi+1 : 0);
+    for(var i=0;i<segs+2;i++){
       var d=document.createElement('div'); d.className='dot';
-      if(i>=1 && agencyDone.has(MODES[i-1])) d.classList.add('done');
-      if(i===wizIndex+1) d.classList.add('cur');
+      if(inQueue && i>=1 && i<=queue.length && agencyDone.has(queue[i-1])) d.classList.add('done');
+      if(i===curDot) d.classList.add('cur');
       dots.appendChild(d);
     }
-    var scStory=document.getElementById('scStory'), scAg=document.getElementById('scAgency'), scDone=document.getElementById('scDone');
-    var barStory=document.getElementById('barStory'), barAg=document.getElementById('barAgency'), back=document.getElementById('hdBack');
-    scStory.hidden=scAg.hidden=scDone.hidden=true; barStory.hidden=barAg.hidden=true;
+    var scStory=document.getElementById('scStory'), scPick=document.getElementById('scPick'),
+        scAg=document.getElementById('scAgency'), scDone=document.getElementById('scDone');
+    var barStory=document.getElementById('barStory'), barPick=document.getElementById('barPick'),
+        barAg=document.getElementById('barAgency'), back=document.getElementById('hdBack');
+    scStory.hidden=scPick.hidden=scAg.hidden=scDone.hidden=true;
+    barStory.hidden=barPick.hidden=barAg.hidden=true;
     var sb=document.getElementById('scrollBody'); if(sb) sb.scrollTop=0;
 
-    if(wizIndex===-1){
+    if(wizPhase==='story'){
       scStory.hidden=false; barStory.hidden=false; back.hidden=true;
       document.getElementById('hdTitle').textContent='주암 민원 넣기';
       onStoryInput();
-    } else if(wizIndex>=0 && wizIndex<6){
+    } else if(wizPhase==='pick'){
+      scPick.hidden=false; barPick.hidden=false; back.hidden=false;
+      document.getElementById('hdTitle').textContent='기관 선택';
+      renderPickGrid();
+    } else if(wizPhase==='agency'){
       scAg.hidden=false; barAg.hidden=false; back.hidden=false;
-      var m=MODES[wizIndex]; currentMode=m;
+      var m=queue[qi]; currentMode=m;
       generate(!_seen[m]); _seen[m]=1;
-      document.getElementById('agTag').textContent=(wizIndex+1)+' / 6 · '+AGENCY_FULL_NAMES[m];
+      document.getElementById('agTag').textContent=(qi+1)+' / '+queue.length+' · '+AGENCY_FULL_NAMES[m];
       document.getElementById('hdTitle').textContent=AGENCY_FULL_NAMES[m]+' 민원';
       document.getElementById('btnNextAgency').textContent = agencyDone.has(m) ? '완료함 · 다음 →' : '✅ 제출했어요 · 다음 →';
     } else {
       scDone.hidden=false; back.hidden=false;
-      var n=MODES.filter(function(k){return agencyDone.has(k);}).length;
+      var total=MODES.filter(function(k){return agencyDone.has(k);}).length;
+      var thisN=queue.filter(function(k){return agencyDone.has(k);}).length;
       document.getElementById('hdTitle').textContent='완료';
-      document.getElementById('doneBig').textContent = n>=6 ? '🎉' : '👍';
-      document.getElementById('doneH').textContent = n>=6 ? '6곳 모두 제출 완료!' : (n+'곳 제출 완료');
-      document.getElementById('doneP').textContent = n>=6 ? '정말 수고하셨어요. 내일 또 부탁드려요.' : ('남은 '+(6-n)+'곳도 이어서 넣어주세요.');
+      document.getElementById('doneBig').textContent = total>=6 ? '🎉' : '👍';
+      document.getElementById('doneH').textContent = total>=6 ? '6곳 모두 제출 완료!' : (thisN+'곳 제출 완료');
+      document.getElementById('doneP').textContent = total>=6
+        ? '정말 수고하셨어요. 내일 또 부탁드려요.'
+        : ('오늘 '+thisN+'곳 완료 · 전체 진행 '+total+'/6.');
+      document.getElementById('btnMorePick').hidden = total>=6;
       renderDaily();
     }
   }
-  function goStory(){ showView('write'); wizIndex=-1; renderWiz(); document.getElementById('freeformInput').focus(); }
-  function firstUndone(){ for(var i=0;i<6;i++){ if(!agencyDone.has(MODES[i])) return i; } return 6; }
-  function storyNext(){ if(!storyOk()){ onStoryInput(); return; } _seen={}; wizIndex=firstUndone(); renderWiz(); }
-  function wizBack(){ if(wizIndex>=0) wizIndex=-1; renderWiz(); }
+  function goStory(){ showView('write'); wizPhase='story'; renderWiz(); document.getElementById('freeformInput').focus(); }
+  function storyNext(){ if(!storyOk()){ onStoryInput(); return; } defaultPick(); wizPhase='pick'; renderWiz(); }
+  function goPickMore(){ defaultPick(); wizPhase='pick'; renderWiz(); }
+  function pickStart(){
+    if(pickSel.size===0){ showToast('기관을 하나 이상 고르세요'); return; }
+    queue=MODES.filter(function(k){ return pickSel.has(k); });
+    qi=0; _seen={}; wizPhase='agency'; renderWiz();
+    showToast(queue.length+'곳 준비 완료');
+  }
+  function wizBack(){
+    if(wizPhase==='pick') wizPhase='story';
+    else if(wizPhase==='agency') wizPhase='pick';
+    else if(wizPhase==='done') wizPhase='pick';
+    if(wizPhase==='pick') defaultPick();
+    renderWiz();
+  }
   function reshuffle(){ generate(true); showToast('문장을 다시 뽑았어요'); }
   function agencyDoneNext(){
-    var m=MODES[wizIndex];
+    var m=queue[qi];
     if(!agencyDone.has(m)){ agencyDone.add(m); saveDone(agencyDone); }
-    var next=-1;
-    for(var k=1;k<=6;k++){ var idx=(wizIndex+k)%6; if(!agencyDone.has(MODES[idx])){ next=idx; break; } }
-    wizIndex = next<0 ? 6 : next;
+    qi++;
+    if(qi>=queue.length){ wizPhase='done'; renderWiz(); return; }
     renderWiz();
-    if(next>=0) showToast('다음: '+AGENCY_FULL_NAMES[MODES[next]]);
+    showToast('다음: '+AGENCY_FULL_NAMES[queue[qi]]);
   }
   function restartWizard(){
-    if(!confirm('6개 기관 제출 체크를 모두 지우고 처음부터 다시 할까요?\n(사연은 그대로 남아요)')) return;
-    agencyDone=new Set(); saveDone(agencyDone); _seen={}; wizIndex=-1; renderWiz();
+    if(!confirm('제출 완료 체크를 모두 지울까요?\n(사연은 그대로 남아요)')) return;
+    agencyDone=new Set(); saveDone(agencyDone); _seen={}; queue=[]; qi=0; wizPhase='story'; renderWiz();
   }
 
   /* ── 화면 전환 (민원 / 문자) ── */
@@ -677,6 +769,7 @@
     document.getElementById('dots').style.display = v==='write' ? 'flex' : 'none';
     if(v==='sms'){
       document.getElementById('barStory').hidden=true;
+      document.getElementById('barPick').hidden=true;
       document.getElementById('barAgency').hidden=true;
       document.getElementById('hdBack').hidden=true;
       document.getElementById('hdTitle').textContent='시의원에게 문자';
@@ -818,11 +911,9 @@
     try{ var s=localStorage.getItem(STORY_KEY); if(s) document.getElementById('freeformInput').value=s; }catch(e){}
     rerollLh(); rerollMoland(); rerollGwacheon(); rerollKepco(); rerollFire(); rerollBudongsan();
     initSmsPanel();
-    var some=MODES.some(function(k){return agencyDone.has(k);});
-    var all=MODES.every(function(k){return agencyDone.has(k);});
-    if(storyOk() && some && !all){ _seen={}; wizIndex=firstUndone(); }
-    else if(storyOk() && all){ wizIndex=6; }
-    else { wizIndex=-1; }
+    wizPhase = storyOk() ? 'pick' : 'story';
+    if(wizPhase==='pick') defaultPick();
+    queue=[]; qi=0;
     showView('write');
   })();
 </script>
