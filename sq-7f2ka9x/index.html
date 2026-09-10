@@ -46,6 +46,20 @@
       .dot.cur{background:var(--acc-d);transform:scaleY(1.6)}
       .bd{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:var(--pad);padding-bottom:180px}
       [hidden]{display:none!important}
+      .confetti-piece{position:fixed;top:-14px;width:9px;height:14px;z-index:60;pointer-events:none;will-change:transform,opacity}
+      @keyframes confFall{0%{transform:translateY(-12vh) rotate(0);opacity:1}100%{transform:translateY(108vh) rotate(720deg);opacity:.85}}
+      @media (prefers-reduced-motion:reduce){.confetti-piece{display:none!important}}
+      .ruin{display:flex;flex-direction:column;align-items:center;margin:6px 0 16px}
+      .ruin svg{width:184px;height:auto;overflow:visible}
+      .ruin-cap{font-size:12px;font-weight:700;color:var(--sub);margin-top:8px;text-align:center;word-break:keep-all;min-height:1.3em}
+      .rn-floor{transition:transform .8s cubic-bezier(.35,.9,.4,1),opacity .8s}
+      .rn-floor.fell{opacity:0}
+      #rnBld{transition:transform .8s ease}
+      .rn-rub{transition:opacity .6s}
+      #rnFlag{transition:transform .5s .35s,opacity .5s .35s}
+      .rn-dust{animation:rnDust 1s ease-out forwards}
+      @keyframes rnDust{from{opacity:.55;transform:scale(.4)}to{opacity:0;transform:scale(2)}}
+      @media (prefers-reduced-motion:reduce){.rn-floor,#rnBld,#rnFlag{transition:none!important}.rn-dust{display:none!important}}
       h1.q{font-size:22px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
       p.lead{font-size:13.5px;color:var(--sub);margin:0 0 16px;word-break:keep-all}
       textarea.story{width:100%;min-height:190px;border:1.5px solid var(--line);border-radius:14px;padding:14px;font-size:15.5px;font-family:inherit;line-height:1.75;resize:vertical;color:var(--ink)}
@@ -152,6 +166,7 @@
 
       <section class="screen" id="scAgency" hidden>
         <div class="step-tag" id="agTag">1 / 6</div>
+        <div class="ruin" id="ruin" hidden></div>
         <div class="mtitle" id="agTitle">민원 제목</div>
         <div class="mlabel"><span>📄 민원 본문 · 제출 전 꼭 읽어보세요</span><button class="reroll" onclick="reshuffle()">🔄 문장 다시</button></div>
         <div class="mbody" id="bodyView"></div>
@@ -204,7 +219,7 @@
       <button class="btn btn-out" id="btnCopyTitle" onclick="copyTitle()">📋 제목 복사</button>
       <button class="btn btn-out" id="btnCopyBody" onclick="copyBody()">📄 본문 복사</button>
     </div>
-    <a class="btn btn-out btn-lg" id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" rel="noopener">🏛 국민신문고 열기</a>
+    <a class="btn btn-out btn-lg" id="btnGoTarget" href="https://www.epeople.go.kr/index.paid" target="_blank" rel="noopener" onclick="return openEpeople(event)">🏛 국민신문고 새 창으로 열기</a>
     <button class="btn btn-acc btn-lg" id="btnNextAgency" onclick="agencyDoneNext()">✅ 제출했어요 · 다음 →</button>
     <button class="linkbtn" id="btnCopyAgencyName" onclick="copyCurrentAgencyName()">처리기관 이름 복사</button>
   </div>
@@ -582,14 +597,18 @@
             kepco:[rerollKepco,buildKepco], fire:[rerollFire,buildFire], budongsan:[rerollBudongsan,buildBudongsan] };
   var currentMode='lh', currentTitle='';
 
+  /* 국민신문고 통계 분류용 — 모든 제목 앞에 공통 키워드 */
+  var TITLE_PREFIX='주암 데이터센터 ';
+  function withPrefix(t){ t=t||''; return t.indexOf('주암 데이터센터')===0 ? t : (TITLE_PREFIX+t); }
+
   function generate(reroll){
     var pair=GEN[currentMode];
     if(reroll) pair[0]();
     var r=pair[1]();
-    currentTitle=r.title;
+    currentTitle=withPrefix(r.title);
     var rb=document.getElementById('resultBox'); if(rb) rb.value=r.body;
     var bv=document.getElementById('bodyView'); if(bv) bv.textContent=r.body;
-    var at=document.getElementById('agTitle'); if(at) at.textContent=r.title;
+    var at=document.getElementById('agTitle'); if(at) at.textContent=currentTitle;
     resetCopyBtns();
   }
   /* 배치 북마클릿 호환: switchMode(m) 호출 시 항상 새로 생성 */
@@ -736,7 +755,112 @@
     updatePickBtn();
   }
 
+  /* ── 데이터센터 붕괴 애니메이션 (민원 넣을수록 무너짐) ── */
+  var _ruinLevel=0, _ruinBuilt=false;
+  var RUIN_CAPS=[
+    '데이터센터, 아직은 멀쩡합니다',
+    '첫 민원 접수 — 균열이 가기 시작했어요',
+    '2개 기관 완료 — 건물이 흔들립니다',
+    '3개 기관 완료 — 절반이 무너졌어요',
+    '4개 기관 완료 — 거의 다 왔습니다',
+    '5개 기관 완료 — 한 곳만 더!',
+    '6개 기관 완료 — 주민의 목소리로 무너뜨렸습니다 🚩'
+  ];
+  function ensureRuin(){
+    if(_ruinBuilt) return;
+    var host=document.getElementById('ruin'); if(!host) return;
+    var floors='';
+    for(var i=5;i>=0;i--){
+      var Y=100 - i*16, wins='';
+      for(var j=0;j<3;j++){ wins+='<rect class="rn-win" x="'+(68+j*17)+'" y="'+(Y+4)+'" width="11" height="7" rx="1" fill="#5eead4"></rect>'; }
+      var roof = i===5 ? '<rect x="76" y="'+(Y-7)+'" width="28" height="7" rx="1" fill="#94a3b8"></rect><circle cx="83" cy="'+(Y-3.5)+'" r="2.4" fill="#e2e8f0"></circle><circle cx="97" cy="'+(Y-3.5)+'" r="2.4" fill="#e2e8f0"></circle>' : '';
+      var sign = i===0 ? '<text x="90" y="'+(Y+12.5)+'" text-anchor="middle" font-size="6.3" font-weight="700" fill="#475569" letter-spacing=".4">DATA CENTER</text>' : '';
+      floors+='<g class="rn-floor" data-i="'+i+'">'+roof+'<rect class="rn-body" x="62" y="'+Y+'" width="56" height="15" rx="2" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1"></rect>'+wins+sign+'</g>';
+    }
+    var rub='';
+    for(var r=0;r<8;r++){
+      var rx=55+r*9, ry=110-(r%3)*3, rw=9+(r%3)*3, rot=(r%2?1:-1)*(10+r*7);
+      rub+='<rect class="rn-rub" x="'+rx+'" y="'+ry+'" width="'+rw+'" height="6" rx="1" fill="#b8c0cc" opacity="0" transform="rotate('+rot+' '+(rx+rw/2)+' '+(ry+3)+')"></rect>';
+    }
+    host.innerHTML='<svg viewBox="0 0 180 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+      +'<line x1="8" y1="116" x2="172" y2="116" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round"></line>'
+      +'<g id="rnRubble">'+rub+'</g>'
+      +'<g id="rnBld">'+floors+'</g>'
+      +'<g id="rnFlag" opacity="0" transform="translate(0 10)"><line x1="90" y1="116" x2="90" y2="95" stroke="#0f766e" stroke-width="2"></line><path d="M90 96 L105 100 L90 104 Z" fill="#0d9488"></path></g>'
+      +'<g id="rnDustLayer"></g></svg>'
+      +'<div class="ruin-cap" id="ruinCap"></div>';
+    _ruinBuilt=true;
+  }
+  function ruinPuff(floorI){
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var lay=document.getElementById('rnDustLayer'); if(!lay) return;
+    var Y=100 - floorI*16 + 8;
+    for(var k=0;k<5;k++){
+      var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx', 70 + Math.random()*40);
+      c.setAttribute('cy', Y + (Math.random()*10 - 5));
+      c.setAttribute('r', 5 + Math.random()*5);
+      c.setAttribute('fill', '#e2e8f0');
+      c.setAttribute('class', 'rn-dust');
+      lay.appendChild(c);
+      (function(c){ setTimeout(function(){ c.remove(); }, 1100); })(c);
+    }
+  }
+  function setRuin(level){
+    ensureRuin();
+    level=Math.max(0, Math.min(6, level|0));
+    var bld=document.getElementById('rnBld'); if(!bld) return;
+    Array.prototype.forEach.call(bld.querySelectorAll('.rn-floor'), function(g){
+      var i=+g.getAttribute('data-i'), fell = i >= (6-level);
+      if(fell){
+        var dx=(i%2?-1:1)*(28+(i*7)%22), dy=42+(i*11)%18, rot=(i%2?-1:1)*(30+(i*13)%28);
+        g.setAttribute('transform','translate('+dx+' '+dy+') rotate('+rot+' 90 '+(100-i*16+7)+')');
+        g.classList.add('fell');
+      } else { g.removeAttribute('transform'); g.classList.remove('fell'); }
+    });
+    bld.setAttribute('transform','rotate('+(-(level*1.1)).toFixed(2)+' 90 116)');
+    var showN=Math.min(8, level*2);
+    Array.prototype.forEach.call(document.querySelectorAll('#rnRubble .rn-rub'), function(rc,idx){
+      rc.setAttribute('opacity', idx<showN ? '1' : '0');
+    });
+    var flag=document.getElementById('rnFlag');
+    if(flag){ flag.setAttribute('opacity', level>=6?'1':'0'); flag.setAttribute('transform', level>=6?'translate(0 -4)':'translate(0 10)'); }
+    var cap=document.getElementById('ruinCap'); if(cap) cap.textContent=RUIN_CAPS[level];
+    if(level>_ruinLevel) ruinPuff(6-level);
+    _ruinLevel=level;
+  }
+  function showRuinIn(el, before){
+    var ruin=document.getElementById('ruin'); if(!ruin||!el) return;
+    if(before && before.parentNode===el) el.insertBefore(ruin, before);
+    else el.appendChild(ruin);
+    ruin.hidden=false;
+    setRuin(agencyDone.size);
+  }
+
+  var _confettiShown=false;
+  function burstConfetti(){
+    try{
+      if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var colors=['#0d9488','#5eead4','#f59e0b','#fb7185','#34d399','#ffffff'];
+      var app=document.querySelector('.app'), r=app?app.getBoundingClientRect():{left:0,width:window.innerWidth};
+      for(var i=0;i<46;i++){
+        (function(i){
+          var p=document.createElement('div');
+          p.className='confetti-piece';
+          p.style.left=(r.left+Math.random()*r.width)+'px';
+          p.style.background=colors[i%colors.length];
+          if(Math.random()<0.5){ p.style.width='9px'; p.style.height='9px'; p.style.borderRadius='50%'; }
+          var dur=1.8+Math.random()*1.5, delay=Math.random()*0.35;
+          p.style.animation='confFall '+dur.toFixed(2)+'s cubic-bezier(.2,.6,.5,1) '+delay.toFixed(2)+'s forwards';
+          document.body.appendChild(p);
+          setTimeout(function(){ p.remove(); }, (dur+delay)*1000+250);
+        })(i);
+      }
+      if(navigator.vibrate) navigator.vibrate(35);
+    }catch(e){}
+  }
   function renderWiz(){
+    if(wizPhase!=='done') _confettiShown=false;
     var dots=document.getElementById('dots'); dots.innerHTML='';
     var inQueue=(wizPhase==='agency'||wizPhase==='done') && queue.length;
     var segs = inQueue ? queue.length : 6;
@@ -770,6 +894,7 @@
       document.getElementById('agTag').textContent=(qi+1)+' / '+queue.length+' · '+AGENCY_FULL_NAMES[m];
       document.getElementById('hdTitle').textContent=AGENCY_FULL_NAMES[m]+' 민원';
       document.getElementById('btnNextAgency').textContent = agencyDone.has(m) ? '완료함 · 다음 →' : '✅ 제출했어요 · 다음 →';
+      showRuinIn(scAg, document.getElementById('agTitle'));
     } else {
       scDone.hidden=false; back.hidden=false;
       var total=MODES.filter(function(k){return agencyDone.has(k);}).length;
@@ -781,6 +906,8 @@
         : '수고하셨어요. 다른 기관에도 이어서 넣을 수 있어요.';
       document.getElementById('btnMorePick').hidden = total>=6;
       renderDaily();
+      showRuinIn(document.querySelector('#scDone .done-wrap'), document.getElementById('doneBig'));
+      if(!_confettiShown){ _confettiShown=true; burstConfetti(); }
     }
   }
   function goStory(){ showView('write'); wizPhase='story'; renderWiz(); document.getElementById('freeformInput').focus(); }
@@ -810,7 +937,7 @@
   }
   function restartWizard(){
     if(!confirm('제출 완료 체크를 모두 지울까요?\n(사연은 그대로 남아요)')) return;
-    agencyDone=new Set(); saveDone(agencyDone); _seen={}; queue=[]; qi=0; wizPhase='story'; renderWiz();
+    agencyDone=new Set(); saveDone(agencyDone); _seen={}; queue=[]; qi=0; _ruinLevel=0; wizPhase='story'; renderWiz();
   }
 
   /* ── 화면 전환 (민원 / 문자) ── */
@@ -837,6 +964,14 @@
     var t=document.getElementById('toastMsg'); if(!t) return;
     t.textContent=msg; t.classList.add('show');
     clearTimeout(t._h); t._h=setTimeout(function(){ t.classList.remove('show'); },2600);
+  }
+
+  /* ── 국민신문고: 항상 새 창/탭으로 (PWA·모바일 포함) ── */
+  function openEpeople(e){
+    if(e && e.preventDefault) e.preventDefault();
+    var w=window.open('https://www.epeople.go.kr/index.paid','_blank','noopener');
+    if(!w) location.href='https://www.epeople.go.kr/index.paid';
+    return false;
   }
     const COUNCIL_MEMBERS = [
         { id: 'ji',      party: 'ppp', name: '지태훈', phone: '010-4429-1766' },
