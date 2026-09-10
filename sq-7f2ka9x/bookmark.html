@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>주암민원 자동진행 북마크 설치 (v6)</title>
+  <style>
+    body{font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;max-width:780px;margin:44px auto;padding:0 22px;color:#202124;line-height:1.65;background:#f7f7fb}
+    main{background:#fff;border:1px solid #e6e6f0;border-radius:18px;padding:30px;box-shadow:0 8px 30px #0000000d}
+    h1{font-size:24px;margin:0 0 6px}h2{font-size:16px;margin:24px 0 8px}
+    .note{color:#5f6368;margin:0 0 20px}
+    .bookmark{display:block;padding:18px 20px;border-radius:12px;background:#6950d8;color:#fff;text-decoration:none;font-weight:800;text-align:center;cursor:grab;margin:22px 0}
+    ol{padding-left:22px;margin:8px 0}ol li{margin:4px 0}
+    code{background:#f0eff8;padding:2px 6px;border-radius:5px;font-size:.92em}
+    .warn{background:#fff7df;border-left:4px solid #e3a51a;padding:12px 15px;border-radius:6px;font-size:14px}
+    .multi{background:#eef4ff;border-left:4px solid #3b6fe0;padding:12px 15px;border-radius:6px;font-size:14px}
+  </style>
+</head>
+<body>
+<main>
+  <h1>📌 주암민원 자동진행</h1>
+  <p class="note">아래 버튼을 <b>북마크바(즐겨찾기 막대)로 한 번만 끌어다 놓으세요.</b> 이후 발사기·국민신문고 어느 화면에서 눌러도 알아서 동작합니다.</p>
+  <a id="combined" class="bookmark" href="#">📌 주암민원 자동진행</a>
+
+  <h2>혼자 할 때</h2>
+  <ol>
+    <li>민원 발사기에서 <b>나만의 사연을 두 문장 이상</b> 입력합니다.</li>
+    <li>북마크를 누르면 6건이 준비되고 국민신문고로 이동합니다.</li>
+    <li>로그인 → <b>민원 › 일반민원 › 민원신청</b> 화면까지 들어갑니다.</li>
+    <li>그 화면에서 북마크를 누르면 <b>제목·본문</b>(같은 화면에 처리기관 칸이 있으면 <b>기관까지</b>) 채워집니다.
+        화면 <b>오른쪽 아래 진행 표시(예: 2/6)</b>를 보고 다음 할 일을 확인하세요.</li>
+    <li>처리기관이 <b>다음 화면</b>이면 “다음”을 누른 뒤 그 화면에서 북마크를 <b>한 번 더</b> 누릅니다.</li>
+    <li>검색결과 <b>목록에서 해당 기관을 직접 선택</b> → 공개여부 확인 → <b>제출</b>.</li>
+    <li>제출 후 다음 민원신청 화면에서 북마크를 <b>반복</b>합니다. (6곳까지)</li>
+  </ol>
+
+  <h2>한 컴퓨터로 여러 명이 할 때</h2>
+  <p class="multi">
+    <b>한 사람씩</b> “발사기에서 사연 입력 → 북마크 클릭 → 국민신문고에서 <b>첫 클릭</b>”까지 끝내고 <b>다음 사람</b>이 시작하세요.<br>
+    첫 클릭 이후에는 그 <b>창(탭)이 독립적으로</b> 진행돼서 다른 사람과 섞이지 않습니다.<br>
+    가능하면 사람마다 <b>다른 창</b>(또는 다른 기기)을 쓰면 가장 안전합니다.
+  </p>
+
+  <p class="warn">자동 <b>제출은 하지 않습니다.</b> 매번 제목·본문·처리기관·공개여부를 <b>직접 확인</b>하고 본인이 제출하세요.
+  가족이 <b>각자 본인 계정</b>으로 참여하는 용도입니다. 발사기에서 북마크를 다시 누르면 순서가 LH부터 새로 시작됩니다.</p>
+</main>
+
+<script>
+/* ═══ 발사기(guacaya.github.io)에서 실행: 6건 준비 후 국민신문고로 이동 ═══ */
+function JUAM_PREPARE(){
+  try{
+    if(typeof switchMode!=='function' || !document.getElementById('resultBox')){
+      alert('민원 발사기 화면이 아니거나 버전이 다릅니다. 발사기 페이지에서 눌러주세요.'); return;
+    }
+    var story = document.getElementById('freeformInput') || document.querySelector('#personalizeBody textarea') || document.querySelector('textarea');
+    var v = story ? story.value.trim() : '';
+    var sentences = v.split(/[.!?。…\n]+/).filter(function(x){ return x.trim().length >= 4; }).length;
+    if(!v || v.length < 20 || sentences < 2){
+      alert('먼저 "나만의 사연"을 두 문장 이상 적어주세요.\n예) 저는 이 동네에 오래 살 예정입니다. 24시간 냉각팬 소음과 화재 위험이 특히 걱정됩니다.');
+      if(story){ story.scrollIntoView({block:'center'}); story.focus(); }
+      return;
+    }
+    var modes = ['lh','moland','gwacheon','kepco','fire','budongsan'];
+    var names = { lh:'한국토지주택공사', moland:'국토교통부', gwacheon:'과천시', kepco:'한국전력공사', fire:'소방청', budongsan:'한국부동산원' };
+    var items = [];
+    modes.forEach(function(m){
+      switchMode(m);
+      items.push({ title: currentTitle, body: document.getElementById('resultBox').value, agency: names[m] });
+    });
+    switchMode('lh');
+    var payload = JSON.stringify({ __juamBatch:true, items:items, ts:Date.now() });
+    var b64 = btoa(unescape(encodeURIComponent(payload)));
+    var go = function(){ location.href = 'https://www.epeople.go.kr/index.paid#juam=' + encodeURIComponent(b64); };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(payload).then(go, go);
+    } else { go(); }
+  }catch(e){ alert('오류: ' + e.message); }
+}
+
+/* ═══ 국민신문고(epeople.go.kr)에서 실행: 현재 화면에 맞춰 채우기 + 진행표시 ═══ */
+function JUAM_STEP(){
+  var SK = 'juamQ_v6';
+  var vis = function(e){ var s=getComputedStyle(e), r=e.getBoundingClientRect(); return s.display!=='none' && s.visibility!=='hidden' && r.width>0 && r.height>0 && !e.disabled && !e.readOnly; };
+  var norm = function(s){ return (s||'').replace(/\s/g,''); };
+  var setV = function(el,val){
+    el.focus();
+    var proto = el.tagName==='TEXTAREA' ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+    var d = Object.getOwnPropertyDescriptor(proto,'value');
+    try{ (d && d.set) ? d.set.call(el,val) : (el.value=val); }catch(_){ el.value=val; }
+    ['input','change','keyup','blur'].forEach(function(t){ el.dispatchEvent(new Event(t,{bubbles:true})); });
+  };
+  var badge = function(msg,err){
+    var el = document.getElementById('__juamBadge');
+    if(!el){
+      el = document.createElement('div'); el.id='__juamBadge';
+      el.style.cssText = 'position:fixed;right:14px;bottom:14px;z-index:2147483647;color:#fff;font:700 13px/1.55 -apple-system,system-ui,sans-serif;padding:13px 16px;border-radius:12px;max-width:310px;box-shadow:0 10px 34px #0007;white-space:pre-line';
+      (document.body || document.documentElement).appendChild(el);
+      el.addEventListener('click', function(){ el.remove(); });
+    }
+    el.style.background = err ? '#b91c1c' : '#111827';
+    el.textContent = msg;
+  };
+  var save = function(q){ try{ sessionStorage.setItem(SK, JSON.stringify(q)); }catch(_){} };
+
+  var pickInput = function(re){
+    var ins = [].slice.call(document.querySelectorAll('input')).filter(function(x){ var t=(x.type||'text').toLowerCase(); return (t==='text'||t==='search'||t==='') && vis(x); });
+    var a = ins.filter(function(x){ return re.test((x.id||'')+' '+(x.name||'')+' '+(x.placeholder||'')+' '+(x.title||'')+' '+(x.getAttribute('aria-label')||'')); });
+    if(a[0]) return a[0];
+    var labs = [].slice.call(document.querySelectorAll('label[for]'));
+    for(var i=0;i<labs.length;i++){ if(re.test(norm(labs[i].textContent))){ var el=document.getElementById(labs[i].getAttribute('for')); if(el && el.tagName==='INPUT' && vis(el)) return el; } }
+    var ths = [].slice.call(document.querySelectorAll('th'));
+    for(var j=0;j<ths.length;j++){ if(re.test(norm(ths[j].textContent))){ var tr=ths[j].closest && ths[j].closest('tr'); var inp=tr && tr.querySelector('input[type=text],input[type=search],input:not([type])'); if(inp && vis(inp)) return inp; } }
+    return null;
+  };
+  var fillTitleBody = function(it){
+    var done = [];
+    var tas = [].slice.call(document.querySelectorAll('textarea')).filter(vis).sort(function(a,b){ return b.offsetWidth*b.offsetHeight - a.offsetWidth*a.offsetHeight; });
+    var bt = tas[0];
+    if(bt && bt.offsetWidth*bt.offsetHeight > 40000 && (bt.value.trim()==='' || bt.value===it.body)){ setV(bt, it.body); done.push('본문'); }
+    var title = pickInput(/제목|titl|subj/i);
+    if(title){ setV(title, it.title); done.push('제목'); }
+    return done;
+  };
+  var fillAgency = function(it){
+    var f = pickInput(/처리기관|기관명|소관기관|접수기관|담당기관|기관검색|^기관$/i);
+    if(!f) return { present:false };
+    setV(f, it.agency);
+    var fr = f.getBoundingClientRect();
+    var btns = [].slice.call(document.querySelectorAll('button,input[type=button],input[type=submit],a')).filter(vis)
+      .filter(function(x){ return /^검색$/.test(((x.innerText||x.value||'')).trim()); })
+      .sort(function(x,y){ var xr=x.getBoundingClientRect(), yr=y.getBoundingClientRect();
+        return Math.hypot(xr.left-fr.right, xr.top-fr.top) - Math.hypot(yr.left-fr.right, yr.top-fr.top); });
+    var b = btns[0], clicked = false;
+    if(b){ var br = b.getBoundingClientRect();
+      if(Math.abs((br.top+br.height/2)-(fr.top+fr.height/2)) < 60 && br.left >= fr.right - 30){ b.click(); clicked = true; }
+    }
+    return { present:true, clicked:clicked };
+  };
+
+  var proceed = function(q){
+    if(!q || !Array.isArray(q.items)){ badge('발사기에서 먼저 "📌 주암민원 자동진행"을 눌러 6건을 준비하세요.', 1); return; }
+    var txt = document.body.innerText || '';
+    var looksSimilar = (/유사\s*민원|유사\s*사례/.test(txt)) && (/확인|검색결과|목록/.test(txt)) && !(/민원\s*내용/.test(txt));
+    if(looksSimilar){ badge('⚠️ 유사민원 확인 화면이에요.\n"신규 등록" 등으로 민원신청 화면까지 들어간 뒤 다시 눌러주세요.', 1); return; }
+    if(q.i >= q.items.length){ badge('✅ 6개 기관 민원 준비 완료!\n마지막 건 확인 후 제출하세요.'); return; }
+
+    var it = q.items[q.i], n = q.i + 1, total = q.items.length;
+
+    if(q.step === 'agency'){
+      var ag1 = fillAgency(it);
+      if(!ag1.present){ badge(n+'/'+total+' · '+it.agency+'\n처리기관 칸을 못 찾았어요. 처리기관 화면이 완전히 열린 뒤 다시 눌러주세요.', 1); return; }
+      q.i += 1; q.step = 'content'; save(q);
+      badge(n+'/'+total+' · '+it.agency + (ag1.clicked ? ' 검색됨' : ' 입력됨(오른쪽 "검색" 버튼 직접 클릭)') + '\n→ 목록에서 '+it.agency+' 선택 → 공개여부 확인 → 제출\n제출 뒤 다음 민원신청 화면에서 북마크를 다시 누르세요.');
+      return;
+    }
+
+    var did = fillTitleBody(it);
+    if(did.length === 0){
+      badge(n+'/'+total+' · '+it.agency+'\n이 화면에서 제목·본문 칸을 못 찾았어요.\n"민원 › 일반민원 › 민원신청" 내용 입력 화면에서 눌러주세요.', 1);
+      return;
+    }
+    var ag = fillAgency(it);
+    if(ag.present){
+      q.i += 1; save(q);
+      badge(n+'/'+total+' · '+it.agency+' 완료 (제목·본문·기관)\n' + (ag.clicked ? '→ 목록에서 '+it.agency+' 선택' : '→ 오른쪽 "검색" 버튼 클릭 후 '+it.agency+' 선택') + ' → 공개여부 확인 → 제출\n제출 뒤 다음 화면에서 북마크를 다시 누르세요.');
+    }else{
+      q.step = 'agency'; save(q);
+      badge(n+'/'+total+' · '+it.agency+' 제목·본문 완료\n"다음"을 눌러 처리기관 화면으로 간 뒤 북마크를 한 번 더 누르세요.');
+    }
+  };
+
+  /* 큐 불러오기: 세션(탭 전용) → URL해시 → 클립보드 순 */
+  var q = null;
+  try{ var s = sessionStorage.getItem(SK); if(s) q = JSON.parse(s); }catch(_){}
+  if(!q){
+    try{
+      var m = (location.hash||'').match(/juam=([^&]+)/);
+      if(m){
+        var raw = decodeURIComponent(escape(atob(decodeURIComponent(m[1]))));
+        var x = JSON.parse(raw);
+        if(x && x.__juamBatch){ q = { items:x.items, i:0, step:'content' }; save(q);
+          try{ history.replaceState(null,'',location.pathname+location.search); }catch(_){}
+        }
+      }
+    }catch(_){}
+  }
+  if(q){ proceed(q); return; }
+  if(navigator.clipboard && navigator.clipboard.readText){
+    navigator.clipboard.readText().then(function(t){
+      var qq = null;
+      try{ var x = JSON.parse(t); if(x && x.__juamBatch) qq = { items:x.items, i:0, step:'content' }; }catch(_){}
+      if(qq) save(qq);
+      proceed(qq);
+    }, function(){
+      badge('클립보드를 읽지 못했어요.\n주소창 왼쪽 자물쇠 → 사이트 설정 → 클립보드 "허용" 후 다시 눌러주세요.', 1);
+    });
+  }else{
+    badge('발사기에서 먼저 "📌 주암민원 자동진행"을 눌러주세요.', 1);
+  }
+}
+
+/* 두 함수를 하나의 북마클릿으로 합치기 (호스트로 분기) */
+(function(){
+  var combined = 'javascript:(function(){var h=location.hostname;'
+    + 'if(h.indexOf("guacaya.github.io")>-1){(' + JUAM_PREPARE.toString() + ')()}'
+    + 'else if(h.indexOf("epeople.go.kr")>-1){(' + JUAM_STEP.toString() + ')()}'
+    + 'else{alert("민원 발사기 또는 국민신문고 화면에서 눌러주세요.")}})()';
+  document.getElementById('combined').href = combined;
+})();
+</script>
+</body>
+</html>
