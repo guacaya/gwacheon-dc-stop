@@ -9,7 +9,12 @@
     main{background:#fff;border:1px solid #e6e6f0;border-radius:18px;padding:30px;box-shadow:0 8px 30px #0000000d}
     h1{font-size:24px;margin:0 0 6px}h2{font-size:16px;margin:24px 0 8px}
     .note{color:#5f6368;margin:0 0 20px}
-    .bookmark{display:block;padding:18px 20px;border-radius:12px;background:#6950d8;color:#fff;text-decoration:none;font-weight:800;text-align:center;cursor:grab;margin:22px 0}
+    .bookmark{display:block;padding:18px 20px;border-radius:12px;background:#6950d8;color:#fff;text-decoration:none;font-weight:800;text-align:center;cursor:grab;margin:22px 0 10px}
+    .copybtn{display:block;width:100%;padding:13px 16px;border-radius:10px;background:#efeaff;color:#4b32b8;border:1.5px solid #ccbdf5;font-weight:800;font-size:14px;cursor:pointer;font-family:inherit;margin:0 0 20px}
+    .copybtn.done{background:#dcfce7;border-color:#86efac;color:#166534}
+    details.manual{background:#f7f7fb;border:1px solid #e6e6f0;border-radius:10px;padding:6px 14px;margin:0 0 20px}
+    details.manual summary{cursor:pointer;font-weight:700;font-size:14px;padding:8px 0;color:#4b32b8}
+    details.manual[open]{padding-bottom:14px}
     ol{padding-left:22px;margin:8px 0}ol li{margin:4px 0}
     code{background:#f0eff8;padding:2px 6px;border-radius:5px;font-size:.92em}
     .warn{background:#fff7df;border-left:4px solid #e3a51a;padding:12px 15px;border-radius:6px;font-size:14px}
@@ -19,12 +24,25 @@
 <body>
 <main>
   <h1>📌 주암민원 자동진행</h1>
-  <p class="note">아래 버튼을 <b>북마크바(즐겨찾기 막대)로 한 번만 끌어다 놓으세요.</b> 이후 발사기·국민신문고 어느 화면에서 눌러도 알아서 동작합니다.</p>
-  <a id="combined" class="bookmark" href="#">📌 주암민원 자동진행</a>
+  <p class="note">이 버튼(북마클릿)은 브라우저 보안상 <b>사이트가 대신 추가해 줄 수 없어요.</b> 아래 둘 중 편한 방법으로 한 번만 등록하면 됩니다. 이후 발사기·국민신문고 어느 화면에서 눌러도 알아서 동작합니다.</p>
+  <a id="combined" class="bookmark" href="#">📌 주암민원 자동진행  (← 북마크바로 끌어다 놓기)</a>
+  <button type="button" id="copyBm" class="copybtn">📋 방법 2 · 북마클릿 코드 복사</button>
+
+  <details class="manual">
+    <summary>드래그가 안 되면 — 손으로 등록하기 (1분)</summary>
+    <ol>
+      <li>위 <b>“📋 코드 복사”</b>를 누릅니다.</li>
+      <li>아무 페이지에서나 <b>Ctrl+D</b>(Mac은 ⌘D) → 북마크를 <b>저장</b>합니다.</li>
+      <li>북마크바에서 방금 만든 북마크를 <b>마우스 오른쪽 클릭 → 수정</b>.</li>
+      <li><b>이름</b>은 <code>주암민원 자동진행</code>, <b>URL</b> 칸을 지우고 <b>복사한 코드를 붙여넣기</b> → 저장.</li>
+      <li>끝. 이제 그 북마크를 누르면 동작합니다.</li>
+    </ol>
+    <p style="font-size:13px;color:#5f6368;margin:6px 0 0">Chrome·Edge·Whale·Firefox 모두 같은 방식입니다. 모바일은 북마클릿이 잘 안 되니 발사기의 복사·붙여넣기를 쓰세요.</p>
+  </details>
 
   <h2>혼자 할 때</h2>
   <ol>
-    <li>민원 발사기에서 <b>나만의 사연을 두 문장 이상</b> 입력합니다.</li>
+    <li>민원 발사기에서 <b>나만의 사연을 한 문장 이상</b> 입력합니다.</li>
     <li>북마크를 누르면 6건이 준비되고 국민신문고로 이동합니다.</li>
     <li>로그인 → <b>민원 › 일반민원 › 민원신청</b> 화면까지 들어갑니다.</li>
     <li>그 화면에서 북마크를 누르면 <b>제목·본문</b>(같은 화면에 처리기관 칸이 있으면 <b>기관까지</b>) 채워집니다.
@@ -54,9 +72,8 @@ function JUAM_PREPARE(){
     }
     var story = document.getElementById('freeformInput') || document.querySelector('#personalizeBody textarea') || document.querySelector('textarea');
     var v = story ? story.value.trim() : '';
-    var sentences = v.split(/[.!?。…\n]+/).filter(function(x){ return x.trim().length >= 4; }).length;
-    if(!v || v.length < 20 || sentences < 2){
-      alert('먼저 "나만의 사연"을 두 문장 이상 적어주세요.\n예) 저는 이 동네에 오래 살 예정입니다. 24시간 냉각팬 소음과 화재 위험이 특히 걱정됩니다.');
+    if(!v || v.length < 14){
+      alert('먼저 "나만의 이유"를 한 문장 적어주세요.\n예) 어린 아기를 키우는 집이라 24시간 냉각팬 소음과 전자파가 특히 걱정됩니다.');
       if(story){ story.scrollIntoView({block:'center'}); story.focus(); }
       return;
     }
@@ -206,6 +223,17 @@ function JUAM_STEP(){
     + 'else if(h.indexOf("epeople.go.kr")>-1){(' + JUAM_STEP.toString() + ')()}'
     + 'else{alert("민원 발사기 또는 국민신문고 화면에서 눌러주세요.")}})()';
   document.getElementById('combined').href = combined;
+
+  var cb = document.getElementById('copyBm');
+  cb.addEventListener('click', function(){
+    var ok = function(){ cb.classList.add('done'); cb.textContent = '✅ 복사됐어요 — 아래 “손으로 등록하기” 순서대로'; };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(combined).then(ok, function(){ window.prompt('아래 코드를 전체 선택(⌘/Ctrl+A) 후 복사하세요', combined); });
+    } else {
+      window.prompt('아래 코드를 전체 선택(⌘/Ctrl+A) 후 복사하세요', combined);
+    }
+    var d = document.querySelector('details.manual'); if(d) d.open = true;
+  });
 })();
 </script>
 </body>
