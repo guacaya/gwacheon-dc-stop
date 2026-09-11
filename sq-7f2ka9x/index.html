@@ -59,7 +59,22 @@
       #rnFlag{transition:transform .5s .35s,opacity .5s .35s}
       .rn-dust{animation:rnDust 1s ease-out forwards}
       @keyframes rnDust{from{opacity:.55;transform:scale(.4)}to{opacity:0;transform:scale(2)}}
-      @media (prefers-reduced-motion:reduce){.rn-floor,#rnBld,#rnFlag{transition:none!important}.rn-dust{display:none!important}}
+      #rnHammer{opacity:0}
+      #rnHammer.swing{animation:rnSwing .6s cubic-bezier(.32,.04,.22,1)}
+      @keyframes rnSwing{
+        0%{opacity:1;transform:rotate(-72deg)}
+        12%{transform:rotate(-80deg)}
+        46%{transform:rotate(8deg)}
+        60%{transform:rotate(-12deg)}
+        100%{opacity:0;transform:rotate(-72deg)}
+      }
+      .ruin.shake{animation:rnShake .32s}
+      @keyframes rnShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px) rotate(-.6deg)}45%{transform:translateX(4px) rotate(.5deg)}70%{transform:translateX(-3px)}88%{transform:translateX(2px)}}
+      .rn-flash-pop{animation:rnFlash .32s ease-out forwards;transform-box:fill-box;transform-origin:center}
+      @keyframes rnFlash{0%{opacity:0;transform:scale(.3)}35%{opacity:1;transform:scale(1.05)}100%{opacity:0;transform:scale(1.6)}}
+      .rn-chip{animation:rnChipFly .72s cubic-bezier(.2,.7,.25,1) forwards}
+      @keyframes rnChipFly{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--cx,30px),var(--cy,-20px)) rotate(var(--cr,180deg));opacity:0}}
+      @media (prefers-reduced-motion:reduce){.rn-floor,#rnBld,#rnFlag,#rnHammer,.ruin.shake,.rn-flash-pop,.rn-chip{animation:none!important;transition:none!important}#rnHammer{display:none!important}}
       h1.q{font-size:22px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
       p.lead{font-size:13.5px;color:var(--sub);margin:0 0 16px;word-break:keep-all}
       textarea.story{width:100%;min-height:190px;border:1.5px solid var(--line);border-radius:14px;padding:14px;font-size:15.5px;font-family:inherit;line-height:1.75;resize:vertical;color:var(--ink)}
@@ -787,12 +802,15 @@
       +'<g id="rnRubble">'+rub+'</g>'
       +'<g id="rnBld">'+floors+'</g>'
       +'<g id="rnFlag" opacity="0" transform="translate(0 10)"><line x1="90" y1="116" x2="90" y2="95" stroke="#0f766e" stroke-width="2"></line><path d="M90 96 L105 100 L90 104 Z" fill="#0d9488"></path></g>'
-      +'<g id="rnDustLayer"></g></svg>'
+      +'<g id="rnFlashLayer"></g>'
+      +'<g id="rnHammerPos"><g id="rnHammer"><rect x="-3" y="0" width="6" height="22" rx="2" fill="#8b5a2b"></rect><rect x="-15" y="20" width="30" height="14" rx="3" fill="#64748b" stroke="#334155" stroke-width="1.3"></rect></g></g>'
+      +'<g id="rnDustLayer"></g><g id="rnChipLayer"></g></svg>'
       +'<div class="ruin-cap" id="ruinCap"></div>';
     _ruinBuilt=true;
   }
+  function ruinReducedMotion(){ return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
   function ruinPuff(floorI){
-    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if(ruinReducedMotion()) return;
     var lay=document.getElementById('rnDustLayer'); if(!lay) return;
     var Y=100 - floorI*16 + 8;
     for(var k=0;k<5;k++){
@@ -806,14 +824,47 @@
       (function(c){ setTimeout(function(){ c.remove(); }, 1100); })(c);
     }
   }
-  function setRuin(level){
-    ensureRuin();
-    level=Math.max(0, Math.min(6, level|0));
+  function ruinFlash(x,y){
+    if(ruinReducedMotion()) return;
+    var lay=document.getElementById('rnFlashLayer'); if(!lay) return;
+    var pts=[], n=8, r1=5, r2=14;
+    for(var k=0;k<n*2;k++){ var a=(Math.PI*k)/n, rr=(k%2?r1:r2); pts.push((x+Math.cos(a)*rr).toFixed(1)+','+(y+Math.sin(a)*rr).toFixed(1)); }
+    var s=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    s.setAttribute('points', pts.join(' '));
+    s.setAttribute('fill', '#fde68a');
+    s.setAttribute('class', 'rn-flash-pop');
+    lay.appendChild(s);
+    setTimeout(function(){ s.remove(); }, 340);
+  }
+  function ruinChips(x,y){
+    if(ruinReducedMotion()) return;
+    var lay=document.getElementById('rnChipLayer'); if(!lay) return;
+    for(var k=0;k<6;k++){
+      var c=document.createElementNS('http://www.w3.org/2000/svg','rect');
+      var w=4+Math.random()*5;
+      c.setAttribute('x', x-w/2); c.setAttribute('y', y-w/2);
+      c.setAttribute('width', w); c.setAttribute('height', w); c.setAttribute('rx', 1);
+      c.setAttribute('fill', Math.random()<0.5 ? '#94a3b8' : '#cbd5e1');
+      c.setAttribute('class', 'rn-chip');
+      var ang = -Math.PI*0.85 + Math.random()*Math.PI*0.9, dist = 26 + Math.random()*32;
+      c.style.setProperty('--cx', (Math.cos(ang)*dist).toFixed(1)+'px');
+      c.style.setProperty('--cy', (Math.sin(ang)*dist).toFixed(1)+'px');
+      c.style.setProperty('--cr', (Math.random()*360-180).toFixed(0)+'deg');
+      lay.appendChild(c);
+      (function(c){ setTimeout(function(){ c.remove(); }, 760); })(c);
+    }
+  }
+  function ruinShake(){
+    if(ruinReducedMotion()) return;
+    var host=document.getElementById('ruin'); if(!host) return;
+    host.classList.remove('shake'); void host.offsetWidth; host.classList.add('shake');
+  }
+  function applyRuinLevel(level){
     var bld=document.getElementById('rnBld'); if(!bld) return;
     Array.prototype.forEach.call(bld.querySelectorAll('.rn-floor'), function(g){
       var i=+g.getAttribute('data-i'), fell = i >= (6-level);
       if(fell){
-        var dx=(i%2?-1:1)*(28+(i*7)%22), dy=42+(i*11)%18, rot=(i%2?-1:1)*(30+(i*13)%28);
+        var dx=(i%2?-1:1)*(34+(i*7)%26), dy=52+(i*11)%22, rot=(i%2?-1:1)*(45+(i*13)%40);
         g.setAttribute('transform','translate('+dx+' '+dy+') rotate('+rot+' 90 '+(100-i*16+7)+')');
         g.classList.add('fell');
       } else { g.removeAttribute('transform'); g.classList.remove('fell'); }
@@ -826,7 +877,27 @@
     var flag=document.getElementById('rnFlag');
     if(flag){ flag.setAttribute('opacity', level>=6?'1':'0'); flag.setAttribute('transform', level>=6?'translate(0 -4)':'translate(0 10)'); }
     var cap=document.getElementById('ruinCap'); if(cap) cap.textContent=RUIN_CAPS[level];
-    if(level>_ruinLevel) ruinPuff(6-level);
+  }
+  var RUIN_HIT_MS=600, RUIN_IMPACT_FRAC=0.46, RUIN_R=34, RUIN_TX=90;
+  function hammerHitTo(level){
+    var i0=6-level, targetY=100-i0*16+7;
+    if(ruinReducedMotion()){ applyRuinLevel(level); return; }
+    var pos=document.getElementById('rnHammerPos'), hammer=document.getElementById('rnHammer');
+    if(pos) pos.setAttribute('transform','translate('+RUIN_TX+' '+(targetY-RUIN_R)+')');
+    if(hammer){ hammer.classList.remove('swing'); void hammer.getBoundingClientRect(); hammer.classList.add('swing'); }
+    setTimeout(function(){
+      ruinFlash(RUIN_TX, targetY);
+      ruinChips(RUIN_TX, targetY);
+      ruinPuff(i0);
+      ruinShake();
+      try{ if(navigator.vibrate) navigator.vibrate([12,45,12]); }catch(e){}
+      applyRuinLevel(level);
+    }, Math.round(RUIN_HIT_MS*RUIN_IMPACT_FRAC));
+  }
+  function setRuin(level){
+    ensureRuin();
+    level=Math.max(0, Math.min(6, level|0));
+    if(level>_ruinLevel) hammerHitTo(level); else applyRuinLevel(level);
     _ruinLevel=level;
   }
   function showRuinIn(el, before){
