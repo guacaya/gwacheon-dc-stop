@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>주암민원 자동진행 북마크 설치 (v6.1)</title>
+  <title>주암민원 자동진행 북마크 설치 (v6.2)</title>
   <style>
     body{font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;max-width:780px;margin:44px auto;padding:0 22px;color:#202124;line-height:1.65;background:#f7f7fb}
     main{background:#fff;border:1px solid #e6e6f0;border-radius:18px;padding:30px;box-shadow:0 8px 30px #0000000d}
@@ -63,6 +63,7 @@
   가족이 <b>각자 본인 계정</b>으로 참여하는 용도입니다. 발사기에서 북마크를 다시 누르면 순서가 LH부터 새로 시작됩니다.</p>
 
   <p class="multi"><b>v6.1 변경:</b> 처리기관 칸이 자동 입력되지 않던 문제를 보완했습니다. 이제 기관 차례가 되면 <b>기관명이 클립보드에 자동 복사</b>되므로, 자동 입력이 안 되면 처리기관 검색창을 클릭해 <b>붙여넣기(Ctrl+V) → 검색 → 선택</b>하면 됩니다.
+  <b>v6.2 변경:</b> 처리기관 칸을 찾을 때 페이지 안내문 속 강조 표시(형광펜) 글자를 실제 입력칸으로 착각해 엉뚱한 곳을 짚던 문제를 고쳤습니다. 이제 문서 순서가 아니라 <b>화면상 실제 거리가 가장 가까운 라벨과 입력칸 짝</b>만 채택합니다.
   <b>이전에 북마크를 등록한 분은 지워졌다 다시 등록(재드래그 또는 코드 재복사)해야</b> 새 동작이 적용됩니다.</p>
 </main>
 
@@ -136,16 +137,35 @@ function JUAM_STEP(){
     for(var j=0;j<ths.length;j++){ if(re.test(norm(ths[j].textContent))){ var tr=ths[j].closest && ths[j].closest('tr'); var inp=tr && tr.querySelector('input[type=text],input[type=search],input:not([type])'); if(inp && vis(inp)) return inp; } }
     return null;
   };
+  var isNoticeish = function(n){
+    var p=n; for(var k=0;k<4 && p; k++,p=p.parentElement){ var c=norm((p.className||'')+(p.id||'')); if(/notice|guide|info|tip|help|desc|안내|주의|유의/i.test(c)) return true; }
+    return false;
+  };
   var pickAgencyInput = function(){
-    var re=/처리기관|기관명|소관기관|접수기관|담당기관|기관검색|기관선택|^기관$/;
+    var re=/처리기관|기관명|소관기관|접수기관|담당기관|기관\s*검색|기관\s*선택|^기관$/;
     var ins=[].slice.call(document.querySelectorAll('input')).filter(function(x){ var t=(x.type||'text').toLowerCase(); return (t==='text'||t==='search'||t==='') && visLoose(x); });
+    if(!ins.length) return null;
+    /* 1) 입력칸 자체 속성(id/name/placeholder 등)에 매칭 — 가장 확실함 */
     var a=ins.filter(function(x){ return re.test(norm((x.id||'')+(x.name||'')+(x.placeholder||'')+(x.title||'')+(x.getAttribute('aria-label')||''))); });
     if(a[0]) return a[0];
+    /* 2) <label for="..."> 정식 연결 */
     var labs=[].slice.call(document.querySelectorAll('label[for]'));
-    for(var i=0;i<labs.length;i++){ if(re.test(norm(labs[i].textContent))){ var el=document.getElementById(labs[i].getAttribute('for')); if(el&&el.tagName==='INPUT'&&visLoose(el)) return el; } }
-    var lbls=[].slice.call(document.querySelectorAll('th,dt,label,span,strong,b'));
-    for(var j=0;j<lbls.length;j++){ var tt=norm(lbls[j].textContent); if(tt && tt.length<=8 && re.test(tt)){ var box=lbls[j].closest('tr,li,dd,div,fieldset'); var inp=box&&box.querySelector('input[type=text],input[type=search],input:not([type])'); if(inp&&visLoose(inp)) return inp; } }
-    return null;
+    for(var i=0;i<labs.length;i++){ if(re.test(norm(labs[i].textContent))){ var el=document.getElementById(labs[i].getAttribute('for')); if(el && ins.indexOf(el)>-1) return el; } }
+    /* 3) 화면상 가장 가까운 라벨↔입력칸 짝 찾기 (DOM 순서가 아니라 실제 거리로) —
+          안내문 속 형광펜 텍스트처럼 문서 어딘가에 우연히 있는 "기관검색" 같은 글자에
+          속아 엉뚱한 칸을 집지 않도록, 페이지 전체에서 가장 가까운 조합만 채택 */
+    var cands=[].slice.call(document.querySelectorAll('label,th,dt,span,strong,b'))
+      .filter(function(n){ var tt=norm(n.textContent); return tt && tt.length<=10 && n.children.length===0 && re.test(tt) && visLoose(n) && !isNoticeish(n); });
+    var best=null, bestD=Infinity;
+    cands.forEach(function(lb){
+      var lr=lb.getBoundingClientRect();
+      ins.forEach(function(inp){
+        var ir=inp.getBoundingClientRect();
+        var d=Math.hypot(ir.left-lr.right, (ir.top+ir.height/2)-(lr.top+lr.height/2));
+        if(d<bestD){ bestD=d; best=inp; }
+      });
+    });
+    return (best && bestD<240) ? best : null;
   };
   var clickSearchNear = function(f){
     var fr=f.getBoundingClientRect();
@@ -169,10 +189,16 @@ function JUAM_STEP(){
     var f = pickAgencyInput();
     if(!f) return { present:false };
     try{ f.focus(); f.click(); }catch(_){}
-    setV(f, it.agency);
-    var f2 = pickAgencyInput();
-    if(f2 && f2!==f){ try{ f2.focus(); }catch(_){} setV(f2, it.agency); f=f2; }
-    var clicked = clickSearchNear(f);
+    /* 클릭으로 팝업이 뜨면서 포커스가 다른 칸으로 넘어간 경우만 그 칸을 사용.
+       (거리 재검색을 또 하면 focus로 인한 스크롤 이동 때문에 엉뚱한 칸을 고를 수 있어 브라우저의
+        실제 포커스 이동만 신뢰 — 한 번의 호출에서 입력은 정확히 한 칸에만 들어간다) */
+    var target = f, active = document.activeElement;
+    if(active && active!==f && active.tagName==='INPUT'){
+      var t=(active.type||'text').toLowerCase();
+      if((t==='text'||t==='search'||t==='') && visLoose(active)) target = active;
+    }
+    setV(target, it.agency);
+    var clicked = clickSearchNear(target);
     return { present:true, clicked:clicked };
   };
 
@@ -181,7 +207,7 @@ function JUAM_STEP(){
     var txt = document.body.innerText || '';
     var looksSimilar = (/유사\s*민원|유사\s*사례/.test(txt)) && (/확인|검색결과|목록/.test(txt)) && !(/민원\s*내용/.test(txt));
     if(looksSimilar){ badge('⚠️ 유사민원 확인 화면이에요.\n"신규 등록" 등으로 민원신청 화면까지 들어간 뒤 다시 눌러주세요.', 1); return; }
-    if(q.i >= q.items.length){ badge('✅ 6개 기관 민원 준비 완료!\n마지막 건 확인 후 제출하세요.'); return; }
+    if(q.i >= q.items.length){ badge('✅ '+q.items.length+'개 기관 민원 준비 완료!\n마지막 건 확인 후 제출하세요.'); return; }
 
     var it = q.items[q.i], n = q.i + 1, total = q.items.length;
 
