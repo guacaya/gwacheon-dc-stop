@@ -50,8 +50,12 @@
       @keyframes confFall{0%{transform:translateY(-12vh) rotate(0);opacity:1}100%{transform:translateY(108vh) rotate(720deg);opacity:.85}}
       @media (prefers-reduced-motion:reduce){.confetti-piece{display:none!important}}
       .ruin{display:flex;flex-direction:column;align-items:center;margin:6px 0 16px}
-      .ruin svg{width:184px;height:auto;overflow:visible}
+      .ruin svg{width:184px;height:auto;overflow:visible;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+      .ruin svg.punch{animation:rnPunch .16s ease-out}
+      @keyframes rnPunch{0%{transform:scale(1)}45%{transform:scale(.93)}100%{transform:scale(1)}}
       .ruin-cap{font-size:12px;font-weight:700;color:var(--sub);margin-top:8px;text-align:center;word-break:keep-all;min-height:1.3em}
+      .ruin-tap-hint{font-size:11px;color:var(--sub);opacity:.7;margin-top:1px}
+      .ruin-tap-count{font-size:11px;font-weight:800;color:var(--acc-d);margin-top:1px;min-height:1em}
       .rn-floor{transition:transform .8s cubic-bezier(.35,.9,.4,1),opacity .8s}
       .rn-floor.fell{opacity:0}
       #rnBld{transition:transform .8s ease}
@@ -74,7 +78,7 @@
       @keyframes rnFlash{0%{opacity:0;transform:scale(.3)}35%{opacity:1;transform:scale(1.05)}100%{opacity:0;transform:scale(1.6)}}
       .rn-chip{animation:rnChipFly .72s cubic-bezier(.2,.7,.25,1) forwards}
       @keyframes rnChipFly{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--cx,30px),var(--cy,-20px)) rotate(var(--cr,180deg));opacity:0}}
-      @media (prefers-reduced-motion:reduce){.rn-floor,#rnBld,#rnFlag,#rnHammer,.ruin.shake,.rn-flash-pop,.rn-chip{animation:none!important;transition:none!important}#rnHammer{display:none!important}}
+      @media (prefers-reduced-motion:reduce){.rn-floor,#rnBld,#rnFlag,#rnHammer,.ruin.shake,.rn-flash-pop,.rn-chip,.ruin svg.punch{animation:none!important;transition:none!important}#rnHammer{display:none!important}}
       h1.q{font-size:22px;font-weight:800;margin:8px 0 6px;letter-spacing:-.01em}
       p.lead{font-size:13.5px;color:var(--sub);margin:0 0 16px;word-break:keep-all}
       textarea.story{width:100%;min-height:190px;border:1.5px solid var(--line);border-radius:14px;padding:14px;font-size:15.5px;font-family:inherit;line-height:1.75;resize:vertical;color:var(--ink)}
@@ -805,10 +809,31 @@
       +'<g id="rnFlashLayer"></g>'
       +'<g id="rnHammerPos"><g id="rnHammer"><rect x="-3" y="0" width="6" height="22" rx="2" fill="#8b5a2b"></rect><rect x="-15" y="20" width="30" height="14" rx="3" fill="#64748b" stroke="#334155" stroke-width="1.3"></rect></g></g>'
       +'<g id="rnDustLayer"></g><g id="rnChipLayer"></g></svg>'
-      +'<div class="ruin-cap" id="ruinCap"></div>';
+      +'<div class="ruin-cap" id="ruinCap"></div>'
+      +'<div class="ruin-tap-hint" id="ruinTapHint">👆 톡톡 두드려도 돼요</div>'
+      +'<div class="ruin-tap-count" id="ruinTapCount" hidden></div>';
+    host.addEventListener('click', onRuinTap);
     _ruinBuilt=true;
   }
   function ruinReducedMotion(){ return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+  /* ── 톡톡 두드리기 (진행도와 무관한 재미용 타격 — 스트레스 해소) ── */
+  var _tapCount=0, _lastTapTs=0;
+  function onRuinTap(e){
+    var now=Date.now(); if(now-_lastTapTs<90) return; _lastTapTs=now;
+    var svg=document.querySelector('#ruin svg'); if(!svg) return;
+    var r=svg.getBoundingClientRect(), vb=svg.viewBox.baseVal;
+    if(!r.width || !r.height) return;
+    var px=(e.clientX-r.left)/r.width*vb.width + vb.x;
+    var py=(e.clientY-r.top)/r.height*vb.height + vb.y;
+    var x=Math.max(30,Math.min(150,px)), y=Math.max(15,Math.min(120,py));
+    ruinFlash(x,y); ruinChips(x,y);
+    svg.classList.remove('punch'); void svg.getBoundingClientRect(); svg.classList.add('punch');
+    try{ if(navigator.vibrate) navigator.vibrate(10); }catch(err){}
+    _tapCount++;
+    var hint=document.getElementById('ruinTapHint'), tc=document.getElementById('ruinTapCount');
+    if(hint) hint.hidden=true;
+    if(tc){ tc.hidden=false; tc.textContent='💥 '+_tapCount+'번 두드림'; }
+  }
   function ruinPuff(floorI){
     if(ruinReducedMotion()) return;
     var lay=document.getElementById('rnDustLayer'); if(!lay) return;
