@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>과천 주암 데이터센터 대응 민원·의견서 도우미</title>
-    <meta name="description" content="과천 주암 공공주택지구 데이터센터 건립에 반대하는 민원·의견서를 LH·국토교통부·과천시·한국전력·소방청·한국부동산원 6개 기관별로 준비하는 도우미. 국민신문고에 본인이 직접 로그인해 제출합니다.">
+    <meta name="description" content="과천 주암 공공주택지구 데이터센터 건립에 반대하는 민원·의견서를 LH·국토교통부·과천시·한국전력·소방청 5개 기관별로 준비하는 도우미. 국민신문고에 본인이 직접 로그인해 제출합니다.">
     <link rel="canonical" href="https://guacaya.github.io/gwacheon-dc-stop/sq-7f2ka9x/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://guacaya.github.io/gwacheon-dc-stop/sq-7f2ka9x/">
     <meta property="og:title" content="과천 주암 데이터센터 대응 민원·의견서 도우미">
-    <meta property="og:description" content="6개 기관 민원을 한 페이지에서 준비 → 국민신문고에 본인이 직접 제출. 나만의 사연을 넣으면 매번 다른 문장으로 생성됩니다.">
+    <meta property="og:description" content="5개 기관 민원을 한 페이지에서 준비 → 국민신문고에 본인이 직접 제출. 나만의 사연을 넣으면 매번 다른 문장으로 생성됩니다.">
     <meta property="og:image" content="https://guacaya.github.io/gwacheon-dc-stop/sq-7f2ka9x/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="ko_KR">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="과천 주암 데이터센터 대응 민원·의견서 도우미">
-    <meta name="twitter:description" content="6개 기관 민원을 한 페이지에서 준비 → 국민신문고에 본인이 직접 제출.">
+    <meta name="twitter:description" content="5개 기관 민원을 한 페이지에서 준비 → 국민신문고에 본인이 직접 제출.">
     <meta name="twitter:image" content="https://guacaya.github.io/gwacheon-dc-stop/sq-7f2ka9x/og-image.png">
     <meta name="theme-color" content="#0d9488">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -201,11 +201,11 @@
           <button type="button" class="pick-tool" onclick="pickSet('none')">모두 해제</button>
         </div>
         <div id="pickGrid"></div>
-        <a class="pick-pc" href="bookmark.html" target="_blank" rel="noopener">💻 PC라면 · 6곳 한 번에 채우는 북마크 →</a>
+        <a class="pick-pc" href="bookmark.html" target="_blank" rel="noopener">💻 PC라면 · 5곳 한 번에 채우는 북마크 →</a>
       </section>
 
       <section class="screen" id="scAgency" hidden>
-        <div class="step-tag" id="agTag">1 / 6</div>
+        <div class="step-tag" id="agTag">1 / 5</div>
         <div class="ruin" id="ruin" hidden></div>
         <div class="mtitle" id="agTitle">민원 제목</div>
         <div class="mlabel"><span>📄 민원 본문 · 제출 전 꼭 읽어보세요</span><button class="reroll" onclick="reshuffle()">🔄 문장 다시</button></div>
@@ -216,7 +216,7 @@
       <section class="screen" id="scDone" hidden>
         <div class="done-wrap">
           <div class="done-big" id="doneBig">🎉</div>
-          <div class="done-h" id="doneH">6곳 모두 제출 완료!</div>
+          <div class="done-h" id="doneH">5곳 모두 제출 완료!</div>
           <p class="lead" id="doneP" style="margin-bottom:18px">정말 수고하셨어요.</p>
           <button class="btn btn-acc btn-lg" id="btnMorePick" style="width:100%;margin-bottom:10px" onclick="goPickMore()">다른 기관에도 넣기 →</button>
           <button class="btn btn-ghost btn-lg" style="width:100%" onclick="restartWizard()">제출 기록 초기화</button>
@@ -464,76 +464,6 @@
   function getRandomIndex(max){ return Math.floor(Math.random()*max); }
   function getPersonalText(){ var ff=document.getElementById('freeformInput'); return (ff?ff.value:'').trim(); }
   function getPersonalParagraph(){ var v=getPersonalText(); return v ? ('\n\n'+v) : ''; }
-    const budongsanTitleVariants = [
-        "과천주암지구 데이터센터 리츠 영업·변경인가 보류 및 전력 편법분할·공익성 심사에 대한 구체적 답변 촉구",
-        "한국부동산원 리츠 사업계획 심사 관련 편법 전력쪼개기 검증 및 주거지 근접 공익성 재검토 요청",
-        "과천주암지구 리츠 영업인가·변경인가 신중 처리 및 구체적 심사 답변 재요청",
-        "한국부동산원 리츠심사팀 앞 - 전력계통영향평가 회피 의혹 및 공익성 침해 우려 답변 촉구"
-    ];
-
-    const budongsanOpenings = [
-        "귀 기관의 공정하고 투명한 심사 업무 수행에 감사드립니다. 아래와 같이 민원을 제출합니다.",
-        "국민의 재산권 및 주거 안전을 위해 힘쓰시는 귀 기관의 책임 있는 심사를 신뢰하며 민원을 올립니다.",
-        "과천주암지구 인근 주민 및 입주예정자로서 리츠 사업계획 심사의 공정성을 촉구하고자 민원을 제출합니다.",
-        "귀 기관의 노고에 감사드립니다. 아래 사항에 대한 신중하고 엄정한 재검토를 강력히 요청합니다."
-    ];
-
-    const budongsanIntroVariants = [
-        "본 민원인은 경기도 과천시 주암지구에 인접한 공동주택 단지의 입주예정자입니다. 기존에 「부동산투자회사법」상 리츠 사업계획 심사와 관련하여 전력계통영향평가 의무 이행 여부 및 공익성 재검토를 요청하는 민원을 제출한 바 있습니다.",
-        "본 민원인은 과천주암지구 인근에 거주 예정인 주민입니다. 이전에도 데이터센터 리츠 사업계획의 전력계통영향평가 이행 여부 및 공익성에 관한 민원을 제출하였으나 실질적인 해소가 이루어지지 않아 보다 구체적인 답변과 책임 있는 행정을 재차 요청드립니다.",
-        "본 민원인은 과천주암지구와 인접한 곳에 거주할 예정인 입주예정자입니다. 리츠 사업계획 심사와 관련하여 이미 한 차례 민원을 접수한 바 있으나 아래 사항에 대한 명확한 답변을 다시 촉구드립니다."
-    ];
-
-    const budongsanEscalationNotice = "최근 귀 기관에서 1-9블록에 대한 영업인가(변경인가)를 승인함에 따라 사업자는 이를 발판 삼아 과천시에 건축허가를 접수했습니다. 이로 인해 인근 예정 주민과 아이들의 안전권 및 생존권은 벼랑 끝에 몰리게 되었으며 주민의 목소리를 외면한 귀 기관의 안일한 인가 처분에 강력한 유감과 규탄의 뜻을 전합니다.";
-
-    const budongsanStaticNotice = "현재 1-1·2블록 등에 대한 자산관리회사(코람코자산신탁, 마스턴자산운용 등)의 영업인가 및 변경인가 신청건이 진행 중인 것으로 파악하고 있습니다. 이에 민원인은 동일한 우를 범하지 않도록 아래 사항에 대한 명확한 검증 없이 추가 인가가 처리되지 않기를 바라며 공익성 재검토를 통한 '인가 불허'를 강력히 요구합니다.";
-
-    const budongsanReq1Variants = [
-        "[요청 1] 편법 전력 쪼개기 여부에 대한 구체적 검증\n\n주암지구 내 데이터센터 사업이 1-1·2블록, 1-9블록 등 복수 블록·복수 법인 명의로 나뉘어 있는바 이것이 실질적으로 동일 사업임에도 계약전력을 각각 10메가와트 미만으로 분할 신고하여 「분산에너지 활성화 특별법」상 전력계통영향평가 의무를 회피하려는 것은 아닌지 구체적으로 검증해 주시기 바랍니다.",
-        "[요청 1] 계약전력 편법 분할(쪼개기) 여부 재확인 요청\n\n복수의 블록과 복수의 법인 명의로 진행되는 이 사업이 사실상 하나의 사업으로서 계약전력을 합산해야 함에도 각각 10메가와트 미만으로 나누어 신고함으로써 전력계통영향평가를 회피하려는 정황은 없는지 다시 한번 면밀히 확인해 주시기 바랍니다."
-    ];
-
-    const budongsanReq2Variants = [
-        "[요청 2] 주거지 밀착 입지에 따른 공익성 심사 반영 여부\n\n가장 인접한 사업부지가 주거지 경계로부터 약 30미터에 불과하고 인근 반경 내 어린이집 약 32개소, 학교 5개교가 밀집해 있는 점을 사업계획 심사에 구체적으로 반영하였는지 확인해 주시기 바랍니다.",
-        "[요청 2] 주민 건강·안전을 고려한 공익성 재검토 요청\n\n사업 부지가 주거지와 불과 30여 미터 거리에 있고 인근에 어린이집과 학교가 다수 밀집해 있는 만큼 이러한 입지 특성이 사업계획의 타당성·적정성 심사에 충분히 반영되었는지 다시 한번 검토해 주시기 바랍니다."
-    ];
-
-    const budongsanReq3Variants = [
-        "[요청 3] 영업인가·변경인가 심사의 신중한 처리 요청\n\n위 두 사항에 대한 검토가 명확히 완결되기 전까지 영업인가·변경인가가 성급히 처리되지 않도록 신중을 기해 주시기 바랍니다.",
-        "[요청 3] 인가 절차의 신중한 진행 촉구\n\n위 사항들에 대한 명확한 확인과 검토 없이 영업인가·변경인가가 서둘러 처리되는 일이 없도록 각별히 유의해 주시기 바랍니다."
-    ];
-
-    const budongsanClosings = [
-        "민원인은 특정 기업의 적법한 사업활동을 부당하게 방해하고자 하는 것이 아니며 다만 관계 법령상 의무가 빠짐없이 이행되었는지를 감독기관으로서 명확히 확인해 주실 것을 요청드립니다.\n\n감사합니다.",
-        "본 민원은 특정 사업자를 비방하거나 그 영업을 방해하려는 목적이 아니라 법과 절차에 따른 공정한 심사를 요청드리는 것입니다.\n\n감사합니다.",
-        "민원인은 적법한 절차를 존중하며 다만 심사 과정에서 위 사항들이 누락 없이 충실히 검토되기를 바랄 뿐입니다.\n\n감사합니다."
-    ];
-
-    let stateB = {};
-    function rerollBudongsan() {
-        stateB = {
-            titleIdx: getRandomIndex(budongsanTitleVariants.length),
-            openIdx: getRandomIndex(budongsanOpenings.length),
-            introIdx: getRandomIndex(budongsanIntroVariants.length),
-            req1Idx: getRandomIndex(budongsanReq1Variants.length),
-            req2Idx: getRandomIndex(budongsanReq2Variants.length),
-            req3Idx: getRandomIndex(budongsanReq3Variants.length),
-            closeIdx: getRandomIndex(budongsanClosings.length)
-        };
-    }
-
-    function buildBudongsan() {
-        const intro = budongsanIntroVariants[stateB.introIdx];
-        const body = budongsanOpenings[stateB.openIdx] + "\n\n" + intro
-            + "\n\n" + budongsanEscalationNotice
-            + "\n\n" + budongsanStaticNotice + getPersonalParagraph()
-            + "\n\n" + budongsanReq1Variants[stateB.req1Idx]
-            + "\n\n" + budongsanReq2Variants[stateB.req2Idx]
-            + "\n\n" + budongsanReq3Variants[stateB.req3Idx]
-            + "\n\n" + budongsanClosings[stateB.closeIdx];
-        return { title: budongsanTitleVariants[stateB.titleIdx], body };
-    }
-
     const REASON_BANK = [
         { title: "수도권 집중 완화 국정과제 위배", text: "정부는 국토 균형발전과 수도권 인구·기능 분산을 핵심 국정과제로 추진하고 있습니다. 대규모 전력을 소비하는 첨단 인프라 시설을 수도권 한복판에 신축하는 것은 이러한 국정 기조에 정면으로 배치되는 것으로 보입니다." },
         { title: "RE100·에너지 전환 정책 역행", text: "글로벌 기업들은 RE100 달성을 위해 신재생에너지 사용을 사실상 필수 요건으로 요구하고 있습니다. 신재생에너지 공급이 구조적으로 제한적인 수도권에 대규모 데이터센터를 신축하는 것은 정부의 탄소중립 목표 및 에너지 전환 정책과 역행하는 방향이라고 판단됩니다." },
@@ -564,152 +494,196 @@
         "주민들의 정당한 우려에도 불구하고 관련 절차가 일방적으로 강행될 경우 부득이하게 법적 대응을 포함한 모든 수단을 검토할 수밖에 없다는 점을 미리 말씀드립니다."
     ];
 
-    const lhTitleVariants = [
-        "장군마을 민관협의체 9월 개최 일정 제시 및 주암지구 업무시설 소요전력·에너지사용계획 비교 요구",
-        "미매각 업무시설용지 관련 민관협의체 일정 공개 및 1-9블록 소요전력 대비 지구 에너지사용계획 초과 여부 확인 요청",
-        "장군마을재개발 입주예정자 - 민관협의체 개최 일정 및 업무시설 소요전력 비교·대책 답변 촉구"
-    ];
+    const lhFixedTitle = `장군마을 데이터센터 허용용도 삭제 관련 "검토 중" 답변에 대한 재민원 - 구체적 검토 진행 상황 및 처리 시한 요구`;
 
-    const lhOpenings = [
-        "공공택지 개발과 지역 상생을 위해 힘쓰시는 귀 공사(LH)의 노고에 감사드립니다. 아래와 같이 민원을 제출합니다.",
-        "귀 공사(LH)의 공정하고 투명한 업무 처리를 신뢰합니다. 아래와 같이 민원을 제출합니다."
-    ];
-
-    const lhNotice = "본 민원인은 장군마을재개발사업 입주예정자입니다. 귀 공사(LH)는 장군마을·과천시와 민관협의체를 구성해 논의하기로 약속하였고 그 개최 시기로 9월을 밝힌 바 있으나, 9월이 이미 도래하였음에도 현재까지 입주예정자에게 아무런 공지가 없습니다. 아래 사항에 대한 명확한 답변을 요청드립니다.";
-
-    const lhReq1 = "[요청 1] 민관협의체 개최 일정 제시\n\n귀 공사는 민관협의체를 개최하기로 약속한 9월이 도래하였음에도 현재까지 장군마을재개발사업 입주예정자에게 아무런 공지를 하지 않고 있습니다. 민관협의체의 구체적인 개최 일정을 제시하여 주시기 바랍니다.";
-
-    const lhReq2 = "[요청 2] 지구계획상 에너지사용계획 대비 소요전력 비교 및 초과 시 대책 제시\n\n귀 공사는 주암지구 지구계획상 한국전력공사와 협의된 에너지사용계획과, 현재 주암지구 내에 건축심의를 신청한 업무 1-9블록의 소요 전력량을 비교하여 주시기 바랍니다. 나아가 향후 업무시설용지에도 1-9블록과 유사한 수준의 전력량이 사용된다고 추정할 경우, 그 합계가 주암지구 에너지사용계획을 초과한다면 어떠한 대책이 있는지 함께 제시하여 주시기 바랍니다.";
-
-    const lhClosings = [
-        "본 민원은 귀 공사의 적법한 업무 수행을 방해하고자 하는 것이 아니라 이미 약속하신 사항에 대한 투명하고 신속한 이행을 요청드리는 주민의 정당한 요구입니다.\n\n감사합니다.",
-        "적법한 절차를 존중하나 이미 하신 약속의 이행 여부조차 확인할 수 없는 현재 상황은 결코 가볍게 넘길 문제가 아닙니다.\n\n감사합니다."
-    ];
-
-    const lhStrongAskVariants = [
-        "아울러 귀 공사께서는 위와 같은 사유들을 종합적으로 고려하시어 주암지구 지구단위계획상 해당 부지의 허용용도에서 데이터센터를 명시적으로 제외하는 지구계획 변경 절차를 조속히 검토하고 추진해 주시기 바랍니다.",
-        "아울러 귀 공사께서는 앞서 말씀드린 여러 우려를 충분히 반영하시어 지구단위계획상 허용용도에서 데이터센터를 제외하는 방향으로 조속히 절차를 진행해 주시기를 강력히 요청드립니다."
-    ];
-
-    let stateL = {};
-    function rerollLh() {
-        stateL = {
-            titleIdx: getRandomIndex(lhTitleVariants.length),
-            openIdx: getRandomIndex(lhOpenings.length),
-            closeIdx: getRandomIndex(lhClosings.length),
-            reasonIdxs: pickReasonIndices(2),
-            askIdx: getRandomIndex(lhStrongAskVariants.length),
-            warnIdx: getRandomIndex(WARNING_VARIANTS.length)
-        };
-    }
+    function rerollLh() { /* 답변에 대한 재민원(고정 문안)이라 개인화 문단 반영 외 변화가 없습니다. */ }
 
     function buildLh() {
-        const body = lhOpenings[stateL.openIdx] + "\n\n" + lhNotice + getPersonalParagraph()
-            + "\n\n" + lhReq1
-            + "\n\n" + lhReq2
-            + "\n\n" + buildReasonsBlock(stateL.reasonIdxs)
-            + "\n\n" + lhStrongAskVariants[stateL.askIdx]
-            + "\n\n" + WARNING_VARIANTS[stateL.warnIdx]
-            + "\n\n" + lhClosings[stateL.closeIdx];
-        return { title: lhTitleVariants[stateL.titleIdx], body };
+        const personal = getPersonalParagraph();
+        const body = `귀 공사의 업무에 감사드립니다. 본 민원인은 앞서 제출한 민원(과천주암지구 데이터센터 관련 민관협의체 중간검토결과 공유 요청)에 대해 귀 공사로부터 아래와 같은 답변을 받았습니다.
+
+"민관협의체 요청사항 중 미매각 업무시설용지의 허용용도 내 데이터센터 삭제에 대해서는 계획의 안정성 및 토지공급의 공정성 등을 감안하여 검토중에 있으며, 현 단계에서 답변드리기 어려움을 양해하여 주시기 바랍니다."
+
+그러나 이 답변은 지난 7월 민관협의체에서 이미 약속하신 "검토를 진행하겠다"는 입장을 두 달 넘게 지난 지금 재확인한 것에 불과하며, 본 민원인이 요청한 세 가지 사항 중 어느 것에도 실질적인 진전을 알려주지 않았습니다. 아울러 "계획의 안정성 및 토지공급의 공정성"이라는 표현은 검토 지연의 이유로 제시되었을 뿐, 구체적으로 무엇을 어떻게 검토하고 있는지에 대한 설명이 전혀 없습니다. 이에 아래와 같이 재차 명확한 답변과 처리 시한을 요구합니다.${personal}
+
+[재요청 1] "검토 중"의 구체적 내용과 처리 예상 시한 명시 요구
+"검토중"이라는 답변은 7월 협의체 회의 이후 지금까지 동일하게 반복되고 있습니다. 검토가 실제로 어떤 절차를 거쳐 진행되고 있는지(예: 관련 부서 협의, 국토교통부 협의, 사업자와의 협의 등), 그리고 언제까지 결론을 낼 예정인지 구체적인 처리 시한을 명시하여 답변해 주시기 바랍니다. 시한을 밝힐 수 없다면 그 이유를 구체적으로 설명해 주시기 바랍니다.
+
+[재요청 2] 연접 부지(과천주암지구) 용도 변경 추진 현황 재확인
+과천시는 이미 지난 4월 국토교통부와 귀 공사에 주암지구 업무시설용지의 지구단위계획 변경(허용용도에서 데이터센터 제외)을 공식 건의하였고, 과천시의회는 데이터센터와 주거지 간 이격거리를 두는 도시계획조례 개정까지 추진하고 있는 것으로 확인됩니다. 귀 공사의 이번 답변에는 이러한 과천시의 공식 건의에 대한 검토 진행 상황이 전혀 언급되지 않았습니다. 과천시의 지구단위계획 변경 건의에 대해 귀 공사가 어떤 입장을 가지고 있는지, 국토교통부와 어떤 협의가 진행되고 있는지 구체적으로 답변해 주시기 바랍니다.
+
+[재요청 3] 답변 지연에 대한 재발 방지 및 정기 안내 체계 마련 요구
+7월 약속 이후 두 달 이상 동일한 "검토 중" 답변만 반복되는 것은 행정 신뢰를 저해하는 문제입니다.
+최종 결론이 나오기 전까지 최소 2주 또는 1개월 단위로 검토 진행 상황을 정기적으로 안내하는 절차를 마련해 주시기 바랍니다.
+
+[문제 제기 1] 인근 지자체·의회의 반대 확산과 정책적 흐름 역행 우려
+과천주암지구 데이터센터 건립에 대해서는 과천시뿐 아니라 인접한 서울 서초구의회도 지난달 LH에 사업 철회를, 국토교통부에는 지구단위계획 변경을 요구하는 결의안을 채택하였습니다. 또한 서울 금천구에서도 유사한 주거지 인접 데이터센터 건립에 대해 주민 반발이 확산되어 구청이 반경 200미터 이내 주민 동의 및 건강 위험성 평가를 의무화하는 조례를 마련한 사례가 있습니다. 이처럼 국내 여러 지자체에서 주거지 인접 데이터센터에 대한 규제를 강화하는 흐름이 확산되는 상황에서, 귀 공사가 계속 결론을 미루는 것은 이러한 정책적 흐름에 역행하는 것으로 비칠 수 있습니다.
+
+[문제 제기 2] 해외 사례와 비교한 검토 지연의 부적절성
+해외에서는 이미 주거지 인접 데이터센터에 대해 구체적인 이격거리 기준을 마련하거나 승인을 보류하는 사례가 늘고 있습니다. 예를 들어 미국 애리조나주 투손시는 대형 데이터센터가 주택·학교로부터 최소 0.5마일(약 800미터) 떨어지도록 규정하고 있으며, 태국은 49개 데이터센터 프로젝트에 대해 건설 중단을 요청한 바 있습니다. 이러한 국제적 흐름에 비추어 볼 때, 이미 7월부터 약속된 국내 검토가 두 달 넘게 결론 없이 지연되는 것은 국제 기준에도 미치지 못하는 소극적 대응으로 판단됩니다.
+
+[문제 제기 3] 계획 변경의 법적·행정적 가능성 확인 요구
+과천시 관계자도 "지구단위계획 변경을 통해 허용 용도를 재조정하는 방향으로 주민 입장을 최대한 반영하겠다"고 밝힌 바 있으나, 동시에 "지구단위계획 변경은 국토부와 LH의 동의가 필요하다"는 점도 지적되었습니다. 귀 공사가 실질적으로 이 변경에 동의할 의사가 있는지, 아니면 이미 매각 절차 또는 사업자와의 계약 관계상 변경이 어려운 상황인지 명확히 답변해 주시기 바랍니다. 만약 계획 변경이 현실적으로 어려운 상황이라면, 그 구체적인 법적·계약적 제약사항을 투명하게 공개하여 주민들이 다음 대응 방향을 판단할 수 있도록 해 주시기 바랍니다.
+
+결론 및 요청
+본 민원인을 비롯한 장군마을 주민들은 이미 1년 넘게 데이터센터 입지에 대한 불안 속에 살고 있습니다. 귀 공사가 검토를 약속한 지 두 달이 지난 현재까지 "검토 중"이라는 답변만 반복하는 것은 주민들의 정당한 우려를 방치하는 것과 다르지 않습니다. 위 재요청 사항에 대한 구체적이고 성실한 답변을 요청드리며, 명확한 답변이 계속 지연될 경우 국민권익위원회 이의신청 등 후속 절차를 검토할 수밖에 없음을 알려드립니다.
+
+본 민원은 귀 공사의 적법한 업무 수행을 방해하고자 하는 것이 아니라, 이미 약속하신 사항의 투명하고 신속한 이행을 요청하는 주민의 정당한 요구임을 다시 한번 밝힙니다.
+
+감사합니다.`;
+        return { title: lhFixedTitle, body };
     }
 
-    const molandTitleVariants = [
-        "과천주암지구 데이터센터 관련 민관협의체 정상 운영 촉구 및 LH 조속한 인허가 변경 요청",
-        "장군마을-과천시-LH 민관협의체 파행 우려 - 인허가권자 국토교통부의 관리·감독 촉구",
-        "과천주암지구 인허가권자 국토교통부에 데이터센터 민원 심각성 및 신속 처리 촉구"
-    ];
+    const molandFixedTitle = "[재민원] 과천 주암지구 데이터센터 관련 귀 부 회신에 대한 재검토 요청";
 
-    const molandOpenings = [
-        "국민의 주거 안전과 공정한 인허가 행정을 위해 힘쓰시는 귀 부의 노고에 감사드립니다. 아래와 같이 민원을 제출합니다.",
-        "귀 부의 공정하고 투명한 인허가 행정을 신뢰합니다. 아래와 같이 민원을 제출합니다."
-    ];
-
-    const molandNotice = "과천주암지구의 인허가권자인 국토교통부는 지난 7월 장군마을재개발조합·과천시·LH 간 상호 합의하여 추진하기로 한 '민관협의체'의 정상 운영을 위해 힘써주시기 바랍니다.";
-
-    const molandReq1 = "[요청 1] 민관협의체 요청사항 이행 여부에 대한 관리·감독\n\n지난 7월 장군마을 주민은 LH에게 미매각 업무시설용지의 허용용도 중 '데이터센터'의 삭제를 요청하였습니다.";
-
-    const molandReq2 = "[요청 2] 사업시행자에 대한 수시 감독 요청\n\n투명하고 오로지 주민을 위한 민관협의체 운영이 이루어질 수 있도록 사업시행자(LH)의 민관협의체 운영 방향 등에 대하여 수시로 감독하여 주시기 바랍니다.";
-
-    const molandReq3Variants = [
-        "[요청 3] 데이터센터 관련 민원의 심각성 제고 및 조속한 처리 촉구\n\n인허가권자인 국토교통부께서 이러한 상황의 심각성을 충분히 인지하시고 사업시행자인 LH의 인허가 변경 절차가 조속히 진행될 수 있도록 강력히 지도해 주시기를 촉구합니다.",
-        "[요청 3] 신속한 관리·감독을 강력히 촉구합니다\n\n민관협의체가 형식적인 절차에 그치지 않고 실질적인 결과로 이어지도록 인허가권자인 국토교통부께서 사업시행자를 강력하게 지도·감독하여 주시기 바랍니다."
-    ];
-
-    const molandClosings = [
-        "본 민원은 특정 기관·기업의 적법한 업무를 방해하고자 하는 것이 아니라 인허가권자로서의 관리·감독 책임을 다해주실 것을 요청드리는 주민의 정당한 의견입니다.\n\n감사합니다.",
-        "적법한 절차를 존중하며 다만 주민의 안전과 직결된 사안인 만큼 인허가권자의 적극적인 역할을 요청드립니다.\n\n감사합니다."
-    ];
-
-    const molandStrongAskVariants = [
-        "아울러 국토교통부께서는 인허가권자로서 위와 같은 사유들을 종합적으로 검토하시어 사업시행자인 LH가 지구단위계획상 허용용도에서 데이터센터를 제외하는 방향으로 조속히 절차를 진행할 수 있도록 강력하게 관리·감독해 주시기 바랍니다.",
-        "인허가권자인 국토교통부께서는 위 사유들의 심각성을 인지하시고 사업시행자가 데이터센터를 허용용도에서 제외하는 지구계획 변경에 나서도록 적극적으로 지도해 주시기를 강력히 촉구합니다."
-    ];
-
-    let stateM = {};
-    function rerollMoland() {
-        stateM = {
-            titleIdx: getRandomIndex(molandTitleVariants.length),
-            openIdx: getRandomIndex(molandOpenings.length),
-            req3Idx: getRandomIndex(molandReq3Variants.length),
-            closeIdx: getRandomIndex(molandClosings.length),
-            reasonIdxs: pickReasonIndices(2),
-            askIdx: getRandomIndex(molandStrongAskVariants.length),
-            warnIdx: getRandomIndex(WARNING_VARIANTS.length)
-        };
-    }
+    function rerollMoland() { /* 답변에 대한 재민원(고정 문안)이라 개인화 문단 반영 외 변화가 없습니다. */ }
 
     function buildMoland() {
-        const body = molandOpenings[stateM.openIdx] + "\n\n" + molandNotice + getPersonalParagraph()
-            + "\n\n" + molandReq1
-            + "\n\n" + molandReq2
-            + "\n\n" + molandReq3Variants[stateM.req3Idx]
-            + "\n\n" + buildReasonsBlock(stateM.reasonIdxs)
-            + "\n\n" + molandStrongAskVariants[stateM.askIdx]
-            + "\n\n" + WARNING_VARIANTS[stateM.warnIdx]
-            + "\n\n" + molandClosings[stateM.closeIdx];
-        return { title: molandTitleVariants[stateM.titleIdx], body };
+        const personal = getPersonalParagraph();
+        const body = `귀 부의 회신은 본 민원의 핵심 요청(민관협의체 합의사항 이행 점검 및 사업시행자 지도)에 대한 실질적 답변이 되지 못하여 다음과 같이 재차 질의드립니다.${personal}
+
+1. 협의체 "합의사항 이행 여부" 확인은 개입이 아닙니다
+귀 부는 "민관협의체에서 협의하고 있는 사항에 대한 개입은 바람직하지 않다"고 답변하셨습니다. 그러나 본 민원 요청 2, 3은 협의 내용에 대한 개입이 아니라, 지난 7월 장군마을재개발조합·과천시·LH 3자가 이미 상호 합의하여 구성한 절차가 약속대로 이행되고 있는지 확인해 달라는 것입니다. "협의 중인 사항"과 "이미 합의되어 이행 단계에 있는 사항"은 명백히 다른 차원이므로, 이 구분에 대해 명확히 답변해 주시기 바랍니다.
+
+2. 이행 지연 시 절차적 결과에 대한 질의
+① LH가 민관협의체 합의사항(업무시설용지 허용용도 중 데이터센터 삭제 요청)과 관련하여 지구계획 변경 요청서를 귀 부에 제출한 사실이 있습니까, 없습니까.
+
+② 만약 제출된 사실이 없다면, 「민간임대주택에 관한 특별법」 및 관련 하위법령상 사업시행자가 지구계획 변경 요청을 하지 않고 방치할 경우 이를 강제하거나 촉구할 수 있는 절차가 존재합니까, 존재하지 않습니까. 존재하지 않는다면 그 법적 공백을 어떻게 보완할 계획인지 답변해 주시기 바랍니다.
+
+③ 통합심의위원회 심의 등 인허가 절차가 진행 중인 상태에서, 민관협의체 합의사항이 반영되지 않은 지구계획(즉 데이터센터가 여전히 허용용도에 포함된 계획)이 그대로 신청될 경우, 귀 부는 이를 그대로 승인 심사할 것인지, 아니면 합의사항 미반영을 심사 과정에서 고려할 것인지 답변해 주시기 바랍니다.
+
+3. 원 민원 요청사항 재확인
+본 민원은 절차적 사실관계 확인에 그치는 것이 아니라, 애초 민원에서 요청한 바와 같이 귀 부가 인허가권자로서 사업시행자(LH)가 데이터센터를 허용용도에서 제외하는 지구계획 변경에 나서도록 적극적으로 지도·감독해 줄 것을 재차 강력히 촉구하는 것입니다. 위 ①②③의 사실관계 확인은 이러한 지도·감독이 실제로 이루어지고 있는지, 이루어지지 않고 있다면 그 이유가 무엇인지를 규명하기 위한 것입니다.
+
+원론적인 절차 설명이 아닌 본 사안에 대한 구체적 답변과, 사업시행자에 대한 실질적 지도 조치를 다시 한번 요청드립니다. 답변이 계속 원론에 머물거나 지도·감독 조치가 이루어지지 않을 경우, 본 사안을 국민권익위원회 고충민원으로 재신청하고, LH의 협의체 합의사항 미이행에 대해서는 감사원 공익감사를 별도로 청구하겠습니다.
+
+감사합니다.`;
+        return { title: molandFixedTitle, body };
     }
 
-    const gwacheonFixedTitle = "신계용 시장님 데이터센터 공약 이행 관련 촉구";
+    const gwacheonFixedTitle = "[재민원] 주암지구 데이터센터 건축허가 관련 답변에 대한 검증책임 소재 및 심의위원 이해충돌 확인 요구";
 
-    function rerollGwacheon() { }
+    function rerollGwacheon() { /* 답변에 대한 재민원(고정 문안)이라 개인화 문단 반영 외 변화가 없습니다. */ }
 
     function buildGwacheon() {
         const personal = getPersonalParagraph();
-        const body =
-            "안녕하십니까. 과천 주암지구 디에이치 아델스타 입주예정자입니다. 신계용 시장님께서 후보 시절 밝히신 데이터센터 인허가 불허 공약의 이행을 강력히 촉구합니다." + personal + "\n\n" +
-            "최근 서울 금천구에서도 저희와 유사한 데이터센터 입지 갈등이 있었습니다. 금천구 최기찬 구청장은 지난 7월 1일 취임 1호 결재로 '데이터센터 주민참여형 검토체계 구축 및 제도개선'을 발표했습니다." + "\n\n" +
-            "신계용 시장님께서 후보 시절 밝히신 데이터센터 관련 인허가 불허 공약, 지금 어느 단계까지 이행되고 있습니까. 더 이상 검토만 하고 있을 시간이 없습니다." + "\n\n" +
-            "공약 이행, 지금 확인하겠습니다. 이행 계획과 일정을 명확히 밝혀주십시오.";
+        const body = `과천시의 행정에 감사드리며, 앞서 제출한 민원(신청번호 1AA-2609-0595885 외 다수)에 대해 아래와 같은 답변을 받았습니다.
+
+"우리 시는 데이터센터 입지에 대한 귀하의 우려에 깊이 공감하고 있습니다. 향후 건축허가 절차 진행 시 귀하께서 제기하신 우려사항을 포함하여 법령기준 충족여부, 안전성, 주변환경영향 등을 종합적으로 고려하여 허가 여부를 결정할 예정임을 알려드립니다."
+
+이 답변은 '안전성', '주변환경영향'이라는 표현만 있을 뿐, 실제로 무엇을 어떤 기준과 방법으로 측정·검증하는지, 그리고 그 검증의 책임이 누구에게 있는지에 대한 내용이 전혀 없습니다. 본 민원인은 이 부분을 명확히 하고자 합니다.${personal}
+
+※ 검증책임은 사업자에게 있다는 원칙 확인 요구
+「환경영향평가법」은 환경영향평가서 작성의 책임과 의무를 명확히 "사업자"에게 부과하고 있으며, 사업이 환경에 미치는 영향을 사업자가 스스로 조사·예측·평가하여 제출하는 것이 법의 기본 구조입니다.
+이는 건축 심의에서도 동일하게 적용되어야 할 원칙입니다. 즉 데이터센터가 안전하다는 것을 입증할 책임은 사업을 추진하는 사업자에게 있고, 주민이 위험성을 반증할 책임을 지는 것이 아닙니다.
+
+이에 과천시가 이 원칙을 명확히 인식하고 있는지, 그리고 아래 사항에 대해 사업자에게 입증책임이 있음을 심의 과정에서 어떻게 적용하고 있는지 답변해 주시기 바랍니다.
+
+[재요청 1] 사업자 제출 자료의 검증 방법 및 책임 소재
+사업자가 제출한 소음·발열·화재 안전성 등에 관한 자료가 사업자 스스로 위탁한 기관에서 작성된 것인지, 아니면 과천시 또는 국토교통부가 지정한 독립된 제3의 검증기관을 통해 별도로 확인되는지 답변해 주시기 바랍니다.
+
+「건축법」에 따른 건축위원회 심의는 사업자가 제출한 자료를 그대로 인용하여 통과시키는 절차가 아니라, 그 조사방법의 적정성과 결과의 신뢰성 자체를 심의위원회가 직접 판단하는 절차로 알고 있습니다.
+이번 심의에서 사업자가 제출한 소음·화재·발열 관련 자료의 측정 조건(최대부하 여부, 측정 지점, 저주파음 분석 여부 등)이 실제로 타당한지를 심의위원회가 어떤 방식으로 독립적으로 검증하는지 구체적으로 답변해 주시기 바랍니다.
+
+만약 사업자 제출 자료를 그대로 신뢰하여 심의를 진행한다면, 그 자료의 오류나 유리한 조건 설정 여부를 누가 어떤 절차로 걸러내는지 답변해 주시기 바랍니다.
+검증 주체가 없다면, 그 자체가 심의 절차의 중대한 공백에 해당함을 알려드립니다.
+
+[재요청 2] 건축위원회 심의위원의 이해충돌 여부 확인
+「건축법 시행령」은 건축위원회 위원을 공무원이 아닌 위원의 경우 관련 학회·협회 등의 추천 또는 공모절차를 거쳐 위촉하도록 규정하고 있으며, 위원이 해당 안건에 용역·자문·연구 등으로 직접 관여하였거나 이해당사자가 되는 경우 그 심의에서 제척되어야 한다고 규정하고 있습니다.
+
+이에 아래 사항을 명확히 답변해 주시기 바랍니다.
+
+이번 주암지구 데이터센터 관련 건축심의에 참여하는 위원들의 위촉 절차(추천 단체, 공모 여부)가 관계 법령에 따라 적법하게 이루어졌는지 답변해 주시기 바랍니다.
+
+심의위원 중 이번 안건의 사업자, 자산관리회사, 시행사 또는 그 관계사와 최근 5년 이내 용역·자문·연구·감정 등의 관계를 맺었거나, 직원 또는 임원으로 재직한 이력이 있는 위원이 있는지 확인해 주시기 바랍니다.
+
+위와 같은 이해관계가 있는 위원이 확인될 경우, 관계 법령에 따른 제척·기피·회피 절차가 실제로 적용되는지, 그리고 이를 사전에 검증하는 절차가 마련되어 있는지 답변해 주시기 바랍니다.
+
+심의위원 명단 공개가 심의의 공정성을 이유로 제한된다면, 최소한 위 이해충돌 여부에 대한 검증 결과만이라도 별도로 답변해 주시기 바랍니다.
+
+[재요청 3] 소음 측정 조건의 구체화
+사업자가 제출하는 소음 예측치가 '최대부하' 조건(냉각기·팬·변압기·발전기가 동시에 최대 가동되는 상황)을 기준으로 산정되었는지, 이를 과천시 또는 독립된 검증기관이 확인하였는지 답변해 주시기 바랍니다.
+
+측정·평가 지점이 주거지 경계뿐 아니라 최근접 세대(주거동 외벽 또는 발코니 등 실제 생활공간)를 포함하는지 답변해 주시기 바랍니다.
+
+냉각기·팬·변압기·발전기에서 발생하는 저주파음에 대해 1/3옥타브밴드 분석이 실시되었는지, 그 결과가 무엇인지 답변해 주시기 바랍니다. 저주파음은 일반 소음 기준으로는 걸러지지 않으면서도 수면장애 등 실질적 피해를 유발할 수 있어 별도 분석이 반드시 필요한 항목입니다.
+
+[재요청 4] 사업 분할(쪼개기)을 통한 심사 회피 여부 확인
+주암지구 업무시설용지 1-1, 1-2, 1-7~1-9블록 등에서 추진되는 데이터센터 사업은 형식상 각기 다른 법인(리츠)과 자산관리회사 명의로 분리되어 있으나, 동일 지구 내 인접 블록에서 동일한 시점에 유사한 규모로 추진되는 사실상 하나의 개발사업으로 볼 여지가 있습니다.
+
+이와 관련하여 이미 언론에서도 수도권 데이터센터 사업자들이 전력계통영향평가를 회피하기 위해 계약전력을 10메가와트 미만으로 나누어 신청하는 이른바 '쪼개기' 의혹이 제기된 바 있습니다. 아래 사항을 답변해 주시기 바랍니다.
+
+1-1, 1-2, 1-7~1-9블록 등 각 블록의 사업 시행자, 자산관리회사, 사업계획 수립 시점, 착수 시점이 서로 어떻게 다른지 답변해 주시기 바랍니다.
+
+각 블록의 개별 건축 연면적, 계약전력을 합산할 경우 관계 법령상 통합적 평가가 의무화되는 규모 기준에 해당하는지 여부를 답변해 주시기 바랍니다.
+
+이러한 분할 구조가 회피 목적의 인위적 분할로 볼 근거가 있는지 여부에 대한 과천시의 검토 결과를 답변해 주시기 바랍니다.
+
+[재요청 5] UPS·BESS 화재 안전성 및 제3자 인증 확인
+설치되는 UPS 및 배터리 에너지저장장치(BESS)의 배터리 종류와 용량이 무엇인지, 리튬이온 배터리의 셀 간 열폭주 확산을 방지하기 위한 UL9540A 등 국제 인증 또는 동등한 국내 기준의 설계가 적용되는지, 그리고 이를 사업자 자체 보고가 아닌 독립된 인증기관을 통해 확인하는지 답변해 주시기 바랍니다. 화재 발생 시 소화 방식과 소화 실패 시 배연·환기 계획도 함께 답변해 주시기 바랍니다.
+
+[재요청 6] 그 외 안전 관련 중요 사항
+비상발전기의 정기 시험 및 실제 비상운전 시나리오 각각의 소음·배출가스 영향이 평가되어야 합니다.
+
+옥상·외벽 기계설비는 반드시 건물 안으로 들어가야 합니다. 외부에 나오더라도 결국 바람을 타고 디에이치 아델스타 방향으로 영향을 미칠 수밖에 없는 구조이므로, 외부에 설치할 경우 완전 차폐 설계가 필수적입니다.
+
+경유 저장탱크의 저장량과 위험물 안전관리 인허가가 건축허가 심의와 연계되어 검토되어야 합니다.
+
+소방차 진입로, 피난계획, 방화구획이 인근 주거지 여건을 반영하여 검토되어야 합니다.
+
+공사차량의 통학로 회피 노선 및 통학시간대 운행 제한 계획이 포함되어야 합니다.
+
+※ 성실한 답변이 이루어지지 않을 경우의 후속 조치
+본 민원인은 위 각 항목에 대해 "종합적으로 고려하겠다"는 식의 원론적 답변이 반복되거나, 사업자 제출 자료의 존재 여부만을 확인하는 수준에 그칠 경우, 이를 실질적 검증 책임을 방기한 것으로 판단하고 아래 절차를 진행하겠습니다.
+
+1) 사업자 제출 자료의 원본, 심의위원 명단 및 위촉 절차 관련 자료에 대해 「공공기관의 정보공개에 관한 법률」에 따른 정보공개청구를 진행하겠습니다.
+
+2) 심의위원의 이해충돌이 확인될 경우, 이를 근거로 국민권익위원회에 고충민원 및 감사원에 공익감사를 청구하겠습니다.
+
+3) 재량권을 스스로 포기한 채 검증 책임이 사업자가 아닌 주민에게 전가된 상태로 허가가 진행될 경우, 심의 절차 자체의 하자 및 재량권 불행사를 근거로 행정심판 및 행정소송을 제기할 것을 검토하겠습니다.
+
+※ 결론
+건축위원회 심의는 사업자가 제출한 자료를 형식적으로 확인하는 절차가 아니며, 이 사업과 같이 형질변경·개발행위를 수반하는 건축허가는 법령상 최소 기준 충족만으로 허가가 자동 의무화되는 기속행위가 아니라 폭넓은 재량이 인정되는 재량행위입니다. 안전성을 입증할 책임은 사업을 추진하여 이익을 얻는 사업자에게 있으며, 그 검증이 실질적으로 이루어지고 있는지, 심의를 담당하는 위원들에게 이해충돌이 없는지를 확인하는 것은 주민의 정당한 권리입니다. 본 민원인은 과천시가 위 항목들에 대해 구체적이고 성실한 답변을 제공하여 줄 것을 다시 한번 강력히 요청드립니다.
+
+감사합니다.`;
         return { title: gwacheonFixedTitle, body };
     }
 
-    const kepcoFixedTitle = "과천주암지구 데이터센터 사업주체 분할(쪼개기) 수전 의혹 조사 및 전력공급 신중 재검토 요청";
+    const kepcoFixedTitle = "과천 주암지구 데이터센터 전력계통영향평가 관련 답변 보완 요청";
 
-    function rerollKepco() { /* 고정 문안이라 다시 섞기는 개인화 문단 반영 외 변화가 없습니다. */ }
+    function rerollKepco() { /* 답변에 대한 재민원(고정 문안)이라 개인화 문단 반영 외 변화가 없습니다. */ }
 
     function buildKepco() {
         const personal = getPersonalParagraph();
-        const body =
-            "과천 주암 공공주택지구 내 업무시설용지(방송통신시설)에 대규모 데이터센터 건립이 추진되고 있다는 사실에 대해 지역 주민들은 깊은 우려를 갖고 있습니다." + personal + "\n\n" +
-            "[핵심 문제 제기] 사업주체 분할을 통한 수전 신청 ‘쪼개기’ 의혹 조사 요청" + "\n\n" +
-            "이 사업은 과천 주암지구 업무시설용지의 여러 필지(1-1BL, 1-2BL, 1-7BL, 1-8BL, 1-9BL)에서 개별 필지 단위로 데이터센터가 추진되고 있으며, 이를 위한 전기사용(수전) 신청 또한 필지별로 개별적으로 이루어진 것으로 파악됩니다." + "\n\n" +
-            "그런데 확인된 바에 따르면, 1-7BL·1-8BL·1-9BL은 동일한 법인(주식회사 과천주암대토개발제1호위탁관리부동산투자회사)이 시행하고 있고, 1-1BL·1-2BL은 각각 별도 법인이나 모두 동일한 자산운용사(마스턴투자운용)가 운용하는 것으로 보입니다. 즉 실질적으로 동일하거나 밀접히 관련된 사업주체가 인접한 필지에서 하나의 데이터센터 단지를 개발하면서, 형식상 필지·법인을 분할하여 개별적으로 수전을 신청한 정황이 있습니다." + "\n\n" +
-            "이 경우 인접 필지의 계약전력을 합산하면 상당한 규모에 이르러 「분산에너지 활성화 특별법」 제25조에 따른 전력계통영향평가 대상(계약전력 10MW 이상)에 해당할 수 있음에도, 개별 수전 신청으로 이를 회피한 것은 아닌지 하는 의혹이 제기됩니다." + "\n\n" +
-            "이에 귀 공사께 다음을 요청드립니다.\n" +
-            "① 위 5개 필지(1-1·1-2·1-7·1-8·1-9BL)에 대한 전기사용 신청 및 계약전력 현황을 확인하여 주시기 바랍니다.\n" +
-            "② 동일 법인 또는 동일 자산운용사가 시행·운용하는 인접 필지의 전력수요를 합산하여 심사하고, 필지 분할을 통한 수전 신청이 전력계통영향평가 등 관련 심사를 회피하기 위한 것은 아닌지 전수조사하여 주시기 바랍니다.\n" +
-            "③ 조사 결과 실질적으로 하나의 사업에 해당한다고 판단될 경우, 개별 수전 승인을 재검토하고 합산 기준에 따라 전력계통 영향을 다시 평가하여 주시기 바랍니다." + "\n\n" +
-            "[문제 제기 1] RE100·에너지 전환 정책 역행\n" +
-            "글로벌 기업들은 RE100 달성을 위해 신재생에너지 사용을 사실상 필수 요건으로 요구하고 있습니다. 신재생에너지 공급이 구조적으로 제한적인 수도권에 대규모 데이터센터를 신축하는 것은 정부의 탄소중립 목표 및 에너지 전환 정책과 역행하는 방향이라고 판단됩니다." + "\n\n" +
-            "[문제 제기 2] 공공택지 취지에 맞지 않는 특혜성 개발 우려\n" +
-            "공공주택지구 부지는 본래 공공적 목적을 위해 조성된 것입니다. 이 부지에 대규모 민간 데이터센터 개발이 허용될 경우 공공사업의 취지와 맞지 않는 특혜성 개발로 비칠 소지가 있다고 생각합니다." + "\n\n" +
-            "[문제 제기 3] 수도권 집중 완화 국정과제 위배\n" +
-            "정부는 국토 균형발전과 수도권 인구·기능 분산을 핵심 국정과제로 추진하고 있습니다. 대규모 전력을 소비하는 첨단 인프라 시설을 수도권 한복판에 신축하는 것은 이러한 국정 기조에 정면으로 배치되는 것으로 보입니다." + "\n\n" +
-            "한국전력공사께서는 수도권 전력계통 안정화와 「분산에너지 활성화 특별법」의 취지에 따라, 위 쪼개기 의혹에 대한 조사와 함께 해당 사업장에 대한 전력 공급 여부를 신중하게 재검토해 주시기 바랍니다." + "\n\n" +
-            "주민들의 정당한 우려에도 불구하고 관련 절차가 면밀한 검토 없이 진행될 경우, 주민들은 정당한 절차를 통해 필요한 대응을 검토할 수밖에 없다는 점을 말씀드립니다. 적법한 절차를 존중하며, 다만 전력 수급 안정성과 시민 안전에 직결된 사안인 만큼 신중한 검토를 요청드립니다." + "\n\n" +
-            "감사합니다.";
+        const body = `귀 공사께서는 "계약용량 분할 신청을 통한 회피는 시행령상 누적 합산 기준으로 제도적으로 차단되어 있다"고 답변하셨으나, 이는 본 민원의 핵심 질의에 대한 답변이 되지 못합니다.
+아래 4가지를 명확히 답변해 주시기 바랍니다.${personal}
+
+1. 시행령 제25조·부칙 제3조의 적용 전제 확인
+해당 조항은 "기존에 전기를 사용 중인 동일 사업자가 추가로 증량 신청"하는 경우를 전제로 합산 규정을 두고 있는 것으로 이해됩니다.
+그런데 주암지구 1-1·1-2·1-7·1-8·1-9BL은 전부 신규 신청입니다.
+신규 신청 건에도 이 합산 조항이 적용되는지, 아니면 애초에 신규 동시신청 상황에는 해당 조항이 적용되지 않는지 명확히 답변해 주시기 바랍니다. 만약 신규 신청에는 적용되지 않는다면, 이는 형식상 법인·필지를 분할해 신규 신청하면 합산 규제를 원천적으로 피할 수 있다는 의미가 되므로, 이 부분이 본 민원의 핵심 우려입니다.
+
+2. "동일 사업자" 판단 기준
+한전이 "동일 사업자"를 판단할 때 법인등기부상 형식적 법인 단위로만 보는지, 아니면 아래와 같은 실질적 지배관계도 판단 요소로 고려하는지 답변해 주시기 바랍니다.
+
+1) 동일 자산운용사(AMC)가 복수 리츠·법인을 실질적으로 운용하는 경우
+2) 하나의 사업계획을 필지별로 나누어 복수 법인이 시행하는 경우
+3) 필지 간 인접성, 신청 시점의 동시성 등 정황상 하나의 사업으로 볼 수 있는 경우
+이러한 구조적 허점이 방치되어 편법적인 회피 수단으로 악용되는 일은 없어야 할 것입니다.
+
+3. 5개 필지 현황 및 합산 검토 계획
+① 1-1, 1-2, 1-7, 1-8, 1-9BL 각각의 전기사용신청 접수 여부, 접수일자, 신청 계약전력을 확인해 주시기 바랍니다.
+② 본 사안에 대해 한전이 실제로 이 5개 필지를 합산 검토할 계획이 있는지, 있다면 절차와 시기를, 없다면 그 법적 근거를 답변해 주시기 바랍니다.
+
+4. 공급 검토 시 고려 범위
+전기사업법 제14조 및 기본공급약관에 따른 공급 검토가 신청서류의 형식적 완비 여부만을 기준으로 하는지, 인접 사업장 간 실질적 연관성과 지역 계통의 누적 부담도 검토 대상인지 답변해 주시기 바랍니다.
+
+위 4가지 질의에 대해 원론적 법조문 인용이 아닌, 본 사안에 대한 구체적 답변을 요청합니다.
+답변이 계속 원론에 머물 경우, 전력계통영향평가 정책 소관 부처인 산업통상자원부에 직접 유권해석을 질의하고, 감사원 공익감사 청구 및 국민권익위원회 고충민원 재신청을 병행하겠습니다.
+
+본 민원은 특정 사업자의 적법한 사업활동을 방해하거나 비방하려는 목적이 아니며, 관계 법령에 따른 공정한 심사와 검증이 실제로 이루어지고 있는지를 확인하고자 하는 것임을 밝힙니다.
+
+감사합니다.`;
         return { title: kepcoFixedTitle, body };
     }
 
@@ -753,11 +727,11 @@
         return { title: v.title, body };
     }
 
-  /* ── 6개 기관 ── */
-  var MODES=['lh','moland','gwacheon','kepco','fire','budongsan'];
-  var AGENCY_FULL_NAMES={lh:'한국토지주택공사',moland:'국토교통부',gwacheon:'과천시',kepco:'한국전력공사',fire:'소방청',budongsan:'한국부동산원'};
+  /* ── 5개 기관 ── */
+  var MODES=['lh','moland','gwacheon','kepco','fire'];
+  var AGENCY_FULL_NAMES={lh:'한국토지주택공사',moland:'국토교통부',gwacheon:'과천시',kepco:'한국전력공사',fire:'소방청'};
   var GEN={ lh:[rerollLh,buildLh], moland:[rerollMoland,buildMoland], gwacheon:[rerollGwacheon,buildGwacheon],
-            kepco:[rerollKepco,buildKepco], fire:[rerollFire,buildFire], budongsan:[rerollBudongsan,buildBudongsan] };
+            kepco:[rerollKepco,buildKepco], fire:[rerollFire,buildFire] };
   var currentMode='lh', currentTitle='';
 
   /* 국민신문고 통계 분류용 — 모든 제목 앞에 공통 키워드 */
@@ -918,25 +892,24 @@
     updatePickBtn();
   }
 
-  /* ── 데이터센터 붕괴 애니메이션 (민원 넣을수록 무너짐) ── */
+  /* ── 데이터센터 붕괴 애니메이션 (민원 넣을수록 무너짐, 기관 수에 맞춰 자동 조정) ── */
   var _ruinLevel=0, _ruinBuilt=false;
-  var RUIN_CAPS=[
-    '데이터센터, 아직은 멀쩡합니다',
-    '첫 민원 접수 — 균열이 가기 시작했어요',
-    '2개 기관 완료 — 건물이 흔들립니다',
-    '3개 기관 완료 — 절반이 무너졌어요',
-    '4개 기관 완료 — 거의 다 왔습니다',
-    '5개 기관 완료 — 한 곳만 더!',
-    '6개 기관 완료 — 주민의 목소리로 무너뜨렸습니다 🚩'
-  ];
+  function ruinCaption(level){
+    var total=MODES.length;
+    if(level<=0) return '데이터센터, 아직은 멀쩡합니다';
+    if(level===1) return '첫 민원 접수 — 균열이 가기 시작했어요';
+    if(level>=total) return total+'개 기관 완료 — 주민의 목소리로 무너뜨렸습니다 🚩';
+    if(level===total-1) return level+'개 기관 완료 — 한 곳만 더!';
+    return level+'개 기관 완료 — 점점 무너지고 있습니다';
+  }
   function ensureRuin(){
     if(_ruinBuilt) return;
     var host=document.getElementById('ruin'); if(!host) return;
-    var floors='';
-    for(var i=5;i>=0;i--){
+    var floors='', topFloor=MODES.length-1;
+    for(var i=topFloor;i>=0;i--){
       var Y=100 - i*16, wins='';
       for(var j=0;j<3;j++){ wins+='<rect class="rn-win" x="'+(68+j*17)+'" y="'+(Y+4)+'" width="11" height="7" rx="1" fill="#5eead4"></rect>'; }
-      var roof = i===5 ? '<rect x="76" y="'+(Y-7)+'" width="28" height="7" rx="1" fill="#94a3b8"></rect><circle cx="83" cy="'+(Y-3.5)+'" r="2.4" fill="#e2e8f0"></circle><circle cx="97" cy="'+(Y-3.5)+'" r="2.4" fill="#e2e8f0"></circle>' : '';
+      var roof = i===topFloor ? '<rect x="76" y="'+(Y-7)+'" width="28" height="7" rx="1" fill="#94a3b8"></rect><circle cx="83" cy="'+(Y-3.5)+'" r="2.4" fill="#e2e8f0"></circle><circle cx="97" cy="'+(Y-3.5)+'" r="2.4" fill="#e2e8f0"></circle>' : '';
       var sign = i===0 ? '<text x="90" y="'+(Y+12.5)+'" text-anchor="middle" font-size="6.3" font-weight="700" fill="#475569" letter-spacing=".4">DATA CENTER</text>' : '';
       floors+='<g class="rn-floor" data-i="'+i+'">'+roof+'<rect class="rn-body" x="62" y="'+Y+'" width="56" height="15" rx="2" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1"></rect>'+wins+sign+'</g>';
     }
@@ -1030,8 +1003,9 @@
   }
   function applyRuinLevel(level){
     var bld=document.getElementById('rnBld'); if(!bld) return;
+    var total=MODES.length;
     Array.prototype.forEach.call(bld.querySelectorAll('.rn-floor'), function(g){
-      var i=+g.getAttribute('data-i'), fell = i >= (6-level);
+      var i=+g.getAttribute('data-i'), fell = i >= (total-level);
       if(fell){
         var dx=(i%2?-1:1)*(34+(i*7)%26), dy=52+(i*11)%22, rot=(i%2?-1:1)*(45+(i*13)%40);
         g.setAttribute('transform','translate('+dx+' '+dy+') rotate('+rot+' 90 '+(100-i*16+7)+')');
@@ -1039,17 +1013,17 @@
       } else { g.removeAttribute('transform'); g.classList.remove('fell'); }
     });
     bld.setAttribute('transform','rotate('+(-(level*1.1)).toFixed(2)+' 90 116)');
-    var showN=Math.min(8, level*2);
+    var showN=Math.min(8, Math.round(level*(8/total)));
     Array.prototype.forEach.call(document.querySelectorAll('#rnRubble .rn-rub'), function(rc,idx){
       rc.setAttribute('opacity', idx<showN ? '1' : '0');
     });
     var flag=document.getElementById('rnFlag');
-    if(flag){ flag.setAttribute('opacity', level>=6?'1':'0'); flag.setAttribute('transform', level>=6?'translate(0 -4)':'translate(0 10)'); }
-    var cap=document.getElementById('ruinCap'); if(cap) cap.textContent=RUIN_CAPS[level];
+    if(flag){ flag.setAttribute('opacity', level>=total?'1':'0'); flag.setAttribute('transform', level>=total?'translate(0 -4)':'translate(0 10)'); }
+    var cap=document.getElementById('ruinCap'); if(cap) cap.textContent=ruinCaption(level);
   }
   var RUIN_HIT_MS=600, RUIN_IMPACT_FRAC=0.46, RUIN_R=34, RUIN_TX=90;
   function hammerHitTo(level){
-    var i0=6-level, targetY=100-i0*16+7;
+    var i0=MODES.length-level, targetY=100-i0*16+7;
     if(ruinReducedMotion()){ applyRuinLevel(level); return; }
     var pos=document.getElementById('rnHammerPos'), hammer=document.getElementById('rnHammer');
     if(pos) pos.setAttribute('transform','translate('+RUIN_TX+' '+(targetY-RUIN_R)+')');
@@ -1065,7 +1039,7 @@
   }
   function setRuin(level){
     ensureRuin();
-    level=Math.max(0, Math.min(6, level|0));
+    level=Math.max(0, Math.min(MODES.length, level|0));
     if(level>_ruinLevel) hammerHitTo(level); else applyRuinLevel(level);
     _ruinLevel=level;
   }
@@ -1103,7 +1077,7 @@
     if(wizPhase!=='done') _confettiShown=false;
     var dots=document.getElementById('dots'); dots.innerHTML='';
     var inQueue=(wizPhase==='agency'||wizPhase==='done') && queue.length;
-    var segs = inQueue ? queue.length : 6;
+    var segs = inQueue ? queue.length : MODES.length;
     var curDot = wizPhase==='done' ? segs+1 : (wizPhase==='agency' ? qi+1 : 0);
     for(var i=0;i<segs+2;i++){
       var d=document.createElement('div'); d.className='dot';
@@ -1138,14 +1112,14 @@
       showRuinIn(scAg, document.getElementById('agTitle'));
     } else {
       scDone.hidden=false; back.hidden=false;
-      var total=MODES.filter(function(k){return agencyDone.has(k);}).length;
+      var total=MODES.filter(function(k){return agencyDone.has(k);}).length, allDone=total>=MODES.length;
       document.getElementById('hdTitle').textContent='완료';
-      document.getElementById('doneBig').textContent = total>=6 ? '🎉' : '👍';
-      document.getElementById('doneH').textContent = total>=6 ? '6곳 모두 제출 완료!' : (total+'곳 제출 완료');
-      document.getElementById('doneP').textContent = total>=6
+      document.getElementById('doneBig').textContent = allDone ? '🎉' : '👍';
+      document.getElementById('doneH').textContent = allDone ? (MODES.length+'곳 모두 제출 완료!') : (total+'곳 제출 완료');
+      document.getElementById('doneP').textContent = allDone
         ? '정말 수고하셨어요. 내일 또 부탁드려요.'
         : '수고하셨어요. 다른 기관에도 이어서 넣을 수 있어요.';
-      document.getElementById('btnMorePick').hidden = total>=6;
+      document.getElementById('btnMorePick').hidden = allDone;
       renderDaily();
       showRuinIn(document.querySelector('#scDone .done-wrap'), document.getElementById('doneBig'));
       if(!_confettiShown){ _confettiShown=true; burstConfetti(); }
@@ -1338,7 +1312,7 @@
   /* ── 시작 ── */
   (function(){
     try{ var s=localStorage.getItem(STORY_KEY); if(s) document.getElementById('freeformInput').value=s; }catch(e){}
-    rerollLh(); rerollMoland(); rerollGwacheon(); rerollKepco(); rerollFire(); rerollBudongsan();
+    rerollLh(); rerollMoland(); rerollGwacheon(); rerollKepco(); rerollFire();
     initSmsPanel();
     /* 카톡 등으로 링크를 다시 눌러도 항상 사연 화면부터 — 예전 저장값 때문에
        "다음"만 눌리고 문장을 못 고치던 문제 방지. 저장된 사연은 그대로 불러와 보여주되 수정 가능 */
