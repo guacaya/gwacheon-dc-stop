@@ -43,13 +43,13 @@
   <h2>혼자 할 때</h2>
   <ol>
     <li>민원 발사기에서 <b>나만의 사연을 한 문장 이상</b> 입력합니다.</li>
-    <li>북마크를 누르면 6건이 준비되고 국민신문고로 이동합니다.</li>
+    <li>북마크를 누르면 5건이 준비되고 국민신문고로 이동합니다.</li>
     <li>로그인 → <b>민원 › 일반민원 › 민원신청</b> 화면까지 들어갑니다.</li>
     <li>그 화면에서 북마크를 누르면 <b>제목·본문</b>(같은 화면에 처리기관 칸이 있으면 <b>기관까지</b>) 채워집니다.
-        화면 <b>오른쪽 아래 진행 표시(예: 2/6)</b>를 보고 다음 할 일을 확인하세요.</li>
+        화면 <b>오른쪽 아래 진행 표시(예: 2/5)</b>를 보고 다음 할 일을 확인하세요.</li>
     <li>처리기관이 <b>다음 화면</b>이면 “다음”을 누른 뒤 그 화면에서 북마크를 <b>한 번 더</b> 누릅니다.</li>
     <li>검색결과 <b>목록에서 해당 기관을 직접 선택</b> → 공개여부 확인 → <b>제출</b>.</li>
-    <li>제출 후 다음 민원신청 화면에서 북마크를 <b>반복</b>합니다. (6곳까지)</li>
+    <li>제출 후 다음 민원신청 화면에서 북마크를 <b>반복</b>합니다. (5곳까지)</li>
   </ol>
 
   <h2>한 컴퓨터로 여러 명이 할 때</h2>
@@ -68,7 +68,7 @@
 </main>
 
 <script>
-/* ═══ 발사기(guacaya.github.io)에서 실행: 6건 준비 후 국민신문고로 이동 ═══ */
+/* ═══ 발사기(guacaya.github.io)에서 실행: 5건 준비 후 국민신문고로 이동 ═══ */
 function JUAM_PREPARE(){
   try{
     if(typeof switchMode!=='function' || !document.getElementById('resultBox')){
@@ -81,8 +81,8 @@ function JUAM_PREPARE(){
       if(story){ story.scrollIntoView({block:'center'}); story.focus(); }
       return;
     }
-    var modes = ['lh','moland','gwacheon','kepco','fire','budongsan'];
-    var names = { lh:'한국토지주택공사', moland:'국토교통부', gwacheon:'과천시', kepco:'한국전력공사', fire:'소방청', budongsan:'한국부동산원' };
+    var modes = ['lh','moland','gwacheon','kepco','fire'];
+    var names = { lh:'한국토지주택공사', moland:'국토교통부', gwacheon:'과천시', kepco:'한국전력공사', fire:'소방청' };
     var items = [];
     modes.forEach(function(m){
       switchMode(m);
@@ -203,7 +203,7 @@ function JUAM_STEP(){
   };
 
   var proceed = function(q){
-    if(!q || !Array.isArray(q.items)){ badge('발사기에서 먼저 "📌 주암민원 자동진행"을 눌러 6건을 준비하세요.', 1); return; }
+    if(!q || !Array.isArray(q.items)){ badge('발사기에서 먼저 "📌 주암민원 자동진행"을 눌러 5건을 준비하세요.', 1); return; }
     var txt = document.body.innerText || '';
     var looksSimilar = (/유사\s*민원|유사\s*사례/.test(txt)) && (/확인|검색결과|목록/.test(txt)) && !(/민원\s*내용/.test(txt));
     if(looksSimilar){ badge('⚠️ 유사민원 확인 화면이에요.\n"신규 등록" 등으로 민원신청 화면까지 들어간 뒤 다시 눌러주세요.', 1); return; }
