@@ -157,6 +157,7 @@
       .sug-btn{display:inline-block;margin:10px 2px 0;border:1.5px solid var(--acc);background:var(--acc-l);color:var(--acc-d);font-size:12.5px;font-weight:800;border-radius:999px;padding:8px 14px;cursor:pointer;font-family:inherit}
       .sug-btn:active{transform:scale(.97)}
     </style>
+    <link rel="stylesheet" href="picket.css">
 </head>
 <body>
 <div class="app">
@@ -164,8 +165,9 @@
     <div class="hd-row">
       <button class="hd-back" id="hdBack" hidden onclick="wizBack()">←</button>
       <div class="hd-title" id="hdTitle">주암 데이터센터 반대 민원 넣기</div>
+      <button class="hd-tab" id="tabPicket" onclick="showView('picket')">피켓시위 신청</button>
       <button class="hd-tab on" id="tabWrite" onclick="showView('write')">민원</button>
-      <button class="hd-tab" id="tabSms" onclick="showView('sms')">시의원 문자</button>
+      <button class="hd-tab" id="tabSms" onclick="showView('sms')" hidden>시의원 문자</button>
     </div>
     <div class="dots" id="dots"></div>
   </header>
@@ -243,6 +245,8 @@
       <div class="sms-party-block"><div class="sms-party-header">⚪ 그 외</div><div class="sms-member-list" id="smsListEtc"></div></div>
       <div class="disc">문자 앱은 본인 휴대폰에서 열립니다. 실제 발송은 본인이 눌러야 완료되며, 발송 기록은 이 브라우저에만 저장됩니다.</div>
     </div>
+
+    <div id="viewPicket" hidden></div>
 
   </main>
 
@@ -1159,18 +1163,24 @@
   function showView(v){
     document.getElementById('viewWrite').hidden = v!=='write';
     document.getElementById('viewSms').hidden = v!=='sms';
+    var vp=document.getElementById('viewPicket'); if(vp) vp.hidden = v!=='picket';
     document.getElementById('tabWrite').classList.toggle('on', v==='write');
     document.getElementById('tabSms').classList.toggle('on', v==='sms');
+    var tp=document.getElementById('tabPicket'); if(tp) tp.classList.toggle('on', v==='picket');
     document.getElementById('dots').style.display = v==='write' ? 'flex' : 'none';
-    if(v==='sms'){
+    if(v!=='write'){
       document.getElementById('barStory').hidden=true;
       document.getElementById('barPick').hidden=true;
       document.getElementById('barAgency').hidden=true;
       document.getElementById('hdBack').hidden=true;
-      document.getElementById('hdTitle').textContent='시의원에게 문자';
+      document.getElementById('hdTitle').textContent = v==='sms' ? '시의원에게 문자' : '피켓시위';
       var sb=document.getElementById('scrollBody'); if(sb) sb.scrollTop=0;
     } else {
       renderWiz();
+    }
+    if(window.Picket){
+      if(v==='picket') Picket.show(); else Picket.hide();
+      try{ history.replaceState(null,'', v==='picket' ? location.pathname+location.search : '#'+v); }catch(e){}
     }
   }
 
@@ -1318,8 +1328,10 @@
        "다음"만 눌리고 문장을 못 고치던 문제 방지. 저장된 사연은 그대로 불러와 보여주되 수정 가능 */
     wizPhase = 'story';
     queue=[]; qi=0;
-    showView('write');
+    var h0=location.hash.replace('#','');
+    showView(h0==='sms' ? 'sms' : 'write');   /* 피켓시위 화면은 picket.js 가 불러와지면 자동 전환 (못 불러오면 민원 화면 유지) */
   })();
 </script>
+<script src="picket.js"></script>
 </body>
 </html>
