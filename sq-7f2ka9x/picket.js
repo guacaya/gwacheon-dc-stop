@@ -82,7 +82,7 @@
       '<div class="pk-track"><div class="pk-fill" id="pkFill" style="width:0"></div></div>'+
       '<div class="pk-meta">'+md(DAYS[0].date).t+'~'+md(DAYS[DAYS.length-1].date).t+' 평일 점심 '+CONFIG.time+' · '+CONFIG.place+'<br><span id="pkToday"></span></div></div>'+
       '<div class="pk-info"><details><summary>🎯 왜 하나요?</summary><ol><li>심의 전, 시민이 지켜보고 있다는 신호를 시청에 직접 전달</li><li>민원·서명만으로 안 보이는 반대 여론을 눈에 보이게</li><li>지나가는 시민과 언론에 알려 참여층 확대</li><li>심의 결과 나올 때까지 압박 유지</li></ol></details>'+
-      '<details><summary>🙌 알아두세요</summary><ul><li>피켓·조끼·물 현장에 다 있어요. 몸만 오세요</li><li>점심 '+CONFIG.time+' 중 30분만 들러도 OK</li><li>하루 2–3개 동이 함께 담당 — 다른 동도 언제든 신청 OK</li><li>'+CONFIG.giftAt+'회 이상 참여하면 감사 굿즈 🎁</li><li>자발적인 주민 참여가 가장 큰 힘이에요</li></ul></details></div>'+
+      '<details><summary>🙌 알아두세요</summary><ul><li>피켓·물 현장에 다 있어요. 몸만 오세요</li><li>점심 '+CONFIG.time+' 중 30분만 들러도 OK</li><li>하루 2–3개 동이 함께 담당 — 다른 동도 언제든 신청 OK</li><li>'+CONFIG.giftAt+'회 이상 참여하면 감사 굿즈 🎁</li><li>자발적인 주민 참여가 가장 큰 힘이에요</li></ul></details></div>'+
       '<div class="pk-card pk-dsel"><div class="pk-dsel-h">🏢 우리 동 <small>누르면 담당일이 달력에 표시돼요</small></div><div class="pk-dchips" id="pkChips"></div><div class="pk-ddates" id="pkDates"></div></div>'+
       '<div class="pk-h">📅 10월 · 날짜를 눌러 고르세요 <small>여러 날 OK</small></div>'+
       '<div class="pk-card pk-cal"><div class="pk-cw"><span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span></div>'+
