@@ -8,12 +8,16 @@
   var SUPABASE_URL = 'https://gqjfwkjyvqrkvngqdqrm.supabase.co';
   var SUPABASE_KEY = 'sb_publishable_oMV-_pPRpuD8EQRVMftRKg_MSKTOK4a';
   var CONFIG = {
-    place: '과천시청 앞', time: '11:30–13:00', minPerDay: 7, giftAt: 3,
+    place: '과천시청 앞', time: '11:30–13:00', minPerDay: 7, goalPerDay: 10, giftAt: 3,   // 최소 7명, 목표 10명
     // 담당동: 단톡 인원 비율로 배분, 하루 2–3개 동, 같은 동 연속 없음 (104 = 104+102+105)
+    // 날짜를 늘리면 Supabase 의 picket_days() 도 같이 늘려야 신청이 됩니다
     days: [['2026-10-06','108·109'],['2026-10-07','101·103'],['2026-10-08','108·107'],
       ['2026-10-12','101·109·106'],['2026-10-13','108·104'],['2026-10-14','107·103'],['2026-10-15','108·101·109'],['2026-10-16','106·104'],
       ['2026-10-19','108·101·107'],['2026-10-20','109·106·103'],['2026-10-21','108·104'],['2026-10-22','101·107'],['2026-10-23','108·109'],
-      ['2026-10-26','101·106·103'],['2026-10-27','108·107·104'],['2026-10-28','전원']],
+      ['2026-10-26','101·106·103'],['2026-10-27','108·107·104'],['2026-10-28','101·106'],
+      ['2026-10-29','109·103'],['2026-10-30','108·101'],['2026-11-02','107·106·104'],['2026-11-03','108·101·109'],['2026-11-04','104·103'],['2026-11-05','108·107·106'],['2026-11-06','101·109'],['2026-11-09','108·107'],
+      ['2026-11-10','101·106·104'],['2026-11-11','108·109·103'],['2026-11-12','101·107'],['2026-11-13','108·106'],['2026-11-16','109·104·103'],['2026-11-17','108·101·107'],['2026-11-18','109·106'],['2026-11-19','108·101'],
+      ['2026-11-20','107·104·103'],['2026-11-23','108·109'],['2026-11-24','101·107·106'],['2026-11-25','108·104'],['2026-11-26','101·109'],['2026-11-27','108·107·106'],['2026-11-30','101·104·103']],
     holidays: {'2026-10-03':'개천절','2026-10-09':'한글날'},
     dongs: ['101동','102동','103동','104동','105동','106동','107동','108동','109동']
   };
@@ -23,7 +27,7 @@
   var WD = ['일','월','화','수','목','금','토'];
   var DAYS = CONFIG.days.map(function(x){ return {date:x[0], dong:x[1]}; });
   var GROUPS = ['101','103','104','106','107','108','109'];
-  var GOAL_TOTAL = CONFIG.minPerDay * DAYS.length;
+  var GOAL_TOTAL = CONFIG.goalPerDay * DAYS.length;
 
   function $(id){ return document.getElementById(id); }
   function st(k, v){ try{ if(v===undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k, JSON.stringify(v)); }catch(e){ return null; } }
@@ -59,7 +63,7 @@
   };
 
   /* ---------- 상태 ---------- */
-  var S=[], loaded=false, focusDay=null, picked={}, mine=st('pk_mine')||{}, lastDone=null, visible=false, built=false, timer=null;
+  var S=[], loaded=false, focusDay=null, month=null, showPast=false, picked={}, mine=st('pk_mine')||{}, lastDone=null, visible=false, built=false, timer=null;
   function pickedList(){ return Object.keys(picked).sort(); }
   function byDate(d){ return S.filter(function(s){ return s.date===d; }); }
   function iJoined(d){ var m=me(); return S.some(function(s){ return s.date===d && s.nick===m.nick && s.dong===m.dong; }); }
@@ -67,7 +71,8 @@
   function status(d){
     var c=byDate(d.date).length, t=openFrom();
     if(d.date<t) return ['done','종료 · '+c+'명 참여'];
-    if(c>=CONFIG.minPerDay) return ['ok','✅ 최소 인원 달성 · '+c+'명'];
+    if(c>=CONFIG.goalPerDay) return ['best','🎉 목표 달성 · '+c+'명'];
+    if(c>=CONFIG.minPerDay) return ['ok','✅ 최소 달성 '+c+'/'+CONFIG.goalPerDay];
     var diff=(pd(d.date)-pd(t))/864e5;
     return diff<=2 ? ['urgent','🚨 인원 부족 '+c+'/'+CONFIG.minPerDay] : ['warn','모집 중 '+c+'/'+CONFIG.minPerDay];
   }
@@ -84,10 +89,10 @@
       '<div class="pk-info"><details><summary>🎯 왜 하나요?</summary><ol><li>심의 전, 시민이 지켜보고 있다는 신호를 시청에 직접 전달</li><li>민원·서명만으로 안 보이는 반대 여론을 눈에 보이게</li><li>지나가는 시민과 언론에 알려 참여층 확대</li><li>심의 결과 나올 때까지 압박 유지</li></ol></details>'+
       '<details><summary>🙌 알아두세요</summary><ul><li>피켓·물 현장에 다 있어요. 몸만 오세요</li><li>점심 '+CONFIG.time+' 중 30분만 들러도 OK</li><li>하루 2–3개 동이 함께 담당 — 다른 동도 언제든 신청 OK</li><li>'+CONFIG.giftAt+'회 이상 참여하면 감사 굿즈 🎁</li><li>자발적인 주민 참여가 가장 큰 힘이에요</li></ul></details></div>'+
       '<div class="pk-card pk-dsel"><div class="pk-dsel-h">🏢 우리 동 <small>누르면 담당일이 달력에 표시돼요</small></div><div class="pk-dchips" id="pkChips"></div><div class="pk-ddates" id="pkDates"></div></div>'+
-      '<div class="pk-h">📅 10월 · 날짜를 눌러 고르세요 <small>여러 날 OK</small></div>'+
-      '<div class="pk-card pk-cal"><div class="pk-cw"><span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span></div>'+
+      '<div class="pk-h">📅 날짜를 눌러 고르세요 <small>여러 날 OK</small></div>'+
+      '<div class="pk-card pk-cal"><div class="pk-mtabs" id="pkTabs"></div><div id="pkPastT"></div><div class="pk-cw"><span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span></div>'+
       '<div class="pk-cg" id="pkGrid"><div class="pk-loading">불러오는 중…</div></div><div class="pk-quick" id="pkQuick"></div>'+
-      '<div class="pk-legend"><span><i class="pk-lg ok"></i>7명 달성</span><span><i class="pk-lg warn"></i>모집 중</span><span><i class="pk-lg urgent"></i>임박·부족</span><span><i class="pk-lg hl"></i>우리 동</span></div></div>'+
+      '<div class="pk-legend"><span><i class="pk-lg warn"></i>모집 중</span><span><i class="pk-lg urgent"></i>임박·부족</span><span><i class="pk-lg ok"></i>최소 '+CONFIG.minPerDay+'명</span><span><i class="pk-lg best"></i>목표 '+CONFIG.goalPerDay+'명</span><span><i class="pk-lg hl"></i>우리 동</span></div></div>'+
       '<div id="pkDone"></div><div id="pkDetail"></div><div id="pkMine"></div>'+
       '<div class="disc">신청 내용(닉네임·동·날짜)은 함께 보는 달력에 공개됩니다. 본인 신청은 이 폰에서만 취소할 수 있어요.</div>';
     var bar=document.createElement('div');
@@ -105,7 +110,7 @@
   function renderTop(){
     var n=S.length, t=today(), td=DAYS.filter(function(d){ return d.date===t; })[0];
     $('pkNow').textContent=n; $('pkFill').style.width=Math.min(100,Math.round(n/GOAL_TOTAL*100))+'%';
-    if(td) $('pkToday').innerHTML='오늘 <b>'+(td.dong==='전원'?'전원 집결':esc(td.dong)+'동')+'</b> 담당 · <b>'+byDate(t).length+'/'+CONFIG.minPerDay+'명</b>';
+    if(td) $('pkToday').innerHTML='오늘 <b>'+(td.dong==='전원'?'전원 집결':esc(td.dong)+'동')+'</b> 담당 · <b>'+byDate(t).length+'명</b> (최소 '+CONFIG.minPerDay+' · 목표 '+CONFIG.goalPerDay+'명)';
     else { var nx=DAYS.filter(function(d){ return d.date>t; })[0]; $('pkToday').innerHTML = nx ? '다음 지킴이 <b>'+md(nx.date).t+'('+md(nx.date).w+')</b> · '+byDate(nx.date).length+'명 신청' : '함께해주셔서 감사합니다 🙏'; }
   }
   function renderChips(){
@@ -113,29 +118,51 @@
     $('pkChips').innerHTML=GROUPS.map(function(n){ return '<button type="button" class="'+(g===n?'on':'')+'" data-grp="'+n+'">'+n+(n==='104'?'<sup>+</sup>':'')+'</button>'; }).join('');
     if(!g){ $('pkDates').innerHTML='동을 누르면 담당 날짜가 여기에 나와요. 담당일이 아니어도 언제든 신청 OK'; return; }
     var ds=DAYS.filter(function(d){ return nums(d.dong).indexOf(g)>=0; });
-    $('pkDates').innerHTML='<b>'+g+'동'+(g==='104'?'(+102·105동)':'')+'</b> 담당 '+ds.length+'일 · '+ds.map(function(d){ var f=md(d.date); return '<span class="pk-dt '+(d.date<t?'past':'')+'">'+f.d+'<small>'+f.w+'</small></span>'; }).join('')+'<span class="pk-dt">28<small>수</small> 🔥전원</span>';
+    $('pkDates').innerHTML='<b>'+g+'동'+(g==='104'?'(+102·105동)':'')+'</b> 담당 '+ds.length+'일 · '+ds.map(function(d){ var f=md(d.date); return '<span class="pk-dt '+(d.date<t?'past':'')+'">'+f.t+'<small>'+f.w+'</small></span>'; }).join('')+DAYS.filter(function(d){ return d.dong==='전원'; }).map(function(d){ var f=md(d.date); return '<span class="pk-dt '+(d.date<t?'past':'')+'">'+f.t+'<small>'+f.w+'</small> 🔥전원</span>'; }).join('');
   }
+  function months(){ var o=[]; DAYS.forEach(function(d){ var m=d.date.slice(0,7); if(o.indexOf(m)<0) o.push(m); }); return o; }
+  function curMonth(){ var ms=months(); if(month && ms.indexOf(month)>=0) return month; var nx=DAYS.filter(function(d){ return d.date>=openFrom(); })[0]; return nx ? nx.date.slice(0,7) : ms[ms.length-1]; }
   function renderCal(){
     if(!loaded) return;
-    var t=today(), m=me(), g=grp(), map={}; DAYS.forEach(function(d){ map[d.date]=d; });
-    var start=pd(DAYS[0].date); start.setDate(start.getDate()-start.getDay());
-    var end=pd(DAYS[DAYS.length-1].date); end.setDate(end.getDate()+(6-end.getDay()));
+    var t=today(), op=openFrom(), m=me(), g=grp(), map={}, cm=curMonth(); DAYS.forEach(function(d){ map[d.date]=d; });
+    // 월 탭
+    $('pkTabs').innerHTML=months().map(function(mm){
+      var ds=DAYS.filter(function(d){ return d.date.slice(0,7)===mm; }), left=ds.filter(function(d){ return d.date>=op; }).length;
+      var pk=pickedList().filter(function(k){ return k.slice(0,7)===mm; }).length;
+      return '<button type="button" class="'+(mm===cm?'on':'')+'" data-month="'+mm+'" aria-pressed="'+(mm===cm)+'">'+Number(mm.slice(5))+'월'+
+        '<small>'+(left?left+'일 남음':'종료')+(pk?' · <b>'+pk+'일 선택</b>':'')+'</small></button>';
+    }).join('');
+    // 이 달의 주(일~토) 만들기
+    var mds=DAYS.filter(function(d){ return d.date.slice(0,7)===cm; });
+    var start=pd(mds[0].date); start.setDate(start.getDate()-start.getDay());
+    var end=pd(mds[mds.length-1].date); end.setDate(end.getDate()+(6-end.getDay()));
+    var weeks=[], wk=[];
+    for(var dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){ wk.push(new Date(dt)); if(wk.length===7){ weeks.push(wk); wk=[]; } }
+    var weekPast=function(w){ return w.filter(function(x){ var k=ymd(x); return map[k] && k.slice(0,7)===cm; }).every(function(x){ return ymd(x)<op; }); };
+    var pastN=weeks.filter(weekPast).length, allPast=pastN===weeks.length;
+    $('pkPastT').innerHTML = (pastN && !allPast) ? '<button type="button" class="pk-pastbtn" data-pk="past">'+(showPast?'▴ 지난 날짜 접기':'▾ 지난 '+pastN+'주 보기')+'</button>' : '';
     var html='';
-    for(var dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
-      var wd=dt.getDay(), key=ymd(dt), day=dt.getDate(), d=map[key];
-      if(wd===0||wd===6){ html+='<div class="pk-c we '+(wd===0?'sun':'sat')+'"><span class="pk-n">'+day+'</span></div>'; continue; }
-      if(!d){ html+='<div class="pk-c off"><span class="pk-top"><span class="pk-n">'+day+'</span></span>'+(CONFIG.holidays[key]?'<span class="pk-hol">'+CONFIG.holidays[key]+'</span>':'')+'</div>'; continue; }
-      var ss=byDate(key), cls=status(d)[0], show=ss.length>3?2:3, isPick=!!picked[key];
-      var names=ss.slice(0,show).map(function(s){ return '<b class="'+(s.nick===m.nick&&s.dong===m.dong?'mn':'')+'">'+esc(s.nick)+'</b>'; }).join('')+(ss.length>show?'<b class="more">외 '+(ss.length-show)+'명</b>':'');
-      var cnt=ss.length>=CONFIG.minPerDay ? ss.length+'명' : ss.length+'/'+CONFIG.minPerDay;
-      html+='<button type="button" class="pk-c op '+cls+(key===t?' today':'')+(isPick?' pick':'')+(key===focusDay&&!isPick?' focus':'')+(ours(d,g)?' hl':'')+'" data-day="'+key+'" aria-pressed="'+isPick+'">'+
-        '<span class="pk-top"><span class="pk-n">'+day+'</span>'+(isPick?'<span class="pk-ck">✓</span>':(d.dong==='전원'?'<span>🔥</span>':''))+'</span>'+
-        '<span class="pk-nm">'+names+'</span><span class="pk-ct">'+cnt+'</span></button>';
-    }
+    weeks.forEach(function(w){
+      if(!allPast && !showPast && weekPast(w)) return;
+      w.forEach(function(x){
+        var wd=x.getDay(), key=ymd(x), day=x.getDate(), d=(key.slice(0,7)===cm)?map[key]:null, other=key.slice(0,7)!==cm;
+        if(other && key>mds[mds.length-1].date){ html+='<div></div>'; return; }   // 다음 달 날짜는 비워둠
+        if(wd===0||wd===6){ html+='<div class="pk-c we '+(wd===0?'sun':'sat')+(other?' oth':'')+'"><span class="pk-n">'+day+'</span></div>'; return; }
+        if(!d){ html+='<div class="pk-c off'+(other?' oth':'')+'"><span class="pk-top"><span class="pk-n">'+(other?(x.getMonth()+1)+'/'+day:day)+'</span></span>'+(CONFIG.holidays[key]?'<span class="pk-hol">'+CONFIG.holidays[key]+'</span>':'')+'</div>'; return; }
+        var ss=byDate(key), cls=status(d)[0], show=ss.length>3?2:3, isPick=!!picked[key];
+        var names=ss.slice(0,show).map(function(s){ return '<b class="'+(s.nick===m.nick&&s.dong===m.dong?'mn':'')+'">'+esc(s.nick)+'</b>'; }).join('')+(ss.length>show?'<b class="more">외 '+(ss.length-show)+'명</b>':'');
+        var cnt=ss.length>=CONFIG.goalPerDay ? ss.length+'명 🎉' : ss.length>=CONFIG.minPerDay ? ss.length+'/'+CONFIG.goalPerDay : ss.length+'/'+CONFIG.minPerDay;
+        html+='<button type="button" class="pk-c op '+cls+(key===t?' today':'')+(isPick?' pick':'')+(key===focusDay&&!isPick?' focus':'')+(ours(d,g)?' hl':'')+'" data-day="'+key+'" aria-pressed="'+isPick+'">'+
+          '<span class="pk-top"><span class="pk-n">'+day+'</span>'+(isPick?'<span class="pk-ck">✓</span>':(d.dong==='전원'?'<span>🔥</span>':''))+'</span>'+
+          '<span class="pk-nm">'+names+'</span><span class="pk-ct">'+cnt+'</span></button>';
+      });
+    });
     $('pkGrid').innerHTML=html;
     fitNames();
     var o = g ? DAYS.filter(function(d){ return d.dong!=='전원' && ours(d,g) && canPick(d); }) : [];
-    $('pkQuick').innerHTML = o.length ? '<button type="button" data-pk="ours">＋ '+g+'동 담당일 모두 고르기 ('+o.length+'일)</button>' : '';
+    var allIn = o.length && o.every(function(d){ return picked[d.date]; });
+    $('pkQuick').innerHTML = !o.length ? '' : allIn ? '<button type="button" class="done" data-pk="unours">✓ '+g+'동 담당일 '+o.length+'일 모두 선택됨 · 누르면 해제</button>'
+      : '<button type="button" data-pk="ours">＋ '+g+'동 담당일 모두 고르기 ('+o.length+'일'+(months().length>1?', 10·11월 전체':'')+')</button>';
   }
   // 긴 닉네임은 칸에 맞게 글자를 줄이고, 그래도 넘치면 두 줄로
   function fitNames(){
@@ -150,7 +177,7 @@
   }
   function renderDetail(){
     var d=DAYS.filter(function(x){ return x.date===focusDay; })[0]; if(!d||!loaded){ $('pkDetail').innerHTML=''; return; }
-    var t=openFrom(), past=d.date<t, f=md(d.date), ss=byDate(d.date), s=status(d), joined=iJoined(d.date), need=Math.max(0,CONFIG.minPerDay-ss.length);
+    var t=openFrom(), past=d.date<t, f=md(d.date), ss=byDate(d.date), s=status(d), joined=iJoined(d.date), need=Math.max(0,CONFIG.minPerDay-ss.length), needG=Math.max(0,CONFIG.goalPerDay-ss.length);
     var ppl = ss.length ? ss.map(function(p){ var mr=!!mine[p.id]; return '<span class="pk-p '+(mr?'mine':'')+'">'+(p.checked?'✓ ':'')+esc(p.nick)+' <small>'+esc(p.dong.replace('동',''))+'</small>'+(mr&&!past?'<span class="x" data-cancel="'+p.id+'">✕</span>':'')+'</span>'; }).join('') : '<span class="pk-empty">아직 신청자가 없어요. 첫 지킴이가 되어주세요</span>';
     var act = past ? '<button class="btn btn-acc" disabled>종료된 날이에요</button>'
       : joined ? '<button class="btn btn-acc" disabled>✓ 신청한 날이에요 (취소는 내 이름 ✕)</button>'
@@ -158,7 +185,7 @@
       : '<button class="btn btn-acc" data-toggle="'+d.date+'">＋ '+f.t+'('+f.w+') 선택하기</button>';
     $('pkDetail').innerHTML='<div class="pk-card pk-dd"><div class="pk-dh"><span class="d">'+f.t+'</span><span class="w">'+f.w+'요일</span><span class="pk-st '+s[0]+'">'+s[1]+'</span></div>'+
       '<div class="pk-dinfo">'+(d.dong==='전원'?'':'<span>담당</span>')+chips(d)+(d.dong!=='전원'&&ours(d,grp())?'<span class="pk-ours">· 우리 동 차례!</span>':'')+'</div>'+
-      '<div class="pk-sec">신청자 '+ss.length+'명'+(!past&&need?' · 최소까지 '+need+'명 더':'')+'</div><div class="pk-ppl">'+ppl+'</div><div class="pk-dact">'+act+'</div></div>';
+      '<div class="pk-sec">신청자 '+ss.length+'명'+(past?'':need?' · 최소 '+CONFIG.minPerDay+'명까지 '+need+'명 더':needG?' · 목표 '+CONFIG.goalPerDay+'명까지 '+needG+'명 더':' · 많을수록 힘이 돼요 💪')+'</div><div class="pk-ppl">'+ppl+'</div><div class="pk-dact">'+act+'</div></div>';
   }
   function renderDone(){
     if(!lastDone){ $('pkDone').innerHTML=''; return; }
@@ -189,11 +216,14 @@
     if((el=e.target.closest('.pk-c.op[data-day]'))){ var k=el.dataset.day, d=DAYS.filter(function(x){ return x.date===k; })[0]; focusDay=k; if(canPick(d)) toggle(k); lastDone=null; render(); return; }
     if((el=e.target.closest('[data-toggle]'))){ toggle(el.dataset.toggle); render(); return; }
     if((el=e.target.closest('[data-unpick]'))){ delete picked[el.dataset.unpick]; render(); return; }
+    if((el=e.target.closest('[data-month]'))){ month=el.dataset.month; showPast=false; var fm=DAYS.filter(function(d){ return d.date.slice(0,7)===month && d.date>=openFrom(); })[0]||DAYS.filter(function(d){ return d.date.slice(0,7)===month; })[0]; focusDay=fm.date; render(); return; }
     if((el=e.target.closest('[data-grp]'))){ var g=el.dataset.grp; st('pk_grp', grp()===g?'':g); render(); return; }
     if((el=e.target.closest('[data-pk]'))){
       var a=el.dataset.pk;
       if(a==='ours'){ var g2=grp(); DAYS.filter(function(d){ return d.dong!=='전원'&&ours(d,g2)&&canPick(d); }).forEach(function(d){ picked[d.date]=1; }); render(); toast(pickedList().length+'일을 골랐어요. 아래에서 신청하세요'); }
       if(a==='clear'){ picked={}; render(); }
+      if(a==='past'){ showPast=!showPast; render(); }
+      if(a==='unours'){ var g3=grp(); DAYS.filter(function(d){ return ours(d,g3); }).forEach(function(d){ delete picked[d.date]; }); render(); }
       if(a==='close'){ lastDone=null; render(); }
       if(a==='copy'){ var msg=lastDone?lastDone.msg:''; (navigator.clipboard?navigator.clipboard.writeText(msg):Promise.reject()).then(function(){ toast('복사했어요. 단톡에 붙여넣기!'); }).catch(function(){ var r=document.createRange(); r.selectNodeContents($('pkShare')); var s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('문구를 길게 눌러 복사해 주세요'); }); }
       return;

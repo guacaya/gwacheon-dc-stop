@@ -110,3 +110,20 @@
 
 /* 상단 탭 손가락 터치 영역 키우기 (모양은 그대로) */
 .hd-tab{padding:8px 12px;font-size:12px}
+
+/* 월 탭 · 지난 주 접기 (11월 연장) */
+.pk-mtabs{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;margin:0 2px 8px}
+.pk-mtabs button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:7px 6px;font-size:16px;font-weight:900;color:var(--ink);cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:1px;min-height:50px;line-height:1.2}
+.pk-mtabs button small{font-size:11px;font-weight:600;color:var(--sub)}
+.pk-mtabs button small b{color:var(--ink)}
+.pk-mtabs button.on{border-color:var(--acc);background:var(--acc-l);color:var(--acc-d)}
+.pk-mtabs button.on small{color:var(--acc-d)}
+.pk-pastbtn{display:block;width:calc(100% - 4px);margin:0 2px 8px;border:1px dashed var(--line);background:transparent;border-radius:8px;padding:8px;font-size:12.5px;font-weight:700;color:var(--sub);cursor:pointer;font-family:inherit;min-height:36px}
+.pk-c.oth{opacity:.3}
+.pk-quick button.done{background:var(--acc-l);border-style:solid}
+/* 2단계 목표: 최소 7명(연초록) → 목표 10명(진초록) */
+.pk-c.op.best{background:var(--acc)} .pk-c.op.best .pk-ct,.pk-c.op.best .pk-n{color:#fff}
+.pk-c.op.best.hl{box-shadow:inset 0 0 0 2px var(--acc-d)}
+.pk-st.best{background:var(--acc);color:#fff}
+.pk-lg.best{background:var(--acc);border:1px solid var(--acc-d)}
+.pk-c.op.best .pk-nm b.more{color:#d7f5f0}
