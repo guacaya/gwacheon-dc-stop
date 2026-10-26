@@ -81,14 +81,14 @@ function JUAM_PREPARE(){
       if(story){ story.scrollIntoView({block:'center'}); story.focus(); }
       return;
     }
-    var modes = ['lh','moland','gwacheon','kepco','climate','acrc','fire'];
+    var modes = ['kepco','climate','moland','gwacheon','acrc','lh','fire'];
     var names = { lh:'한국토지주택공사', moland:'국토교통부', gwacheon:'과천시', kepco:'한국전력공사', climate:'기후에너지환경부', acrc:'국민권익위원회', fire:'소방청' };
     var items = [];
     modes.forEach(function(m){
       switchMode(m);
       items.push({ title: currentTitle, body: document.getElementById('resultBox').value, agency: names[m] });
     });
-    switchMode('lh');
+    switchMode('kepco');
     var payload = JSON.stringify({ __juamBatch:true, items:items, ts:Date.now() });
     var b64 = btoa(unescape(encodeURIComponent(payload)));
     var go = function(){ location.href = 'https://www.epeople.go.kr/index.paid#juam=' + encodeURIComponent(b64); };
