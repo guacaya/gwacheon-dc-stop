@@ -158,7 +158,8 @@
       .sug-btn:active{transform:scale(.97)}
     </style>
     <link rel="stylesheet" href="picket.css">
-    <!-- ── 시즌 테마: 날짜 따라 자동 변경 (~10/31 할로윈, 11월 주차별 크리스마스) / 미리보기: ?theme=halloween|snow|tree|gift|eve|off ── -->
+    <!-- ── 화면 스킨: 시즌 테마(날짜 따라 자동: ~10/31 할로윈, 11월 주차별 크리스마스) / 무채색 / 다크 ──
+         미리보기: ?theme=halloween|snow|tree|gift|eve|off   모드 강제: ?mode=mono|dark|season -->
     <script>
     (function(){
       var T={
@@ -183,12 +184,17 @@
           off:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="13" rx="2" fill="#F5DCD7"/><rect x="2" y="7" width="20" height="4" rx="1.4" fill="#EED0CA"/><path d="M12 7V22" stroke="#E8C6C0" stroke-width="2.6"/></svg>',
           ill:'<svg viewBox="0 0 240 110"><path d="M30 86H176Q196 86 200 70" stroke="#7A5638" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M40 50H170L162 80H52Z" fill="#B8262E"/><path d="M40 50H170" stroke="#E3B341" stroke-width="4"/><rect x="56" y="22" width="30" height="28" rx="3" fill="#2F6B45"/><path d="M71 22v28M56 36h30" stroke="#F6D77A" stroke-width="3"/><rect x="90" y="12" width="34" height="38" rx="3" fill="#E3B341"/><path d="M107 12v38" stroke="#B8262E" stroke-width="3.4"/><path d="M107 12C100 2 94 8 107 12 120 8 114 2 107 12Z" fill="#B8262E"/><rect x="128" y="26" width="28" height="24" rx="3" fill="#fff"/><path d="M142 26v24M128 38h28" stroke="#B8262E" stroke-width="3"/><circle cx="208" cy="30" r="13" fill="#F3C9A8"/><path d="M194 26Q208 4 224 22L230 12Q232 8 236 12 234 16 230 16L222 26Z" fill="#B8262E"/><path d="M194 26H222" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="236" cy="12" r="3.6" fill="#fff"/><path d="M196 36Q208 58 220 36 214 40 208 40 202 40 196 36Z" fill="#fff"/><circle cx="204" cy="30" r="1.6" fill="#3A1F1F"/><circle cx="213" cy="30" r="1.6" fill="#3A1F1F"/><g fill="#E3B341"><circle cx="20" cy="20" r="2.4"/><circle cx="180" cy="10" r="2"/><circle cx="14" cy="60" r="2"/></g></svg>'},
         eve:{v:{acc:'#F2C14E','acc-d':'#F7D27A','acc-l':'#1D2D4D',ink:'#F4EFE3',sub:'#AEB9D2',line:'#2C3E63',bg:'#0C1526',card:'#14213A',on:'#14213A'},
-          label:'크리스마스 이브 주간',cap:'민원 넣을 때마다 전구가 하나씩 켜져요',dark:1,
+          label:'크리스마스 이브 주간',cap:'민원 넣을 때마다 전구가 하나씩 켜져요',dark:{field:'#1A2846',out:'#24365A',dis:'#2C3E63',disT:'#7D8BAA',ph:'#8C9AB8'},
           on:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="14" r="10" fill="#F2C14E" opacity=".22"/><rect x="9" y="2" width="6" height="5" rx="1" fill="#6B7A99"/><ellipse cx="12" cy="14" rx="5.5" ry="8" fill="#F2C14E"/></svg>',
           off:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="5" rx="1" fill="#4A5C80"/><ellipse cx="12" cy="14" rx="5.5" ry="8" fill="#2D3D60"/></svg>',
           ill:'<svg viewBox="0 0 250 118"><circle cx="210" cy="24" r="16" fill="#F4EFE3"/><g fill="#F4EFE3"><circle cx="30" cy="16" r="1.6"/><circle cx="80" cy="8" r="1.2"/><circle cx="150" cy="18" r="1.4"/><circle cx="240" cy="60" r="1.2"/><circle cx="12" cy="56" r="1.4"/></g><path d="M0 106Q70 96 125 102T250 100V118H0Z" fill="#E8EEF7"/><path d="M80 56L125 24 170 56Z" fill="#7A2E2E"/><path d="M78 56Q125 30 172 56" stroke="#F4EFE3" stroke-width="5" fill="none" stroke-linecap="round"/><rect x="88" y="56" width="74" height="48" fill="#3B2A3E"/><rect x="98" y="66" width="18" height="16" rx="2" fill="#F2C14E"/><rect x="134" y="66" width="18" height="16" rx="2" fill="#F2C14E"/><rect x="118" y="84" width="14" height="20" rx="2" fill="#7A2E2E"/><path d="M150 34V22h8v18" fill="#3B2A3E"/><path d="M84 58q20 8 41 0 21 8 41 0" stroke="#4A5C80" stroke-width="1.2" fill="none"/><circle cx="92" cy="61" r="2.6" fill="#E85D5D"/><circle cx="104" cy="63" r="2.6" fill="#F2C14E"/><circle cx="116" cy="61" r="2.6" fill="#6FCF97"/><circle cx="134" cy="61" r="2.6" fill="#E85D5D"/><circle cx="146" cy="63" r="2.6" fill="#F2C14E"/><circle cx="158" cy="61" r="2.6" fill="#6FCF97"/><path d="M40 104L54 70 68 104Z" fill="#2F6B45"/><path d="M44 92L54 62 64 92Z" fill="#3A8257"/><path d="M184 104L196 76 208 104Z" fill="#2F6B45"/></svg>'}
       };
-      function pick(){
+      var MODESKIN={
+        mono:{v:{acc:'#374151','acc-d':'#374151','acc-l':'#F3F4F6',ink:'#1F2937',sub:'#6B7280',line:'#E5E7EB',bg:'#ECEDEF',card:'#FFFFFF',on:'#FFFFFF'}},
+        dark:{v:{acc:'#D9DBDF','acc-d':'#D9DBDF','acc-l':'#222429',ink:'#E8E9EB',sub:'#A9ADB5',line:'#34363C',bg:'#0F1012',card:'#17181B',on:'#17181B'},
+          dark:{field:'#1F2125',out:'#26282D',dis:'#2A2C31',disT:'#6E727A',ph:'#7C8088'}}
+      };
+      function pickSeason(){
         try{ var q=(location.search.match(/[?&]theme=([a-z]+)/)||[])[1]; if(q) return q==='off'?null:(T[q]?q:null); }catch(e){}
         var d=new Date(), y=d.getFullYear(), md=(d.getMonth()+1)*100+d.getDate();
         if(y!==2026) return null;
@@ -199,44 +205,110 @@
         if(md<=1225) return 'eve';
         return null;
       }
-      var k=pick(); if(!k) return;
-      var t=T[k], v=t.v, root=document.documentElement;
-      root.setAttribute('data-theme',k);
-      window.SEASON={key:k,label:t.label,cap:t.cap,illus:[t.ill]};
+      function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+      function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+      var sk=pickSeason(), S=sk?T[sk]:null;
+      window.SEASON = S ? {key:sk,label:S.label,cap:S.cap,illus:[S.ill]} : null;
+      var root=document.documentElement;
+      var st=document.createElement('style'); st.id='skinCss'; document.head.appendChild(st);
       var u=function(s){ return 'url("data:image/svg+xml,'+encodeURIComponent(s)+'")'; };
-      var vars='--acc:'+v.acc+';--acc-d:'+v['acc-d']+';--acc-l:'+v['acc-l']+';--ink:'+v.ink+';--sub:'+v.sub+';--line:'+v.line+';--bg:'+v.bg+';--card:'+v.card+';--on-acc:'+v.on+';';
-      var P='html[data-theme] ';
-      var css=
-        'html[data-theme] body{background:'+v.bg+'}'+
-        P+'.hd,'+'html[data-theme]:not(.in-picket) .app{'+vars+'}'+
-        P+'.hd{background:var(--card);color:var(--ink)}'+'html[data-theme]:not(.in-picket) .app{color:var(--ink)}'+
-        P+'.hd-title,'+P+'h1.q,'+P+'.btn,'+P+'.daily-l,'+P+'.story-daily .daily-m,'+P+'.done-h,'+P+'.sug-btn{font-family:"Jua",-apple-system,"Apple SD Gothic Neo",sans-serif;font-weight:400}'+
-        P+'.hd-title{font-size:16.5px}'+P+'h1.q{font-size:24px}'+P+'.btn{font-size:16px}'+P+'.daily-l{font-size:14px;letter-spacing:0}'+
-        P+'.story-daily .daily-m{font-size:16.5px;text-align:center;line-height:1.55}'+
-        P+'.story-daily{border-radius:22px}'+P+'.story-daily-ill{max-width:220px}'+
-        P+'.hd-tab.on,'+P+'.btn-acc,'+P+'.pick-row.on .pick-row-check,'+P+'.sms-send-btn{color:var(--on-acc)}'+
-        P+'.btn-acc:not(:disabled){box-shadow:0 4px 0 rgba(0,0,0,.18)}'+
-        P+'textarea.story{border-radius:18px;background:var(--card);border-width:2px}'+
-        P+'.dots{gap:0;justify-content:space-between;align-items:center;margin-top:8px}'+
-        P+'.dot{flex:0 0 auto;width:30px;height:26px;border-radius:0;background:'+u(t.off)+' center/contain no-repeat;transform:none!important;transition:transform .25s}'+
-        P+'.dot.done,'+P+'.dot.cur{background-image:'+u(t.on)+'}'+
-        P+'.dot.cur{transform:scale(1.18)!important}'+
-        '.season-cap{display:none}'+
-        P+'.season-cap{display:block;font-size:11.5px;color:var(--sub);text-align:center;margin-top:5px}'+
-        P+'.dots[style*="none"]+.season-cap{display:none}'+
-        (t.dark?
-          P+'.pick-row{background:var(--card)}'+
-          P+'.mbody{background:#1A2846;color:#F4EFE3;border-color:var(--line)}'+
-          P+'.btn-out{background:#24365A;color:#F4EFE3}'+
-          P+'.btn-acc:disabled{background:#2C3E63;color:#7D8BAA}'+
-          P+'.sms-progress-track{background:#24365A}'+
-          P+'textarea.story::placeholder{color:#8C9AB8}'
-        :'');
-      var st=document.createElement('style'); st.id='seasonCss'; st.textContent=css; document.head.appendChild(st);
-      var lk=document.createElement('link'); lk.rel='stylesheet'; lk.href='https://fonts.googleapis.com/css2?family=Jua&display=swap'; document.head.appendChild(lk);
+      var P='html.skin ';
+      /* 고정 스타일: 모드 버튼 · 메뉴 · 말풍선 */
+      var base=document.createElement('style');
+      base.textContent=
+        '.dotrow{display:flex;align-items:center;gap:8px;margin-top:9px}.dotrow .dots{flex:1;min-width:0;margin-top:0!important}'+
+        '.mode-btn{display:inline-flex;align-items:center;gap:5px;flex-shrink:0;font-family:inherit;font-size:12px;font-weight:800;color:var(--ink);background:var(--card);border:1.5px solid var(--ink);border-radius:999px;padding:5px 10px 5px 8px;min-height:32px;cursor:pointer;white-space:nowrap}'+
+        '.mode-btn svg{flex-shrink:0}'+
+        'html:not(.in-write) .mode-btn,html:not(.in-write) .mode-tip,html:not(.in-write) .mode-pop{display:none!important}'+'.season-cap{display:none;font-size:11.5px;color:var(--sub);text-align:center;margin-top:5px}'+
+        '.mode-pop{position:absolute;top:calc(100% - 4px);right:12px;z-index:40;width:262px;max-width:calc(100% - 24px);background:#fff;color:#1F2937;border:1px solid #E5E7EB;border-radius:16px;box-shadow:0 12px 32px rgba(0,0,0,.18);padding:12px;display:flex;flex-direction:column;gap:6px}'+
+        '.mode-pop-h{font-size:12px;font-weight:800;color:#6B7280;padding:2px 4px 4px}'+
+        '.mode-opt{display:flex;align-items:center;gap:10px;border:1.5px solid #E5E7EB;background:#fff;border-radius:12px;padding:10px;text-align:left;font-family:inherit;min-height:52px;cursor:pointer;color:#1F2937;width:100%}'+
+        '.mode-opt.on{border:2px solid #1F2937;background:#F9FAFB}'+
+        '.mode-sw{width:28px;height:28px;border-radius:8px;flex-shrink:0}'+
+        '.mode-tx{flex:1;display:flex;flex-direction:column}.mode-tx b{font-size:14px;font-weight:800}.mode-tx span{font-size:11.5px;color:#6B7280}'+
+        '.mode-ck{font-size:16px;font-weight:900;color:#1F2937;visibility:hidden}.mode-opt.on .mode-ck{visibility:visible}'+
+        '.mode-note{font-size:11px;color:#6B7280;padding:4px 4px 0}'+
+        '.mode-tip{position:absolute;top:calc(100% + 4px);right:12px;z-index:39;width:230px;background:#1F2937;color:#fff;border-radius:14px;padding:12px 14px;box-shadow:0 10px 24px rgba(0,0,0,.25);font-size:13px;line-height:1.55;font-weight:600}'+
+        '.mode-tip:before{content:"";position:absolute;top:-6px;right:44px;width:12px;height:12px;background:#1F2937;transform:rotate(45deg)}'+
+        '.mode-tip button{display:block;margin:8px 0 0 auto;font-family:inherit;font-size:12px;font-weight:800;color:#1F2937;background:#fff;border:none;border-radius:999px;padding:6px 12px;cursor:pointer}';
+      document.head.appendChild(base);
+      function varsOf(v){ return '--acc:'+v.acc+';--acc-d:'+v['acc-d']+';--acc-l:'+v['acc-l']+';--ink:'+v.ink+';--sub:'+v.sub+';--line:'+v.line+';--bg:'+v.bg+';--card:'+v.card+';--on-acc:'+v.on+';'; }
+      function darkCss(d){ return P+'.pick-row{background:var(--card)}'+P+'.mbody{background:'+d.field+';color:var(--ink);border-color:var(--line)}'+P+'.btn-out{background:'+d.out+';color:var(--ink)}'+P+'.btn-acc:disabled{background:'+d.dis+';color:'+d.disT+'}'+P+'.sms-progress-track{background:'+d.out+'}'+P+'textarea.story{background:'+d.field+'}'+P+'textarea.story::placeholder{color:'+d.ph+'}'+P+'.sms-copy-btn{background:'+d.out+';color:var(--ink)}'; }
+      var fontLoaded=false;
+      function build(mode){
+        var seasonal = mode==='season' && S;
+        var sk2 = seasonal ? S : (MODESKIN[mode]||null);
+        root.classList.toggle('skin', !!sk2);
+        root.classList.toggle('skin-season', !!seasonal);
+        if(seasonal) root.setAttribute('data-theme', sk); else root.removeAttribute('data-theme');
+        root.setAttribute('data-mode', mode);
+        if(!sk2){ st.textContent=''; return; }
+        var v=sk2.v, Q='html.skin-season ';
+        var css=
+          'html.skin body{background:'+v.bg+'}'+
+          P+'.hd,html.skin:not(.in-picket) .app{'+varsOf(v)+'}'+
+          P+'.hd{background:var(--card);color:var(--ink)}html.skin:not(.in-picket) .app{color:var(--ink)}'+
+          P+'.hd-tab.on,'+P+'.btn-acc,'+P+'.pick-row.on .pick-row-check,'+P+'.sms-send-btn{color:var(--on-acc)}'+
+          P+'textarea.story{background:var(--card)}'+
+          (sk2.dark?darkCss(sk2.dark):'');
+        if(seasonal){
+          css+=
+            Q+'.hd-title,'+Q+'h1.q,'+Q+'.btn,'+Q+'.daily-l,'+Q+'.story-daily .daily-m,'+Q+'.done-h,'+Q+'.sug-btn{font-family:"Jua",-apple-system,"Apple SD Gothic Neo",sans-serif;font-weight:400}'+
+            Q+'.hd-title{font-size:16.5px}'+Q+'h1.q{font-size:24px}'+Q+'.btn{font-size:16px}'+Q+'.daily-l{font-size:14px;letter-spacing:0}'+
+            Q+'.story-daily .daily-m{font-size:16.5px;text-align:center;line-height:1.55}'+
+            Q+'.story-daily{border-radius:22px}'+Q+'.story-daily-ill{max-width:190px}'+'@media (max-width:370px){'+Q+'.story-daily-ill{max-width:150px}}'+
+            Q+'.btn-acc:not(:disabled){box-shadow:0 4px 0 rgba(0,0,0,.18)}'+
+            Q+'textarea.story{border-radius:18px;border-width:2px}'+
+            Q+'.dots{gap:0;justify-content:space-between;align-items:center}'+
+            Q+'.dot{flex:1 1 0;min-width:0;max-width:30px;height:24px;border-radius:0;background:'+u(S.off)+' center/contain no-repeat;transform:none!important;transition:transform .25s}'+
+            Q+'.dot.done,'+Q+'.dot.cur{background-image:'+u(S.on)+'}'+
+            Q+'.dot.cur{transform:scale(1.18)!important}'+
+            'html.skin-season.in-write .season-cap{display:block}';
+          if(!fontLoaded){ fontLoaded=true; var lk=document.createElement('link'); lk.rel='stylesheet'; lk.href='https://fonts.googleapis.com/css2?family=Jua&display=swap'; document.head.appendChild(lk); }
+        } else {
+          /* 무채색·다크: 그림과 장식 빼고 조용하게 */
+          css+=
+            P+'#storyIllus,'+P+'.story-daily-ill{display:none}'+
+            P+'.story-daily{text-align:left;padding:14px 16px}'+P+'.story-daily .daily-l{text-align:left}'+
+            P+'.ruin svg{filter:grayscale(1)'+(mode==='dark'?' brightness(.85)':'')+'}'+
+            P+'.confetti-piece{display:none!important}';
+        }
+        st.textContent=css;
+        var l=document.querySelector('#storyDailyCard .daily-l'); if(l) l.textContent = seasonal ? S.label : (S||mode!=='season' ? '오늘의 한마디' : '💪 오늘도 화이팅!');
+        var c=document.getElementById('seasonCap'); if(c) c.textContent = seasonal ? S.cap : '';
+        var b=document.getElementById('modeBtnTx'); if(b) b.textContent = mode==='season' ? '조용한 화면' : '화면 모드';
+      }
+      var mode=(function(){ try{ var q=(location.search.match(/[?&]mode=(mono|dark|season)/)||[])[1]; if(q) return q; }catch(e){} var m=lsGet('juam_mode'); return (m==='mono'||m==='dark')?m:'season'; })();
+      build(mode);
+      window.setSkinMode=function(m){ mode=m; lsSet('juam_mode',m); build(m); closePop(); };
+      var pop=null;
+      function closePop(){ if(pop){ pop.remove(); pop=null; } }
+      function hideTip(){ var t=document.getElementById('modeTip'); if(t) t.remove(); lsSet('juam_mode_tip','1'); }
+      window.toggleModePop=function(ev){
+        if(ev) ev.stopPropagation();
+        hideTip();
+        if(pop){ closePop(); return; }
+        var sw = S ? S.v.acc : '#0d9488';
+        var opts=[['season','시즌 테마', S ? '할로윈·크리스마스, 주마다 바뀌어요' : '기본 화면', 'background:'+sw],
+                  ['mono','무채색','회사에서도 튀지 않게, 그림 없이','background:#E5E7EB;border:1px solid #D1D5DB'],
+                  ['dark','다크','어두운 화면, 밤에 눈이 편하게','background:#1F2125']];
+        pop=document.createElement('div'); pop.className='mode-pop'; pop.setAttribute('role','dialog'); pop.setAttribute('aria-label','화면 모드');
+        var h='<div class="mode-pop-h">화면 모드</div>';
+        opts.forEach(function(o){ h+='<button type="button" class="mode-opt'+(o[0]===mode?' on':'')+'" onclick="setSkinMode(\''+o[0]+'\')"><span class="mode-sw" style="'+o[3]+'"></span><span class="mode-tx"><b>'+o[1]+'</b><span>'+o[2]+'</span></span><span class="mode-ck">✓</span></button>'; });
+        h+='<div class="mode-note">고른 화면은 이 기기에 기억돼요</div>';
+        pop.innerHTML=h; pop.addEventListener('click',function(e){ e.stopPropagation(); });
+        document.querySelector('.hd').appendChild(pop);
+      };
+      document.addEventListener('click', closePop);
+      document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePop(); });
       document.addEventListener('DOMContentLoaded',function(){
-        var l=document.querySelector('#storyDailyCard .daily-l'); if(l) l.textContent=t.label;
-        var c=document.getElementById('seasonCap'); if(c) c.textContent=t.cap;
+        build(mode);
+        if(!lsGet('juam_mode_tip')){
+          var t=document.createElement('div'); t.className='mode-tip'; t.id='modeTip'; t.setAttribute('role','status');
+          t.innerHTML='회사에서 보기 부담되면<br>여기서 무채색·다크로 바꿀 수 있어요<button type="button">알겠어요</button>';
+          t.querySelector('button').onclick=function(e){ e.stopPropagation(); hideTip(); };
+          var hd=document.querySelector('.hd'); if(hd) hd.appendChild(t);
+        }
       });
     })();
     </script>
@@ -251,7 +323,10 @@
       <button class="hd-tab on" id="tabWrite" onclick="showView('write')">민원</button>
       <button class="hd-tab" id="tabSms" onclick="showView('sms')" hidden>시의원 문자</button>
     </div>
-    <div class="dots" id="dots"></div>
+    <div class="dotrow">
+      <div class="dots" id="dots"></div>
+      <button type="button" class="mode-btn" id="modeBtn" onclick="toggleModePop(event)" aria-haspopup="dialog"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><span id="modeBtnTx">조용한 화면</span></button>
+    </div>
     <div class="season-cap" id="seasonCap"></div>
   </header>
 
@@ -1231,6 +1306,7 @@ ${DC_DISCLAIM}`;
   /* ── 화면 전환 (민원 / 문자) ── */
   function showView(v){
     document.documentElement.classList.toggle('in-picket', v==='picket');
+    document.documentElement.classList.toggle('in-write', v==='write');
     document.getElementById('viewWrite').hidden = v!=='write';
     document.getElementById('viewSms').hidden = v!=='sms';
     var vp=document.getElementById('viewPicket'); if(vp) vp.hidden = v!=='picket';
