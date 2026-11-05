@@ -81,8 +81,8 @@ function JUAM_PREPARE(){
       if(story){ story.scrollIntoView({block:'center'}); story.focus(); }
       return;
     }
-    var modes = ['kepco','climate','moland','gwacheon','acrc','lh','fire'];
-    var names = { lh:'한국토지주택공사', moland:'국토교통부', gwacheon:'과천시', kepco:'한국전력공사', climate:'기후에너지환경부', acrc:'국민권익위원회', fire:'소방청' };
+    var modes = ['kepco','climate','moland','wgline','gwacheon','lh','fire'];
+    var names = { lh:'한국토지주택공사', moland:'국토교통부', gwacheon:'과천시', kepco:'한국전력공사', climate:'기후에너지환경부', wgline:'국토교통부', fire:'소방청' };
     var items = [];
     modes.forEach(function(m){
       switchMode(m);
