@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>주암민원 자동진행 북마크 설치 (v6.2)</title>
+  <title>주암민원 자동진행 북마크 설치 (v6.3)</title>
   <style>
     body{font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;max-width:780px;margin:44px auto;padding:0 22px;color:#202124;line-height:1.65;background:#f7f7fb}
     main{background:#fff;border:1px solid #e6e6f0;border-radius:18px;padding:30px;box-shadow:0 8px 30px #0000000d}
@@ -60,10 +60,11 @@
   </p>
 
   <p class="warn">자동 <b>제출은 하지 않습니다.</b> 매번 제목·본문·처리기관·공개여부를 <b>직접 확인</b>하고 본인이 제출하세요.
-  가족이 <b>각자 본인 계정</b>으로 참여하는 용도입니다. 발사기에서 북마크를 다시 누르면 순서가 LH부터 새로 시작됩니다.</p>
+  가족이 <b>각자 본인 계정</b>으로 참여하는 용도입니다. 발사기에서 북마크를 다시 누르면 순서가 처음부터 새로 시작됩니다.</p>
 
   <p class="multi"><b>v6.1 변경:</b> 처리기관 칸이 자동 입력되지 않던 문제를 보완했습니다. 이제 기관 차례가 되면 <b>기관명이 클립보드에 자동 복사</b>되므로, 자동 입력이 안 되면 처리기관 검색창을 클릭해 <b>붙여넣기(Ctrl+V) → 검색 → 선택</b>하면 됩니다.
   <b>v6.2 변경:</b> 처리기관 칸을 찾을 때 페이지 안내문 속 강조 표시(형광펜) 글자를 실제 입력칸으로 착각해 엉뚱한 곳을 짚던 문제를 고쳤습니다. 이제 문서 순서가 아니라 <b>화면상 실제 거리가 가장 가까운 라벨과 입력칸 짝</b>만 채택합니다.
+  <b>v6.3 변경:</b> 기관 목록을 발사기에서 직접 읽어오도록 바꿔, 앞으로 기관이 추가·삭제돼도 북마크가 고장 나지 않습니다. <b>11월 5일 이전에 등록한 북마크는 "오류" 창이 뜨며 동작하지 않으니 꼭 다시 등록해 주세요.</b>
   <b>이전에 북마크를 등록한 분은 지워졌다 다시 등록(재드래그 또는 코드 재복사)해야</b> 새 동작이 적용됩니다.</p>
 </main>
 
@@ -81,14 +82,15 @@ function JUAM_PREPARE(){
       if(story){ story.scrollIntoView({block:'center'}); story.focus(); }
       return;
     }
-    var modes = ['kepco','climate','moland','wgline','gwacheon','lh','fire'];
-    var names = { lh:'한국토지주택공사', moland:'국토교통부', gwacheon:'과천시', kepco:'한국전력공사', climate:'기후에너지환경부', wgline:'국토교통부', fire:'소방청' };
+    /* 기관 목록은 발사기 페이지에서 그대로 읽어옴 → 기관이 바뀌어도 북마크를 다시 등록할 필요 없음 */
+    var modes = (window.MODES && window.MODES.length) ? window.MODES.slice() : ['kepco','climate','moland','wgline','gwacheon','lh','fire'];
+    var names = window.AGENCY_FULL_NAMES || { lh:'한국토지주택공사', moland:'국토교통부', gwacheon:'과천시', kepco:'한국전력공사', climate:'기후에너지환경부', wgline:'국토교통부', fire:'소방청' };
     var items = [];
     modes.forEach(function(m){
       switchMode(m);
       items.push({ title: currentTitle, body: document.getElementById('resultBox').value, agency: names[m] });
     });
-    switchMode('kepco');
+    switchMode(modes[0]);
     var payload = JSON.stringify({ __juamBatch:true, items:items, ts:Date.now() });
     var b64 = btoa(unescape(encodeURIComponent(payload)));
     var go = function(){ location.href = 'https://www.epeople.go.kr/index.paid#juam=' + encodeURIComponent(b64); };
