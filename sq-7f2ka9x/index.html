@@ -959,7 +959,10 @@ ${WGLINE_CLOSINGS[wglineClosing]}
     resetCopyBtns();
   }
   /* 배치 북마클릿 호환: switchMode(m) 호출 시 항상 새로 생성 */
-  function switchMode(m){ currentMode=m; generate(true); }
+  function switchMode(m){
+    if(!GEN[m]) throw new Error('예전 버전 북마크예요. 기관 고르기 화면의 \'PC라면 · 여러 곳 한 번에 채우는 북마크\' 페이지에서 기존 북마크를 지우고 새로 등록해 주세요.');
+    currentMode=m; generate(true);
+  }
   function onWgInput(){ if(currentMode==='wgline') generate(false); }
 
   /* ── 개인화 게이트 ── */
